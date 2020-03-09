@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "button.h"
-#include "Adafruit_ILI9341.h"
+#include "libs/Adafruit_ILI9341.h"
 
 class Screen {
 protected:

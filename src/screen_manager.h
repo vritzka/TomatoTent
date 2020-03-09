@@ -8,7 +8,7 @@
 #include "screens/home.h"
 
 #include "XPT2046_Touch.h"
-#include "Adafruit_ILI9341.h"
+#include "libs/Adafruit_ILI9341.h"
 #include "Adafruit_mfGFX.h"
 
 #define TCS_PIN D5
