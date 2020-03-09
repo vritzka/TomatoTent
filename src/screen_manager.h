@@ -9,13 +9,15 @@
 
 #include "XPT2046_Touch.h"
 #include "libs/Adafruit_ILI9341.h"
-#include "Adafruit_mfGFX.h"
+#include "libs/lvgl/lvgl.h"
 
 #define TCS_PIN D5
 #define TIRQ_PIN A0
 #define TFT_DC A1
 #define TFT_CS A2
 #define TFT_RST D6
+
+#define LVGL_TICK_PERIOD 20
 
 enum redrawMarker {
     TEMPERATURE = 1,
@@ -34,6 +36,11 @@ private:
     void render();
 
     XPT2046_Touchscreen ts = XPT2046_Touchscreen(SPI1, 320, 240, TCS_PIN, TIRQ_PIN);
+
+    void lvTick();
+    Timer lvTimer = Timer(LVGL_TICK_PERIOD, &ScreenManager::lvTick, *this);
+    lv_disp_buf_t disp_buf;
+    lv_color_t buf[LV_HOR_RES_MAX * 10];
 
 public:
     Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);

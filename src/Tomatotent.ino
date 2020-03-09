@@ -118,9 +118,9 @@ void loop(void)
     tent.checkInputs();
     tent.checkSensors();
 
-    if (screenManager.current) {
-        screenManager.current->update();
-    }
+    //if (screenManager.current) {
+    //    screenManager.current->update();
+    //}
 
     server.processConnection();
 }

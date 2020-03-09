@@ -11,11 +11,54 @@
 
 extern Tent tent;
 
+static void tft_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+{
+    uint16_t c;
+    ScreenManager *sm = reinterpret_cast<ScreenManager*>(disp->user_data);
+    Adafruit_ILI9341 &tft = sm->tft;
+
+    tft.startWrite(area->x1, area->y1, area->x2, area->y2);
+    for (int y = area->y1; y <= area->y2; y++) {
+        for (int x = area->x1; x <= area->x2; x++) {
+            c = color_p->full;
+            tft.writeColor(c);
+            color_p++;
+        }
+    }
+    tft.endWrite();
+    lv_disp_flush_ready(disp);
+}
+
+void ScreenManager::lvTick()
+{
+    lv_tick_inc(LVGL_TICK_PERIOD);
+}
+
 void ScreenManager::setup()
 {
+    lv_init();
+
     tft.begin();
     tft.setRotation(1);
-    tft.fillScreen(ILI9341_BLACK);
+    tft.fillScreen(ILI9341_RED);
+
+    lv_disp_buf_init(&disp_buf, buf, NULL, LV_HOR_RES_MAX * 10);
+
+    lv_disp_drv_t disp_drv;
+    lv_disp_drv_init(&disp_drv);
+    disp_drv.hor_res = 320;
+    disp_drv.ver_res = 240;
+    disp_drv.user_data = reinterpret_cast<void*>(this);
+    disp_drv.flush_cb = tft_flush;
+    disp_drv.buffer = &disp_buf;
+    lv_disp_drv_register(&disp_drv);
+
+    lv_obj_t *label = lv_label_create(lv_scr_act(), NULL);
+    lv_label_set_text(label, "Hello!");
+    lv_obj_align(label, NULL, LV_ALIGN_CENTER, 0, 0);
+
+    lv_task_handler();
+    lvTimer.start();
 
     ts.begin();
     ts.setRotation(3); // 1 for 2.4 screen, 3 for 2.8
@@ -23,6 +66,9 @@ void ScreenManager::setup()
 
 void ScreenManager::tick()
 {
+    lv_task_handler();
+    return;
+
     if (ts.touched()) {
         tent.displayLightHigh(); // Switch on Displaylight on touch
 
@@ -42,6 +88,7 @@ void ScreenManager::tick()
 
 void ScreenManager::render()
 {
+    return;
     if (current) {
         markNeedsRedraw(DIMMED);
         current->render();
@@ -51,7 +98,7 @@ void ScreenManager::render()
 
 void ScreenManager::homeScreen()
 {
-    current.reset(new HomeScreen());
+    //current.reset(new HomeScreen());
     render();
 }
 

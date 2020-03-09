@@ -432,8 +432,10 @@ void Adafruit_ILI9341::setAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1,
   writecommand(ILI9341_RAMWR); // write to RAM
 }
 
-void Adafruit_ILI9341::startWrite() {
+void Adafruit_ILI9341::startWrite(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
   if (hwSPI) spi_begin();
+
+  setAddrWindow(x0, y0, x1, y1);
 
 #if defined(PARTICLE)
   pinSetFast(_dc);
