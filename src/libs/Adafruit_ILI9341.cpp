@@ -432,6 +432,37 @@ void Adafruit_ILI9341::setAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1,
   writecommand(ILI9341_RAMWR); // write to RAM
 }
 
+void Adafruit_ILI9341::startWrite() {
+  if (hwSPI) spi_begin();
+
+#if defined(PARTICLE)
+  pinSetFast(_dc);
+  pinResetFast(_cs);
+#elif defined(USE_FAST_PINIO)
+  *dcport |=  dcpinmask;
+  *csport &= ~cspinmask;
+#else
+  digitalWrite(_dc, HIGH);
+  digitalWrite(_cs, LOW);
+#endif
+}
+
+void Adafruit_ILI9341::endWrite() {
+#if defined(PARTICLE)
+  pinSetFast(_cs);
+#elif defined(USE_FAST_PINIO)
+  *csport |= cspinmask;
+#else
+  digitalWrite(_cs, HIGH);
+#endif
+
+  if (hwSPI) spi_end();
+}
+
+void Adafruit_ILI9341::writeColor(uint16_t color) {
+  spiwrite(color >> 8);
+  spiwrite(color);
+}
 
 void Adafruit_ILI9341::pushColor(uint16_t color) {
   if (hwSPI) spi_begin();

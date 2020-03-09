@@ -171,6 +171,11 @@ class Adafruit_ILI9341 : public Adafruit_GFX {
     commandList(uint8_t *addr);
   uint8_t  spiread(void);
 
+  // Bare metal functions
+  void     startWrite(void);           // Begin SPI transaction
+  void     writeColor(uint16_t color);
+  void     endWrite(void);             // End SPI transaction
+
  private:
   uint8_t  tabcolor;
 
