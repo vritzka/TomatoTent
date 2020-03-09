@@ -44,10 +44,10 @@
 #define LV_COLOR_TRANSP    LV_COLOR_LIME         /*LV_COLOR_LIME: pure green*/
 
 /* Enable chroma keying for indexed images. */
-#define LV_INDEXED_CHROMA    1
+#define LV_INDEXED_CHROMA    0
 
 /* Enable anti-aliasing (lines, and radiuses will be smoothed) */
-#define LV_ANTIALIAS        1
+#define LV_ANTIALIAS        0
 
 /* Default display refresh period.
  * Can be changed in the display driver (`lv_disp_drv_t`).*/
@@ -127,7 +127,7 @@ typedef int16_t lv_coord_t;
  *==================*/
 
 /*1: Enable the Animations */
-#define LV_USE_ANIMATION        1
+#define LV_USE_ANIMATION        0
 #if LV_USE_ANIMATION
 
 /*Declare the type of the user data of animations (can be e.g. `void *`, `int`, `struct`)*/
@@ -136,7 +136,7 @@ typedef void * lv_anim_user_data_t;
 #endif
 
 /* 1: Enable shadow drawing*/
-#define LV_USE_SHADOW           1
+#define LV_USE_SHADOW           0
 
 /* 1: Enable object groups (for keyboard/encoder navigation) */
 #define LV_USE_GROUP            0
@@ -253,7 +253,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * The behavior of asserts can be overwritten by redefining them here.
  * E.g. #define LV_ASSERT_MEM(p)  <my_assert_code>
  */
-#define LV_USE_DEBUG        1
+#define LV_USE_DEBUG        0
 #if LV_USE_DEBUG
 
 /*Check if the parameter is NULL. (Quite fast) */
@@ -421,7 +421,7 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_BAR      0
 
 /*Button (dependencies: lv_cont*/
-#define LV_USE_BTN      0
+#define LV_USE_BTN      1
 #if LV_USE_BTN != 0
 /*Enable button-state animations - draw a circle on click (dependencies: LV_USE_ANIMATION)*/
 #  define LV_BTN_INK_EFFECT   0
@@ -446,7 +446,7 @@ typedef void * lv_obj_user_data_t;
 #endif
 
 /*Container (dependencies: -*/
-#define LV_USE_CONT     0
+#define LV_USE_CONT     1
 
 /*Color picker (dependencies: -*/
 #define LV_USE_CPICKER   0
