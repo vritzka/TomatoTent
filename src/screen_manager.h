@@ -54,6 +54,7 @@ public:
     void wifiScreen();
     void wifiSplashScreen();
     void fanScreen();
+    void fanMoreScreen();
     void tempUnitScreen();
 };
 #endif

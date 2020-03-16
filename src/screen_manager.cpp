@@ -97,6 +97,12 @@ void ScreenManager::fanScreen()
     render();
 }
 
+void ScreenManager::fanMoreScreen()
+{
+    current.reset(new FanMoreScreen());
+    render();
+}
+
 void ScreenManager::tempUnitScreen()
 {
     current.reset(new TempUnitScreen());

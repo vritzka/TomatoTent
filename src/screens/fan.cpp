@@ -21,7 +21,8 @@ void FanScreen::render()
     buttons.push_back(Button("fanManualBtn", 20, 115, 150, 38, "Manual", 40, 11));
     buttons.push_back(Button("fanUpBtn", 240, 55, 40, 40, "", 0, 0));
     buttons.push_back(Button("fanDownBtn", 240, 110, 40, 40, "", 0, 0));
-    buttons.push_back(Button("fanOkBtn", 20, 170, 250, 38, "Ok", 110, 8));
+    buttons.push_back(Button("fanOkBtn", 20, 170, 150, 38, "Ok", 60, 8));
+    buttons.push_back(Button("fanMoreBtn", 200, 170, 100, 38, "more", 25, 8));
 
     renderButtons(true);
     drawFanStatus();
@@ -51,6 +52,9 @@ void FanScreen::renderButton(Button& btn)
 
     } else if (btn.getName() == "fanOkBtn") {
         drawButton(btn, ILI9341_OLIVE, 3);
+
+    } else if (btn.getName() == "fanMoreBtn") {
+        drawButton(btn, ILI9341_OLIVE, 2);
     }
 }
 
@@ -108,5 +112,10 @@ void FanScreen::handleButton(Button& btn)
 
     } else if (btn.getName() == "fanOkBtn") {
         screenManager.homeScreen();
-    }
+    
+        
+    } else if (btn.getName() == "fanMoreBtn") {
+        screenManager.fanMoreScreen();
+    } 
+    
 }
