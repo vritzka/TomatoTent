@@ -72,21 +72,32 @@ void Tent::checkTent()
 {
     double rawTemp = sht20.readTemperature();
     if (rawTemp == 998.0) {
-        if (sensors.tentTemperatureC != -1) {
-            sensors.tentTemperatureC = sensors.tentTemperatureF = -1;
-            screenManager.markNeedsRedraw(TEMPERATURE);
-        }
-        if (sensors.tentHumidity != -1) {
-            sensors.tentHumidity = -1;
-            screenManager.markNeedsRedraw(HUMIDITY);
-        }
-        rawSensors.tentTemperature = -1;
-        rawSensors.tentHumidity = -1;
-        return;
-    }
+        bool updated = sht30.update();
 
-    rawSensors.tentTemperature = rawTemp;
-    rawSensors.tentHumidity = sht20.readHumidity();
+        if (!updated || sht30.temperature > 900) {
+
+            if (sensors.tentTemperatureC != -1) {
+                sensors.tentTemperatureC = sensors.tentTemperatureF = -1;
+                screenManager.markNeedsRedraw(TEMPERATURE);
+            }
+
+            if (sensors.tentHumidity != -1) {
+                sensors.tentHumidity = -1;
+                screenManager.markNeedsRedraw(HUMIDITY);
+            }
+
+            rawSensors.tentTemperature = -1;
+            rawSensors.tentHumidity = -1;
+            return;
+        }
+
+        rawSensors.tentTemperature = sht30.temperature;
+        rawSensors.tentHumidity = sht30.humidity;
+
+    } else {
+        rawSensors.tentTemperature = rawTemp;
+        rawSensors.tentHumidity = sht20.readHumidity();
+    }
 
     double currentTemp = (int)(rawSensors.tentTemperature * 10) / 10.0;
     double currentHumidity = (int)(rawSensors.tentHumidity * 10) / 10.0;
@@ -122,7 +133,7 @@ void Tent::checkSoil()
         return;
     }
 
-    double waterLevel = (moisture - 244.0) * 100.0 / (525.0 - 244.0);
+    double waterLevel = (moisture - 275.0) * 100.0 / (575.0 - 275.0);
     waterLevel = (int)(waterLevel * 10) / 10.0;
     if (waterLevel > 100) {
         waterLevel = 100;
@@ -151,7 +162,7 @@ void Tent::fan(String fanStatus)
     if (fanStatus == "OFF") {
         analogWrite(FAN_SPEED_PIN, 255, 25000);
     } else {
-        int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
+        int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 153.0);
         analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
     }
 }
@@ -186,10 +197,14 @@ void Tent::checkInputs()
     unsigned long now = millis();
     unsigned long diff = now - lastDimmerBtnTime;
 
+    if (diff <= 300) {
+        return;
+    }
+
     lastDimmerBtnTime = now;
     dimmerBtnPressed = false;
 
-    if ((diff <= 500 && diff >= 150) && growLightStatus == "LOW") {
+    if (diff <= 600 && growLightStatus == "LOW") {
         muteGrowLight();
     } else {
         dimGrowLight();
@@ -445,7 +460,7 @@ void Tent::adjustFan()
 
         //sensor fail
         if (sensors.tentTemperatureF > 200 || sensors.tentHumidity > 200)
-            fanSpeedPercent = FAN_SPEED_MIN + 15;
+            fanSpeedPercent = FAN_SPEED_MIN + 20;
 
         if (fanSpeedPercent != state.getFanSpeed()) {
             state.setFanSpeed(fanSpeedPercent);
