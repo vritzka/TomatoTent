@@ -4,6 +4,7 @@
 #include "screens/cancel_confirm.h"
 #include "screens/timer.h"
 #include "screens/fan.h"
+#include "screens/tent_size.h"
 #include "screens/temp_unit.h"
 #include "screens/grow_started.h"
 #include "screens/wifi_splash.h"
@@ -97,9 +98,9 @@ void ScreenManager::fanScreen()
     render();
 }
 
-void ScreenManager::fanMoreScreen()
+void ScreenManager::tentSizeScreen()
 {
-    current.reset(new FanMoreScreen());
+    current.reset(new TentSizeScreen());
     render();
 }
 
