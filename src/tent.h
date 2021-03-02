@@ -18,6 +18,7 @@ class Tent {
 private:
     DFRobot_SHT20 sht20;
     SHT30 sht30;
+    SHT30 sht30_outside_tent;
     I2CSoilMoistureSensor soil;
     Timer sensorTimer, minuteTimer;
     Timer displayDimTimer, displayOffTimer;
@@ -49,6 +50,9 @@ public:
         double tentTemperatureC;
         double tentTemperatureF;
         double tentHumidity;
+        double outsideTentTemperatureC;
+        double outsideTentTemperatureF;
+        double outsideTentHumidity;
         double soilTemperatureC;
         double soilTemperatureF;
         double waterLevel;
@@ -58,6 +62,8 @@ public:
         double lightBrightness;
         double tentTemperature;
         double tentHumidity;
+        double outsideTentTemperature;
+        double outsideTentHumidity;
         double soilTemperature;
         int soilMoisture;
     } rawSensors;

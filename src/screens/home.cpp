@@ -115,7 +115,7 @@ void HomeScreen::update()
 
 void HomeScreen::drawTemperature()
 {
-    tft.fillRect(86, 75, 141, 25, ILI9341_BLACK);
+    tft.fillRect(86, 75, 141, 40, ILI9341_BLACK);
     tft.setCursor(86, 75);
     tft.setTextColor(ILI9341_WHITE);
 
@@ -133,11 +133,16 @@ void HomeScreen::drawTemperature()
 
     tft.setTextSize(2);
     tft.print(String::format(" %c", tempUnit));
+
+    tft.setCursor(86, 100);
+    tft.setTextSize(1);
+    tft.print(String::format("%.1f", tempUnit == 'F' ? tent.sensors.outsideTentTemperatureF : tent.sensors.outsideTentTemperatureC));
+    tft.print(String::format(" %c", tempUnit));
 }
 
 void HomeScreen::drawHumidity()
 {
-    tft.fillRect(86, 122, 141, 25, ILI9341_BLACK);
+    tft.fillRect(86, 122, 141, 40, ILI9341_BLACK);
     tft.setCursor(86, 122);
     tft.setTextColor(ILI9341_WHITE);
 
@@ -152,6 +157,11 @@ void HomeScreen::drawHumidity()
     tft.print(String::format("%.1f", tent.sensors.tentHumidity));
 
     tft.setTextSize(2);
+    tft.print(" %");
+    
+    tft.setCursor(86, 147);
+    tft.setTextSize(1);
+    tft.print(String::format("%.1f", tent.sensors.outsideTentHumidity));
     tft.print(" %");
 }
 
