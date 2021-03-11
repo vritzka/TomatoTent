@@ -153,7 +153,7 @@ void Tent::checkTent()
         sensors.outsideTentTemperatureF = (currentOutsideTemp == 0 || currentOutsideTemp > 900) ? currentOutsideTemp : (currentOutsideTemp * 1.8 + 32);
         screenManager.markNeedsRedraw(TEMPERATURE);
     }
-    
+
     if ((sensors.outsideTentHumidity == 0) || (sensors.outsideTentHumidity != currentOutsideHumidity)) {
         sensors.outsideTentHumidity = currentOutsideHumidity;
         screenManager.markNeedsRedraw(HUMIDITY);

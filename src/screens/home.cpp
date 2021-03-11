@@ -158,7 +158,7 @@ void HomeScreen::drawHumidity()
 
     tft.setTextSize(2);
     tft.print(" %");
-    
+
     tft.setCursor(86, 147);
     tft.setTextSize(1);
     tft.print(String::format("%.1f", tent.sensors.outsideTentHumidity));

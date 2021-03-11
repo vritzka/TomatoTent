@@ -99,13 +99,13 @@ void firmware_update_handler(system_event_t event, int status)
 
 void network_status_handler(system_event_t event, int status)
 {
-    if(status == network_status_connected) {
+    if (status == network_status_connected) {
 
         http_request_t request;
         http_response_t response;
 
         http_header_t headers[] = {
-            { "Accept" , "*/*"},
+            { "Accept", "*/*" },
             { NULL, NULL }
         };
 
@@ -116,10 +116,8 @@ void network_status_handler(system_event_t event, int status)
 
         request.hostname = "add-to-particle-product.tomatotent.com";
         http.get(request, response, headers);
-
     }
 }
-
 
 void setup()
 {
@@ -135,7 +133,7 @@ void setup()
     tent.setup();
 
     System.on(firmware_update, firmware_update_handler);
-    System.on(network_status, network_status_handler); 
+    System.on(network_status, network_status_handler);
 
     server.begin();
 }
