@@ -106,7 +106,7 @@ void network_status_handler(system_event_t event, int status)
 
         http_header_t headers[] = {
             { "Accept" , "*/*"},
-            { NULL, NULL } // NOTE: Always terminate headers will NULL
+            { NULL, NULL }
         };
 
         request.port = 80;
