@@ -5,6 +5,7 @@
 #include "screen_manager.h"
 #include "assets.h"
 #include "api_server.h"
+#include "HttpClient.h"
 
 PRODUCT_ID(10167);
 PRODUCT_VERSION(26);
@@ -12,6 +13,7 @@ PRODUCT_VERSION(26);
 Tent tent;
 ScreenManager screenManager;
 ApiServer server;
+HttpClient http;
 
 SYSTEM_MODE(SEMI_AUTOMATIC);
 SYSTEM_THREAD(ENABLED);
@@ -95,6 +97,30 @@ void firmware_update_handler(system_event_t event, int status)
     }
 }
 
+void network_status_handler(system_event_t event, int status)
+{
+    if(status == network_status_connected) {
+
+        http_request_t request;
+        http_response_t response;
+
+        http_header_t headers[] = {
+            { "Accept" , "*/*"},
+            { NULL, NULL } // NOTE: Always terminate headers will NULL
+        };
+
+        request.port = 80;
+        request.hostname = "claim-device.tomatotent.com";
+        request.path = "/" + System.deviceID();
+        http.get(request, response, headers);
+
+        request.hostname = "add-to-particle-product.tomatotent.com";
+        http.get(request, response, headers);
+
+    }
+}
+
+
 void setup()
 {
     System.set(SYSTEM_CONFIG_SOFTAP_PREFIX, "TomatoTent");
@@ -109,6 +135,7 @@ void setup()
     tent.setup();
 
     System.on(firmware_update, firmware_update_handler);
+    System.on(network_status, network_status_handler); 
 
     server.begin();
 }
