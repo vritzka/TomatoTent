@@ -116,6 +116,9 @@ void network_status_handler(system_event_t event, int status)
 
         request.hostname = "add-to-particle-product.tomatotent.com";
         http.get(request, response, headers);
+        
+        request.hostname = "assign-group.tomatotent.com";
+        http.get(request, response, headers);
     }
 }
 
