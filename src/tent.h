@@ -6,6 +6,7 @@
 #include "libs/DFRobot_SHT20.h"
 #include "libs/SHT30.h"
 #include "libs/I2CSoilMoistureSensor.h"
+#include "libs/T67XX.h"
 #include "tent_state.h"
 
 #define GROW_LIGHT_BRIGHTNESS_PIN TX

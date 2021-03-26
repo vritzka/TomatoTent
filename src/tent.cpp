@@ -486,6 +486,8 @@ void Tent::adjustFan()
         float fanReactTempHigh;
         char tempUnit = state.getTempUnit();
         float tentTemperature;
+        float inletTemperature;
+        float inOutTempDifference;
         float fanSpeedMinSetting = state.getFanSpeedMin();
         float fanSpeedMaxSetting = state.getFanSpeedMax();
         float targetTemperature = state.getTargetTemperature();
@@ -495,6 +497,13 @@ void Tent::adjustFan()
         float fanSpeedPercentbyHumidity;
         int8_t tempDiffinF = 4;
         int8_t humDiff = 5;
+        bool useInOutComparison = 1;
+        
+        if(useInOutComparison) {
+            inOutTempDifference = sensors.outsideTentTemperatureC - sensors.tentTemperatureC;
+            
+        }
+        
 
         if (tempUnit == 'F') {
             tentTemperature = sensors.tentTemperatureF;
