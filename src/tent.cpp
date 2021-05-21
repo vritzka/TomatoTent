@@ -1,8 +1,10 @@
 #include "tent.h"
 #include "screen_manager.h"
 #include <ArduinoJson.h>
+#include "libs/PCF8575.h"
 
 extern ScreenManager screenManager;
+PCF8575 acFanSwitcher(0x41);
 
 const int minBrightness = 20;
 
@@ -32,6 +34,8 @@ void Tent::setup()
     sht30.setAddress(0);
     sht30.update();
     soil.begin();
+    acFanSwitcher.pinMode(P0, OUTPUT);
+	acFanSwitcher.begin();
 
     displayLightHigh();
 
@@ -168,10 +172,12 @@ void Tent::fan(String fanStatus)
     if (fanStatus == "OFF") {
         analogWrite(FAN_SPEED_PIN, 255, 25000);
         analogWrite(FAN_SPEED_OPTICAL_PIN, 0, 10000);
+        acFanSwitcher.digitalWrite(P0, LOW);
     } else {
         int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
         analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
         analogWrite(FAN_SPEED_OPTICAL_PIN, fanSpeed, 10000);
+        acFanSwitcher.digitalWrite(P0, HIGH);
     }
 }
 
@@ -458,7 +464,7 @@ void Tent::adjustFan()
         float fanSpeedPercentbyHumidity;
         int8_t tempDiffinF = 4;
         int8_t humDiff = 5;
-
+        
         if (tempUnit == 'F') {
             tentTemperature = sensors.tentTemperatureF;
             fanReactTempLow = targetTemperature - tempDiffinF;
@@ -510,6 +516,16 @@ void Tent::adjustFan()
             fan("ON");
             screenManager.markNeedsRedraw(FAN);
         }
+        
+        
+        if(tentTemperature < targetTemperature) {
+            acFanSwitcher.digitalWrite(P0, LOW);
+        }
+        
+         if(tentTemperature > targetTemperature) {
+            acFanSwitcher.digitalWrite(P0, HIGH);
+        }       
+        
     }
 }
 
