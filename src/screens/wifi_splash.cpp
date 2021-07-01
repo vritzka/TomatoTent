@@ -19,7 +19,7 @@ void WifiSplashScreen::render()
     tft.setCursor(20, 70);
     tft.print("Go to WiFi settings, scan for Networks.");
     tft.setCursor(20, 90);
-    tft.print("Connect to the Network called TomatoTent-xxxx.");
+    tft.print("Connect to the Network called TTNT-xxxx.");
     tft.setCursor(20, 110);
     tft.print("Open a Web Browser (Safari, Chrome, IE).");
     tft.setCursor(20, 130);
