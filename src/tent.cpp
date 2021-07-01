@@ -175,7 +175,7 @@ void Tent::fan(String fanStatus)
         acFanSwitcher.digitalWrite(P0, LOW);
     } else {
         int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
-        analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
+        analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 4000);
         analogWrite(FAN_SPEED_OPTICAL_PIN, fanSpeed, 10000);
         acFanSwitcher.digitalWrite(P0, HIGH);
     }

@@ -82,7 +82,7 @@ void setup_finished_handler()
 STARTUP(
     softap_set_application_page_handler(myPage, nullptr);
     pinMode(FAN_SPEED_PIN, OUTPUT);
-    analogWrite(FAN_SPEED_PIN, 255, 25000);
+    analogWrite(FAN_SPEED_PIN, 255, 4000);
     pinMode(FAN_SPEED_OPTICAL_PIN, OUTPUT);
     analogWrite(FAN_SPEED_OPTICAL_PIN, 0, 10000);
     pinMode(TFT_BRIGHTNESS_PIN, OUTPUT);
