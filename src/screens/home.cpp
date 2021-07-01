@@ -133,11 +133,12 @@ void HomeScreen::drawTemperature()
 
     tft.setTextSize(2);
     tft.print(String::format(" %c", tempUnit));
-
+/*
     tft.setCursor(86, 100);
     tft.setTextSize(1);
     tft.print(String::format("%.1f", tempUnit == 'F' ? tent.sensors.outsideTentTemperatureF : tent.sensors.outsideTentTemperatureC));
     tft.print(String::format(" %c", tempUnit));
+*/    
 }
 
 void HomeScreen::drawHumidity()
@@ -158,11 +159,12 @@ void HomeScreen::drawHumidity()
 
     tft.setTextSize(2);
     tft.print(" %");
-
+/*
     tft.setCursor(86, 147);
     tft.setTextSize(1);
     tft.print(String::format("%.1f", tent.sensors.outsideTentHumidity));
     tft.print(" %");
+   */ 
 }
 
 void HomeScreen::drawSoilMoistureMeter()

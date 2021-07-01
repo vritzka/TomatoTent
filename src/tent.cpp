@@ -506,14 +506,6 @@ void Tent::adjustFan()
         int8_t tempDiffinF = 4;
         int8_t humDiff = 5;
         
-        bool useInOutComparison = 1;
-        
-        if(useInOutComparison) {
-            inOutTempDifference = sensors.outsideTentTemperatureC - sensors.tentTemperatureC;
-            
-        }
-        
-
         if (tempUnit == 'F') {
             tentTemperature = sensors.tentTemperatureF;
             fanReactTempLow = targetTemperature - tempDiffinF;
