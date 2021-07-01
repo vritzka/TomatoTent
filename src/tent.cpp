@@ -33,6 +33,8 @@ void Tent::setup()
     sht20.checkSHT20();
     sht30.setAddress(0);
     sht30.update();
+    sht30_outside_tent.setAddress(1);
+    sht30_outside_tent.update();
     soil.begin();
     acFanSwitcher.pinMode(P0, OUTPUT);
 	acFanSwitcher.begin();
@@ -121,6 +123,43 @@ void Tent::checkTent()
 
     if ((sensors.tentHumidity == 0) || (sensors.tentHumidity != currentHumidity)) {
         sensors.tentHumidity = currentHumidity;
+        screenManager.markNeedsRedraw(HUMIDITY);
+    }
+
+    bool updated = sht30_outside_tent.update();
+
+    if (!updated || sht30_outside_tent.temperature > 900) {
+
+        if (sensors.outsideTentTemperatureC != -1) {
+            sensors.outsideTentTemperatureC = sensors.outsideTentTemperatureF = -1;
+            screenManager.markNeedsRedraw(TEMPERATURE);
+        }
+
+        if (sensors.outsideTentHumidity != -1) {
+            sensors.outsideTentHumidity = -1;
+            screenManager.markNeedsRedraw(HUMIDITY);
+        }
+
+        rawSensors.outsideTentTemperature = -1;
+        rawSensors.outsideTentHumidity = -1;
+        return;
+    }
+
+    rawSensors.outsideTentTemperature = sht30_outside_tent.temperature;
+    rawSensors.outsideTentHumidity = sht30_outside_tent.humidity;
+
+    double currentOutsideTemp = (int)(rawSensors.outsideTentTemperature * 10) / 10.0;
+    double currentOutsideHumidity = (int)(rawSensors.outsideTentHumidity * 10) / 10.0;
+    Serial.printlnf("action=sensor name=outsideTent humidity=%.1f temperature=%.1f", currentOutsideHumidity, currentOutsideTemp);
+
+    if ((sensors.outsideTentTemperatureC == 0) || (sensors.outsideTentTemperatureC != currentOutsideTemp)) {
+        sensors.outsideTentTemperatureC = currentOutsideTemp;
+        sensors.outsideTentTemperatureF = (currentOutsideTemp == 0 || currentOutsideTemp > 900) ? currentOutsideTemp : (currentOutsideTemp * 1.8 + 32);
+        screenManager.markNeedsRedraw(TEMPERATURE);
+    }
+
+    if ((sensors.outsideTentHumidity == 0) || (sensors.outsideTentHumidity != currentOutsideHumidity)) {
+        sensors.outsideTentHumidity = currentOutsideHumidity;
         screenManager.markNeedsRedraw(HUMIDITY);
     }
 }
@@ -455,6 +494,8 @@ void Tent::adjustFan()
         float fanReactTempHigh;
         char tempUnit = state.getTempUnit();
         float tentTemperature;
+        float inletTemperature;
+        float inOutTempDifference;
         float fanSpeedMinSetting = state.getFanSpeedMin();
         float fanSpeedMaxSetting = state.getFanSpeedMax();
         float targetTemperature = state.getTargetTemperature();
@@ -465,6 +506,14 @@ void Tent::adjustFan()
         int8_t tempDiffinF = 4;
         int8_t humDiff = 5;
         
+        bool useInOutComparison = 1;
+        
+        if(useInOutComparison) {
+            inOutTempDifference = sensors.outsideTentTemperatureC - sensors.tentTemperatureC;
+            
+        }
+        
+
         if (tempUnit == 'F') {
             tentTemperature = sensors.tentTemperatureF;
             fanReactTempLow = targetTemperature - tempDiffinF;

@@ -6,6 +6,7 @@
 #include "libs/DFRobot_SHT20.h"
 #include "libs/SHT30.h"
 #include "libs/I2CSoilMoistureSensor.h"
+#include "libs/T67XX.h"
 #include "tent_state.h"
 
 #define GROW_LIGHT_BRIGHTNESS_PIN TX
@@ -19,6 +20,7 @@ class Tent {
 private:
     DFRobot_SHT20 sht20;
     SHT30 sht30;
+    SHT30 sht30_outside_tent;
     I2CSoilMoistureSensor soil;
     Timer sensorTimer, minuteTimer;
     Timer displayDimTimer, displayOffTimer;
@@ -50,6 +52,9 @@ public:
         double tentTemperatureC;
         double tentTemperatureF;
         double tentHumidity;
+        double outsideTentTemperatureC;
+        double outsideTentTemperatureF;
+        double outsideTentHumidity;
         double soilTemperatureC;
         double soilTemperatureF;
         double waterLevel;
@@ -59,6 +64,8 @@ public:
         double lightBrightness;
         double tentTemperature;
         double tentHumidity;
+        double outsideTentTemperature;
+        double outsideTentHumidity;
         double soilTemperature;
         int soilMoisture;
     } rawSensors;
