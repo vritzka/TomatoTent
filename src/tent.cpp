@@ -210,12 +210,12 @@ void Tent::fan(String fanStatus)
 {
     if (fanStatus == "OFF") {
         analogWrite(FAN_SPEED_PIN, 255, 25000);
-        analogWrite(FAN_SPEED_OPTICAL_PIN, 0, 10000);
+        analogWrite(FAN_SPEED_PIN_2, 0, 4000);
         extSwitcher.digitalWrite(P0, LOW);
     } else {
         int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
-        analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 4000);
-        analogWrite(FAN_SPEED_OPTICAL_PIN, fanSpeed, 10000);
+        analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
+        analogWrite(FAN_SPEED_PIN_2, 255 - fanSpeed, 4000);
         extSwitcher.digitalWrite(P0, HIGH);
     }
 }
