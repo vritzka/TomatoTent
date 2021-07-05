@@ -8,7 +8,7 @@
 #include "HttpClient.h"
 
 PRODUCT_ID(10167);
-PRODUCT_VERSION(26);
+PRODUCT_VERSION(27);
 
 Tent tent;
 ScreenManager screenManager;
