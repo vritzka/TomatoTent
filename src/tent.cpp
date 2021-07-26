@@ -1,10 +1,8 @@
 #include "tent.h"
 #include "screen_manager.h"
 #include <ArduinoJson.h>
-#include "libs/PCF8575.h"
 
 extern ScreenManager screenManager;
-PCF8575 extSwitcher(0x41);
 
 const int minBrightness = 20;
 
@@ -36,8 +34,6 @@ void Tent::setup()
     sht30_2.setAddress(1);
     sht30_2.update();
     soil.begin();
-    extSwitcher.pinMode(P0, OUTPUT);
-	extSwitcher.begin();
 
     displayLightHigh();
 
@@ -211,12 +207,10 @@ void Tent::fan(String fanStatus)
     if (fanStatus == "OFF") {
         analogWrite(FAN_SPEED_PIN, 255, 25000);
         analogWrite(FAN_SPEED_PIN_2, 0, 4000);
-        extSwitcher.digitalWrite(P0, LOW);
     } else {
         int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
         analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
         analogWrite(FAN_SPEED_PIN_2, 255 - fanSpeed, 4000);
-        extSwitcher.digitalWrite(P0, HIGH);
     }
 }
 
@@ -490,63 +484,22 @@ void Tent::adjustFan()
 
     } else {
         float fanSpeedPercent;
-        float fanReactTempLow;
-        float fanReactTempHigh;
-        char tempUnit = state.getTempUnit();
-        float tentTemperature;
-        //float inletTemperature;
-        //float inOutTempDifference;
         float fanSpeedMinSetting = state.getFanSpeedMin();
         float fanSpeedMaxSetting = state.getFanSpeedMax();
-        float targetTemperature = state.getTargetTemperature();
-        float targetHumidity = state.getTargetHumidity();
-        float fanReactHumLow;
-        float fanReactHumHigh;
-        float fanSpeedPercentbyHumidity;
-        int8_t tempDiffinF = 4;
-        int8_t humDiff = 5;
-        
-        if (tempUnit == 'F') {
-            tentTemperature = sensors.tentTemperatureF;
-            fanReactTempLow = targetTemperature - tempDiffinF;
-            fanReactTempHigh = targetTemperature + tempDiffinF;
 
-        } else if (tempUnit == 'C') {
-            tentTemperature = sensors.tentTemperatureC;
-            fanReactTempLow = targetTemperature - 2.22;
-            fanReactTempHigh = targetTemperature + 2.22;
-        }
-
-        if (tentTemperature < fanReactTempLow) {
+        if (state.isDay()) { 
+            fanSpeedPercent = fanSpeedMaxSetting;    
+        } else {
             fanSpeedPercent = fanSpeedMinSetting;
-
-        } else if (tentTemperature >= fanReactTempLow && tentTemperature <= fanReactTempHigh) {
-            fanSpeedPercent = map(tentTemperature, fanReactTempLow, fanReactTempHigh, fanSpeedMinSetting, fanSpeedMaxSetting);
-            fanSpeedPercent = ceil(fanSpeedPercent);
-
-        } else if (tentTemperature > fanReactTempHigh) {
-            fanSpeedPercent = fanSpeedMaxSetting;
         }
 
-        fanReactHumLow = targetHumidity - 2;
-        fanReactHumHigh = targetHumidity + 3;
-
-        if (sensors.tentHumidity < fanReactHumLow) {
-            fanSpeedPercentbyHumidity = fanSpeedMinSetting;
-
-        } else if (sensors.tentHumidity >= fanReactHumLow && sensors.tentHumidity <= fanReactHumHigh) {
-            fanSpeedPercentbyHumidity = map(sensors.tentHumidity, fanReactHumLow, fanReactHumHigh, fanSpeedMinSetting, fanSpeedMaxSetting);
-            fanSpeedPercentbyHumidity = ceil(fanSpeedPercentbyHumidity);
-
-        } else if (sensors.tentHumidity > fanReactHumHigh) {
-            fanSpeedPercentbyHumidity = fanSpeedMaxSetting;
+        if(sensors.tentHumidity > 80) {
+            fanSpeedPercent += 10;    
         }
 
-        if (fanSpeedPercentbyHumidity > fanSpeedPercent)
-            fanSpeedPercent = fanSpeedPercentbyHumidity;
-
-        if (fanSpeedPercent > fanSpeedMaxSetting)
-            fanSpeedPercent = fanSpeedMaxSetting;
+        if(sensors.tentTemperatureC > 26) {
+            fanSpeedPercent += 10;  
+        }
 
         //sensor fail
         if (sensors.tentHumidity < 0)
@@ -556,16 +509,7 @@ void Tent::adjustFan()
             state.setFanSpeed(fanSpeedPercent);
             fan("ON");
             screenManager.markNeedsRedraw(FAN);
-        }
-        
-        
-        if(tentTemperature < targetTemperature) {
-            extSwitcher.digitalWrite(P0, LOW);
-        }
-        
-         if(tentTemperature > targetTemperature) {
-            extSwitcher.digitalWrite(P0, HIGH);
-        }       
+        }           
         
     }
 }
