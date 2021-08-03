@@ -483,27 +483,26 @@ void Tent::adjustFan()
         fan("ON");
 
     } else {
-        float fanSpeedPercent;
-        float fanSpeedMinSetting = state.getFanSpeedMin();
-        float fanSpeedMaxSetting = state.getFanSpeedMax();
+        float fanSpeedPercent, fanSpeedPercentByTemp, fanSpeedPercentByHum;
+        double fanSpeedMinSetting = state.getFanSpeedMin();
+        double fanSpeedMaxSetting = state.getFanSpeedMax();
 
-        if (state.isDay()) { 
-            fanSpeedPercent = fanSpeedMaxSetting;    
-        } else {
-            fanSpeedPercent = fanSpeedMinSetting;
+        if(sensors.tentTemperatureC >= 20 && sensors.tentTemperatureC <= 28) {
+            fanSpeedPercent = map(sensors.tentTemperatureC, 20.00, 28.00, fanSpeedMinSetting, fanSpeedMaxSetting );
+        } else if(sensors.tentTemperatureC < 20) {
+            fanSpeedPercent =  fanSpeedMinSetting;
+        } else if(sensors.tentTemperatureC > 28) {
+            fanSpeedPercent =  fanSpeedMaxSetting;
         }
 
-        if(sensors.tentHumidity > 80) {
-            fanSpeedPercent += 10;    
+        if (sensors.tentHumidity > 80) { 
+            fanSpeedPercent = round(fanSpeedPercent*1.2);   
         }
-
-        if(sensors.tentTemperatureC > 26) {
-            fanSpeedPercent += 10;  
-        }
+   
 
         //sensor fail
         if (sensors.tentHumidity < 0)
-            fanSpeedPercent = fanSpeedMinSetting + 10;
+            fanSpeedPercent = fanSpeedMinSetting + 15;
 
         if (fanSpeedPercent != state.getFanSpeed()) {
             state.setFanSpeed(fanSpeedPercent);

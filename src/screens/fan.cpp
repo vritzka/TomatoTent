@@ -209,14 +209,14 @@ void FanScreen::drawFanSpeedSettings(void)
         tft.fillRect(225, 75, 51, 122, ILI9341_BLACK);
         tft.setTextColor(ILI9341_WHITE);
 
-        tft.setCursor(234, 65);
-        tft.setTextSize(1);
-        tft.println("Daytime");
+        tft.setCursor(232, 64);
+        tft.setTextSize(2);
+        tft.println("HIGH");
         drawFanSpeedMax();
 
-        tft.setCursor(226, 140);
-        tft.setTextSize(1);
-        tft.print("Nighttime");
+        tft.setCursor(240, 139);
+        tft.setTextSize(2);
+        tft.print("LOW");
         drawFanSpeedMin();
 
         buttons.push_back(Button("fanMaxUpBtn", 280, 85, 30, 30, "", 0, 0));
