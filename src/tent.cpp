@@ -483,7 +483,7 @@ void Tent::adjustFan()
         fan("ON");
 
     } else {
-        float fanSpeedPercent, fanSpeedPercentByTemp, fanSpeedPercentByHum;
+        float fanSpeedPercent;
         double fanSpeedMinSetting = state.getFanSpeedMin();
         double fanSpeedMaxSetting = state.getFanSpeedMax();
 
