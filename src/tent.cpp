@@ -487,16 +487,28 @@ void Tent::adjustFan()
         double fanSpeedMinSetting = state.getFanSpeedMin();
         double fanSpeedMaxSetting = state.getFanSpeedMax();
 
-        if(sensors.tentTemperatureC >= 20 && sensors.tentTemperatureC <= 28) {
-            fanSpeedPercent = map(sensors.tentTemperatureC, 20.00, 28.00, fanSpeedMinSetting, fanSpeedMaxSetting );
-        } else if(sensors.tentTemperatureC < 20) {
-            fanSpeedPercent =  fanSpeedMinSetting;
-        } else if(sensors.tentTemperatureC > 28) {
-            fanSpeedPercent =  fanSpeedMaxSetting;
-        }
+        if (state.getMode() == 'g') {
 
-        if (sensors.tentHumidity > 80) { 
-            fanSpeedPercent = round(fanSpeedPercent*1.2);   
+            if(sensors.tentTemperatureC >= 20 && sensors.tentTemperatureC <= 28) {
+                fanSpeedPercent = map(sensors.tentTemperatureC, 20.00, 28.00, fanSpeedMinSetting, fanSpeedMaxSetting );
+            } else if(sensors.tentTemperatureC < 20) {
+                fanSpeedPercent =  fanSpeedMinSetting;
+            } else if(sensors.tentTemperatureC > 28) {
+                fanSpeedPercent =  fanSpeedMaxSetting;
+            }
+
+            if (sensors.tentHumidity > 80) { 
+                fanSpeedPercent = round(fanSpeedPercent*1.2);   
+            }
+        } else {
+
+            if(sensors.tentHumidity >= 55 && sensors.tentHumidity <= 70) {
+                fanSpeedPercent = map(sensors.tentHumidity, 55.00, 70.00, fanSpeedMinSetting, fanSpeedMaxSetting );
+            } else if(sensors.tentHumidity < 55) {
+                fanSpeedPercent =  fanSpeedMinSetting;
+            } else if(sensors.tentHumidity > 70) {
+                fanSpeedPercent =  fanSpeedMaxSetting;
+            }
         }
    
         //sensor fail
