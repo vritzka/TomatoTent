@@ -31,8 +31,6 @@ void Tent::setup()
     sht20.checkSHT20();
     sht30.setAddress(0);
     sht30.update();
-    sht30_2.setAddress(1);
-    sht30_2.update();
     soil.begin();
 
     displayLightHigh();
@@ -206,7 +204,7 @@ void Tent::fan(String fanStatus)
 {
     if (fanStatus == "OFF") {
         analogWrite(FAN_SPEED_PIN, 255, 25000);
-        analogWrite(FAN_SPEED_PIN_2, 0, 4000);
+        analogWrite(FAN_SPEED_PIN_2, 255, 4000);
     } else {
         int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
         analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);

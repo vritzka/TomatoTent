@@ -8,7 +8,7 @@
 #include "HttpClient.h"
 
 PRODUCT_ID(10167);
-PRODUCT_VERSION(27);
+PRODUCT_VERSION(28);
 
 Tent tent;
 ScreenManager screenManager;
@@ -112,20 +112,21 @@ void network_status_handler(system_event_t event, int status)
         };
 
         request.port = 80;
-        request.hostname = "claim-device.tomatotent.com";
         request.path = "/" + System.deviceID();
+
+        request.hostname = "claim-device.tomatotent.com";
         http.get(request, response, headers);
 
         request.hostname = "add-to-particle-product.tomatotent.com";
         http.get(request, response, headers);
         
-        request.hostname = "assign-group.tomatotent.com";
-        http.get(request, response, headers);
     }
 }
 
 void setup()
 {
+    System.disableUpdates();
+
     System.set(SYSTEM_CONFIG_SOFTAP_PREFIX, "TTNT");
 
     System.on(setup_begin, setup_handler);
