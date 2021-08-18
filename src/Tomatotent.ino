@@ -86,7 +86,7 @@ STARTUP(
     pinMode(FAN_SPEED_PIN, OUTPUT);
     analogWrite(FAN_SPEED_PIN, 255, 25000);
     pinMode(FAN_SPEED_PIN_2, OUTPUT);
-    analogWrite(FAN_SPEED_PIN_2, 0, 4000);
+    analogWrite(FAN_SPEED_PIN_2, 255, 4000);
     pinMode(TFT_BRIGHTNESS_PIN, OUTPUT);
     pinMode(GROW_LIGHT_BRIGHTNESS_PIN, OUTPUT);
     pinMode(GROW_LIGHT_ON_OFF_PIN, OUTPUT);
