@@ -77,6 +77,7 @@ void Tent::stop()
 void Tent::checkTent()
 {
     double rawTemp = sht20.readTemperature();
+    
     if (rawTemp == 998.0) {
         bool updated = sht30.update();
 
@@ -117,43 +118,6 @@ void Tent::checkTent()
 
     if ((sensors.tentHumidity == 0) || (sensors.tentHumidity != currentHumidity)) {
         sensors.tentHumidity = currentHumidity;
-        screenManager.markNeedsRedraw(HUMIDITY);
-    }
-
-    bool updated = sht30_2.update();
-
-    if (!updated || sht30_2.temperature > 900) {
-
-        if (sensors.tentTemperatureC_2 != -1) {
-            sensors.tentTemperatureC_2 = sensors.tentTemperatureF_2 = -1;
-            screenManager.markNeedsRedraw(TEMPERATURE);
-        }
-
-        if (sensors.tentHumidity_2 != -1) {
-            sensors.tentHumidity_2 = -1;
-            screenManager.markNeedsRedraw(HUMIDITY);
-        }
-
-        rawSensors.tentTemperature_2 = -1;
-        rawSensors.tentHumidity_2 = -1;
-        return;
-    }
-
-    rawSensors.tentTemperature_2 = sht30_2.temperature;
-    rawSensors.tentHumidity_2 = sht30_2.humidity;
-
-    double currentTemp_2 = (int)(rawSensors.tentTemperature_2 * 10) / 10.0;
-    double currentHumidity_2 = (int)(rawSensors.tentHumidity_2 * 10) / 10.0;
-    Serial.printlnf("action=sensor name=Tent humidity 2=%.1f temperature=%.1f", currentHumidity_2, currentTemp_2);
-
-    if ((sensors.tentTemperatureC_2 == 0) || (sensors.tentTemperatureC_2 != currentTemp_2)) {
-        sensors.tentTemperatureC_2 = currentTemp_2;
-        sensors.tentTemperatureF_2 = (currentTemp_2 == 0 || currentTemp_2 > 900) ? currentTemp_2 : (currentTemp_2 * 1.8 + 32);
-        screenManager.markNeedsRedraw(TEMPERATURE);
-    }
-
-    if ((sensors.tentHumidity_2 == 0) || (sensors.tentHumidity_2 != currentHumidity_2)) {
-        sensors.tentHumidity_2 = currentHumidity_2;
         screenManager.markNeedsRedraw(HUMIDITY);
     }
 }

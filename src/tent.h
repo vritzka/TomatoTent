@@ -64,8 +64,6 @@ public:
         double lightBrightness;
         double tentTemperature;
         double tentHumidity;
-        double tentTemperature_2;
-        double tentHumidity_2;
         double soilTemperature;
         int soilMoisture;
     } rawSensors;
