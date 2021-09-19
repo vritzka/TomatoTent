@@ -12,6 +12,8 @@ bool SHT30::setAddress(int a0)
     if (status != 0) {
         Serial.println("Init failed");
         return false;
+    } else {
+        return true;
     }
 }
 
