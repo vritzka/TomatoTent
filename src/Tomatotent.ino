@@ -125,9 +125,9 @@ void network_status_handler(system_event_t event, int status)
 
 void setup()
 {
-    System.disableUpdates();
+    //System.disableUpdates();
 
-    System.set(SYSTEM_CONFIG_SOFTAP_PREFIX, "TTNT");
+    System.set(SYSTEM_CONFIG_SOFTAP_PREFIX, "TMT");
 
     System.on(setup_begin, setup_handler);
     System.on(setup_end, setup_finished_handler);

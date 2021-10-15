@@ -40,6 +40,7 @@ void HomeScreen::render()
             drawDayCounter();
             drawTemperature();
             drawHumidity();
+            drawVPD();
             drawSoilMoistureMeter();
             drawSoilMoisture();
             drawSoilTemperature();
@@ -67,6 +68,7 @@ void HomeScreen::render()
             drawDayCounter();
             drawTemperature();
             drawHumidity();
+            drawVPD();
             drawFanStatus();
 
             buttons.push_back(Button("dayCounterBtn", 40, 170, 130, 45, "", 18, 8));
@@ -96,6 +98,8 @@ void HomeScreen::update()
         drawTemperature();
     if (screenManager.wasNeedsRedraw(HUMIDITY))
         drawHumidity();
+    if (screenManager.wasNeedsRedraw(VPD))
+        drawVPD();        
     if (screenManager.wasNeedsRedraw(FAN))
         drawFanStatus();
     if (screenManager.wasNeedsRedraw(DAY))
@@ -115,14 +119,14 @@ void HomeScreen::update()
 
 void HomeScreen::drawTemperature()
 {
-    tft.fillRect(86, 75, 141, 40, ILI9341_BLACK);
+    tft.fillRect(86, 75, 141, 21, ILI9341_RED);
     tft.setCursor(86, 75);
     tft.setTextColor(ILI9341_WHITE);
 
     if (tent.sensors.tentHumidity < 0) {
         tft.setTextSize(3);
         tft.setTextColor(ILI9341_MAGENTA);
-        tft.print("Sensor");
+        tft.print("Please");
         return;
     }
 
@@ -133,24 +137,19 @@ void HomeScreen::drawTemperature()
 
     tft.setTextSize(2);
     tft.print(String::format(" %c", tempUnit));
-/*
-    tft.setCursor(86, 100);
-    tft.setTextSize(1);
-    tft.print(String::format("%.1f", tempUnit == 'F' ? tent.sensors.temperatureF_2 : tent.sensors.tentTemperatureC_2));
-    tft.print(String::format(" %c", tempUnit));
-*/    
+   
 }
 
 void HomeScreen::drawHumidity()
 {
-    tft.fillRect(86, 122, 141, 40, ILI9341_BLACK);
+    tft.fillRect(86, 122, 141, 21, ILI9341_RED);
     tft.setCursor(86, 122);
     tft.setTextColor(ILI9341_WHITE);
 
     if (tent.sensors.tentHumidity < 0) {
         tft.setTextSize(3);
         tft.setTextColor(ILI9341_MAGENTA);
-        tft.print("Error");
+        tft.print("connect");
         return;
     }
 
@@ -159,12 +158,28 @@ void HomeScreen::drawHumidity()
 
     tft.setTextSize(2);
     tft.print(" %");
-/*
-    tft.setCursor(86, 147);
-    tft.setTextSize(1);
-    tft.print(String::format("%.1f", tent.sensors.tentHumidity_2));
-    tft.print(" %");
-   */ 
+
+}
+
+void HomeScreen::drawVPD()
+{
+    tft.fillRect(86, 152, 141, 21, ILI9341_RED);
+    tft.setCursor(86, 152);
+    tft.setTextColor(ILI9341_WHITE);
+
+    if (tent.sensors.tentVPD < 0) {
+        tft.setTextSize(3);
+        tft.setTextColor(ILI9341_MAGENTA);
+        tft.print("Sensor");
+        return;
+    }
+
+    tft.setTextSize(2);
+    tft.print(String::format("%.1f", tent.sensors.tentVPD));
+
+    tft.setTextSize(2);
+    tft.print(" kPa");
+
 }
 
 void HomeScreen::drawSoilMoistureMeter()
@@ -230,11 +245,11 @@ void HomeScreen::drawSoilTemperature()
 
 void HomeScreen::drawDayCounter()
 {
-    tft.fillRect(130, 180, 80, 25, ILI9341_BLACK);
+    tft.fillRect(50, 40, 55, 8, ILI9341_BLACK);
 
-    tft.setCursor(70, 180);
-    tft.setTextColor(ILI9341_CYAN);
-    tft.setTextSize(3);
+    tft.setCursor(50, 40);
+    tft.setTextColor(ILI9341_YELLOW);
+    tft.setTextSize(1);
 
     tft.print("Day " + String(tent.state.getDayCount()));
 }

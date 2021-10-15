@@ -19,6 +19,7 @@ void Tent::setup()
 {
     Particle.variable("tentTemperatureC", sensors.tentTemperatureC);
     Particle.variable("tentTemperatureF", sensors.tentTemperatureF);
+    Particle.variable("tentCPD", sensors.tentVPD);
     Particle.variable("tentHumidity", sensors.tentHumidity);
     Particle.variable("soilTemperatureC", sensors.soilTemperatureC);
     Particle.variable("soilTemperatureF", sensors.soilTemperatureF);
@@ -93,13 +94,20 @@ void Tent::checkTent()
                 screenManager.markNeedsRedraw(HUMIDITY);
             }
 
+            if (sensors.tentVPD != -1) {
+                sensors.tentVPD = -1;
+                screenManager.markNeedsRedraw(VPD);
+            }
+
             rawSensors.tentTemperature = -1;
             rawSensors.tentHumidity = -1;
+            rawSensors.tentVPD = -1;
             return;
         }
 
         rawSensors.tentTemperature = sht30.temperature;
         rawSensors.tentHumidity = sht30.humidity;
+        rawSensors.tentVPD = sht30.vpd;
 
     } else {
         rawSensors.tentTemperature = rawTemp;
@@ -108,7 +116,9 @@ void Tent::checkTent()
 
     double currentTemp = (int)(rawSensors.tentTemperature * 10) / 10.0;
     double currentHumidity = (int)(rawSensors.tentHumidity * 10) / 10.0;
-    Serial.printlnf("action=sensor name=tent humidity=%.1f temperature=%.1f", currentHumidity, currentTemp);
+    double currentVPD = (int)(rawSensors.tentVPD * 10) / 10.0;
+
+    Serial.printlnf("action=sensor name=tent humidity=%.1f temperature=%.1f vpd=%.1f", currentHumidity, currentTemp, currentVPD);
 
     if ((sensors.tentTemperatureC == 0) || (sensors.tentTemperatureC != currentTemp)) {
         sensors.tentTemperatureC = currentTemp;
@@ -120,6 +130,12 @@ void Tent::checkTent()
         sensors.tentHumidity = currentHumidity;
         screenManager.markNeedsRedraw(HUMIDITY);
     }
+
+    if ((sensors.tentVPD == 0) || sensors.tentVPD != currentVPD) {
+        sensors.tentVPD = currentVPD;
+        screenManager.markNeedsRedraw(VPD);
+    }
+
 }
 
 void Tent::checkSoil()

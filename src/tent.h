@@ -51,9 +51,7 @@ public:
         double tentTemperatureC;
         double tentTemperatureF;
         double tentHumidity;
-        double tentTemperatureC_2;
-        double tentTemperatureF_2;
-        double tentHumidity_2;
+        double tentVPD;
         double soilTemperatureC;
         double soilTemperatureF;
         double waterLevel;
@@ -63,6 +61,7 @@ public:
         double lightBrightness;
         double tentTemperature;
         double tentHumidity;
+        double tentVPD;
         double soilTemperature;
         int soilMoisture;
     } rawSensors;

@@ -1,4 +1,5 @@
 #include "SHT30.h"
+#include "math.h"
 
 bool SHT30::setAddress(int a0)
 {
@@ -26,6 +27,7 @@ bool SHT30::update()
     if (status != 0) {
         temperature = 998;
         humidity = 0;
+        vpd = 0;
         return false;
     }
     delay(10);
@@ -47,6 +49,16 @@ bool SHT30::update()
     } else {
         humidity = 0;
     }
+
+    if(temperature != 997 && humidity != 0) {
+        float es = 0.61078 * exp(17.2694 * temperature / (temperature + 238.3));
+        float ae = humidity / 100 * es;
+        vpd = es - ae;  //kPa
+    } else {
+        vpd = 0;   
+    }
+
+
     return true;
 }
 

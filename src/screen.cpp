@@ -127,7 +127,7 @@ void Screen::drawTimerStatus(bool ignoreDayCounter)
 
     } else {
 
-        tft.fillRect(4, 4, 147, 37, ILI9341_BLACK);
+        tft.fillRect(4, 4, 147, 32, ILI9341_BLACK);
         if (tent.state.getDayDuration() != 1440 && tent.state.getDayDuration() != 0) {
             tft.setCursor(50, 27);
             tft.setTextSize(1);
@@ -148,7 +148,7 @@ void Screen::drawTimerStatus(bool ignoreDayCounter)
                 tft.setCursor(50, 27);
                 tft.print("always on");
             } else {
-                tft.print("to dusk");
+                tft.print("left");
             }
 
             if (maxBrightness < 100) {
@@ -169,7 +169,7 @@ void Screen::drawTimerStatus(bool ignoreDayCounter)
                 tft.setCursor(50, 27);
                 tft.print("off");
             } else {
-                tft.print("to dawn");
+                tft.print("left");
             }
         }
     }

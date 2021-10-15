@@ -12,6 +12,7 @@ public:
     bool update();
     double temperature;
     double humidity;
+    double vpd;
 
 private:
     int address = 0x44;

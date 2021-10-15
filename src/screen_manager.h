@@ -26,7 +26,8 @@ enum redrawMarker {
     DAY = 32,
     DIMMED = 64,
     SOIL_TEMPERATURE = 128,
-    FAN_SPEED_SETTINGS = 256
+    FAN_SPEED_SETTINGS = 256,
+    VPD = 512
 };
 
 class ScreenManager {
