@@ -230,15 +230,12 @@ void Tent::checkInputs()
             
         dimmerBtnPressed = false;
         return;
-
     } else if(digitalRead(DIM_PIN) == LOW && dimmerBtnPressed) {
-
         unsigned long holdingTime = millis() - lastDimmerBtnTime;
         if(holdingTime > 1000 && growLightStatus != "MUTE") {
             muteGrowLight();
         }
         return;
-        
     }
 }
 
