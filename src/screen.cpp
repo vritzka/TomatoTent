@@ -84,7 +84,7 @@ void Screen::drawButtonTriangleLeft(Button& btn, int color)
 
 void Screen::drawFanStatus()
 {
-    tft.fillRect(200, 10, 56, 35, ILI9341_BLACK);
+    tft.fillRect(210, 10, 50, 35, ILI9341_BLACK);
 
     tft.setCursor(210, 10);
     tft.setTextSize(2);
@@ -207,7 +207,7 @@ void Screen::update()
 {
     if (screenManager.wasNeedsRedraw(DIMMED)) {
         if (tent.getGrowLightStatus() == "LOW" || tent.getGrowLightStatus() == "MUTE") {
-            x();
+            drawDimmedIndicator();
         } else {
             hideDimmedIndicator();
         }

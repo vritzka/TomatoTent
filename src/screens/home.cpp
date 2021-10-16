@@ -33,7 +33,7 @@ void HomeScreen::render()
         switch (tent.state.getMode()) {
         case 'g':
             tft.drawRect(20, 180, 250, 38, ILI9341_BLACK);
-            tft.drawBitmap(165, 4, fan_36, 36, 36, ILI9341_LIGHTGREY);
+            tft.drawBitmap(179, 5, fan_24, 24, 24, ILI9341_LIGHTGREY);
             tft.drawBitmap(32, 72, temperature_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(40, 116, hygrometer_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(40, 165, atmospheric_pressure_30, 30, 30, ILI9341_WHITE);
@@ -55,7 +55,7 @@ void HomeScreen::render()
             break;
         case 'd':
             tft.drawRect(20, 180, 250, 38, ILI9341_BLACK);
-            tft.drawBitmap(165, 4, fan_36, 36, 36, ILI9341_LIGHTGREY);
+            tft.drawBitmap(179, 5, fan_24, 24, 24, ILI9341_LIGHTGREY);
             tft.drawBitmap(32, 72, temperature_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(40, 116, hygrometer_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(17, 4, wind_36, 36, 36, ILI9341_YELLOW);

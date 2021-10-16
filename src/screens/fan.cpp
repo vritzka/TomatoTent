@@ -10,7 +10,7 @@ void FanScreen::render()
 {
     tft.fillScreen(ILI9341_BLACK);
 
-    tft.drawBitmap(20, 4, fan_36, 36, 36, ILI9341_WHITE);
+    tft.drawBitmap(25, 6, fan_24, 24, 24, ILI9341_WHITE);
 
     tft.setCursor(60, 12);
     tft.setTextColor(ILI9341_GREEN);
