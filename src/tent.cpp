@@ -211,27 +211,34 @@ void Tent::checkSensors()
 
 void Tent::checkInputs()
 {
-    if (digitalRead(DIM_PIN) == LOW) {
-        displayLightHigh();
+    if (digitalRead(DIM_PIN) == LOW && !dimmerBtnPressed) {
+        unsigned long now = millis();
+        unsigned long diff = now - lastDimmerBtnTime;
+        if (diff <= 300)
+            return;
+        
         dimmerBtnPressed = true;
-        return;
-    } else if (!dimmerBtnPressed) {
-        return;
-    }
-
-    unsigned long now = millis();
-    unsigned long diff = now - lastDimmerBtnTime;
-
-    if (diff <= 300)
-        return;
-
-    lastDimmerBtnTime = now;
-    dimmerBtnPressed = false;
-
-    if (diff <= 600 && growLightStatus == "LOW") {
-        muteGrowLight();
-    } else {
+        lastDimmerBtnTime = now;
+        displayLightHigh();
         dimGrowLight();
+        return;
+    } else if (digitalRead(DIM_PIN) == HIGH) {
+        unsigned long now = millis();
+        unsigned long diff = now - lastDimmerBtnTime;
+        if (diff <= 300)
+            return;
+            
+        dimmerBtnPressed = false;
+        return;
+
+    } else if(digitalRead(DIM_PIN) == LOW && dimmerBtnPressed) {
+
+        unsigned long holdingTime = millis() - lastDimmerBtnTime;
+        if(holdingTime > 1000 && growLightStatus != "MUTE") {
+            muteGrowLight();
+        }
+        return;
+        
     }
 }
 
@@ -468,17 +475,29 @@ void Tent::adjustFan()
         if (state.getMode() == 'g') {          
 
             if(sensors.tentTemperatureC >= 20 && sensors.tentTemperatureC <= 28) {
-                fanSpeedPercent = map(sensors.tentTemperatureC, 20.00, 28.00, fanSpeedMinSetting, fanSpeedMaxSetting );
+                fanSpeedPercent = map(sensors.tentTemperatureC, 20.00, 28.00, fanSpeedMinSetting, fanSpeedMaxSetting);
             } else if(sensors.tentTemperatureC < 20) {
                 fanSpeedPercent =  fanSpeedMinSetting;
             } else if(sensors.tentTemperatureC > 28) {
                 fanSpeedPercent =  fanSpeedMaxSetting;
             }
 
+            if(sensors.tentHumidity >= 60) {
+                fanSpeedPercent = round(fanSpeedPercent*1.2);
+            } else if(sensors.tentHumidity >= 70) {
+                fanSpeedPercent = round(fanSpeedPercent*1.2);
+            } else if(sensors.tentHumidity >= 80) {
+                fanSpeedPercent = round(fanSpeedPercent*1.2);
+            } else if(sensors.tentHumidity >= 90) {
+                fanSpeedPercent = round(fanSpeedPercent*1.2);
+            }
+
             if (state.isDay()) {
                 fanSpeedPercent = round(fanSpeedPercent*1.2);
-            } else if(sensors.tentHumidity > 80) { 
-                fanSpeedPercent = round(fanSpeedPercent*1.2);   
+            } 
+
+            if(fanSpeedPercent > fanSpeedMaxSetting) {
+                fanSpeedPercent = fanSpeedMaxSetting;   
             }
             
         } else {
