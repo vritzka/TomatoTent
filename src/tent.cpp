@@ -219,8 +219,16 @@ void Tent::checkInputs()
         
         dimmerBtnPressed = true;
         lastDimmerBtnTime = now;
-        displayLightHigh();
-        dimGrowLight();
+        if(state.isDay()) {
+            displayLightHigh();
+            dimGrowLight();
+        } else {
+            if(displayBrightness == 0) {
+                displayLightHigh();    
+            } else {
+                displayLightOff();
+            }
+        }
         return;
     } else if (digitalRead(DIM_PIN) == HIGH) {
         unsigned long now = millis();
@@ -232,7 +240,7 @@ void Tent::checkInputs()
         return;
     } else if(digitalRead(DIM_PIN) == LOW && dimmerBtnPressed) {
         unsigned long holdingTime = millis() - lastDimmerBtnTime;
-        if(holdingTime > 1000 && growLightStatus != "MUTE") {
+        if(holdingTime > 1000) {
             muteGrowLight();
         }
         return;
@@ -367,14 +375,14 @@ bool Tent::displayLightHigh()
 {
     unsigned long now = millis();
 
-    if ((now - lastDisplayLightTime) >= 15000 || lastDisplayLightTime == 0) {
+    if ((now - lastDisplayLightTime) >= 500 || lastDisplayLightTime == 0) {
         lastDisplayLightTime = now;
 
         while (displayBrightness < 255) {
             displayBrightness += 5;
             analogWrite(TFT_BRIGHTNESS_PIN, displayBrightness);
 
-            delay(5);
+            delay(15);
         }
         RGB.brightness(255);
         RGB.control(false);
