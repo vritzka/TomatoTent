@@ -356,7 +356,7 @@ void Tent::dimGrowLight()
 
 void Tent::muteGrowLight()
 {
-    if (growLightStatus != "MUTE") {
+    if (growLightStatus != "MUTE" && growLightStatus != "OFF") {
         growLight("MUTE");
     }
 
