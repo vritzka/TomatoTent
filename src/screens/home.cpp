@@ -257,19 +257,6 @@ void HomeScreen::drawDayCounter()
     tft.print("Day " + String(tent.state.getDayCount()));
 }
 
-void HomeScreen::drawClock()
-{
-    String currentTime = Time.format(Time.now(), "%l:%M %P %S");
-
-    tft.fillRect(190, 7, 140, 18, ILI9341_BLACK);
-
-    tft.setCursor(190, 7);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextSize(2);
-
-    tft.print(currentTime);
-}
-
 void HomeScreen::renderButton(Button& btn)
 {
     if (btn.getName() == "startGrowBtn") {
