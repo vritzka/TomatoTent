@@ -19,7 +19,7 @@ void Tent::setup()
 {
     Particle.variable("tentTemperatureC", sensors.tentTemperatureC);
     Particle.variable("tentTemperatureF", sensors.tentTemperatureF);
-    Particle.variable("tentCPD", sensors.tentVPD);
+    Particle.variable("tentVPD", sensors.tentVPD);
     Particle.variable("tentHumidity", sensors.tentHumidity);
     Particle.variable("soilTemperatureC", sensors.soilTemperatureC);
     Particle.variable("soilTemperatureF", sensors.soilTemperatureF);
