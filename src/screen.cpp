@@ -127,7 +127,7 @@ void Screen::drawTimerStatus(bool ignoreDayCounter)
 
     } else {
 
-        tft.fillRect(4, 4, 147, 35, ILI9341_BLACK);
+        tft.fillRect(4, 4, 147, 36, ILI9341_BLACK);
         if (tent.state.getDayDuration() != 1440 && tent.state.getDayDuration() != 0) {
             tft.setCursor(50, 27);
             tft.setTextSize(1);
@@ -207,7 +207,7 @@ void Screen::update()
 {
     if (screenManager.wasNeedsRedraw(DIMMED)) {
         if (tent.getGrowLightStatus() == "LOW" || tent.getGrowLightStatus() == "MUTE") {
-            drawDimmedIndicator();
+            x();
         } else {
             hideDimmedIndicator();
         }
