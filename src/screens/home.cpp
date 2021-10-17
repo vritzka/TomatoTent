@@ -48,7 +48,6 @@ void HomeScreen::render()
             drawTimerStatus();
             drawFanStatus();
 
-            buttons.push_back(Button("dayCounterBtn", 40, 170, 130, 45, "", 18, 8));
             buttons.push_back(Button("lightBtn", 0, 0, 139, 50, "", 18, 8));
             buttons.push_back(Button("fanBtn", 155, 0, 105, 50, "", 18, 8));
             buttons.push_back(Button("tempBtn", 40, 70, 160, 85, "", 18, 8));
@@ -72,7 +71,6 @@ void HomeScreen::render()
             drawVPD();
             drawFanStatus();
 
-            buttons.push_back(Button("dayCounterBtn", 40, 170, 130, 45, "", 18, 8));
             buttons.push_back(Button("fanBtn", 155, 0, 105, 50, "", 18, 8));
             buttons.push_back(Button("tempBtn", 40, 70, 160, 85, "", 18, 8));
             buttons.push_back(Button("dryingHintbtn", 250, 150, 36, 36, "", 18, 8));
@@ -241,22 +239,6 @@ void HomeScreen::drawSoilTemperature()
     tft.print(String::format("%.1f %c", temp, tempUnit));
 }
 
-void HomeScreen::drawDayCounter()
-{
-    tft.fillRect(50, 40, 55, 8, ILI9341_BLACK);
-
-    tft.setCursor(50, 40);
-    tft.setTextSize(1);
-    
-    if(tent.state.isDay()) {
-        tft.setTextColor(ILI9341_YELLOW);
-    } else {
-        tft.setTextColor(ILI9341_BLUE);
-    }
-
-    tft.print("Day " + String(tent.state.getDayCount()));
-}
-
 void HomeScreen::renderButton(Button& btn)
 {
     if (btn.getName() == "startGrowBtn") {
@@ -306,9 +288,6 @@ void HomeScreen::handleButton(Button& btn)
 
     } else if (btn.getName() == "wifiBtn") {
         screenManager.wifiScreen();
-
-    } else if (btn.getName() == "dayCounterBtn") {
-        screenManager.cancelScreen();
 
     } else if (btn.getName() == "lightBtn") {
         screenManager.lightScreen();

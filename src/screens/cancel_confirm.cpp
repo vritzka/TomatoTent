@@ -46,6 +46,6 @@ void CancelConfirmScreen::handleButton(Button& btn)
         screenManager.homeScreen();
 
     } else if (btn.getName() == "terminateNoBtn") {
-        screenManager.homeScreen();
+        screenManager.lightScreen();
     }
 }

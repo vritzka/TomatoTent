@@ -19,18 +19,29 @@ void LightScreen::render()
     buttons.push_back(Button("nowLeftBtn", 120, 60, 30, 30, "", 0, 0));
     buttons.push_back(Button("nowRightBtn", 170, 60, 30, 30, "", 0, 0));
 
+    buttons.push_back(Button("dayLeftBtn", 120, 130, 30, 30, "", 0, 0));
+    buttons.push_back(Button("dayRightBtn", 170, 130, 30, 30, "", 0, 0));
+
     buttons.push_back(Button("brightnessUpBtn", 235, 55, 40, 40, "", 0, 0));
     buttons.push_back(Button("brightnessDownBtn", 235, 165, 40, 40, "", 0, 0));
 
-    tft.setCursor(152, 99);
+    buttons.push_back(Button("cancelBtn", 260, 10, 50, 30, "End", 9, 8));
+
+    buttons.push_back(Button("lightOkBtn", 140, 180, 40, 38, "OK", 9, 12));
+
+    tft.setCursor(152, 45);
     tft.setTextColor(ILI9341_LIGHTGREY);
     tft.setTextSize(1);
     tft.print("NOW");
 
+    tft.setCursor(152, 115);
+    tft.print("DAY");
+
     renderLedBrightness();
     drawTimerStatus();
+    drawDayCounter();
 
-    buttons.push_back(Button("lightOkBtn", 140, 180, 40, 38, "OK", 9, 12));
+
 
     renderButtons(true);
 }
@@ -57,11 +68,20 @@ void LightScreen::renderButton(Button& btn)
     } else if (btn.getName() == "nowLeftBtn") {
         drawButtonTriangleLeft(btn, ILI9341_RED);
 
+    } else if (btn.getName() == "dayRightBtn") {
+        drawButtonTriangleRight(btn, ILI9341_RED);
+
+    } else if (btn.getName() == "dayLeftBtn") {
+        drawButtonTriangleLeft(btn, ILI9341_RED);
+
     } else if (btn.getName() == "brightnessUpBtn") {
         drawButtonTriangleUp(btn, ILI9341_CYAN);
 
     } else if (btn.getName() == "brightnessDownBtn") {
         drawButtonTriangleDown(btn, ILI9341_CYAN);
+
+    } else if (btn.getName() == "cancelBtn") {
+        drawButton(btn, ILI9341_BLACK, 2);
 
     } else if (btn.getName() == "lightOkBtn") {
         drawButton(btn, ILI9341_OLIVE, 2);
@@ -80,6 +100,12 @@ void LightScreen::renderButtonPressed(Button& btn)
         drawButtonTriangleRight(btn, ILI9341_WHITE);
 
     } else if (btn.getName() == "nowLeftBtn") {
+        drawButtonTriangleLeft(btn, ILI9341_WHITE);
+
+    } else if (btn.getName() == "dayRightBtn") {
+        drawButtonTriangleRight(btn, ILI9341_WHITE);
+
+    } else if (btn.getName() == "dayLeftBtn") {
         drawButtonTriangleLeft(btn, ILI9341_WHITE);
 
     } else if (btn.getName() == "brightnessUpBtn") {
@@ -228,6 +254,14 @@ void LightScreen::handleButton(Button& btn)
         tent.state.setMinutesInPhotoperiod(minutesInPhotoperiod);
         drawTimerStatus(true);
 
+    } else if (btn.getName() == "dayRightBtn") {
+        tent.state.setDayCount(tent.state.getDayCount() + 1);
+        drawDayCounter();
+
+    } else if (btn.getName() == "dayLeftBtn") {
+        tent.state.setDayCount(tent.state.getDayCount() - 1);
+        drawDayCounter();
+
     } else if (btn.getName() == "brightnessUpBtn") {
         int brightness = tent.state.getLedBrightnessMax();
         if (brightness == 100)
@@ -256,6 +290,9 @@ void LightScreen::handleButton(Button& btn)
         drawTimerStatus();
         screenManager.markNeedsRedraw(DIMMED);
 
+    } else if (btn.getName() == "cancelBtn") {
+        screenManager.cancelConfirmationScreen();
+    
     } else if (btn.getName() == "lightOkBtn") {
         screenManager.homeScreen();
     }

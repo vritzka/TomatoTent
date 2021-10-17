@@ -203,6 +203,22 @@ void Screen::drawTimerStatus(bool ignoreDayCounter)
     }
 }
 
+void Screen::drawDayCounter()
+{
+    tft.fillRect(50, 40, 55, 8, ILI9341_BLACK);
+
+    tft.setCursor(50, 40);
+    tft.setTextSize(1);
+    
+    if(tent.state.isDay()) {
+        tft.setTextColor(ILI9341_YELLOW);
+    } else {
+        tft.setTextColor(ILI9341_BLUE);
+    }
+
+    tft.print("Day " + String(tent.state.getDayCount()));
+}
+
 void Screen::update()
 {
     if (screenManager.wasNeedsRedraw(DIMMED)) {

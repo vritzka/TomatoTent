@@ -1,6 +1,5 @@
 #include "screen_manager.h"
 #include "tent.h"
-#include "screens/cancel.h"
 #include "screens/cancel_confirm.h"
 #include "screens/light.h"
 #include "screens/fan.h"
@@ -68,12 +67,6 @@ void ScreenManager::homeScreen()
 void ScreenManager::growStartedScreen()
 {
     current.reset(new GrowStartedScreen());
-    render();
-}
-
-void ScreenManager::cancelScreen()
-{
-    current.reset(new CancelScreen());
     render();
 }
 

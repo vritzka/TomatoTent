@@ -50,7 +50,6 @@ public:
 
     void homeScreen();
     void growStartedScreen();
-    void cancelScreen();
     void cancelConfirmationScreen();
     void lightScreen();
     void wifiScreen();
