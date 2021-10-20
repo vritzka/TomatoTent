@@ -220,8 +220,8 @@ void Tent::checkInputs()
         dimmerBtnPressed = true;
         lastDimmerBtnTime = now;
         if(state.isDay()) {
-            displayLightHigh();
             dimGrowLight();
+            displayLightHigh();
         } else {
             if(displayBrightness == 0) {
                 displayLightHigh();    
@@ -373,6 +373,9 @@ void Tent::muteGrowLight()
 
 bool Tent::displayLightHigh()
 {
+    RGB.brightness(255);
+    RGB.control(false);
+
     unsigned long now = millis();
 
     if ((now - lastDisplayLightTime) >= 500 || lastDisplayLightTime == 0) {
@@ -384,8 +387,6 @@ bool Tent::displayLightHigh()
 
             delay(15);
         }
-        RGB.brightness(255);
-        RGB.control(false);
 
         displayDimTimer.start();
         displayOffTimer.start();
