@@ -112,6 +112,7 @@ void Tent::checkTent()
     } else {
         rawSensors.tentTemperature = rawTemp;
         rawSensors.tentHumidity = sht20.readHumidity();
+        rawSensors.tentVPD = sht20.readVPD();
     }
 
     double currentTemp = (int)(rawSensors.tentTemperature * 10) / 10.0;

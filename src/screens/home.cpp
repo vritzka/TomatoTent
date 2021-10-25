@@ -59,6 +59,7 @@ void HomeScreen::render()
             tft.drawBitmap(40, 116, hygrometer_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(17, 4, wind_36, 36, 36, ILI9341_YELLOW);
             tft.drawBitmap(250, 150, about_36, 36, 36, ILI9341_DARKGREY);
+            tft.drawBitmap(40, 165, atmospheric_pressure_30, 30, 30, ILI9341_WHITE);
 
             tft.setTextSize(2);
             tft.setTextColor(ILI9341_YELLOW);

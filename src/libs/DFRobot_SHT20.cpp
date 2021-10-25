@@ -56,6 +56,19 @@ float DFRobot_SHT20::readTemperature(void)
     return (realTemperature);
 }
 
+float DFRobot_SHT20::readVPD(void)
+{
+    float temperature = readTemperature();
+    float humidity = readHumidity();
+
+    float es = 0.61078 * exp(17.2694 * temperature / (temperature + 238.3));
+    float ae = humidity / 100 * es;
+    float vpd = es - ae;  //kPa
+
+    return vpd;
+}
+
+
 void DFRobot_SHT20::setResolution(byte resolution)
 {
     byte userRegister = readUserRegister();

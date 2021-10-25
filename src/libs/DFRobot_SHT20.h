@@ -41,6 +41,7 @@ public:
     void     showReslut(const char *prefix, int val);
     float    readHumidity(void);
     float    readTemperature(void);
+    float    readVPD(void);
     byte     readUserRegister(void);
 
 private:
