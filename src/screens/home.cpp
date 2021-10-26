@@ -72,6 +72,7 @@ void HomeScreen::render()
             drawVPD();
             drawFanStatus();
 
+            buttons.push_back(Button("lightBtn", 0, 0, 139, 50, "", 18, 8));
             buttons.push_back(Button("fanBtn", 155, 0, 105, 50, "", 18, 8));
             buttons.push_back(Button("tempBtn", 40, 70, 160, 85, "", 18, 8));
             buttons.push_back(Button("dryingHintbtn", 250, 150, 36, 36, "", 18, 8));

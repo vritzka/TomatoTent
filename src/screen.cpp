@@ -166,6 +166,7 @@ void Screen::drawTimerStatus(bool ignoreDayCounter)
         } else {
             tft.drawBitmap(4, 4, moon_and_stars_36, 36, 36, ILI9341_BLUE);
             if (tent.state.getDayDuration() == 0) {
+                tft.setTextSize(1);
                 tft.setCursor(50, 27);
                 tft.print("always off");
             } else {
