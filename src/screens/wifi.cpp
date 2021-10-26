@@ -66,6 +66,7 @@ void WifiScreen::render()
 
     buttons.push_back(Button("wifiOnBtn", 30, 100, 80, 38, "On", 25, 8));
     buttons.push_back(Button("wifiOffBtn", 115, 100, 80, 38, "Off", 16, 8));
+    buttons.push_back(Button("wifiClearBtn", 240, 10, 75, 30, "Clear", 9, 8));
     buttons.push_back(Button("wifiOkBtn", 30, 150, 165, 38, "Back", 50, 8));
 
     renderButtons(true);
@@ -81,11 +82,17 @@ void WifiScreen::renderButton(Button& btn)
 
     } else if (btn.getName() == "wifiOkBtn") {
         drawButton(btn, ILI9341_OLIVE, 3);
+
+    } else if (btn.getName() == "wifiClearBtn") {
+        drawButton(btn, ILI9341_BLACK, 2);
     }
 }
 
 void WifiScreen::renderButtonPressed(Button& btn)
 {
+    if (btn.getName() == "wifiClearBtn") {
+        drawButton(btn, ILI9341_WHITE, 2);
+    }
 }
 
 void WifiScreen::handleButton(Button& btn)
@@ -99,6 +106,13 @@ void WifiScreen::handleButton(Button& btn)
         WiFi.off();
         tent.state.setWifiStatus(0);
         screenManager.homeScreen();
+        
+    } else if (btn.getName() == "wifiClearBtn") {
+        WiFi.off();
+        tent.state.setWifiStatus(0);
+        WiFi.clearCredentials();
+        screenManager.wifiScreen();
+
     } else if (btn.getName() == "wifiOkBtn") {
         screenManager.homeScreen();
     }

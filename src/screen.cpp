@@ -49,11 +49,17 @@ void Screen::drawButton(Button& btn, int color, int textSize)
     uint16_t x0 = btn.x0, y0 = btn.y0, w = btn.w, h = btn.h, textOffsetLeft = btn.textOffsetLeft, textOffsetTop = btn.textOffsetTop;
     String buttonText = btn.buttonText;
 
-    tft.drawRect(x0, y0, w, h, ILI9341_WHITE);
+    if(color == ILI9341_WHITE) {
+        tft.drawRect(x0, y0, w, h, ILI9341_BLACK);
+        tft.setTextColor(ILI9341_BLACK);
+    } else {
+        tft.drawRect(x0, y0, w, h, ILI9341_WHITE);
+        tft.setTextColor(ILI9341_WHITE);
+    }
+    
     tft.fillRect(x0 + 1, y0 + 1, w - 2, h - 2, color);
-
     tft.setCursor(x0 + textOffsetLeft, y0 + textOffsetTop);
-    tft.setTextColor(ILI9341_WHITE);
+    
     tft.setTextSize(textSize);
     tft.print(buttonText);
 }
