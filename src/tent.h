@@ -14,6 +14,7 @@
 #define FAN_SPEED_PIN_2 P1S0
 #define TFT_BRIGHTNESS_PIN WKP
 #define DIM_PIN DAC
+#define HARDWAREFLAG_PIN P1S5
 
 class Tent {
 private:
@@ -26,6 +27,7 @@ private:
 
     int16_t displayBrightness = 0;
     String growLightStatus;
+    int hardwareVersion;
     unsigned long lastDisplayLightTime = 0;
     bool dimmerBtnPressed = false;
     unsigned long lastDimmerBtnTime = 0;
@@ -87,5 +89,6 @@ public:
     String getGrowLightStatus(void);
     bool displayLightHigh(void);
     int16_t getDisplayBrightness(void);
+    int getHardwareVersion(void);
 };
 #endif

@@ -13,6 +13,7 @@ Tent::Tent()
     , displayOffTimer { Timer(300000, &Tent::displayLightOff, *this, true) }
 {
     this->growLightStatus = "OFF";
+    this->hardwareVersion = (digitalRead(HARDWAREFLAG_PIN) == HIGH) ? 1 : 2;
 }
 
 void Tent::setup()
@@ -25,6 +26,7 @@ void Tent::setup()
     Particle.variable("soilTemperatureF", sensors.soilTemperatureF);
     Particle.variable("soilMoisture", rawSensors.soilMoisture);
     Particle.variable("waterLevel", sensors.waterLevel);
+    Particle.variable("hardwareVersion", this->hardwareVersion);
 
     // init sensors
     sht20.initSHT20();
@@ -183,14 +185,26 @@ void Tent::checkSoil()
 
 void Tent::fan(String fanStatus)
 {
-    if (fanStatus == "OFF") {
-        analogWrite(FAN_SPEED_PIN, 255, 25000);
-        analogWrite(FAN_SPEED_PIN_2, 255, 4000);
+
+    if(hardwareVersion == 1) {
+        if (fanStatus == "OFF") {
+            analogWrite(FAN_SPEED_PIN, 255, 25000);
+            analogWrite(FAN_SPEED_PIN_2, 255, 4000);
+        } else {
+            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
+            analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
+            analogWrite(FAN_SPEED_PIN_2, 255 - fanSpeed, 4000);
+        }
     } else {
-        int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
-        analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
-        analogWrite(FAN_SPEED_PIN_2, 255 - fanSpeed, 4000);
+        if (fanStatus == "OFF") {
+            analogWrite(FAN_SPEED_PIN_2, 0, 4000);
+        } else {
+            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
+            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 4000);
+        }
     }
+
+
 }
 
 void Tent::markNeedsSensorUpdate()
@@ -445,7 +459,7 @@ void Tent::countMinute(bool ignoreDayCounter)
         if (state.getMode() == 'g') {
             if (minutesInPeriod > nightDuration) { //night is over (growing)
                 if (!ignoreDayCounter)
-                    state.setDayCount(state.getDayCount() + 1);
+                state.setDayCount(state.getDayCount() + 1);
                 growLight("HIGH");
                 state.setIsDay(true);
                 state.setMinutesInPhotoperiod(0);
@@ -529,6 +543,10 @@ void Tent::adjustFan()
         }           
         
     }
+}
+
+int Tent::getHardwareVersion() {
+    return hardwareVersion;
 }
 
 float Tent::convertFtoC(float tempF)
