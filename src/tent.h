@@ -15,6 +15,7 @@
 #define TFT_BRIGHTNESS_PIN WKP
 #define DIM_PIN DAC
 #define HARDWAREFLAG_PIN P1S5
+#define FANCURRENTSENSE_PIN P1S3
 
 class Tent {
 private:
@@ -48,6 +49,9 @@ public:
     Tent();
     TentState state;
     int dimTimeout = 0;
+    bool fanOverload = false;
+    const int minBrightness = 20;
+    unsigned long lastFanCurrentMeasurement = 0;
 
     struct {
         double tentTemperatureC;
@@ -57,6 +61,7 @@ public:
         double soilTemperatureC;
         double soilTemperatureF;
         double waterLevel;
+        double fanCurrent;
     } sensors;
 
     struct {
@@ -66,6 +71,7 @@ public:
         double tentVPD;
         double soilTemperature;
         int soilMoisture;
+        double fanCurrentSensorValue;
     } rawSensors;
 
     void setup();

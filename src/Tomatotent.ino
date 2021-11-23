@@ -133,6 +133,9 @@ void setup()
 {
     //System.disableUpdates();
 
+    Serial.begin(9600);
+    System.enableFeature(FEATURE_RESET_INFO);
+
     System.set(SYSTEM_CONFIG_SOFTAP_PREFIX, "TMT");
 
     System.on(setup_begin, setup_handler);
@@ -146,6 +149,8 @@ void setup()
 
     System.on(firmware_update, firmware_update_handler);
     System.on(network_status, network_status_handler);
+
+    setADCSampleTime(ADC_SampleTime_56Cycles);
 
     server.begin();
 }

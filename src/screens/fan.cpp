@@ -130,6 +130,8 @@ void FanScreen::handleButton(Button& btn)
 
         if (fanSpeedPercent < 100) {
             fanSpeedPercent += 5;
+            if(fanSpeedPercent > 100)
+                fanSpeedPercent = 100;
             tent.state.setFanSpeed(fanSpeedPercent);
             tent.adjustFan();
             screenManager.markNeedsRedraw(FAN);
@@ -140,8 +142,10 @@ void FanScreen::handleButton(Button& btn)
         renderButton(buttons[0]);
         renderButton(buttons[1]);
 
-        if (fanSpeedPercent > 5) {
+        if (fanSpeedPercent >= 5) {
             fanSpeedPercent -= 5;
+            if(fanSpeedPercent < 0)
+                fanSpeedPercent == 0;
             tent.state.setFanSpeed(fanSpeedPercent);
             tent.adjustFan();
             screenManager.markNeedsRedraw(FAN);
@@ -237,6 +241,7 @@ void FanScreen::drawFanSpeedSettings(void)
         renderButton(buttons[1]);
         renderButton(buttons[3]);
         renderButton(buttons[4]);
+        Serial.println(String(buttons.size()));
     }
 }
 

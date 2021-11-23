@@ -4,8 +4,6 @@
 
 extern ScreenManager screenManager;
 
-const int minBrightness = 20;
-
 Tent::Tent()
     : sensorTimer { Timer(5000, &Tent::markNeedsSensorUpdate, *this) }
     , minuteTimer { Timer(60000, &Tent::minutelyTick, *this) }
@@ -27,6 +25,7 @@ void Tent::setup()
     Particle.variable("soilMoisture", rawSensors.soilMoisture);
     Particle.variable("waterLevel", sensors.waterLevel);
     Particle.variable("hardwareVersion", this->hardwareVersion);
+    Particle.variable("fanCurrent", sensors.fanCurrent);
 
     // init sensors
     sht20.initSHT20();
@@ -117,9 +116,13 @@ void Tent::checkTent()
         rawSensors.tentVPD = sht20.readVPD();
     }
 
+    rawSensors.fanCurrentSensorValue = analogRead(FANCURRENTSENSE_PIN);
+    double fanCurrentSensorVoltage = map(rawSensors.fanCurrentSensorValue, 0.0, 4095.0, 0.0, 3.3);
+
     double currentTemp = (int)(rawSensors.tentTemperature * 10) / 10.0;
     double currentHumidity = (int)(rawSensors.tentHumidity * 10) / 10.0;
     double currentVPD = (int)(rawSensors.tentVPD * 10) / 10.0;
+    double currentFanCurrent = map(fanCurrentSensorVoltage, 2.5, 3.5, 0.0, 5.0);
 
     Serial.printlnf("action=sensor name=tent humidity=%.1f temperature=%.1f vpd=%.1f", currentHumidity, currentTemp, currentVPD);
 
@@ -137,6 +140,11 @@ void Tent::checkTent()
     if ((sensors.tentVPD == 0) || sensors.tentVPD != currentVPD) {
         sensors.tentVPD = currentVPD;
         screenManager.markNeedsRedraw(VPD);
+    }
+
+    if(sensors.fanCurrent == 0 || sensors.fanCurrent != currentFanCurrent) {
+        sensors.fanCurrent = currentFanCurrent;
+        screenManager.markNeedsRedraw(FAN);    
     }
 
 }
@@ -222,6 +230,7 @@ void Tent::checkSensors()
     checkTent();
     checkSoil();
     adjustFan();
+    Serial.println(System.resetReason());
 }
 
 void Tent::checkInputs()
@@ -245,7 +254,7 @@ void Tent::checkInputs()
             }
         }
         return;
-    } else if (digitalRead(DIM_PIN) == HIGH) {
+    } else if (digitalRead(DIM_PIN) == HIGH && dimmerBtnPressed) {
         unsigned long now = millis();
         unsigned long diff = now - lastDimmerBtnTime;
         if (diff <= 300)
@@ -257,6 +266,27 @@ void Tent::checkInputs()
         unsigned long holdingTime = millis() - lastDimmerBtnTime;
         if(holdingTime > 1000 && growLightStatus != "MUTE") {
             muteGrowLight();
+        }
+        return;
+    } else if((millis() - lastFanCurrentMeasurement) > 200) {
+        int currentSensorReading = analogRead(FANCURRENTSENSE_PIN);
+        lastFanCurrentMeasurement = millis();
+        if(currentSensorReading >= 3750) {
+
+            int c = 0;
+            int c2 = 0;
+            while(c < 3) {
+                if(analogRead(FANCURRENTSENSE_PIN) >= 3750) {
+                    c2++;
+                    if(c2 == 3) {
+                        this->fanOverload = true;
+                        adjustFan();
+                    }    
+                }
+                c++;
+            }
+        } else {
+            this->fanOverload = false;    
         }
         return;
     }
@@ -484,12 +514,23 @@ void Tent::countMinute(bool ignoreDayCounter)
 
 void Tent::adjustFan()
 {
-    if (!state.getFanAutoMode()) { //manual
+    float fanSpeedPercent = state.getFanSpeed();
 
+    if (!state.getFanAutoMode()) { //manual
+    
+        //overload
+        if(this->fanOverload == true) {
+            if(fanSpeedPercent > 10) {
+                fanSpeedPercent *= 0.7;
+            }
+            state.setFanSpeed(fanSpeedPercent);
+            fan("ON");
+            screenManager.markNeedsRedraw(FAN);
+            return;
+        }
         fan("ON");
 
     } else {
-        float fanSpeedPercent = 0;
         double fanSpeedMinSetting = state.getFanSpeedMin();
         double fanSpeedMaxSetting = state.getFanSpeedMax();
 
@@ -536,13 +577,30 @@ void Tent::adjustFan()
         if (sensors.tentHumidity < 0)
             fanSpeedPercent = fanSpeedMinSetting + 15;
 
+        //overload
+        if(this->fanOverload == true) {
+            if(fanSpeedPercent > 10) {
+                fanSpeedPercent = 10;
+            }
+            if((fanSpeedMaxSetting - fanSpeedMinSetting) > 5) {
+                state.setFanSpeedMax(fanSpeedMaxSetting - 5);
+            } else {
+                if(fanSpeedMinSetting >= 10)
+                    state.setFanSpeedMin(fanSpeedMinSetting - 5);
+            }
+            if(screenManager.current->getName() == "fanScreen") {
+                screenManager.fanScreen();
+            }
+        }
+
         if (fanSpeedPercent != state.getFanSpeed()) {
             state.setFanSpeed(fanSpeedPercent);
             fan("ON");
             screenManager.markNeedsRedraw(FAN);
-        }           
-        
+        }    
     }
+
+  
 }
 
 int Tent::getHardwareVersion() {

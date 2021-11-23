@@ -90,7 +90,7 @@ void Screen::drawButtonTriangleLeft(Button& btn, int color)
 
 void Screen::drawFanStatus()
 {
-    tft.fillRect(210, 10, 50, 35, ILI9341_BLACK);
+    tft.fillRect(200, 10, 60, 35, ILI9341_BLACK);
 
     tft.setCursor(210, 10);
     tft.setTextSize(2);
@@ -102,13 +102,21 @@ void Screen::drawFanStatus()
 
     tft.setTextSize(1);
     tft.setTextColor(ILI9341_DARKGREY);
-    if (tent.state.getFanAutoMode()) {
-        tft.setCursor(200, 30);
-        tft.print("automatic");
+
+    if(tent.fanOverload == true) {
+            tft.setCursor(205, 30);
+            tft.setTextColor(ILI9341_RED);
+            tft.print("OVERLOAD"); 
     } else {
-        tft.setCursor(210, 30);
-        tft.print("manual");
+        if (tent.state.getFanAutoMode()) {
+            tft.setCursor(200, 30);
+            tft.print("automatic");
+        } else {
+            tft.setCursor(210, 30);
+            tft.print("manual");
+        }    
     }
+
 }
 
 void Screen::drawTimerStatus(bool ignoreDayCounter)
@@ -226,17 +234,6 @@ void Screen::drawDayCounter()
     tft.print("Day " + String(tent.state.getDayCount()));
 }
 
-void Screen::update()
-{
-    if (screenManager.wasNeedsRedraw(DIMMED)) {
-        if (tent.getGrowLightStatus() == "LOW" || tent.getGrowLightStatus() == "MUTE") {
-            drawDimmedIndicator();
-        } else {
-            hideDimmedIndicator();
-        }
-    }
-}
-
 void Screen::drawDimmedIndicator()
 {
     tft.fillRoundRect(0, 220, 320, 25, 5, ILI9341_RED);
@@ -257,4 +254,15 @@ void Screen::drawDimmedIndicator()
 void Screen::hideDimmedIndicator()
 {
     tft.fillRoundRect(0, 220, 320, 25, 5, ILI9341_BLACK);
+}
+
+void Screen::update()
+{
+    if (screenManager.wasNeedsRedraw(DIMMED)) {
+        if (tent.getGrowLightStatus() == "LOW" || tent.getGrowLightStatus() == "MUTE") {
+            drawDimmedIndicator();
+        } else {
+            hideDimmedIndicator();
+        }
+    }
 }
