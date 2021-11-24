@@ -255,10 +255,14 @@ void LightScreen::handleButton(Button& btn)
         drawTimerStatus(true);
 
     } else if (btn.getName() == "dayRightBtn") {
+        if(tent.state.getDayCount() >= 9999)
+            return;
         tent.state.setDayCount(tent.state.getDayCount() + 1);
         drawDayCounter();
 
     } else if (btn.getName() == "dayLeftBtn") {
+        if(tent.state.getDayCount() == 0)
+            return;
         tent.state.setDayCount(tent.state.getDayCount() - 1);
         drawDayCounter();
 
