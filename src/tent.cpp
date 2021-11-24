@@ -25,7 +25,7 @@ void Tent::setup()
     Particle.variable("soilMoisture", rawSensors.soilMoisture);
     Particle.variable("waterLevel", sensors.waterLevel);
     Particle.variable("hardwareVersion", this->hardwareVersion);
-    Particle.variable("fanCurrent", sensors.fanCurrent);
+    Particle.variable("resetReason", System.resetReason());
 
     // init sensors
     sht20.initSHT20();
@@ -64,6 +64,22 @@ void Tent::start()
 {
     minuteTimer.start();
     sensorTimer.start();
+
+    if(System.resetReason() == 40) { //we had brownout. Possibly caused by overloaded fan bus
+        if(!state.getFanAutoMode()) { //manual
+            state.setFanSpeed(state.getFanSpeed()*0.6);
+        } else { //auto
+            double fanSpeedMinSetting = state.getFanSpeedMin();
+            double fanSpeedMaxSetting = state.getFanSpeedMax();
+            if(((fanSpeedMaxSetting - fanSpeedMinSetting) <= 40) && fanSpeedMinSetting > 40) {
+                fanSpeedMinSetting -= 40;
+                state.setFanSpeedMin(fanSpeedMinSetting);
+            }
+
+            if((fanSpeedMaxSetting - fanSpeedMinSetting) > 40) 
+                state.setFanSpeedMax(fanSpeedMaxSetting - 40);
+        }
+    }
 
     fan("ON");
     markNeedsSensorUpdate();
@@ -116,13 +132,9 @@ void Tent::checkTent()
         rawSensors.tentVPD = sht20.readVPD();
     }
 
-    rawSensors.fanCurrentSensorValue = analogRead(FANCURRENTSENSE_PIN);
-    double fanCurrentSensorVoltage = map(rawSensors.fanCurrentSensorValue, 0.0, 4095.0, 0.0, 3.3);
-
     double currentTemp = (int)(rawSensors.tentTemperature * 10) / 10.0;
     double currentHumidity = (int)(rawSensors.tentHumidity * 10) / 10.0;
     double currentVPD = (int)(rawSensors.tentVPD * 10) / 10.0;
-    double currentFanCurrent = map(fanCurrentSensorVoltage, 2.5, 3.5, 0.0, 5.0);
 
     Serial.printlnf("action=sensor name=tent humidity=%.1f temperature=%.1f vpd=%.1f", currentHumidity, currentTemp, currentVPD);
 
@@ -140,11 +152,6 @@ void Tent::checkTent()
     if ((sensors.tentVPD == 0) || sensors.tentVPD != currentVPD) {
         sensors.tentVPD = currentVPD;
         screenManager.markNeedsRedraw(VPD);
-    }
-
-    if(sensors.fanCurrent == 0 || sensors.fanCurrent != currentFanCurrent) {
-        sensors.fanCurrent = currentFanCurrent;
-        screenManager.markNeedsRedraw(FAN);    
     }
 
 }
@@ -230,7 +237,6 @@ void Tent::checkSensors()
     checkTent();
     checkSoil();
     adjustFan();
-    Serial.println(System.resetReason());
 }
 
 void Tent::checkInputs()
@@ -272,13 +278,12 @@ void Tent::checkInputs()
         int currentSensorReading = analogRead(FANCURRENTSENSE_PIN);
         lastFanCurrentMeasurement = millis();
         if(currentSensorReading >= 3750) {
-
             int c = 0;
             int c2 = 0;
             while(c < 3) {
                 if(analogRead(FANCURRENTSENSE_PIN) >= 3750) {
                     c2++;
-                    if(c2 == 3) {
+                    if(c2 == 2) {
                         this->fanOverload = true;
                         adjustFan();
                     }    
@@ -528,6 +533,7 @@ void Tent::adjustFan()
             screenManager.markNeedsRedraw(FAN);
             return;
         }
+
         fan("ON");
 
     } else {
@@ -579,18 +585,22 @@ void Tent::adjustFan()
 
         //overload
         if(this->fanOverload == true) {
-            if(fanSpeedPercent > 10) {
+            if(fanSpeedPercent > 10)
                 fanSpeedPercent = 10;
+
+            state.setFanSpeed(fanSpeedPercent);
+            fan("ON");     
+
+            if(((fanSpeedMaxSetting - fanSpeedMinSetting) <= 5) && fanSpeedMinSetting >= 10) {
+                fanSpeedMinSetting -= 5;
+                state.setFanSpeedMin(fanSpeedMinSetting);
             }
-            if((fanSpeedMaxSetting - fanSpeedMinSetting) > 5) {
+
+            if((fanSpeedMaxSetting - fanSpeedMinSetting) > 5) 
                 state.setFanSpeedMax(fanSpeedMaxSetting - 5);
-            } else {
-                if(fanSpeedMinSetting >= 10)
-                    state.setFanSpeedMin(fanSpeedMinSetting - 5);
-            }
-            if(screenManager.current->getName() == "fanScreen") {
+            
+            if(screenManager.current->getName() == "fanScreen")
                 screenManager.fanScreen();
-            }
         }
 
         if (fanSpeedPercent != state.getFanSpeed()) {

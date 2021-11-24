@@ -142,10 +142,10 @@ void FanScreen::handleButton(Button& btn)
         renderButton(buttons[0]);
         renderButton(buttons[1]);
 
-        if (fanSpeedPercent >= 5) {
+        if (fanSpeedPercent > 5) {
             fanSpeedPercent -= 5;
-            if(fanSpeedPercent < 0)
-                fanSpeedPercent == 0;
+            if(fanSpeedPercent < 5)
+                fanSpeedPercent == 5;
             tent.state.setFanSpeed(fanSpeedPercent);
             tent.adjustFan();
             screenManager.markNeedsRedraw(FAN);
