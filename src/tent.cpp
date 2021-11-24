@@ -25,7 +25,6 @@ void Tent::setup()
     Particle.variable("soilMoisture", rawSensors.soilMoisture);
     Particle.variable("waterLevel", sensors.waterLevel);
     Particle.variable("hardwareVersion", this->hardwareVersion);
-    Particle.variable("resetReason", System.resetReason());
 
     // init sensors
     sht20.initSHT20();
