@@ -54,6 +54,7 @@ public:
     void lightScreen();
     void wifiScreen();
     void wifiSplashScreen();
+    void wifiClearConfirmScreen();
     void fanScreen();
     void firmwareUpdateScreen();
     void climateScreen();

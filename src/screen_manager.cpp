@@ -8,6 +8,7 @@
 #include "screens/grow_started.h"
 #include "screens/wifi_splash.h"
 #include "screens/wifi.h"
+#include "screens/wifi_clear_confirm.h"
 #include "screens/drying_hint.h"
 
 extern Tent tent;
@@ -91,6 +92,12 @@ void ScreenManager::wifiScreen()
 void ScreenManager::wifiSplashScreen()
 {
     current.reset(new WifiSplashScreen());
+    render();
+}
+
+void ScreenManager::wifiClearConfirmScreen()
+{
+    current.reset(new WifiClearConfirmScreen());
     render();
 }
 

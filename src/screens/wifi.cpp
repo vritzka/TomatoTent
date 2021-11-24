@@ -108,10 +108,7 @@ void WifiScreen::handleButton(Button& btn)
         screenManager.homeScreen();
         
     } else if (btn.getName() == "wifiClearBtn") {
-        WiFi.off();
-        tent.state.setWifiStatus(0);
-        WiFi.clearCredentials();
-        screenManager.wifiScreen();
+        screenManager.wifiClearConfirmScreen();
 
     } else if (btn.getName() == "wifiOkBtn") {
         screenManager.homeScreen();
