@@ -53,8 +53,8 @@ void Screen::drawButton(Button& btn, int color, int textSize)
         tft.drawRect(x0, y0, w, h, ILI9341_BLACK);
         tft.setTextColor(ILI9341_BLACK);
     } else {
-        tft.drawRect(x0, y0, w, h, ILI9341_WHITE);
-        tft.setTextColor(ILI9341_WHITE);
+        tft.drawRect(x0, y0, w, h, ILI9341_LIGHTGREY);
+        tft.setTextColor(ILI9341_LIGHTGREY);
     }
     
     tft.fillRect(x0 + 1, y0 + 1, w - 2, h - 2, color);

@@ -10,11 +10,17 @@ void CancelConfirmScreen::render()
 {
     tft.fillScreen(ILI9341_BLACK);
 
-    tft.setCursor(10, 50);
-    tft.setTextColor(ILI9341_RED);
+    
+    tft.setTextColor(ILI9341_GREEN);
     tft.setTextSize(3);
-    tft.print("Really Terminate?");
-
+    if(tent.state.getMode() == 'g') {
+        tft.setCursor(35, 50);
+        tft.print("End this Grow?");
+    } else {
+        tft.setCursor(60, 50);
+        tft.print("End Drying?");
+    }
+    
     buttons.push_back(Button("terminateYesBtn", 70, 120, 180, 28, "Yes", 78, 7));
     buttons.push_back(Button("terminateNoBtn", 70, 180, 180, 38, "No", 75, 8));
 
