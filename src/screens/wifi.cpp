@@ -45,24 +45,27 @@ void WifiScreen::render()
     tft.setTextSize(1);
     tft.setTextColor(ILI9341_LIGHTGREY);
     tft.print(String::format("TomatoTent v%d ", __system_product_version));
-    if (WiFi.ready())
+    if (WiFi.ready())     
         tft.print("on http://" + WiFi.localIP().toString());
 
-    int x, y, xOffset = 220, yOffset = 90;
-    tft.setTextSize(1);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setCursor(xOffset, yOffset);
-    tft.print("Grow Graphs");
-    for (y = 0; y < WD; y++) {
-        for (x = 0; x < WD; x++) {
-            int color = QRBIT(x, y) ? ILI9341_WHITE : ILI9341_BLACK;
-            int x0 = xOffset + x * 2, y0 = yOffset + 12 + y * 2;
-            tft.drawPixel(x0, y0, color);
-            tft.drawPixel(x0 + 1, y0, color);
-            tft.drawPixel(x0, y0 + 1, color);
-            tft.drawPixel(x0 + 1, y0 + 1, color);
+    if (Particle.connected()) {
+        int x, y, xOffset = 220, yOffset = 90;
+        tft.setTextSize(1);
+        tft.setTextColor(ILI9341_WHITE);
+        tft.setCursor(xOffset, yOffset);
+        tft.print("Grow Graphs");
+        for (y = 0; y < WD; y++) {
+            for (x = 0; x < WD; x++) {
+                int color = QRBIT(x, y) ? ILI9341_WHITE : ILI9341_BLACK;
+                int x0 = xOffset + x * 2, y0 = yOffset + 12 + y * 2;
+                tft.drawPixel(x0, y0, color);
+                tft.drawPixel(x0 + 1, y0, color);
+                tft.drawPixel(x0, y0 + 1, color);
+                tft.drawPixel(x0 + 1, y0 + 1, color);
+            }
+        
         }
-    }
+    } 
 
     buttons.push_back(Button("wifiOnBtn", 30, 100, 80, 38, "On", 25, 8));
     buttons.push_back(Button("wifiOffBtn", 115, 100, 80, 38, "Off", 16, 8));
@@ -100,12 +103,12 @@ void WifiScreen::handleButton(Button& btn)
     if (btn.getName() == "wifiOnBtn") {
         Particle.connect();
         tent.state.setWifiStatus(1);
-        screenManager.homeScreen();
+        screenManager.wifiScreen();
 
     } else if (btn.getName() == "wifiOffBtn") {
         WiFi.off();
         tent.state.setWifiStatus(0);
-        screenManager.homeScreen();
+        screenManager.wifiScreen();
         
     } else if (btn.getName() == "wifiClearBtn") {
         screenManager.wifiClearConfirmScreen();

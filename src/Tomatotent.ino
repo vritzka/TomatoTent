@@ -109,6 +109,9 @@ void network_status_handler(system_event_t event, int status)
 {
     if (status == network_status_connected) {
 
+        if(screenManager.current->getName() == "wifiScreen")
+            screenManager.wifiScreen();
+
         http_request_t request;
         http_response_t response;
 
@@ -133,6 +136,19 @@ void network_status_handler(system_event_t event, int status)
     }
 }
 
+void cloud_status_handler(system_event_t event, int status)
+{
+    if (status == cloud_status_connected) {
+        if(screenManager.current->getName() == "wifiScreen")
+            screenManager.wifiScreen();
+    }
+}
+
+void button_click_handler(system_event_t event, int status)
+{
+    tent.displayLightHigh();
+}
+
 void setup()
 {
     //System.disableUpdates();
@@ -153,6 +169,8 @@ void setup()
 
     System.on(firmware_update, firmware_update_handler);
     System.on(network_status, network_status_handler);
+    System.on(cloud_status, cloud_status_handler);
+    System.on(button_click, button_click_handler);
 
     setADCSampleTime(ADC_SampleTime_56Cycles);
 

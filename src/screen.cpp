@@ -258,6 +258,9 @@ void Screen::hideDimmedIndicator()
 
 void Screen::update()
 {
+    //if(screenManager.current->getName() == "WifiSplashScreen")
+      //  return;
+
     if (screenManager.wasNeedsRedraw(DIMMED)) {
         if (tent.getGrowLightStatus() == "LOW" || tent.getGrowLightStatus() == "MUTE") {
             drawDimmedIndicator();

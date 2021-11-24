@@ -58,7 +58,6 @@ void HomeScreen::render()
             tft.drawBitmap(32, 72, temperature_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(40, 116, hygrometer_30, 30, 30, ILI9341_WHITE);
             tft.drawBitmap(17, 4, wind_36, 36, 36, ILI9341_YELLOW);
-            tft.drawBitmap(250, 150, about_36, 36, 36, ILI9341_DARKGREY);
             tft.drawBitmap(40, 165, atmospheric_pressure_30, 30, 30, ILI9341_WHITE);
 
             tft.setTextSize(2);
@@ -75,7 +74,6 @@ void HomeScreen::render()
             buttons.push_back(Button("lightBtn", 0, 0, 139, 50, "", 18, 8));
             buttons.push_back(Button("fanBtn", 155, 0, 105, 50, "", 18, 8));
             buttons.push_back(Button("tempBtn", 40, 70, 160, 85, "", 18, 8));
-            buttons.push_back(Button("dryingHintbtn", 250, 150, 36, 36, "", 18, 8));
 
             break;
         }
@@ -300,7 +298,5 @@ void HomeScreen::handleButton(Button& btn)
     } else if (btn.getName() == "tempBtn") {
         screenManager.climateScreen();
 
-    } else if (btn.getName() == "dryingHintbtn") {
-        screenManager.dryingHintScreen();
-    }
+    } 
 }

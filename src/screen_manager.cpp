@@ -9,7 +9,6 @@
 #include "screens/wifi_splash.h"
 #include "screens/wifi.h"
 #include "screens/wifi_clear_confirm.h"
-#include "screens/drying_hint.h"
 
 extern Tent tent;
 
@@ -116,12 +115,6 @@ void ScreenManager::firmwareUpdateScreen()
 void ScreenManager::climateScreen()
 {
     current.reset(new ClimateScreen());
-    render();
-}
-
-void ScreenManager::dryingHintScreen()
-{
-    current.reset(new DryingHintScreen());
     render();
 }
 

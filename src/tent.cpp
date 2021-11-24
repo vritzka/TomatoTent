@@ -449,6 +449,9 @@ bool Tent::displayLightHigh()
 
 void Tent::displayLightLow(void)
 {
+    if(screenManager.current->getName() == "WifiSplashScreen")
+        return;
+
     while (displayBrightness > 30) {
         displayBrightness -= 5;
         analogWrite(TFT_BRIGHTNESS_PIN, displayBrightness);
@@ -458,6 +461,9 @@ void Tent::displayLightLow(void)
 
 void Tent::displayLightOff(void)
 {
+    if(screenManager.current->getName() == "WifiSplashScreen")
+        return;
+
     analogWrite(TFT_BRIGHTNESS_PIN, 0);
     displayBrightness = 0;
     RGB.control(true);
