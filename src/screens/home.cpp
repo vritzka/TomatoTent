@@ -13,7 +13,14 @@ void HomeScreen::render()
 {
     tft.fillScreen(ILI9341_BLACK);
     buttons.clear();
-    buttons.push_back(Button("wifiBtn", 260, 5, 60, 30, "", 18, 8));
+    buttons.push_back(Button("wifiBtn", 260, 0, 60, 30, "", 18, 8));
+
+    if(System.updatesEnabled()) {
+        tft.setTextSize(1);
+        tft.setCursor(273, 30);
+        tft.setTextColor(ILI9341_PURPLE);
+        tft.print("Update");
+    }
 
     if (tent.state.getDayCount() == -1) {
 

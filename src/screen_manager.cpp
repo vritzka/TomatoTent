@@ -4,6 +4,7 @@
 #include "screens/light.h"
 #include "screens/fan.h"
 #include "screens/firmware_update.h"
+#include "screens/firmware_update_confirm.h"
 #include "screens/climate.h"
 #include "screens/grow_started.h"
 #include "screens/wifi_splash.h"
@@ -109,6 +110,12 @@ void ScreenManager::fanScreen()
 void ScreenManager::firmwareUpdateScreen()
 {
     current.reset(new FirmwareUpdateScreen());
+    render();
+}
+
+void ScreenManager::firmwareUpdateConfirmScreen()
+{
+    current.reset(new FirmwareUpdateConfirmScreen());
     render();
 }
 

@@ -57,6 +57,7 @@ public:
     void wifiClearConfirmScreen();
     void fanScreen();
     void firmwareUpdateScreen();
+    void firmwareUpdateConfirmScreen();
     void climateScreen();
 };
 #endif

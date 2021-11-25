@@ -105,6 +105,12 @@ void firmware_update_handler(system_event_t event, int status)
     }
 }
 
+void firmware_update_pending_handler()
+{
+    if(screenManager.current->getName() == "wifiScreen")
+        screenManager.wifiScreen();    
+}
+
 void network_status_handler(system_event_t event, int status)
 {
     if (status == network_status_connected) {
@@ -155,7 +161,7 @@ void button_click_handler(system_event_t event, int clicks)
 
 void setup()
 {
-    //System.disableUpdates();
+    System.disableUpdates();
 
     Serial.begin(9600);
     System.enableFeature(FEATURE_RESET_INFO);
@@ -172,6 +178,7 @@ void setup()
     tent.setup();
 
     System.on(firmware_update, firmware_update_handler);
+    System.on(firmware_update_pending, firmware_update_pending_handler);
     System.on(network_status, network_status_handler);
     System.on(cloud_status, cloud_status_handler);
     System.on(button_click, button_click_handler);

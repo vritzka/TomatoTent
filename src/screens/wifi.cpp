@@ -49,7 +49,7 @@ void WifiScreen::render()
         tft.print("on http://" + WiFi.localIP().toString());
 
     if (Particle.connected()) {
-        int x, y, xOffset = 220, yOffset = 90;
+        int x, y, xOffset = 220, yOffset = 70;
         tft.setTextSize(1);
         tft.setTextColor(ILI9341_WHITE);
         tft.setCursor(xOffset, yOffset);
@@ -67,10 +67,13 @@ void WifiScreen::render()
         }
     } 
 
-    buttons.push_back(Button("wifiOnBtn", 30, 100, 80, 38, "On", 25, 8));
-    buttons.push_back(Button("wifiOffBtn", 115, 100, 80, 38, "Off", 16, 8));
-    buttons.push_back(Button("wifiClearBtn", 240, 10, 75, 30, "Clear", 9, 8));
-    buttons.push_back(Button("wifiOkBtn", 30, 150, 165, 38, "Back", 50, 8));
+    buttons.push_back(Button("wifiOnBtn", 30, 80, 80, 38, "On", 25, 8));
+    buttons.push_back(Button("wifiOffBtn", 115, 80, 80, 38, "Off", 16, 8));
+    buttons.push_back(Button("wifiClearBtn", 220, 10, 82, 30, "Clear", 10, 8));
+    buttons.push_back(Button("wifiOkBtn", 220, 180, 82, 38, "OK", 25, 8));
+
+    if(System.updatesPending() && Particle.connected())
+        buttons.push_back(Button("wifiUpdateBtn", 15, 180, 195, 38, "Update Software", 8, 12));
 
     renderButtons(true);
 }
@@ -85,6 +88,9 @@ void WifiScreen::renderButton(Button& btn)
 
     } else if (btn.getName() == "wifiOkBtn") {
         drawButton(btn, ILI9341_OLIVE, 3);
+
+    } else if (btn.getName() == "wifiUpdateBtn") {
+        drawButton(btn, ILI9341_PURPLE, 2);
 
     } else if (btn.getName() == "wifiClearBtn") {
         drawButton(btn, ILI9341_BLACK, 2);
@@ -112,6 +118,9 @@ void WifiScreen::handleButton(Button& btn)
         
     } else if (btn.getName() == "wifiClearBtn") {
         screenManager.wifiClearConfirmScreen();
+ 
+    } else if (btn.getName() == "wifiUpdateBtn") {
+        screenManager.firmwareUpdateConfirmScreen();
 
     } else if (btn.getName() == "wifiOkBtn") {
         screenManager.homeScreen();
