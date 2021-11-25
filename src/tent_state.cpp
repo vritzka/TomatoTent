@@ -169,6 +169,17 @@ void TentState::setLedBrightnessMax(int brightness)
     save();
 }
 
+bool TentState::getClimateAutoMode()
+{
+    return eeprom2.climateAutoMode;
+}
+
+void TentState::setClimateAutoMode(bool climateAutoMode)
+{
+    eeprom2.climateAutoMode = climateAutoMode;
+    save();
+}
+
 uint8_t TentState::getVersion(void)
 {
     return eeprom2.version;

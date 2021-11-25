@@ -154,14 +154,13 @@ void button_click_handler(system_event_t event, int clicks)
 {
     tent.displayLightHigh();
     
-    if(clicks == 5) {
+    if(clicks == 5)
         tent.do_eeprom_clear = true;
-    }
 }
 
 void setup()
 {
-    System.disableUpdates();
+    //System.disableUpdates();
 
     Serial.begin(9600);
     System.enableFeature(FEATURE_RESET_INFO);

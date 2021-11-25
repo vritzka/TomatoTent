@@ -15,11 +15,16 @@ void HomeScreen::render()
     buttons.clear();
     buttons.push_back(Button("wifiBtn", 260, 0, 60, 30, "", 18, 8));
 
-    if(System.updatesEnabled()) {
+    if(System.updatesPending()) {
         tft.setTextSize(1);
-        tft.setCursor(273, 30);
         tft.setTextColor(ILI9341_PURPLE);
-        tft.print("Update");
+        if(System.updatesEnabled()) {
+            tft.setCursor(268, 30);
+            tft.print("Updating");
+        } else {
+            tft.setCursor(273, 30);
+            tft.print("Update");
+        }
     }
 
     if (tent.state.getDayCount() == -1) {

@@ -25,6 +25,7 @@ class TentState {
         uint8_t fanSpeedMin;
         uint8_t fanSpeedMax;
         uint8_t ledBrightnessMax;
+        bool climateAutoMode;
     } eeprom2;
 
 public:
@@ -48,6 +49,7 @@ public:
         eeprom2.fanSpeedMin = 10;
         eeprom2.fanSpeedMax = 25;
         eeprom2.ledBrightnessMax = 100;
+        eeprom2.climateAutoMode = 1;
         save();
     }
 
@@ -59,6 +61,7 @@ public:
         eeprom2.fanSpeedMin = 25;
         eeprom2.fanSpeedMax = 50;
         eeprom2.ledBrightnessMax = 100;
+        eeprom2.climateAutoMode = 1;
         save();
     }
 
@@ -106,6 +109,9 @@ public:
 
     uint8_t getLedBrightnessMax(void);
     void setLedBrightnessMax(int);
+
+    bool getClimateAutoMode(void);
+    void setClimateAutoMode(bool);
 
     uint8_t getVersion(void);
 };
