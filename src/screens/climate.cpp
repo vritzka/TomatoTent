@@ -10,18 +10,18 @@ void ClimateScreen::render()
 {
     tft.fillScreen(ILI9341_BLACK);
 
-    tft.drawBitmap(20, 4, thermometer_36, 36, 36, ILI9341_WHITE);
+    tft.drawBitmap(20, 4, climate_36, 36, 36, ILI9341_GREENYELLOW);
 
-    tft.setCursor(60, 11);
-    tft.setTextColor(ILI9341_WHITE);
+    tft.setCursor(63, 14);
+    tft.setTextColor(ILI9341_GREENYELLOW);
     tft.setTextSize(2);
     tft.print("Climate");
 
-    buttons.push_back(Button("climateAutoBtn", 180, 10, 50, 30, "Auto", 14, 12));
-    buttons.push_back(Button("climateManualBtn", 240, 10, 50, 30, "Manu", 14, 12));
+    buttons.push_back(Button("climateAutoBtn", 250, 70, 50, 30, "Auto", 14, 12));
+    buttons.push_back(Button("climateManualBtn", 250, 107, 50, 30, "Manu", 14, 12));
 
-    buttons.push_back(Button("climateUnitFBtn", 250, 70, 40, 38, "F", 15, 11));
-    buttons.push_back(Button("climateUnitCBtn", 250, 107, 40, 38, "C", 15, 11));
+    buttons.push_back(Button("climateUnitFBtn", 180, 10, 40, 30, "F", 15, 12));
+    buttons.push_back(Button("climateUnitCBtn", 240, 10, 40, 30, "C", 15, 12));
 
     buttons.push_back(Button("climateOkBtn", 250, 180, 40, 38, "OK", 9, 12));
 
@@ -39,10 +39,12 @@ void ClimateScreen::renderButton(Button& btn)
         drawButton(btn, !tent.state.getClimateAutoMode() ? ILI9341_OLIVE : ILI9341_BLACK, 1);
 
     } else if (btn.getName() == "climateUnitFBtn") {
-        drawButton(btn, tent.state.getTempUnit() == 'F' ? ILI9341_OLIVE : ILI9341_BLACK, 2);
+        drawButton(btn, tent.state.getTempUnit() == 'F' ? ILI9341_OLIVE : ILI9341_BLACK, 1);
+        tft.drawCircle( btn.x0 + 10, btn.y0 + 10, 2, ILI9341_LIGHTGREY);
 
     } else if (btn.getName() == "climateUnitCBtn") {
-        drawButton(btn, tent.state.getTempUnit() == 'C' ? ILI9341_OLIVE : ILI9341_BLACK, 2);
+        drawButton(btn, tent.state.getTempUnit() == 'C' ? ILI9341_OLIVE : ILI9341_BLACK, 1);
+        tft.drawCircle( btn.x0 + 10, btn.y0 + 10, 2, ILI9341_LIGHTGREY);
 
     } else if (btn.getName() == "targetTempUpBtn") {
         drawButtonTriangleUp(btn, ILI9341_RED);
@@ -82,17 +84,19 @@ void ClimateScreen::handleButton(Button& btn)
     if (btn.getName() == "climateUnitFBtn") {
         char tempUnit = tent.state.getTempUnit();
         if (tempUnit == 'F')
-            return;
+            return;   
 
         float targetTemperature = tent.state.getTargetTemperature();
         targetTemperature = round(tent.convertCtoF(targetTemperature));
         tent.state.setTargetTemperature(targetTemperature);
 
         tent.state.setTempUnit('F');
-        drawTargetTemperature();
 
         renderButton(buttons[2]);
-        renderButton(buttons[3]);
+        renderButton(buttons[3]); 
+
+        if (!tent.state.getClimateAutoMode())
+            drawTargetTemperature();
 
     } else if (btn.getName() == "climateUnitCBtn") {
         char tempUnit = tent.state.getTempUnit();
@@ -104,10 +108,12 @@ void ClimateScreen::handleButton(Button& btn)
         tent.state.setTargetTemperature(targetTemperature);
 
         tent.state.setTempUnit('C');
-        drawTargetTemperature();
 
         renderButton(buttons[2]);
         renderButton(buttons[3]);
+
+        if (!tent.state.getClimateAutoMode())
+            drawTargetTemperature();
 
     } else if (btn.getName() == "climateOkBtn") {
         screenManager.homeScreen();
@@ -250,19 +256,28 @@ void ClimateScreen::drawTargetHumidity(bool warning)
 
 void ClimateScreen::drawClimateSettings(void)
 {
+    tft.fillRect(10, 60, 189, 145, ILI9341_BLACK);
+
     if(tent.state.getClimateAutoMode()) {
-        Serial.println(buttons.size());
-        tft.fillRect(34, 60, 165, 145, ILI9341_BLUE);
-        if(buttons.size() == 9) {
-            buttons.pop_back();
-            buttons.pop_back();
-            buttons.pop_back();
+
+        while(buttons.size() > 5) {
             buttons.pop_back();
         }
 
+        tft.setTextColor(ILI9341_DARKGREY);
+        tft.setCursor(64,80);
+        tft.setTextSize(2);
+        tft.print("Automatic");
+        tft.setCursor(78,110);
+        tft.print("Climate");
+        tft.setCursor(78,140);
+        tft.print("Control");
+        tft.setCursor(84,170);
+        tft.print("Active");
+
+        tft.drawBitmap(10, 139, robot_48, 48, 48, ILI9341_GREENYELLOW);
+
     } else {
-        Serial.println(buttons.size());
-        tft.fillRect(34, 60, 165, 145, ILI9341_BLUE);
         
         tft.setCursor(64, 60);
         tft.setTextSize(1);
