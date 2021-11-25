@@ -52,6 +52,7 @@ public:
     bool fanOverload = false;
     const int minBrightness = 20;
     unsigned long lastFanCurrentMeasurement = 0;
+    bool do_eeprom_clear = false;
 
     struct {
         double tentTemperatureC;

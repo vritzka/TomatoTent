@@ -144,9 +144,13 @@ void cloud_status_handler(system_event_t event, int status)
     }
 }
 
-void button_click_handler(system_event_t event, int status)
+void button_click_handler(system_event_t event, int clicks)
 {
     tent.displayLightHigh();
+    
+    if(clicks == 5) {
+        tent.do_eeprom_clear = true;
+    }
 }
 
 void setup()
@@ -187,6 +191,11 @@ void loop(void)
 
     if (screenManager.current) {
         screenManager.current->update();
+    }
+
+    if(tent.do_eeprom_clear == true) {
+        EEPROM.clear();
+        System.reset();
     }
 
     server.processConnection();
