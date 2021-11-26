@@ -241,7 +241,6 @@ void FanScreen::drawFanSpeedSettings(void)
         renderButton(buttons[1]);
         renderButton(buttons[3]);
         renderButton(buttons[4]);
-        Serial.println(String(buttons.size()));
     }
 }
 

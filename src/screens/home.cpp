@@ -130,7 +130,7 @@ void HomeScreen::update()
 
 void HomeScreen::drawTemperature()
 {
-    tft.fillRect(86, 75, 141, 21, ILI9341_BLACK);
+    tft.fillRect(86, 70, 141, 26, ILI9341_BLACK);
     tft.setCursor(86, 75);
     tft.setTextColor(ILI9341_WHITE);
     tft.setTextSize(3);
@@ -147,6 +147,12 @@ void HomeScreen::drawTemperature()
 
     tft.setTextSize(2);
     tft.print(String::format(" %c", tempUnit));
+    
+    if(tempUnit == 'C' && tent.sensors.tentTemperatureC < 10) {
+        tft.drawCircle( 148, 73, 2, ILI9341_WHITE);
+    } else {
+        tft.drawCircle( 165, 73, 2, ILI9341_WHITE);
+    }
    
 }
 

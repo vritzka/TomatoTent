@@ -187,6 +187,7 @@ void ClimateScreen::handleButton(Button& btn)
         renderButton(buttons[3]);
 
         drawClimateSettings();
+        tent.adjustFan();
         
     } else if (btn.getName() == "climateManualBtn") {
         tent.state.setClimateAutoMode(false);
@@ -194,7 +195,7 @@ void ClimateScreen::handleButton(Button& btn)
         renderButton(buttons[3]);
 
         drawClimateSettings();
-
+        tent.adjustFan();
     }
 }
 
