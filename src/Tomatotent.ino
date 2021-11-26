@@ -114,31 +114,10 @@ void firmware_update_pending_handler()
 void network_status_handler(system_event_t event, int status)
 {
     if (status == network_status_connected) {
-
         if(screenManager.current->getName() == "wifiScreen")
             screenManager.wifiScreen();
 
-        http_request_t request;
-        http_response_t response;
-
-        http_header_t headers[] = {
-            { "Accept", "*/*" },
-            { NULL, NULL }
-        };
-
-        request.port = 80;
-        request.path = "/" + System.deviceID();
-
-        request.hostname = "claim-device.tomatotent.com";
-        http.get(request, response, headers);
-
-        request.hostname = "add-to-particle-product.tomatotent.com";
-        http.get(request, response, headers);
-
-        if(tent.getHardwareVersion() == 2) {
-            request.hostname = "assign-group.tomatotent.com";
-            http.get(request, response, headers);
-        }        
+        tent.do_device_registration = true;    
     }
 }
 
@@ -199,9 +178,36 @@ void loop(void)
         screenManager.current->update();
     }
 
-    if(tent.do_eeprom_clear == true) {
+    if(tent.do_eeprom_clear) {
         EEPROM.clear();
+        tent.do_eeprom_clear = false;
         System.reset();
+    }
+
+    if(tent.do_device_registration) {
+
+        http_request_t request;
+        http_response_t response;
+
+        http_header_t headers[] = {
+            { "Accept", "/*" },
+            { NULL, NULL }
+        };
+
+        request.port = 80;
+        request.path = "/" + System.deviceID();
+
+        request.hostname = "claim-device.tomatotent.com";
+        http.get(request, response, headers);
+
+        request.hostname = "add-to-particle-product.tomatotent.com";
+        http.get(request, response, headers);
+
+        if(tent.getHardwareVersion() == 2) {
+            request.hostname = "assign-group.tomatotent.com";
+            http.get(request, response, headers);
+        }  
+        tent.do_device_registration = false; 
     }
 
     server.processConnection();

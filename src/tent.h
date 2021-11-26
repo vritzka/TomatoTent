@@ -53,6 +53,7 @@ public:
     const int minBrightness = 20;
     unsigned long lastFanCurrentMeasurement = 0;
     bool do_eeprom_clear = false;
+    bool do_device_registration = false;
 
     struct {
         double tentTemperatureC;
