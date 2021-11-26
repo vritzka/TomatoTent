@@ -8,7 +8,7 @@
 #include "HttpClient.h"
 
 PRODUCT_ID(10167);
-PRODUCT_VERSION(34);
+PRODUCT_VERSION(35);
 
 Tent tent;
 ScreenManager screenManager;
@@ -139,7 +139,7 @@ void button_click_handler(system_event_t event, int clicks)
 
 void setup()
 {
-    //System.disableUpdates();
+    System.disableUpdates();
 
     Serial.begin(9600);
     System.enableFeature(FEATURE_RESET_INFO);
