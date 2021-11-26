@@ -17,13 +17,13 @@ void ClimateScreen::render()
     tft.setTextSize(2);
     tft.print("Climate");
 
-    buttons.push_back(Button("climateAutoBtn", 250, 70, 50, 30, "Auto", 14, 12));
-    buttons.push_back(Button("climateManualBtn", 250, 107, 50, 30, "Manu", 14, 12));
+    buttons.push_back(Button("climateUnitFBtn", 225, 10, 40, 30, "F", 20, 12));
+    buttons.push_back(Button("climateUnitCBtn", 265, 10, 40, 30, "C", 20, 12));
 
-    buttons.push_back(Button("climateUnitFBtn", 180, 10, 40, 30, "F", 15, 12));
-    buttons.push_back(Button("climateUnitCBtn", 240, 10, 40, 30, "C", 15, 12));
+    buttons.push_back(Button("climateAutoBtn", 225, 80, 80, 30, "Automatic", 14, 12));
+    buttons.push_back(Button("climateManualBtn", 225, 117, 80, 30, "Manual", 24, 12));
 
-    buttons.push_back(Button("climateOkBtn", 250, 180, 40, 38, "OK", 9, 12));
+    buttons.push_back(Button("climateOkBtn", 225, 180, 80, 38, "OK", 28, 12));
 
     drawClimateSettings();
 
@@ -40,11 +40,11 @@ void ClimateScreen::renderButton(Button& btn)
 
     } else if (btn.getName() == "climateUnitFBtn") {
         drawButton(btn, tent.state.getTempUnit() == 'F' ? ILI9341_OLIVE : ILI9341_BLACK, 1);
-        tft.drawCircle( btn.x0 + 10, btn.y0 + 10, 2, ILI9341_LIGHTGREY);
+        tft.drawCircle( btn.x0 + 16, btn.y0 + 11, 1, ILI9341_LIGHTGREY);
 
     } else if (btn.getName() == "climateUnitCBtn") {
         drawButton(btn, tent.state.getTempUnit() == 'C' ? ILI9341_OLIVE : ILI9341_BLACK, 1);
-        tft.drawCircle( btn.x0 + 10, btn.y0 + 10, 2, ILI9341_LIGHTGREY);
+        tft.drawCircle( btn.x0 + 16, btn.y0 + 11, 1, ILI9341_LIGHTGREY);
 
     } else if (btn.getName() == "targetTempUpBtn") {
         drawButtonTriangleUp(btn, ILI9341_RED);
@@ -92,8 +92,8 @@ void ClimateScreen::handleButton(Button& btn)
 
         tent.state.setTempUnit('F');
 
-        renderButton(buttons[2]);
-        renderButton(buttons[3]); 
+        renderButton(buttons[0]);
+        renderButton(buttons[1]); 
 
         if (!tent.state.getClimateAutoMode())
             drawTargetTemperature();
@@ -109,8 +109,8 @@ void ClimateScreen::handleButton(Button& btn)
 
         tent.state.setTempUnit('C');
 
-        renderButton(buttons[2]);
-        renderButton(buttons[3]);
+        renderButton(buttons[0]);
+        renderButton(buttons[1]);
 
         if (!tent.state.getClimateAutoMode())
             drawTargetTemperature();
@@ -183,15 +183,15 @@ void ClimateScreen::handleButton(Button& btn)
 
     } else if (btn.getName() == "climateAutoBtn") {
         tent.state.setClimateAutoMode(true);
-        renderButton(buttons[0]);
-        renderButton(buttons[1]);
+        renderButton(buttons[2]);
+        renderButton(buttons[3]);
 
         drawClimateSettings();
         
     } else if (btn.getName() == "climateManualBtn") {
         tent.state.setClimateAutoMode(false);
-        renderButton(buttons[0]);
-        renderButton(buttons[1]);
+        renderButton(buttons[2]);
+        renderButton(buttons[3]);
 
         drawClimateSettings();
 
@@ -207,7 +207,7 @@ void ClimateScreen::drawTargetTemperature(bool warning)
     if (warning) {
         tft.setCursor(102, 88);
         tft.setTextSize(3);
-        tft.setTextColor(ILI9341_RED);
+        tft.setTextColor(ILI9341_BLACK);
         tft.print(String::format("%.0f", targetTemperature));
         tft.setTextSize(1);
         tft.print(tempUnit);
@@ -220,7 +220,10 @@ void ClimateScreen::drawTargetTemperature(bool warning)
     tft.setTextColor(ILI9341_WHITE);
     tft.print(String::format("%.0f", targetTemperature));
     tft.setTextSize(1);
+    tft.setCursor(142, 88);
     tft.print(tempUnit);
+    tft.drawCircle( 138, 86, 1, ILI9341_WHITE);
+
 }
 
 void ClimateScreen::drawTargetHumidity(bool warning)
