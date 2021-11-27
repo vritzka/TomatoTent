@@ -10,39 +10,38 @@ void LightScreen::render()
 {
     tft.fillScreen(ILI9341_BLACK);
 
-    uint16_t dayDuration = tent.state.getDayDuration();
-    renderDayDuration(dayDuration);
+    tft.setTextColor(ILI9341_LIGHTGREY);
+    tft.setTextSize(1);
 
-    buttons.push_back(Button("timerUpBtn", 40, 55, 40, 40, "", 0, 0));
-    buttons.push_back(Button("timerDownBtn", 40, 165, 40, 40, "", 0, 0));
+    if(tent.state.getMode() == 'g') {
+        buttons.push_back(Button("timerUpBtn", 40, 55, 40, 40, "", 0, 0));
+        buttons.push_back(Button("timerDownBtn", 40, 165, 40, 40, "", 0, 0));
+        buttons.push_back(Button("nowLeftBtn", 120, 60, 30, 30, "", 0, 0));
+        buttons.push_back(Button("nowRightBtn", 170, 60, 30, 30, "", 0, 0));
+        buttons.push_back(Button("brightnessUpBtn", 235, 55, 40, 40, "", 0, 0));
+        buttons.push_back(Button("brightnessDownBtn", 235, 165, 40, 40, "", 0, 0));
 
-    buttons.push_back(Button("nowLeftBtn", 120, 60, 30, 30, "", 0, 0));
-    buttons.push_back(Button("nowRightBtn", 170, 60, 30, 30, "", 0, 0));
+        uint16_t dayDuration = tent.state.getDayDuration();
+        renderDayDuration(dayDuration);
+
+        tft.setCursor(152, 45);
+        tft.print("NOW");
+        renderLedBrightness();
+
+    }
 
     buttons.push_back(Button("dayLeftBtn", 120, 130, 30, 30, "", 0, 0));
     buttons.push_back(Button("dayRightBtn", 170, 130, 30, 30, "", 0, 0));
 
-    buttons.push_back(Button("brightnessUpBtn", 235, 55, 40, 40, "", 0, 0));
-    buttons.push_back(Button("brightnessDownBtn", 235, 165, 40, 40, "", 0, 0));
-
     buttons.push_back(Button("cancelBtn", 260, 10, 50, 30, "End", 9, 8));
-
     buttons.push_back(Button("lightOkBtn", 140, 180, 40, 38, "OK", 9, 12));
 
-    tft.setCursor(152, 45);
-    tft.setTextColor(ILI9341_LIGHTGREY);
-    tft.setTextSize(1);
-    tft.print("NOW");
-
     tft.setCursor(152, 115);
+    tft.setTextSize(1);
     tft.print("DAY");
 
-    renderLedBrightness();
     drawTimerStatus();
     drawDayCounter();
-
-
-
     renderButtons(true);
 }
 
@@ -119,6 +118,7 @@ void LightScreen::renderButtonPressed(Button& btn)
 void LightScreen::handleButton(Button& btn)
 {
     if (btn.getName() == "timerUpBtn") {
+
         int16_t dayDuration = tent.state.getDayDuration();
         int16_t minutesInPhotoperiod = tent.state.getMinutesInPhotoperiod();
         uint16_t nightDuration = 1440 - dayDuration;

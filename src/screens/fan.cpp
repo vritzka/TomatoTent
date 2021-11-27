@@ -17,23 +17,24 @@ void FanScreen::render()
     tft.setTextSize(2);
     tft.print("Fan Speed");
 
-    buttons.push_back(Button("fanOkBtn", 20, 170, 150, 38, "Ok", 55, 8));
-    buttons.push_back(Button("fanMaxUpBtn", 280, 85, 30, 30, "", 0, 0));
-    buttons.push_back(Button("fanMaxDownBtn", 200, 85, 30, 30, "", 0, 0));
-    buttons.push_back(Button("fanMinUpBtn", 280, 160, 30, 30, "", 0, 0));
-    buttons.push_back(Button("fanMinDownBtn", 200, 160, 30, 30, "", 0, 0));
+    buttons.push_back(Button("fanOkBtn", 225, 180, 80, 38, "Ok", 28, 12));
+
+    buttons.push_back(Button("fanMaxUpBtn", 165, 86, 30, 30, "", 0, 0));
+    buttons.push_back(Button("fanMaxDownBtn", 40, 86, 30, 30, "", 0, 0));
+    buttons.push_back(Button("fanMinUpBtn", 165, 170, 30, 30, "", 0, 0));
+    buttons.push_back(Button("fanMinDownBtn", 40, 170, 30, 30, "", 0, 0));
 
     tft.fillRect(225, 75, 51, 122, ILI9341_BLACK);
     tft.setTextColor(ILI9341_WHITE);
 
-    tft.setCursor(232, 64);
-    tft.setTextSize(2);
-    tft.println("HIGH");
+    tft.setCursor(110, 69);
+    tft.setTextSize(1);
+    tft.println("MAX");
     drawFanSpeedMax();
 
-    tft.setCursor(240, 139);
-    tft.setTextSize(2);
-    tft.print("LOW");
+    tft.setCursor(110, 153);
+    tft.setTextSize(1);
+    tft.print("MIN");
     drawFanSpeedMin();
 
     renderButtons(true);
@@ -52,7 +53,7 @@ void FanScreen::renderButton(Button& btn)
 {
 
     if (btn.getName() == "fanOkBtn") {
-        drawButton(btn, ILI9341_OLIVE, 3);
+        drawButton(btn, ILI9341_OLIVE, 2);
 
     } else if (btn.getName() == "fanMinUpBtn") {
         drawButtonTriangleUp(btn, ILI9341_RED);
@@ -167,67 +168,72 @@ void FanScreen::handleButton(Button& btn)
     }
 }
 
-void FanScreen::drawFanSpeedSettings(void)
-{
-
-}
-
 void FanScreen::drawFanSpeedMax(bool warning)
 {
-    tft.fillRect(233, 92, 47, 15, ILI9341_BLACK);
+    tft.fillRect(85, 88, 70, 21, ILI9341_BLACK);
     float fanSpeedMax = tent.state.getFanSpeedMax();
+
+    tft.setTextSize(3);
 
     if (warning) {
         tft.setTextColor(ILI9341_RED);
-        if (fanSpeedMax < 100) {
-            tft.setCursor(239, 92);
+        if (fanSpeedMax == 100) {
+            tft.setCursor(85, 88);
+        } else if(fanSpeedMax < 100 && fanSpeedMax >= 10) {
+            tft.setCursor(95, 88);
         } else {
-            tft.setCursor(233, 92);
+            tft.setCursor(102, 88);
         }
-        tft.setTextSize(2);
+
         tft.print(String::format("%.0f", fanSpeedMax) + "%");
 
         unsigned long waitUntil = millis() + 100;
-        while (waitUntil > millis()) {
-        }
+        while (waitUntil > millis()) {}
     }
 
     tft.setTextColor(ILI9341_WHITE);
-    if (fanSpeedMax < 100) {
-        tft.setCursor(239, 92);
+    if (fanSpeedMax == 100) {
+        tft.setCursor(85, 88);
+    } else if(fanSpeedMax < 100 && fanSpeedMax >= 10) {
+        tft.setCursor(95, 88);
     } else {
-        tft.setCursor(233, 92);
+        tft.setCursor(102, 88);
     }
-    tft.setTextSize(2);
+
     tft.print(String::format("%.0f", fanSpeedMax) + "%");
 }
 
 void FanScreen::drawFanSpeedMin(bool warning)
 {
-    tft.fillRect(239, 167, 40, 15, ILI9341_BLACK);
+    tft.fillRect(85, 172, 70, 21, ILI9341_BLACK);
     float fanSpeedMin = tent.state.getFanSpeedMin();
+
+    tft.setTextSize(3);
 
     if (warning) {
         tft.setTextColor(ILI9341_RED);
-        if (fanSpeedMin == 5) {
-            tft.setCursor(245, 167);
+
+        if (fanSpeedMin == 100) {
+            tft.setCursor(85, 172);
+        } else if(fanSpeedMin < 100 && fanSpeedMin >= 10) {
+            tft.setCursor(95, 172);
         } else {
-            tft.setCursor(239, 167);
-        }
-        tft.setTextSize(2);
+            tft.setCursor(102, 172);
+        }        
         tft.print(String::format("%.0f", fanSpeedMin) + "%");
 
         unsigned long waitUntil = millis() + 100;
-        while (waitUntil > millis()) {
-        }
+        while (waitUntil > millis()) {}
     }
 
     tft.setTextColor(ILI9341_WHITE);
-    if (fanSpeedMin == 5) {
-        tft.setCursor(245, 167);
+    if (fanSpeedMin == 100) {
+        tft.setCursor(85, 172);
+    } else if(fanSpeedMin < 100 && fanSpeedMin >= 10) {
+        tft.setCursor(95, 172);
     } else {
-        tft.setCursor(239, 167);
-    }
-    tft.setTextSize(2);
+        tft.setCursor(102, 172);
+    }  
+
     tft.print(String::format("%.0f", fanSpeedMin) + "%");
 }

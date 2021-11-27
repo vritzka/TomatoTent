@@ -13,7 +13,7 @@ void FirmwareUpdateScreen::render()
 
     tft.setCursor(25, 90);
     tft.setTextSize(1);
-    tft.print("(Don't switch me off! Will take 10 minutes)");
+    tft.print("(Don't switch me off for about 5 minutes)");
 
     tft.drawBitmap(192, 180, tomato_filled_50, 50, 50, ILI9341_RED);
 }

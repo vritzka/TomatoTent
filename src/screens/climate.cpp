@@ -261,6 +261,7 @@ void ClimateScreen::drawTargetHumidity(bool warning)
 void ClimateScreen::drawClimateSettings(void)
 {
     tft.fillRect(10, 60, 189, 145, ILI9341_BLACK);
+    tft.setTextColor(ILI9341_GREENYELLOW);
 
     if(tent.state.getClimateAutoMode()) {
 
