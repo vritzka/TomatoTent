@@ -10,7 +10,7 @@ void TentState::begin()
 {
     Particle.variable("isDay", eeprom.isDay);
     Particle.variable("dayCounter", eeprom.dayCounter);
-    Particle.variable("fanAutoMode", eeprom.fanAutoMode);
+    Particle.variable("climateAutoMode", eeprom2.climateAutoMode);
     Particle.variable("minutesInPhotoperiod", eeprom.minutesInPhotoperiod);
     Particle.variable("dayDuration", eeprom.dayDuration);
 }
@@ -67,17 +67,6 @@ void TentState::setIsDay(bool isDay)
 void TentState::setMinutesInPhotoperiod(int minutesInPhotoperiod)
 {
     eeprom.minutesInPhotoperiod = minutesInPhotoperiod;
-    save();
-}
-
-bool TentState::getFanAutoMode()
-{
-    return eeprom.fanAutoMode;
-}
-
-void TentState::setFanAutoMode(bool fanAutoMode)
-{
-    eeprom.fanAutoMode = fanAutoMode;
     save();
 }
 

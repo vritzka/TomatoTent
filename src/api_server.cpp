@@ -82,7 +82,7 @@ void apiFanCmd(WebServer& server, WebServer::ConnectionType type, char* url_tail
     switch (type) {
     case WebServer::GET: {
         StaticJsonDocument<capa> json;
-        json["mode"] = tent.state.getFanAutoMode() ? "automatic" : "manual";
+        json["mode"] = tent.state.getClimateAutoMode() ? "automatic" : "manual";
         json["speed"] = tent.state.getFanSpeed();
         server.httpSuccess();
         serializeJson(json, server);
@@ -92,9 +92,9 @@ void apiFanCmd(WebServer& server, WebServer::ConnectionType type, char* url_tail
         StaticJsonDocument<capa> json;
         deserializeJson(json, server);
         if (json["mode"] == "automatic") {
-            tent.state.setFanAutoMode(true);
+            tent.state.setClimateAutoMode(true);
         } else if (json["mode"] == "manual") {
-            tent.state.setFanAutoMode(false);
+            tent.state.setClimateAutoMode(false);
             int speed = json["speed"];
             if (speed > 0 && speed <= 100) {
                 tent.state.setFanSpeed(speed);
@@ -159,7 +159,7 @@ void metricsCmd(WebServer& server, WebServer::ConnectionType type, char* url_tai
 
         server << "# HELP tomatotent_fan_auto Is the fan running in automatic mode?\n";
         server << "# TYPE tomatotent_fan_auto gauge\n";
-        server << "tomatotent_fan_auto " << (tent.state.getFanAutoMode() ? 1 : 0) << "\n";
+        server << "tomatotent_fan_auto " << (tent.state.getClimateAutoMode() ? 1 : 0) << "\n";
 
         server << "# HELP tomatotent_fan_speed Speed of the fan\n";
         server << "# TYPE tomatotent_fan_speed gauge\n";

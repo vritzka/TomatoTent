@@ -108,7 +108,7 @@ void Screen::drawFanStatus()
             tft.setTextColor(ILI9341_RED);
             tft.print("OVERLOAD"); 
     } else {
-        if (tent.state.getFanAutoMode()) {
+        if (tent.state.getClimateAutoMode()) {
             tft.setCursor(200, 30);
             tft.print("automatic");
         } else {

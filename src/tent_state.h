@@ -11,7 +11,7 @@ class TentState {
         bool isDay; // true if the light is on
         int minutesInPhotoperiod; // how long has the system been in current photoperiod?  E.g. 31 minutes in NIGHT
         int dayDuration; // how long is the light on?
-        bool fanAutoMode; // 1 for auto, 0 for manual
+        bool fanAutoMode; // unused
         float fanSpeed; // 0-100%
         char tempUnit; // F or C
         bool wifiStatus; // 1=on, 0=off
@@ -37,7 +37,7 @@ public:
         eeprom.isDay = true;
         eeprom.minutesInPhotoperiod = 0;
         eeprom.dayDuration = 18 * 60;
-        eeprom.fanAutoMode = 1;
+        eeprom.fanAutoMode = false;
         eeprom.fanSpeed = 30;
         eeprom.tempUnit = 'F';
         eeprom.wifiStatus = 1;
@@ -82,9 +82,6 @@ public:
 
     int getDayDuration(void);
     void setDayDuration(int);
-
-    bool getFanAutoMode(void);
-    void setFanAutoMode(bool);
 
     float getFanSpeed(void);
     void setFanSpeed(float);
