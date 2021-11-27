@@ -104,19 +104,10 @@ void Screen::drawFanStatus()
     tft.setTextColor(ILI9341_DARKGREY);
 
     if(tent.fanOverload == true) {
-            tft.setCursor(205, 30);
-            tft.setTextColor(ILI9341_RED);
-            tft.print("OVERLOAD"); 
-    } else {
-        if (tent.state.getClimateAutoMode()) {
-            tft.setCursor(200, 30);
-            tft.print("automatic");
-        } else {
-            tft.setCursor(210, 30);
-            tft.print("manual");
-        }    
-    }
-
+        tft.setCursor(205, 30);
+        tft.setTextColor(ILI9341_RED);
+        tft.print("OVERLOAD"); 
+    } 
 }
 
 void Screen::drawTimerStatus(bool ignoreDayCounter)
