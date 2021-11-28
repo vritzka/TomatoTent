@@ -108,7 +108,7 @@ void firmware_update_handler(system_event_t event, int status)
 void firmware_update_pending_handler()
 {
     if(screenManager.current->getName() == "wifiScreen")
-        screenManager.wifiScreen();    
+        screenManager.wifiScreen();          
 }
 
 void network_status_handler(system_event_t event, int status)

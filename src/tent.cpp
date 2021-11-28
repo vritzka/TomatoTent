@@ -334,7 +334,7 @@ void Tent::publishMetrics()
         json["light_on"] = rawSensors.lightBrightness;
         json["light_period"] = state.getDayDuration();
         json["period_progress"] = state.getMinutesInPhotoperiod();
-        json["climate_auto"] = state.getClimateAutoMode() ? 1 : 0;
+        json["fan_auto"] = state.getClimateAutoMode() ? 1 : 0;
         json["fan_speed"] = state.getFanSpeed();
     }
 
