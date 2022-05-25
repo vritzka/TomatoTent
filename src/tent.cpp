@@ -1,5 +1,6 @@
 #include "tent.h"
 #include "screen_manager.h"
+#define ARDUINOJSON_ENABLE_PROGMEM 0
 #include <ArduinoJson.h>
 
 extern ScreenManager screenManager;
