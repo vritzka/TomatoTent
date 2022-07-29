@@ -46,7 +46,7 @@ public:
         eeprom2.version = 2;
         eeprom2.targetTemperature = 78.0;
         eeprom2.targetHumidity = 70.0;
-        eeprom2.fanSpeedMin = 10;
+        eeprom2.fanSpeedMin = 15;
         eeprom2.fanSpeedMax = 25;
         eeprom2.ledBrightnessMax = 100;
         eeprom2.climateAutoMode = 1;

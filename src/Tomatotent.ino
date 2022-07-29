@@ -95,7 +95,8 @@ STARTUP(
     pinMode(GROW_LIGHT_BRIGHTNESS_PIN, OUTPUT);
     pinMode(GROW_LIGHT_ON_OFF_PIN, OUTPUT);
     pinMode(DIM_PIN, INPUT_PULLUP);
-    pinMode(HARDWAREFLAG_PIN, INPUT_PULLUP);
+    pinMode(HARDWAREFLAG2_PIN, INPUT_PULLUP);
+    pinMode(HARDWAREFLAG3_PIN, INPUT_PULLUP);
 )
 
 void firmware_update_handler(system_event_t event, int status)

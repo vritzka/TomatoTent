@@ -12,7 +12,8 @@ Tent::Tent()
     , displayOffTimer { Timer(300000, &Tent::displayLightOff, *this, true) }
 {
     this->growLightStatus = "OFF";
-    this->hardwareVersion = (digitalRead(HARDWAREFLAG_PIN) == HIGH) ? 1 : 2;
+    this->hardwareVersion = (digitalRead(HARDWAREFLAG2_PIN) == HIGH) ? 1 : 2;
+    this->hardwareVersion = (digitalRead(HARDWAREFLAG3_PIN) == HIGH) ? this->hardwareVersion : 3;
 }
 
 void Tent::setup()
@@ -208,17 +209,22 @@ void Tent::fan(String fanStatus)
             analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
             analogWrite(FAN_SPEED_PIN_2, 255 - fanSpeed, 4000);
         }
-    } else {
+    } else if(hardwareVersion == 2) {
         if (fanStatus == "OFF") {
             analogWrite(FAN_SPEED_PIN_2, 0, 4000);
         } else {
             int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
             analogWrite(FAN_SPEED_PIN_2, fanSpeed, 4000);
         }
+    } else {
+        if (fanStatus == "OFF") {
+            analogWrite(FAN_SPEED_PIN_2, 0, 4000);
+        } else {
+            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 128.0);
+            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 4000);
+        }
     }
-
-
-}
+}    
 
 void Tent::markNeedsSensorUpdate()
 {

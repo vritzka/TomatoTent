@@ -14,7 +14,8 @@
 #define FAN_SPEED_PIN_2 P1S0
 #define TFT_BRIGHTNESS_PIN WKP
 #define DIM_PIN DAC
-#define HARDWAREFLAG_PIN P1S5
+#define HARDWAREFLAG2_PIN P1S5 //v2 with metal case
+#define HARDWAREFLAG3_PIN P1S4 //v3, last item with Particle chip. 
 #define FANCURRENTSENSE_PIN P1S3
 
 class Tent {
