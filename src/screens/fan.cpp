@@ -110,13 +110,13 @@ void FanScreen::handleButton(Button& btn)
     } else if (btn.getName() == "fanMinDownBtn") {
         float fanSpeedMin = tent.state.getFanSpeedMin();
 
-        bool warning = (fanSpeedMin == 15) ? true : false;
+        bool warning = (fanSpeedMin == 10) ? true : false;
 
         if (!warning) {
-            if(fanSpeedMin >= 20) {
+            if(fanSpeedMin >= 15) {
                 fanSpeedMin -= 5;
-            } else if(fanSpeedMin < 15) {
-                fanSpeedMin = 15;
+            } else if(fanSpeedMin < 10) {
+                fanSpeedMin = 10;
             }
 
             tent.state.setFanSpeedMin(fanSpeedMin);
