@@ -44,7 +44,8 @@ void WifiScreen::render()
     tft.setCursor(60, 52);
     tft.setTextSize(1);
     tft.setTextColor(ILI9341_LIGHTGREY);
-    tft.print(String::format("TomatoTent v%d ", __system_product_version));
+    tft.print(String::format("TomatoTent v%d", __system_product_version));
+    tft.print("-" + String(tent.getHardwareVersion()) +" ");
     if (WiFi.ready())     
         tft.print("on http://" + WiFi.localIP().toString());
 
