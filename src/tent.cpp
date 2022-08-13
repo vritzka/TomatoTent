@@ -209,21 +209,14 @@ void Tent::fan(String fanStatus)
             analogWrite(FAN_SPEED_PIN, 255 - fanSpeed, 25000);
             analogWrite(FAN_SPEED_PIN_2, 255 - fanSpeed, 25000);
         }
-    } else if(hardwareVersion == 2) {
+    } else if(hardwareVersion == 2 || hardwareVersion == 3) {
         if (fanStatus == "OFF") {
-            analogWrite(FAN_SPEED_PIN_2, 0, 4000);
+            analogWrite(FAN_SPEED_PIN_2, 0, 60000);
         } else {
-            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
-            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 4000);
+            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 80.0);
+            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 60000);
         }
-    } else {
-        if (fanStatus == "OFF") {
-            analogWrite(FAN_SPEED_PIN_2, 0, 25000);
-        } else {
-            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 120.0);
-            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 25000);
-        }
-    }
+    } 
 }    
 
 void Tent::markNeedsSensorUpdate()
