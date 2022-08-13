@@ -573,7 +573,7 @@ void Tent::adjustFan()
             }
 
             if (!state.isDay()) {
-                fanSpeedPercent = round(fanSpeedPercent*0.8);
+                fanSpeedPercent = round(fanSpeedPercent*0.6);
             } 
 
             if(fanSpeedPercent > fanSpeedMaxSetting) {
@@ -648,6 +648,10 @@ void Tent::adjustFan()
 
         if (fanSpeedPercent > fanSpeedMaxSetting)
             fanSpeedPercent = fanSpeedMaxSetting;
+
+        if (!state.isDay()) {
+            fanSpeedPercent = round(fanSpeedPercent*0.6);
+        } 
 
     }
 
