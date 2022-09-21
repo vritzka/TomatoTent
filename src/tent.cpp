@@ -213,7 +213,7 @@ void Tent::fan(String fanStatus)
         if (fanStatus == "OFF") {
             analogWrite(FAN_SPEED_PIN_2, 0, 60000);
         } else {
-            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 80.0);
+            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
             analogWrite(FAN_SPEED_PIN_2, fanSpeed, 60000);
         }
     } 
