@@ -1,0 +1,26 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "/Users/volkerritzka/esp/esp-idf/components/bootloader/subproject",
+    "build_dir":          "/Users/volkerritzka/esp/TomatoTent/build/bootloader",
+    "config_file":        "/Users/volkerritzka/esp/TomatoTent/sdkconfig",
+    "config_defaults":    "",
+    "bootloader_elf":     "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "build_type":         "flash_app",
+    "git_revision":       "v5.2-dev-544-g54576b7528-dirty",
+    "target":             "esp32s3",
+    "rev":                "",
+    "min_rev":            "0",
+    "max_rev":            "99",
+    "phy_data_partition": "",
+    "monitor_baud" :      "115200",
+    "monitor_toolprefix": "xtensa-esp32s3-elf-",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "/Users/volkerritzka/esp/esp-idf/components/efuse/Kconfig;/Users/volkerritzka/esp/esp-idf/components/esp_common/Kconfig;/Users/volkerritzka/esp/esp-idf/components/esp_hw_support/Kconfig;/Users/volkerritzka/esp/esp-idf/components/esp_system/Kconfig;/Users/volkerritzka/esp/esp-idf/components/freertos/Kconfig;/Users/volkerritzka/esp/esp-idf/components/hal/Kconfig;/Users/volkerritzka/esp/esp-idf/components/log/Kconfig;/Users/volkerritzka/esp/esp-idf/components/newlib/Kconfig;/Users/volkerritzka/esp/esp-idf/components/soc/Kconfig;/Users/volkerritzka/esp/esp-idf/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/Users/volkerritzka/esp/esp-idf/components/bootloader/Kconfig.projbuild;/Users/volkerritzka/esp/esp-idf/components/esp_app_format/Kconfig.projbuild;/Users/volkerritzka/esp/esp-idf/components/esp_rom/Kconfig.projbuild;/Users/volkerritzka/esp/esp-idf/components/esptool_py/Kconfig.projbuild;/Users/volkerritzka/esp/esp-idf/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp_app_format", "esp_common", "esp_hw_support", "esp_rom", "esp_system", "esptool_py", "freertos", "hal", "log", "main", "micro-ecc", "newlib", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "/Users/volkerritzka/esp/esp-idf/components/bootloader", "/Users/volkerritzka/esp/esp-idf/components/bootloader_support", "/Users/volkerritzka/esp/esp-idf/components/efuse", "/Users/volkerritzka/esp/esp-idf/components/esp_app_format", "/Users/volkerritzka/esp/esp-idf/components/esp_common", "/Users/volkerritzka/esp/esp-idf/components/esp_hw_support", "/Users/volkerritzka/esp/esp-idf/components/esp_rom", "/Users/volkerritzka/esp/esp-idf/components/esp_system", "/Users/volkerritzka/esp/esp-idf/components/esptool_py", "/Users/volkerritzka/esp/esp-idf/components/freertos", "/Users/volkerritzka/esp/esp-idf/components/hal", "/Users/volkerritzka/esp/esp-idf/components/log", "/Users/volkerritzka/esp/esp-idf/components/bootloader/subproject/main", "/Users/volkerritzka/esp/esp-idf/components/bootloader/subproject/components/micro-ecc", "/Users/volkerritzka/esp/esp-idf/components/newlib", "/Users/volkerritzka/esp/esp-idf/components/partition_table", "/Users/volkerritzka/esp/esp-idf/components/soc", "/Users/volkerritzka/esp/esp-idf/components/spi_flash", "/Users/volkerritzka/esp/esp-idf/components/xtensa", "" ],
+    "debug_prefix_map_gdbinit": ""
+}

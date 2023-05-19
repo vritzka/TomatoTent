@@ -1,0 +1,78 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x2a (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce3818,len:0x16f8
+load:0x403c9700,len:0x4
+load:0x403c9704,len:0xbfc
+load:0x403cc700,len:0x2efc
+entry 0x403c9904
+[0;32mI (27) boot: ESP-IDF v5.2-dev-544-g54576b7528-dirty 2nd stage bootloader[0m
+[0;32mI (27) boot: compile time May 19 2023 20:41:05[0m
+[0;32mI (28) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v0.1[0m
+[0;32mI (36) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (41) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (45) boot.esp32s3: SPI Flash Size : 2MB[0m
+[0;32mI (50) boot: Enabling RNG early entropy source...[0m
+[0;32mI (56) boot: Partition Table:[0m
+[0;32mI (59) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (66) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (74) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (81) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (89) boot: End of partition table[0m
+[0;32mI (93) esp_image: segment 0: paddr=00010020 vaddr=3c050020 size=23790h (145296) map[0m
+[0;32mI (128) esp_image: segment 1: paddr=000337b8 vaddr=3fc92c00 size=02d30h ( 11568) load[0m
+[0;32mI (130) esp_image: segment 2: paddr=000364f0 vaddr=40374000 size=09b28h ( 39720) load[0m
+[0;32mI (142) esp_image: segment 3: paddr=00040020 vaddr=42000020 size=43368h (275304) map[0m
+[0;32mI (192) esp_image: segment 4: paddr=00083390 vaddr=4037db28 size=0505ch ( 20572) load[0m
+[0;32mI (203) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (203) boot: Disabling RNG early entropy source...[0m
+[0;32mI (214) cpu_start: Multicore app[0m
+[0;32mI (215) esp_psram: Found 2MB PSRAM device[0m
+[0;32mI (215) esp_psram: Speed: 80MHz[0m
+[0;32mI (262) mmu_psram: Instructions copied and mapped to SPIRAM[0m
+[0;32mI (290) mmu_psram: Read only data copied and mapped to SPIRAM[0m
+[0;32mI (290) cpu_start: Pro cpu up.[0m
+[0;32mI (290) cpu_start: Starting app cpu, entry point is 0x403753d0[0m
+[0;32mI (0) cpu_start: App cpu up.[0m
+[0;32mI (467) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (476) cpu_start: Pro cpu start user code[0m
+[0;32mI (476) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (477) cpu_start: Application information:[0m
+[0;32mI (479) cpu_start: Project name:     TomatoTent[0m
+[0;32mI (485) cpu_start: App version:      v31-42-gf13b542-dirty[0m
+[0;32mI (491) cpu_start: Compile time:     May 19 2023 20:40:53[0m
+[0;32mI (497) cpu_start: ELF file SHA256:  cd9a6e334e3b5783...[0m
+[0;32mI (503) cpu_start: ESP-IDF:          v5.2-dev-544-g54576b7528-dirty[0m
+[0;32mI (510) cpu_start: Min chip rev:     v0.0[0m
+[0;32mI (515) cpu_start: Max chip rev:     v0.99 [0m
+[0;32mI (519) cpu_start: Chip rev:         v0.1[0m
+[0;32mI (524) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (531) heap_init: At 3FC966D8 len 00053038 (332 KiB): DRAM[0m
+[0;32mI (538) heap_init: At 3FCE9710 len 00005724 (21 KiB): STACK/DRAM[0m
+[0;32mI (544) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (550) heap_init: At 600FE010 len 00001FF0 (7 KiB): RTCRAM[0m
+[0;32mI (557) esp_psram: Adding pool of 1536K of PSRAM memory to heap allocator[0m
+[0;32mI (565) spi_flash: detected chip: generic[0m
+[0;32mI (569) spi_flash: flash io: dio[0m
+[0;33mW (573) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (586) sleep: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (593) sleep: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (600) app_start: Starting scheduler on CPU0[0m
+[0;32mI (605) app_start: Starting scheduler on CPU1[0m
+[0;32mI (605) main_task: Started on CPU0[0m
+[0;32mI (615) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (625) main_task: Calling app_main()[0m
+[0;32mI (625) example: Turn off LCD backlight[0m
+[0;32mI (635) gpio: GPIO[45]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (645) example: Initialize Intel 8080 bus[0m
+[0;32mI (645) example: Install LCD driver of st7789[0m
+[0;32mI (655) gpio: GPIO[4]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (785) example: Turn on LCD backlight[0m
+[0;32mI (785) example: Initialize LVGL library[0m
+[0;32mI (785) example: buf1@0x3c080a00, buf2@0x3c098140[0m
+[0;32mI (785) example: Register display driver to LVGL[0m
+[0;32mI (795) example: Install LVGL tick timer[0m
+[0;32mI (795) example: Display LVGL animation[0m
