@@ -224,21 +224,7 @@ void app_main(void)
     esp_lcd_panel_set_gap(panel_handle, 0, 0);
     //esp_lcd_panel_mirror(panel_handle, false, true);
     esp_lcd_panel_swap_xy(panel_handle, true);
-#elif CONFIG_EXAMPLE_LCD_I80_CONTROLLER_NT35510
-    ESP_LOGI(TAG, "Install LCD driver of nt35510");
-    esp_lcd_panel_dev_config_t panel_config = {
-        .reset_gpio_num = EXAMPLE_PIN_NUM_RST,
-        .rgb_endian = LCD_RGB_ENDIAN_BGR,
-        .bits_per_pixel = 16,
-    };
-    ESP_ERROR_CHECK(esp_lcd_new_panel_nt35510(io_handle, &panel_config, &panel_handle));
 
-    esp_lcd_panel_reset(panel_handle);
-    esp_lcd_panel_init(panel_handle);
-    // Set inversion, x/y coordinate order, x/y mirror according to your LCD module spec
-    // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
-    esp_lcd_panel_swap_xy(panel_handle, true);
-    esp_lcd_panel_mirror(panel_handle, true, false);
 #elif CONFIG_EXAMPLE_LCD_I80_CONTROLLER_ILI9341
     // ILI9341 is NOT a distinct driver, but a special case of ST7789
     // (essential registers are identical). A few lines further down in this code,

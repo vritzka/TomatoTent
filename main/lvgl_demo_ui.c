@@ -26,7 +26,7 @@ static lv_obj_t *arc[3];
 static lv_obj_t *img_logo;
 static lv_obj_t *img_text = NULL;
 static lv_color_t arc_color[] = {
-    LV_COLOR_MAKE(232, 87, 116),
+    LV_COLOR_MAKE(255, 0, 0),
     LV_COLOR_MAKE(126, 87, 162),
     LV_COLOR_MAKE(90, 202, 228),
 };
