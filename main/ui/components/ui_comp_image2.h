@@ -3,14 +3,19 @@
 // LVGL version: 8.3.6
 // Project name: TT
 
-#ifndef _UI_EVENTS_H
-#define _UI_EVENTS_H
+#ifndef _UI_COMP_IMAGE2_H
+#define _UI_COMP_IMAGE2_H
+
+#include "../ui.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void play_intro(lv_event_t * e);
+// COMPONENT Image2
+#define UI_COMP_IMAGE2_IMAGE2 0
+#define _UI_COMP_IMAGE2_NUM 1
+lv_obj_t *ui_Image2_create(lv_obj_t *comp_parent);
 
 #ifdef __cplusplus
 } /*extern "C"*/

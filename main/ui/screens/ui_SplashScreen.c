@@ -12,4 +12,6 @@ lv_obj_clear_flag( ui_SplashScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_SplashScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_SplashScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+lv_obj_add_event_cb(ui_SplashScreen, ui_event_SplashScreen, LV_EVENT_ALL, NULL);
+
 }

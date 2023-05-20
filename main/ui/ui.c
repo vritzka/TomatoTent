@@ -10,7 +10,17 @@
 
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
+void ui_event_SplashScreen( lv_event_t * e);
 lv_obj_t *ui_SplashScreen;
+
+// SCREEN: ui_LaunchScreen
+void ui_LaunchScreen_screen_init(void);
+lv_obj_t *ui_LaunchScreen;
+lv_obj_t *ui_Image1;
+lv_obj_t *ui_StartNewGrow;
+lv_obj_t *ui_Label3;
+lv_obj_t *ui_DryAHarverst;
+lv_obj_t *ui_Label2;
 
 // SCREEN: ui_HomeScreen
 void ui_HomeScreen_screen_init(void);
@@ -32,15 +42,23 @@ const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_SplashScreen( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_SCREEN_LOADED) {
+      play_intro( e );
+}
+}
 
 ///////////////////// SCREENS ////////////////////
 
 void ui_init( void )
-{
+{LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
+
 lv_disp_t *dispp = lv_disp_get_default();
 lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), true, LV_FONT_DEFAULT);
 lv_disp_set_theme(dispp, theme);
 ui_SplashScreen_screen_init();
+ui_LaunchScreen_screen_init();
 ui_HomeScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_SplashScreen);

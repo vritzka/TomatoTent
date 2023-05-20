@@ -1,6 +1,14 @@
-SET(SOURCES screens/ui_SplashScreen.c
+SET(SOURCES components/ui_comp_image2.c
+    components/ui_comp.c
+    screens/ui_SplashScreen.c
+    screens/ui_LaunchScreen.c
     screens/ui_HomeScreen.c
     ui.c
-    ui_helpers.c)
+    components/ui_comp_hook.c
+    ui_helpers.c
+    images/ui_img_tomato_png.c
+    images/ui_img_bg2_png.c
+    images/ui_img_1669444289.c
+    images/ui_img_182264864.c)
 
 add_library(ui ${SOURCES})

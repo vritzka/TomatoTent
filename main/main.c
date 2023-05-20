@@ -10,7 +10,6 @@
 #include "esp_log.h"
 #include "lvgl.h"
 #include "ui/ui.h"
-#include "helpers/SplashScreen.h"
 
 #if CONFIG_EXAMPLE_LCD_TOUCH_ENABLED
 #include "driver/i2c.h"
@@ -366,7 +365,7 @@ void app_main(void)
 
     ESP_LOGI(TAG, "Start UI");
     ui_init();
-    example_lvgl_demo_ui();
+    //play_intro();
 
     while (1) {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance

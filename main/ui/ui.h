@@ -13,16 +13,28 @@ extern "C" {
     #include "lvgl.h"
 
 #include "ui_helpers.h"
+#include "components/ui_comp.h"
+#include "components/ui_comp_hook.h"
 #include "ui_events.h"
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
+void ui_event_SplashScreen( lv_event_t * e);
 extern lv_obj_t *ui_SplashScreen;
+// SCREEN: ui_LaunchScreen
+void ui_LaunchScreen_screen_init(void);
+extern lv_obj_t *ui_LaunchScreen;
+extern lv_obj_t *ui_Image1;
+extern lv_obj_t *ui_StartNewGrow;
+extern lv_obj_t *ui_Label3;
+extern lv_obj_t *ui_DryAHarverst;
+extern lv_obj_t *ui_Label2;
 // SCREEN: ui_HomeScreen
 void ui_HomeScreen_screen_init(void);
 extern lv_obj_t *ui_HomeScreen;
 extern lv_obj_t *ui_Label1;
 extern lv_obj_t *ui____initial_actions0;
 
+LV_IMG_DECLARE( ui_img_tomato_png);   // assets/tomato.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
