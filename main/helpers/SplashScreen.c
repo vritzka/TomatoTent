@@ -1,38 +1,30 @@
-/*
- * SPDX-FileCopyrightText: 2021-2022 Espressif Systems (Shanghai) CO LTD
- *
- * SPDX-License-Identifier: CC0-1.0
- */
 
-#include <math.h>
-#include "lvgl.h"
+#include "SplashScreen.h"
 
 #ifndef PI
 #define PI  (3.14159f)
 #endif
-
-// LVGL image declare
-LV_IMG_DECLARE(esp_logo)
-LV_IMG_DECLARE(esp_text)
 
 typedef struct {
     lv_obj_t *scr;
     int count_val;
 } my_timer_context_t;
 
-static my_timer_context_t my_tim_ctx;
-static lv_obj_t * btn;
-static lv_obj_t *arc[3];
-static lv_obj_t *img_logo;
-static lv_obj_t *img_text = NULL;
-static lv_color_t arc_color[] = {
-    LV_COLOR_MAKE(255, 0, 0),
-    LV_COLOR_MAKE(126, 87, 162),
-    LV_COLOR_MAKE(90, 202, 228),
+my_timer_context_t my_tim_ctx;
+lv_obj_t *arc[3];
+lv_obj_t *img_logo;
+lv_obj_t *img_text = NULL;
+lv_color_t arc_color[] = {
+    LV_COLOR_MAKE(0, 0, 116),
+    LV_COLOR_MAKE(0, 0, 162),
+    LV_COLOR_MAKE(0, 0, 228),
 };
 
+// LVGL image declare
+LV_IMG_DECLARE(tomato)
+LV_IMG_DECLARE(esp_text)
 
-static void anim_timer_cb(lv_timer_t *timer)
+void anim_timer_cb(lv_timer_t *timer)
 {
     my_timer_context_t *timer_ctx = (my_timer_context_t *) timer->user_data;
     int count = timer_ctx->count_val;
@@ -72,15 +64,13 @@ static void anim_timer_cb(lv_timer_t *timer)
     // Delete timer when all animation finished
     if ((count += 5) == 220) {
         lv_timer_del(timer);
-
-        // Enable button
-        lv_obj_clear_state(btn, LV_STATE_DISABLED);
+        lv_scr_load_anim(ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1500, 2000, true);
     } else {
         timer_ctx->count_val = count;
     }
 }
 
-static void start_animation(lv_obj_t *scr)
+void start_animation(lv_obj_t *scr)
 {
     // Align image
     lv_obj_center(img_logo);
@@ -113,31 +103,17 @@ static void start_animation(lv_obj_t *scr)
     my_tim_ctx.scr = scr;
     lv_timer_create(anim_timer_cb, 20, &my_tim_ctx);
 
-    // Disable button
-    lv_obj_add_state(btn, LV_STATE_DISABLED);
 }
 
-static void btn_cb(lv_event_t * e)
+void example_lvgl_demo_ui()
 {
-    lv_obj_t * scr = lv_event_get_user_data(e);
-    start_animation(scr);
-}
-
-void example_lvgl_demo_ui(lv_disp_t *disp)
-{
-    lv_obj_t *scr = lv_disp_get_scr_act(disp);
 
     // Create image
-    img_logo = lv_img_create(scr);
-    lv_img_set_src(img_logo, &esp_logo);
+    img_logo = lv_img_create(ui_SplashScreen);
+    lv_img_set_src(img_logo, &tomato);
 
-    btn = lv_btn_create(scr);
-    lv_obj_t * lbl = lv_label_create(btn);
-    lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
-    lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 30, -30);
-    // Button event
-    lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
 
-    start_animation(scr);
+    start_animation(ui_SplashScreen);
+    
 }
+

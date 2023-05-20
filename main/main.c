@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2021-2022 Espressif Systems (Shanghai) CO LTD
- *
- * SPDX-License-Identifier: CC0-1.0
- */
-
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -15,6 +9,8 @@
 #include "esp_err.h"
 #include "esp_log.h"
 #include "lvgl.h"
+#include "ui/ui.h"
+#include "helpers/SplashScreen.h"
 
 #if CONFIG_EXAMPLE_LCD_TOUCH_ENABLED
 #include "driver/i2c.h"
@@ -27,7 +23,7 @@
 #endif
 #endif
 
-static const char *TAG = "example";
+static const char *TAG = "main.c";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////// Please update the following configuration according to your LCD spec //////////////////////////////
@@ -90,8 +86,6 @@ static const char *TAG = "example";
 
 // Supported alignment: 16, 32, 64. A higher alignment can enables higher burst transfer size, thus a higher i80 bus throughput.
 #define EXAMPLE_PSRAM_DATA_ALIGNMENT   64
-
-extern void example_lvgl_demo_ui(lv_disp_t *disp);
 
 static bool example_notify_lvgl_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
 {
@@ -211,7 +205,7 @@ void app_main(void)
     ESP_LOGI(TAG, "Install LCD driver of st7789");
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = EXAMPLE_PIN_NUM_RST,
-        .rgb_endian = LCD_RGB_ENDIAN_RGB,
+        .rgb_endian = LCD_RGB_ENDIAN_BGR,
         .bits_per_pixel = 16,
     };
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(io_handle, &panel_config, &panel_handle));
@@ -370,8 +364,9 @@ void app_main(void)
     lv_indev_drv_register(&indev_drv);
 #endif
 
-    ESP_LOGI(TAG, "Display LVGL animation");
-    example_lvgl_demo_ui(disp);
+    ESP_LOGI(TAG, "Start UI");
+    ui_init();
+    example_lvgl_demo_ui();
 
     while (1) {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
@@ -380,3 +375,8 @@ void app_main(void)
         lv_timer_handler();
     }
 }
+
+
+
+
+

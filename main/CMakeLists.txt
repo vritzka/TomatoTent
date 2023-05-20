@@ -1,4 +1,6 @@
-file(GLOB_RECURSE IMAGE_SOURCES images/*.c)
+file(GLOB_RECURSE SRC_UI ${CMAKE_SOURCE_DIR} "ui/*.c" "helpers/*.c" "ui/images/*.c")
 
-idf_component_register(SRCS "i80_controller_example_main.c" "lvgl_demo_ui.c" ${IMAGE_SOURCES}
-                       INCLUDE_DIRS ".")
+idf_component_register(SRCS "main.c" ${SRC_UI}
+                    INCLUDE_DIRS "." "ui" "helpers")
+
+
