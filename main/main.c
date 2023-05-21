@@ -365,7 +365,6 @@ void app_main(void)
 
     ESP_LOGI(TAG, "Start UI");
     ui_init();
-    //play_intro();
 
     while (1) {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
