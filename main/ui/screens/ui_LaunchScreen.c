@@ -52,4 +52,6 @@ lv_obj_set_height( ui_Label2, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_align( ui_Label2, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label2,"Dry a Harvest");
 
+lv_obj_add_event_cb(ui_StartNewGrow, ui_event_StartNewGrow, LV_EVENT_ALL, NULL);
+
 }

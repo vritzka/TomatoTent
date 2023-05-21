@@ -28,7 +28,7 @@ lv_color_t arc_color[] = {
 };
 
 // LVGL image declare
-LV_IMG_DECLARE(tomato)
+LV_IMG_DECLARE(ui_img_tomato_png)
 LV_IMG_DECLARE(tomatotent_text)
 
 void anim_timer_cb(lv_timer_t *timer)
@@ -116,7 +116,7 @@ void play_intro(lv_event_t * e)
 {
     // Create image
     img_logo = lv_img_create(ui_SplashScreen);
-    lv_img_set_src(img_logo, &tomato);
+    lv_img_set_src(img_logo, &ui_img_tomato_png);
 
 
     start_animation(ui_SplashScreen);
