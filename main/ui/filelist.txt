@@ -7,7 +7,13 @@ ui.c
 ui_helpers.c
 images/ui_img_tomato_png.c
 images/ui_img_sun2_png.c
-images/ui_img_60476769.c
+images/ui_img_1484485426.c
+images/ui_img_humidity_png.c
+images/ui_img_dew_png.c
+images/ui_img_1142205948.c
+images/ui_img_wifi_png.c
+images/ui_img_303216376.c
 images/ui_img_bg2_png.c
 images/ui_img_1669444289.c
 images/ui_img_182264864.c
+images/ui_img_60476769.c

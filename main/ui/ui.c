@@ -30,8 +30,6 @@ void ui_HomeScreen_screen_init(void);
 void ui_event_HomeScreen( lv_event_t * e);
 lv_obj_t *ui_HomeScreen;
 lv_obj_t *ui_sun;
-lv_obj_t *ui_fan;
-lv_obj_t *ui_Label12;
 void ui_event_Panel2( lv_event_t * e);
 lv_obj_t *ui_Panel2;
 lv_obj_t *ui_Bar2;
@@ -39,20 +37,33 @@ lv_obj_t *ui_Label10;
 lv_obj_t *ui_Label11;
 lv_obj_t *ui_Panel3;
 lv_obj_t *ui_Label5;
-void ui_event_Label1( lv_event_t * e);
 lv_obj_t *ui_Label1;
+lv_obj_t *ui_Image5;
 lv_obj_t *ui_Panel1;
 lv_obj_t *ui_Label4;
 lv_obj_t *ui_Label6;
+lv_obj_t *ui_Image3;
 lv_obj_t *ui_Panel5;
 lv_obj_t *ui_Label7;
 lv_obj_t *ui_Label8;
+lv_obj_t *ui_Image2;
+lv_obj_t *ui_Panel4;
+lv_obj_t *ui_Label9;
+lv_obj_t *ui_Label13;
+lv_obj_t *ui_fan;
+lv_obj_t *ui_Image6;
 
 // SCREEN: ui_LightSettingsScreen
 void ui_LightSettingsScreen_screen_init(void);
 lv_obj_t *ui_LightSettingsScreen;
+lv_obj_t *ui_Panel8;
 lv_obj_t *ui_Slider2;
+lv_obj_t *ui_Label14;
+lv_obj_t *ui_Label12;
+lv_obj_t *ui_Panel9;
 lv_obj_t *ui_Slider1;
+lv_obj_t *ui_Label16;
+lv_obj_t *ui_Label17;
 
 // SCREEN: ui_SettingsScreen
 void ui_SettingsScreen_screen_init(void);
@@ -66,8 +77,10 @@ lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
 const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
-const lv_img_dsc_t *ui_imgset_877854534[1] = {&ui_img_60476769};
+const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
 const lv_img_dsc_t *ui_imgset_sun[1] = {&ui_img_sun2_png};
+const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
+const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -85,7 +98,7 @@ PropertyAnimation_0_user_data->target = TargetObject;
 PropertyAnimation_0_user_data->val = -1;
 lv_anim_t PropertyAnimation_0;
 lv_anim_init(&PropertyAnimation_0);
-lv_anim_set_time(&PropertyAnimation_0, 1000);
+lv_anim_set_time(&PropertyAnimation_0, 1500);
 lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
 lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_image_angle );
 lv_anim_set_values(&PropertyAnimation_0, 0, 3600 );
@@ -111,8 +124,8 @@ lv_anim_init(&PropertyAnimation_0);
 lv_anim_set_time(&PropertyAnimation_0, 1000);
 lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
 lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_image_zoom );
-lv_anim_set_values(&PropertyAnimation_0, 0, 50 );
-lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_linear);
+lv_anim_set_values(&PropertyAnimation_0, 0, 30 );
+lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_ease_in);
 lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
 //lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
 lv_anim_set_playback_time(&PropertyAnimation_0, 1000);
@@ -153,12 +166,6 @@ void ui_event_Panel2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
       _ui_screen_change( ui_LightSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
-}
-}
-void ui_event_Label1( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_SCREEN_LOADED) {
-      fanspin_Animation(ui_fan, 0);
 }
 }
 void ui_event_SettingsScreen( lv_event_t * e) {
