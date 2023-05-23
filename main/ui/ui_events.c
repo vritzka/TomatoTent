@@ -3,8 +3,12 @@
 // LVGL version: 8.3.6
 // Project name: TT
 
+#include "ui_events.h"
 #include "ui.h"
-#include <math.h>   //these shouldnt be here, usually they go into header file (.h)
+#include <math.h>  
+#include "esp_log.h"
+
+static const char *TAG = "ui_events.c";
 
 //SplashScreen
 
@@ -122,4 +126,21 @@ void play_intro(lv_event_t * e)
     start_animation(ui_SplashScreen);
 }
 
-//
+/////////////////////////////////////
+/////// LightDurationScreen /////////
+/////////////////////////////////////
+
+static int light_duration_slider_value;
+static double_t light_duration;
+static float dark_duration;
+
+void light_duration_slider(lv_event_t * e) {
+	
+	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	light_duration_slider_value = lv_slider_get_value(target);
+	
+	light_duration = light_duration_slider_value / 2;
+	ESP_LOGI(TAG, "%d", light_duration_slider_value);
+	ESP_LOGI(TAG, "%9.7f", light_duration);
+	//ui_LightDurationLabel
+}

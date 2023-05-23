@@ -11,6 +11,7 @@ extern "C" {
 #endif
 
 void play_intro(lv_event_t * e);
+void light_duration_slider(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

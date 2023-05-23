@@ -56,12 +56,13 @@ extern lv_obj_t *ui_Label9;
 extern lv_obj_t *ui_Label13;
 extern lv_obj_t *ui_fan;
 extern lv_obj_t *ui_Image6;
-// SCREEN: ui_LightSettingsScreen
-void ui_LightSettingsScreen_screen_init(void);
-extern lv_obj_t *ui_LightSettingsScreen;
+// SCREEN: ui_LightDurationScreen
+void ui_LightDurationScreen_screen_init(void);
+extern lv_obj_t *ui_LightDurationScreen;
 extern lv_obj_t *ui_Panel8;
-extern lv_obj_t *ui_Slider2;
-extern lv_obj_t *ui_Label14;
+void ui_event_LightDurationSlider( lv_event_t * e);
+extern lv_obj_t *ui_LightDurationSlider;
+extern lv_obj_t *ui_LightDurationLabel;
 extern lv_obj_t *ui_Label12;
 extern lv_obj_t *ui_Panel9;
 extern lv_obj_t *ui_Slider1;

@@ -53,12 +53,13 @@ lv_obj_t *ui_Label13;
 lv_obj_t *ui_fan;
 lv_obj_t *ui_Image6;
 
-// SCREEN: ui_LightSettingsScreen
-void ui_LightSettingsScreen_screen_init(void);
-lv_obj_t *ui_LightSettingsScreen;
+// SCREEN: ui_LightDurationScreen
+void ui_LightDurationScreen_screen_init(void);
+lv_obj_t *ui_LightDurationScreen;
 lv_obj_t *ui_Panel8;
-lv_obj_t *ui_Slider2;
-lv_obj_t *ui_Label14;
+void ui_event_LightDurationSlider( lv_event_t * e);
+lv_obj_t *ui_LightDurationSlider;
+lv_obj_t *ui_LightDurationLabel;
 lv_obj_t *ui_Label12;
 lv_obj_t *ui_Panel9;
 lv_obj_t *ui_Slider1;
@@ -78,9 +79,9 @@ const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
 const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
 const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
+const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_sun[1] = {&ui_img_sun2_png};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
-const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -104,7 +105,7 @@ lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_image_ang
 lv_anim_set_values(&PropertyAnimation_0, 0, 3600 );
 lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_linear);
 lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
-//lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
+lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
 lv_anim_set_playback_time(&PropertyAnimation_0, 0);
 lv_anim_set_playback_delay(&PropertyAnimation_0, 0);
 lv_anim_set_repeat_count(&PropertyAnimation_0, LV_ANIM_REPEAT_INFINITE );
@@ -127,7 +128,7 @@ lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_image_zoo
 lv_anim_set_values(&PropertyAnimation_0, 0, 30 );
 lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_ease_in);
 lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
-//lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
+lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
 lv_anim_set_playback_time(&PropertyAnimation_0, 1000);
 lv_anim_set_playback_delay(&PropertyAnimation_0, 100);
 lv_anim_set_repeat_count(&PropertyAnimation_0, LV_ANIM_REPEAT_INFINITE );
@@ -165,7 +166,13 @@ lv_indev_wait_release(lv_indev_get_act());
 void ui_event_Panel2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( ui_LightSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+      _ui_screen_change( ui_LightDurationScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+}
+}
+void ui_event_LightDurationSlider( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      light_duration_slider( e );
 }
 }
 void ui_event_SettingsScreen( lv_event_t * e) {
@@ -192,7 +199,7 @@ lv_disp_set_theme(dispp, theme);
 ui_SplashScreen_screen_init();
 ui_LaunchScreen_screen_init();
 ui_HomeScreen_screen_init();
-ui_LightSettingsScreen_screen_init();
+ui_LightDurationScreen_screen_init();
 ui_SettingsScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_SplashScreen);

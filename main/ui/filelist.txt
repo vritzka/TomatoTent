@@ -1,7 +1,7 @@
 screens/ui_SplashScreen.c
 screens/ui_LaunchScreen.c
 screens/ui_HomeScreen.c
-screens/ui_LightSettingsScreen.c
+screens/ui_LightDurationScreen.c
 screens/ui_SettingsScreen.c
 ui.c
 ui_helpers.c
