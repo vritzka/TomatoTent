@@ -19,11 +19,12 @@ lv_obj_t *ui_SplashScreen;
 void ui_LaunchScreen_screen_init(void);
 lv_obj_t *ui_LaunchScreen;
 lv_obj_t *ui_Image1;
-void ui_event_StartNewGrow( lv_event_t * e);
-lv_obj_t *ui_StartNewGrow;
+void ui_event_StartNewGrowButton( lv_event_t * e);
+lv_obj_t *ui_StartNewGrowButton;
 lv_obj_t *ui_Label3;
-lv_obj_t *ui_DryAHarverst;
+lv_obj_t *ui_DryAHarverstButton;
 lv_obj_t *ui_Label2;
+lv_obj_t *ui_Label14;
 
 // SCREEN: ui_HomeScreen
 void ui_HomeScreen_screen_init(void);
@@ -59,12 +60,9 @@ lv_obj_t *ui_LightDurationScreen;
 lv_obj_t *ui_Panel8;
 void ui_event_LightDurationSlider( lv_event_t * e);
 lv_obj_t *ui_LightDurationSlider;
-lv_obj_t *ui_LightDurationLabel;
-lv_obj_t *ui_Label12;
-lv_obj_t *ui_Panel9;
-lv_obj_t *ui_Slider1;
-lv_obj_t *ui_Label16;
-lv_obj_t *ui_Label17;
+lv_obj_t *ui_LightDurationLightLabel;
+lv_obj_t *ui_LightDurationDarkLabel;
+lv_obj_t *ui_NowSlider;
 
 // SCREEN: ui_SettingsScreen
 void ui_SettingsScreen_screen_init(void);
@@ -79,6 +77,7 @@ const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
 const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
 const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
+const lv_img_dsc_t *ui_imgset_now_arrow_[1] = {&ui_img_now_arrow_2_png};
 const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_sun[1] = {&ui_img_sun2_png};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
@@ -146,7 +145,7 @@ if ( event_code == LV_EVENT_SCREEN_LOADED) {
       play_intro( e );
 }
 }
-void ui_event_StartNewGrow( lv_event_t * e) {
+void ui_event_StartNewGrowButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_OVER_TOP, 500, 0);

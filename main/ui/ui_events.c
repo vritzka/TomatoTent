@@ -3,12 +3,16 @@
 // LVGL version: 8.3.6
 // Project name: TT
 
+#include "lvgl.h"
 #include "ui_events.h"
 #include "ui.h"
 #include <math.h>  
 #include "esp_log.h"
+#include <stdio.h>
 
 static const char *TAG = "ui_events.c";
+
+static char str[12];
 
 //SplashScreen
 
@@ -131,7 +135,7 @@ void play_intro(lv_event_t * e)
 /////////////////////////////////////
 
 static int light_duration_slider_value;
-static double_t light_duration;
+static float_t light_duration;
 static float dark_duration;
 
 void light_duration_slider(lv_event_t * e) {
@@ -139,8 +143,10 @@ void light_duration_slider(lv_event_t * e) {
 	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 	light_duration_slider_value = lv_slider_get_value(target);
 	
-	light_duration = light_duration_slider_value / 2;
-	ESP_LOGI(TAG, "%d", light_duration_slider_value);
-	ESP_LOGI(TAG, "%9.7f", light_duration);
-	//ui_LightDurationLabel
+	light_duration = (float_t)light_duration_slider_value / 2;
+
+	ESP_LOGI(TAG, "%.1f", light_duration);
+	//fprintf(str, "%f", light_duration);
+	ftoa(light_duration, str, 1);
+	lv_label_set_text(ui_LightDurationLightLabel, str);
 }

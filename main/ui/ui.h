@@ -24,11 +24,12 @@ extern lv_obj_t *ui_SplashScreen;
 void ui_LaunchScreen_screen_init(void);
 extern lv_obj_t *ui_LaunchScreen;
 extern lv_obj_t *ui_Image1;
-void ui_event_StartNewGrow( lv_event_t * e);
-extern lv_obj_t *ui_StartNewGrow;
+void ui_event_StartNewGrowButton( lv_event_t * e);
+extern lv_obj_t *ui_StartNewGrowButton;
 extern lv_obj_t *ui_Label3;
-extern lv_obj_t *ui_DryAHarverst;
+extern lv_obj_t *ui_DryAHarverstButton;
 extern lv_obj_t *ui_Label2;
+extern lv_obj_t *ui_Label14;
 // SCREEN: ui_HomeScreen
 void ui_HomeScreen_screen_init(void);
 void ui_event_HomeScreen( lv_event_t * e);
@@ -62,12 +63,9 @@ extern lv_obj_t *ui_LightDurationScreen;
 extern lv_obj_t *ui_Panel8;
 void ui_event_LightDurationSlider( lv_event_t * e);
 extern lv_obj_t *ui_LightDurationSlider;
-extern lv_obj_t *ui_LightDurationLabel;
-extern lv_obj_t *ui_Label12;
-extern lv_obj_t *ui_Panel9;
-extern lv_obj_t *ui_Slider1;
-extern lv_obj_t *ui_Label16;
-extern lv_obj_t *ui_Label17;
+extern lv_obj_t *ui_LightDurationLightLabel;
+extern lv_obj_t *ui_LightDurationDarkLabel;
+extern lv_obj_t *ui_NowSlider;
 // SCREEN: ui_SettingsScreen
 void ui_SettingsScreen_screen_init(void);
 void ui_event_SettingsScreen( lv_event_t * e);
@@ -86,6 +84,7 @@ LV_IMG_DECLARE( ui_img_dew_png);   // assets/dew.png
 LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
+LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png

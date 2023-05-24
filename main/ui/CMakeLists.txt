@@ -13,6 +13,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_1142205948.c
     images/ui_img_wifi_png.c
     images/ui_img_303216376.c
+    images/ui_img_now_arrow_2_png.c
     images/ui_img_bg2_png.c
     images/ui_img_1669444289.c
     images/ui_img_182264864.c
