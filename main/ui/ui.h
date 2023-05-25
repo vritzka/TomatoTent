@@ -29,18 +29,17 @@ extern lv_obj_t *ui_StartNewGrowButton;
 extern lv_obj_t *ui_Label3;
 extern lv_obj_t *ui_DryAHarverstButton;
 extern lv_obj_t *ui_Label2;
+extern lv_obj_t *ui_Image10;
 extern lv_obj_t *ui_Label14;
+extern lv_obj_t *ui_Image7;
+extern lv_obj_t *ui_Label11;
 // SCREEN: ui_HomeScreen
 void ui_HomeScreen_screen_init(void);
 void ui_event_HomeScreen( lv_event_t * e);
 extern lv_obj_t *ui_HomeScreen;
 extern lv_obj_t *ui_sun;
-void ui_event_Panel2( lv_event_t * e);
-extern lv_obj_t *ui_Panel2;
-extern lv_obj_t *ui_Bar2;
-extern lv_obj_t *ui_Label10;
-extern lv_obj_t *ui_Label11;
-extern lv_obj_t *ui_Panel3;
+void ui_event_TemperaturePanel( lv_event_t * e);
+extern lv_obj_t *ui_TemperaturePanel;
 extern lv_obj_t *ui_Label5;
 extern lv_obj_t *ui_Label1;
 extern lv_obj_t *ui_Image5;
@@ -57,27 +56,39 @@ extern lv_obj_t *ui_Label9;
 extern lv_obj_t *ui_Label13;
 extern lv_obj_t *ui_fan;
 extern lv_obj_t *ui_Image6;
+extern lv_obj_t *ui_DayCounterLabel;
+extern lv_obj_t *ui_Label10;
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
+void ui_event_LightDurationScreen( lv_event_t * e);
 extern lv_obj_t *ui_LightDurationScreen;
 extern lv_obj_t *ui_Panel8;
 void ui_event_LightDurationSlider( lv_event_t * e);
 extern lv_obj_t *ui_LightDurationSlider;
+extern lv_obj_t *ui_NowSlider;
+extern lv_obj_t *ui_Image8;
+extern lv_obj_t *ui_Image9;
+extern lv_obj_t *ui_ArrowDown;
+extern lv_obj_t *ui_ArrowUp;
 extern lv_obj_t *ui_LightDurationLightLabel;
 extern lv_obj_t *ui_LightDurationDarkLabel;
-extern lv_obj_t *ui_NowSlider;
-// SCREEN: ui_SettingsScreen
-void ui_SettingsScreen_screen_init(void);
-void ui_event_SettingsScreen( lv_event_t * e);
-extern lv_obj_t *ui_SettingsScreen;
+// SCREEN: ui_LEDBrightnessScreen
+void ui_LEDBrightnessScreen_screen_init(void);
+void ui_event_LEDBrightnessScreen( lv_event_t * e);
+extern lv_obj_t *ui_LEDBrightnessScreen;
+extern lv_obj_t *ui_LCDBrightnessLabel;
+extern lv_obj_t *ui_arrowdown1;
+extern lv_obj_t *ui_Label12;
+extern lv_obj_t *ui_Image4;
 extern lv_obj_t *ui_Panel6;
 void ui_event_Slider4( lv_event_t * e);
 extern lv_obj_t *ui_Slider4;
-extern lv_obj_t *ui_LCDBrightness;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_tomato_png);   // assets/tomato.png
-LV_IMG_DECLARE( ui_img_sun2_png);   // assets/sun2.png
+LV_IMG_DECLARE( ui_img_dry_png);   // assets/dry.png
+LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png
+LV_IMG_DECLARE( ui_img_791711567);   // assets/sun-3.png
 LV_IMG_DECLARE( ui_img_1484485426);   // assets/thermometer-2.png
 LV_IMG_DECLARE( ui_img_humidity_png);   // assets/humidity.png
 LV_IMG_DECLARE( ui_img_dew_png);   // assets/dew.png
@@ -85,10 +96,16 @@ LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
+LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
+LV_IMG_DECLARE( ui_img_upload_png);   // assets/upload.png
+LV_IMG_DECLARE( ui_img_1756057095);   // assets/led-light-3.png
+LV_IMG_DECLARE( ui_img_320680866);   // assets/led-light-2.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
 LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
+LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
+LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
 
 void ui_init(void);
 

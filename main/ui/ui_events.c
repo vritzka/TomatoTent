@@ -12,7 +12,7 @@
 
 static const char *TAG = "ui_events.c";
 
-static char str[12];
+//static char str[12];
 
 //SplashScreen
 
@@ -147,6 +147,6 @@ void light_duration_slider(lv_event_t * e) {
 
 	ESP_LOGI(TAG, "%.1f", light_duration);
 	//fprintf(str, "%f", light_duration);
-	ftoa(light_duration, str, 1);
-	lv_label_set_text(ui_LightDurationLightLabel, str);
+	
+	//lv_label_set_text(ui_LightDurationLightLabel, );
 }
