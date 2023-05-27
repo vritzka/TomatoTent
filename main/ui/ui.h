@@ -16,23 +16,21 @@ extern "C" {
 #include "ui_events.h"
 void fanspin_Animation( lv_obj_t *TargetObject, int delay);
 void Gentle_rock_Animation( lv_obj_t *TargetObject, int delay);
+void startGrowButtonAppear_Animation( lv_obj_t *TargetObject, int delay);
+void dryHarvestButtonAppear_Animation( lv_obj_t *TargetObject, int delay);
+void moveTomato_Animation( lv_obj_t *TargetObject, int delay);
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
 void ui_event_SplashScreen( lv_event_t * e);
 extern lv_obj_t *ui_SplashScreen;
-// SCREEN: ui_LaunchScreen
-void ui_LaunchScreen_screen_init(void);
-extern lv_obj_t *ui_LaunchScreen;
-extern lv_obj_t *ui_Image1;
 void ui_event_StartNewGrowButton( lv_event_t * e);
 extern lv_obj_t *ui_StartNewGrowButton;
 extern lv_obj_t *ui_Label3;
+extern lv_obj_t *ui_Image7;
 extern lv_obj_t *ui_DryAHarverstButton;
 extern lv_obj_t *ui_Label2;
 extern lv_obj_t *ui_Image10;
-extern lv_obj_t *ui_Label14;
-extern lv_obj_t *ui_Image7;
-extern lv_obj_t *ui_Label11;
+extern lv_obj_t *ui_tomato;
 // SCREEN: ui_HomeScreen
 void ui_HomeScreen_screen_init(void);
 void ui_event_HomeScreen( lv_event_t * e);
@@ -78,16 +76,27 @@ void ui_event_LEDBrightnessScreen( lv_event_t * e);
 extern lv_obj_t *ui_LEDBrightnessScreen;
 extern lv_obj_t *ui_LCDBrightnessLabel;
 extern lv_obj_t *ui_arrowdown1;
+extern lv_obj_t *ui_arrowdown3;
 extern lv_obj_t *ui_Label12;
 extern lv_obj_t *ui_Image4;
 extern lv_obj_t *ui_Panel6;
 void ui_event_Slider4( lv_event_t * e);
 extern lv_obj_t *ui_Slider4;
+// SCREEN: ui_DayCounterScreen
+void ui_DayCounterScreen_screen_init(void);
+void ui_event_DayCounterScreen( lv_event_t * e);
+extern lv_obj_t *ui_DayCounterScreen;
+extern lv_obj_t *ui_Label11;
+extern lv_obj_t *ui_ImgButton2;
+extern lv_obj_t *ui_ImgButton1;
+extern lv_obj_t *ui_Label15;
+extern lv_obj_t *ui_Image1;
+extern lv_obj_t *ui_arrowdown2;
 extern lv_obj_t *ui____initial_actions0;
 
-LV_IMG_DECLARE( ui_img_tomato_png);   // assets/tomato.png
-LV_IMG_DECLARE( ui_img_dry_png);   // assets/dry.png
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png
+LV_IMG_DECLARE( ui_img_dry_png);   // assets/dry.png
+LV_IMG_DECLARE( ui_img_tomato_png);   // assets/tomato.png
 LV_IMG_DECLARE( ui_img_791711567);   // assets/sun-3.png
 LV_IMG_DECLARE( ui_img_1484485426);   // assets/thermometer-2.png
 LV_IMG_DECLARE( ui_img_humidity_png);   // assets/humidity.png
@@ -100,6 +109,9 @@ LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
 LV_IMG_DECLARE( ui_img_upload_png);   // assets/upload.png
 LV_IMG_DECLARE( ui_img_1756057095);   // assets/led-light-3.png
 LV_IMG_DECLARE( ui_img_320680866);   // assets/led-light-2.png
+LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
+LV_IMG_DECLARE( ui_img_1749885216);   // assets/chevron-downwards-arrow.png
+LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png

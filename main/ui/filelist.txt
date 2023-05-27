@@ -1,13 +1,13 @@
 screens/ui_SplashScreen.c
-screens/ui_LaunchScreen.c
 screens/ui_HomeScreen.c
 screens/ui_LightDurationScreen.c
 screens/ui_LEDBrightnessScreen.c
+screens/ui_DayCounterScreen.c
 ui.c
 ui_helpers.c
-images/ui_img_tomato_png.c
-images/ui_img_dry_png.c
 images/ui_img_plant_png.c
+images/ui_img_dry_png.c
+images/ui_img_tomato_png.c
 images/ui_img_791711567.c
 images/ui_img_1484485426.c
 images/ui_img_humidity_png.c
@@ -20,6 +20,9 @@ images/ui_img_432815713.c
 images/ui_img_upload_png.c
 images/ui_img_1756057095.c
 images/ui_img_320680866.c
+images/ui_img_2060199463.c
+images/ui_img_1749885216.c
+images/ui_img_appointment_png.c
 images/ui_img_bg2_png.c
 images/ui_img_1669444289.c
 images/ui_img_182264864.c

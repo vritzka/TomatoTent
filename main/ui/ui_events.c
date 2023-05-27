@@ -27,7 +27,7 @@ typedef struct {
 
 my_timer_context_t my_tim_ctx;
 lv_obj_t *arc[3];
-lv_obj_t *img_logo;
+//lv_obj_t *img_logo;
 lv_obj_t *img_text = NULL;
 lv_color_t arc_color[] = {
     LV_COLOR_MAKE(0, 116, 0),
@@ -71,15 +71,14 @@ void anim_timer_cb(lv_timer_t *timer)
     // Move images when arc animation finished
     if ((count >= 100) && (count <= 180)) {
         lv_coord_t offset = (sinf((count - 140) * 2.25f / 90.0f) + 1) * 20.0f;
-        lv_obj_align(img_logo, LV_ALIGN_CENTER, 0, -offset);
-        lv_obj_align(img_text, LV_ALIGN_CENTER, 0, 2 * offset);
+        lv_obj_align(img_text, LV_ALIGN_CENTER, 0, -2.8 * offset);
         lv_obj_set_style_img_opa(img_text, offset / 40.0f * 255, 0);
     }
 
     // Delete timer when all animation finished
     if ((count += 5) == 220) {
         lv_timer_del(timer);
-        lv_scr_load_anim(ui_LaunchScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1500, 2000, false);
+        
     } else {
         timer_ctx->count_val = count;
     }
@@ -87,8 +86,6 @@ void anim_timer_cb(lv_timer_t *timer)
 
 void start_animation(lv_obj_t *scr)
 {
-    // Align image
-    lv_obj_center(img_logo);
 
     // Create arcs
     for (size_t i = 0; i < sizeof(arc) / sizeof(arc[0]); i++) {
@@ -122,11 +119,6 @@ void start_animation(lv_obj_t *scr)
 
 void play_intro(lv_event_t * e)
 {
-    // Create image
-    img_logo = lv_img_create(ui_SplashScreen);
-    lv_img_set_src(img_logo, &ui_img_tomato_png);
-
-
     start_animation(ui_SplashScreen);
 }
 

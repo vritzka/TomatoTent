@@ -12,7 +12,7 @@ lv_obj_clear_flag( ui_LightDurationScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flag
 lv_obj_set_style_bg_color(ui_LightDurationScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LightDurationScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_grad_color(ui_LightDurationScreen, lv_color_hex(0x0A002D), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_main_stop(ui_LightDurationScreen, 120, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_main_stop(ui_LightDurationScreen, 110, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_grad_stop(ui_LightDurationScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_grad_dir(ui_LightDurationScreen, LV_GRAD_DIR_HOR, LV_PART_MAIN| LV_STATE_DEFAULT);
 
