@@ -27,7 +27,6 @@ typedef struct {
 
 my_timer_context_t my_tim_ctx;
 lv_obj_t *arc[3];
-//lv_obj_t *img_logo;
 lv_obj_t *img_text = NULL;
 lv_color_t arc_color[] = {
     LV_COLOR_MAKE(0, 116, 0),
