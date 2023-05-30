@@ -3,6 +3,11 @@ SET(SOURCES screens/ui_SplashScreen.c
     screens/ui_LightDurationScreen.c
     screens/ui_LEDBrightnessScreen.c
     screens/ui_DayCounterScreen.c
+    screens/ui_GraphScreen.c
+    screens/ui_FanSettingsScreen.c
+    screens/ui_ClimateControlScreen.c
+    screens/ui_WifiSettingsScreen.c
+    screens/ui_GeneralSettingsScreen.c
     ui.c
     ui_helpers.c
     images/ui_img_plant_png.c
@@ -13,20 +18,26 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_humidity_png.c
     images/ui_img_dew_png.c
     images/ui_img_1142205948.c
+    images/ui_img_upload_png.c
     images/ui_img_wifi_png.c
     images/ui_img_303216376.c
     images/ui_img_now_arrow_2_png.c
     images/ui_img_432815713.c
-    images/ui_img_upload_png.c
     images/ui_img_1756057095.c
     images/ui_img_320680866.c
     images/ui_img_2060199463.c
     images/ui_img_1749885216.c
     images/ui_img_appointment_png.c
+    images/ui_img_harvest_png.c
+    images/ui_img_1668913270.c
+    images/ui_img_60476769.c
+    images/ui_img_261459337.c
+    images/ui_img_953604683.c
+    images/ui_img_refresh_png.c
+    images/ui_img_settings_png.c
     images/ui_img_bg2_png.c
     images/ui_img_1669444289.c
     images/ui_img_182264864.c
-    images/ui_img_60476769.c
     images/ui_img_1180469587.c
     images/ui_img_290017612.c)
 
