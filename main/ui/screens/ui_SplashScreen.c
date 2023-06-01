@@ -91,6 +91,7 @@ lv_obj_add_flag( ui_tomato, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_tomato, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 lv_obj_add_event_cb(ui_StartNewGrowButton, ui_event_StartNewGrowButton, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_DryAHarverstButton, ui_event_DryAHarverstButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_SplashScreen, ui_event_SplashScreen, LV_EVENT_ALL, NULL);
 
 }

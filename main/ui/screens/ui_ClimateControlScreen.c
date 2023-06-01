@@ -34,7 +34,7 @@ lv_obj_clear_flag( ui_Image14, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_Panel3 = lv_obj_create(ui_ClimateControlScreen);
 lv_obj_set_width( ui_Panel3, 220);
 lv_obj_set_height( ui_Panel3, 120);
-lv_obj_set_x( ui_Panel3, -118 );
+lv_obj_set_x( ui_Panel3, -117 );
 lv_obj_set_y( ui_Panel3, 73 );
 lv_obj_set_align( ui_Panel3, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -68,8 +68,8 @@ lv_obj_set_style_text_font(ui_Label18, &lv_font_montserrat_16, LV_PART_MAIN| LV_
 ui_Panel7 = lv_obj_create(ui_ClimateControlScreen);
 lv_obj_set_width( ui_Panel7, 220);
 lv_obj_set_height( ui_Panel7, 120);
-lv_obj_set_x( ui_Panel7, 121 );
-lv_obj_set_y( ui_Panel7, 70 );
+lv_obj_set_x( ui_Panel7, 117 );
+lv_obj_set_y( ui_Panel7, 73 );
 lv_obj_set_align( ui_Panel7, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel7, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );

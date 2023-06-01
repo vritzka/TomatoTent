@@ -21,6 +21,7 @@ void ui_event_StartNewGrowButton( lv_event_t * e);
 lv_obj_t *ui_StartNewGrowButton;
 lv_obj_t *ui_Label3;
 lv_obj_t *ui_Image7;
+void ui_event_DryAHarverstButton( lv_event_t * e);
 lv_obj_t *ui_DryAHarverstButton;
 lv_obj_t *ui_Label2;
 lv_obj_t *ui_Image10;
@@ -80,18 +81,18 @@ void ui_event_LEDBrightnessScreen( lv_event_t * e);
 lv_obj_t *ui_LEDBrightnessScreen;
 lv_obj_t *ui_LCDBrightnessLabel;
 lv_obj_t *ui_arrowdown1;
-lv_obj_t *ui_arrowdown3;
 lv_obj_t *ui_Label12;
 lv_obj_t *ui_Image4;
 lv_obj_t *ui_Panel6;
 void ui_event_Slider4( lv_event_t * e);
 lv_obj_t *ui_Slider4;
+lv_obj_t *ui_arrowdown2;
 
 // SCREEN: ui_DayCounterScreen
 void ui_DayCounterScreen_screen_init(void);
+void ui_event_DayCounterScreen( lv_event_t * e);
 lv_obj_t *ui_DayCounterScreen;
 lv_obj_t *ui_Label11;
-lv_obj_t *ui_ImgButton2;
 lv_obj_t *ui_ImgButton1;
 lv_obj_t *ui_Label15;
 lv_obj_t *ui_Image1;
@@ -99,7 +100,9 @@ lv_obj_t *ui_Panel10;
 lv_obj_t *ui_Image15;
 lv_obj_t *ui_Button1;
 lv_obj_t *ui_Label22;
+void ui_event_ImgButton9( lv_event_t * e);
 lv_obj_t *ui_ImgButton9;
+lv_obj_t *ui_ImgButton8;
 
 // SCREEN: ui_GraphScreen
 void ui_GraphScreen_screen_init(void);
@@ -161,7 +164,6 @@ lv_obj_t *ui_ImgButton7;
 void ui_GeneralSettingsScreen_screen_init(void);
 void ui_event_GeneralSettingsScreen( lv_event_t * e);
 lv_obj_t *ui_GeneralSettingsScreen;
-lv_obj_t *ui_Image16;
 lv_obj_t *ui_Label23;
 lv_obj_t *ui_Panel12;
 lv_obj_t *ui_Label24;
@@ -175,6 +177,7 @@ lv_obj_t *ui_Panel17;
 lv_obj_t *ui_Switch3;
 lv_obj_t *ui_Label27;
 lv_obj_t *ui_Label16;
+lv_obj_t *ui_Image20;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
@@ -348,6 +351,12 @@ if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
 }
 }
+void ui_event_DryAHarverstButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+}
+}
 void ui_event_HomeScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_LOADED) {
@@ -382,7 +391,7 @@ if ( event_code == LV_EVENT_LONG_PRESSED) {
 void ui_event_Panel5( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0);
+      _ui_screen_change( ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
 void ui_event_Panel4( lv_event_t * e) {
@@ -394,7 +403,7 @@ if ( event_code == LV_EVENT_LONG_PRESSED) {
 void ui_event_Panel11( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0);
+      _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
 void ui_event_ImgButton3( lv_event_t * e) {
@@ -435,6 +444,19 @@ void ui_event_Slider4( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       _ui_slider_set_text_value( ui_LCDBrightnessLabel, target, "", "%");
+}
+}
+void ui_event_DayCounterScreen( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
+lv_indev_wait_release(lv_indev_get_act());
+      _ui_screen_change( ui_LEDBrightnessScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0);
+}
+}
+void ui_event_ImgButton9( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
 void ui_event_GraphScreen( lv_event_t * e) {

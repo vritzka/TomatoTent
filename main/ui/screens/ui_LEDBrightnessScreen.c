@@ -34,19 +34,6 @@ lv_img_set_angle(ui_arrowdown1,900);
 lv_obj_set_style_img_recolor(ui_arrowdown1, lv_color_hex(0x145B0A), LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor_opa(ui_arrowdown1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_arrowdown3 = lv_img_create(ui_LEDBrightnessScreen);
-lv_img_set_src(ui_arrowdown3, &ui_img_upload_png);
-lv_obj_set_width( ui_arrowdown3, LV_SIZE_CONTENT);  /// 32
-lv_obj_set_height( ui_arrowdown3, LV_SIZE_CONTENT);   /// 32
-lv_obj_set_x( ui_arrowdown3, -221 );
-lv_obj_set_y( ui_arrowdown3, 0 );
-lv_obj_set_align( ui_arrowdown3, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_arrowdown3, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
-lv_obj_clear_flag( ui_arrowdown3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_img_set_angle(ui_arrowdown3,2700);
-lv_obj_set_style_img_recolor(ui_arrowdown3, lv_color_hex(0x145B0A), LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_img_recolor_opa(ui_arrowdown3, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-
 ui_Label12 = lv_label_create(ui_LEDBrightnessScreen);
 lv_obj_set_width( ui_Label12, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label12, LV_SIZE_CONTENT);   /// 1
@@ -97,6 +84,19 @@ lv_obj_set_style_bg_opa(ui_Slider4, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_Slider4, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Slider4, 0, LV_PART_KNOB| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_img_src( ui_Slider4, &ui_img_320680866, LV_PART_KNOB | LV_STATE_DEFAULT );
+
+ui_arrowdown2 = lv_img_create(ui_LEDBrightnessScreen);
+lv_img_set_src(ui_arrowdown2, &ui_img_upload_png);
+lv_obj_set_width( ui_arrowdown2, LV_SIZE_CONTENT);  /// 32
+lv_obj_set_height( ui_arrowdown2, LV_SIZE_CONTENT);   /// 32
+lv_obj_set_x( ui_arrowdown2, -223 );
+lv_obj_set_y( ui_arrowdown2, 0 );
+lv_obj_set_align( ui_arrowdown2, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_arrowdown2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_arrowdown2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_img_set_angle(ui_arrowdown2,2700);
+lv_obj_set_style_img_recolor(ui_arrowdown2, lv_color_hex(0x145B0A), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_arrowdown2, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_Slider4, ui_event_Slider4, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_LEDBrightnessScreen, ui_event_LEDBrightnessScreen, LV_EVENT_ALL, NULL);

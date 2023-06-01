@@ -120,7 +120,7 @@ lv_obj_set_height( ui_Label7, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Label7, 10 );
 lv_obj_set_y( ui_Label7, -1 );
 lv_obj_set_align( ui_Label7, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label7,"55");
+lv_label_set_text(ui_Label7,"1.6");
 lv_obj_set_style_text_font(ui_Label7, &lv_font_montserrat_44, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Label8 = lv_label_create(ui_Panel5);

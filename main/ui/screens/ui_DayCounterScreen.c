@@ -21,17 +21,6 @@ lv_obj_set_align( ui_Label11, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label11,"Day Counter");
 lv_obj_set_style_text_font(ui_Label11, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_ImgButton2 = lv_imgbtn_create(ui_DayCounterScreen);
-lv_imgbtn_set_src(ui_ImgButton2, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_2060199463, NULL);
-lv_imgbtn_set_src(ui_ImgButton2, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_2060199463, NULL);
-lv_obj_set_height( ui_ImgButton2, 64);
-lv_obj_set_width( ui_ImgButton2, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_x( ui_ImgButton2, 113 );
-lv_obj_set_y( ui_ImgButton2, -65 );
-lv_obj_set_align( ui_ImgButton2, LV_ALIGN_CENTER );
-lv_obj_set_style_img_recolor(ui_ImgButton2, lv_color_hex(0x242424), LV_PART_MAIN| LV_STATE_PRESSED);
-lv_obj_set_style_img_recolor_opa(ui_ImgButton2, 255, LV_PART_MAIN| LV_STATE_PRESSED);
-
 ui_ImgButton1 = lv_imgbtn_create(ui_DayCounterScreen);
 lv_imgbtn_set_src(ui_ImgButton1, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1749885216, NULL);
 lv_imgbtn_set_src(ui_ImgButton1, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_1749885216, NULL);
@@ -116,5 +105,18 @@ lv_obj_set_y( ui_ImgButton9, -126 );
 lv_obj_set_align( ui_ImgButton9, LV_ALIGN_CENTER );
 lv_obj_set_style_img_recolor(ui_ImgButton9, lv_color_hex(0xC3C3C3), LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor_opa(ui_ImgButton9, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_ImgButton8 = lv_imgbtn_create(ui_DayCounterScreen);
+lv_imgbtn_set_src(ui_ImgButton8, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_2060199463, NULL);
+lv_obj_set_height( ui_ImgButton8, 64);
+lv_obj_set_width( ui_ImgButton8, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_x( ui_ImgButton8, 113 );
+lv_obj_set_y( ui_ImgButton8, -65 );
+lv_obj_set_align( ui_ImgButton8, LV_ALIGN_CENTER );
+lv_obj_set_style_img_recolor(ui_ImgButton8, lv_color_hex(0x242424), LV_PART_MAIN| LV_STATE_PRESSED);
+lv_obj_set_style_img_recolor_opa(ui_ImgButton8, 255, LV_PART_MAIN| LV_STATE_PRESSED);
+
+lv_obj_add_event_cb(ui_ImgButton9, ui_event_ImgButton9, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_DayCounterScreen, ui_event_DayCounterScreen, LV_EVENT_ALL, NULL);
 
 }
