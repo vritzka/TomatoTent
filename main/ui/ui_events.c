@@ -27,7 +27,7 @@ typedef struct {
 
 my_timer_context_t my_tim_ctx;
 lv_obj_t *arc[3];
-lv_obj_t *img_text = NULL;
+ lv_obj_t *img_text = NULL;
 lv_color_t arc_color[] = {
     LV_COLOR_MAKE(0, 116, 0),
     LV_COLOR_MAKE(0, 162, 0),
@@ -135,9 +135,10 @@ void light_duration_slider(lv_event_t * e) {
 	light_duration_slider_value = lv_slider_get_value(target);
 	
 	light_duration = (float_t)light_duration_slider_value / 2;
+	dark_duration = 24 - light_duration;
 
 	ESP_LOGI(TAG, "%.1f", light_duration);
-	//fprintf(str, "%f", light_duration);
 	
-	//lv_label_set_text(ui_LightDurationLightLabel, );
+	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
+	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );
 }

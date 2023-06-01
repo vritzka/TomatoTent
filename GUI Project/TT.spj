@@ -6584,82 +6584,6 @@
                 "strtype": "PANEL/Style_scrollbar",
                 "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
                 "InheritedType": 11
-              },
-              {
-                "disabled": false,
-                "nid": 1862245582,
-                "strtype": "_event/EventHandler",
-                "strval": "LONG_PRESSED",
-                "childs": [
-                  {
-                    "nid": -1534507216,
-                    "strtype": "_custom/name",
-                    "strval": "Event9",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 708618433,
-                    "strtype": "_custom/condition_C",
-                    "strval": "",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 433172942,
-                    "strtype": "_custom/condition_P",
-                    "strval": "",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 1874136067,
-                    "strtype": "_event/action",
-                    "strval": "CHANGE SCREEN",
-                    "childs": [
-                      {
-                        "nid": -834141399,
-                        "strtype": "CHANGE SCREEN/Name",
-                        "strval": "CHANGE SCREEN",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": -2054243651,
-                        "strtype": "CHANGE SCREEN/Call",
-                        "strval": "ChangeScreen( <{Screen_to}>, lv.SCR_LOAD_ANIM.<{Fade_mode}>, <{Speed}>, <{Delay}>)",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 139390349,
-                        "strtype": "CHANGE SCREEN/CallC",
-                        "strval": "_ui_screen_change( <{Screen_to}>, LV_SCR_LOAD_ANIM_<{Fade_mode}>, <{Speed}>, <{Delay}>);",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 869122710,
-                        "strtype": "CHANGE SCREEN/Screen_to",
-                        "strval": "GUID43678069-1032494S3712148",
-                        "InheritedType": 9
-                      },
-                      {
-                        "nid": 625931087,
-                        "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
-                        "InheritedType": 3
-                      },
-                      {
-                        "nid": 2010494007,
-                        "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 500,
-                        "InheritedType": 6
-                      },
-                      {
-                        "nid": -98133270,
-                        "strtype": "CHANGE SCREEN/Delay",
-                        "InheritedType": 6
-                      }
-                    ],
-                    "InheritedType": 10
-                  }
-                ],
-                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "PANEL"
@@ -7805,7 +7729,7 @@
                           255,
                           255,
                           255,
-                          20
+                          50
                         ],
                         "InheritedType": 7
                       }
@@ -12351,8 +12275,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -74,
-                  -71
+                  -68,
+                  -128
                 ],
                 "InheritedType": 7
               },
@@ -12566,7 +12490,7 @@
               {
                 "nid": 247820118,
                 "strtype": "LABEL/Text",
-                "strval": "12 hrs",
+                "strval": "12 HRS",
                 "InheritedType": 10
               },
               {
@@ -12640,8 +12564,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  68,
-                  -69
+                  71,
+                  -50
                 ],
                 "InheritedType": 7
               },
@@ -12855,7 +12779,7 @@
               {
                 "nid": -958215388,
                 "strtype": "LABEL/Text",
-                "strval": "12 hrs",
+                "strval": "12 HRS",
                 "InheritedType": 10
               },
               {
@@ -36228,7 +36152,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 29,
+    "backup_cnt": 31,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

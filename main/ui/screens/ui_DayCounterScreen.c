@@ -26,8 +26,8 @@ lv_imgbtn_set_src(ui_ImgButton1, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1749885
 lv_imgbtn_set_src(ui_ImgButton1, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_1749885216, NULL);
 lv_obj_set_height( ui_ImgButton1, 64);
 lv_obj_set_width( ui_ImgButton1, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_x( ui_ImgButton1, 113 );
-lv_obj_set_y( ui_ImgButton1, 65 );
+lv_obj_set_x( ui_ImgButton1, 138 );
+lv_obj_set_y( ui_ImgButton1, 66 );
 lv_obj_set_align( ui_ImgButton1, LV_ALIGN_CENTER );
 lv_obj_set_style_img_recolor(ui_ImgButton1, lv_color_hex(0x242424), LV_PART_MAIN| LV_STATE_PRESSED);
 lv_obj_set_style_img_recolor_opa(ui_ImgButton1, 255, LV_PART_MAIN| LV_STATE_PRESSED);
@@ -110,8 +110,8 @@ ui_ImgButton8 = lv_imgbtn_create(ui_DayCounterScreen);
 lv_imgbtn_set_src(ui_ImgButton8, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_2060199463, NULL);
 lv_obj_set_height( ui_ImgButton8, 64);
 lv_obj_set_width( ui_ImgButton8, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_x( ui_ImgButton8, 113 );
-lv_obj_set_y( ui_ImgButton8, -65 );
+lv_obj_set_x( ui_ImgButton8, 85 );
+lv_obj_set_y( ui_ImgButton8, -50 );
 lv_obj_set_align( ui_ImgButton8, LV_ALIGN_CENTER );
 lv_obj_set_style_img_recolor(ui_ImgButton8, lv_color_hex(0x242424), LV_PART_MAIN| LV_STATE_PRESSED);
 lv_obj_set_style_img_recolor_opa(ui_ImgButton8, 255, LV_PART_MAIN| LV_STATE_PRESSED);
