@@ -42,7 +42,6 @@ lv_obj_t *ui_Panel1;
 lv_obj_t *ui_Label4;
 lv_obj_t *ui_Label6;
 lv_obj_t *ui_Image3;
-void ui_event_Panel5( lv_event_t * e);
 lv_obj_t *ui_Panel5;
 lv_obj_t *ui_Label7;
 lv_obj_t *ui_Label8;
@@ -344,6 +343,9 @@ if ( event_code == LV_EVENT_SCREEN_LOADED) {
       dryHarvestButtonAppear_Animation(ui_DryAHarverstButton, 2400);
       moveTomato_Animation(ui_tomato, 2000);
 }
+if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
+      init_tomatotent( e );
+}
 }
 void ui_event_StartNewGrowButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
@@ -361,7 +363,6 @@ void ui_event_HomeScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_LOADED) {
       fanspin_Animation(ui_fan, 1000);
-      Gentle_rock_Animation(ui_sun, 0);
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
@@ -383,12 +384,6 @@ if ( event_code == LV_EVENT_LONG_PRESSED) {
 }
 }
 void ui_event_Panel1( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
-}
-}
-void ui_event_Panel5( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
       _ui_screen_change( ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
@@ -421,6 +416,9 @@ lv_indev_wait_release(lv_indev_get_act());
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0);
+}
+if ( event_code == LV_EVENT_SCREEN_UNLOADED) {
+      save_light_duration_screen( e );
 }
 }
 void ui_event_LightDurationSlider( lv_event_t * e) {

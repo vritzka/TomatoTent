@@ -123,8 +123,8 @@ lv_obj_set_style_img_recolor_opa(ui_ArrowUp, 255, LV_PART_MAIN| LV_STATE_DEFAULT
 ui_LightDurationLightLabel = lv_label_create(ui_LightDurationScreen);
 lv_obj_set_width( ui_LightDurationLightLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_LightDurationLightLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_LightDurationLightLabel, -68 );
-lv_obj_set_y( ui_LightDurationLightLabel, -128 );
+lv_obj_set_x( ui_LightDurationLightLabel, -57 );
+lv_obj_set_y( ui_LightDurationLightLabel, -102 );
 lv_obj_set_align( ui_LightDurationLightLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_LightDurationLightLabel,"12 HRS");
 lv_obj_set_style_text_font(ui_LightDurationLightLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -132,8 +132,8 @@ lv_obj_set_style_text_font(ui_LightDurationLightLabel, &lv_font_montserrat_20, L
 ui_LightDurationDarkLabel = lv_label_create(ui_LightDurationScreen);
 lv_obj_set_width( ui_LightDurationDarkLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_LightDurationDarkLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_LightDurationDarkLabel, 71 );
-lv_obj_set_y( ui_LightDurationDarkLabel, -50 );
+lv_obj_set_x( ui_LightDurationDarkLabel, 67 );
+lv_obj_set_y( ui_LightDurationDarkLabel, -66 );
 lv_obj_set_align( ui_LightDurationDarkLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_LightDurationDarkLabel,"12 HRS");
 lv_obj_set_style_text_font(ui_LightDurationDarkLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);

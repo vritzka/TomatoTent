@@ -9,10 +9,17 @@
 #include <math.h>  
 #include "esp_log.h"
 #include <stdio.h>
+#include "esp_system.h"
+#include "esp_err.h"
+#include "nvs_flash.h"
+#include "nvs.h"
 
 static const char *TAG = "ui_events.c";
+nvs_handle_t storage_handle;
+esp_err_t err;
 
 //static char str[12];
+
 
 //SplashScreen
 
@@ -124,10 +131,10 @@ void play_intro(lv_event_t * e)
 /////////////////////////////////////
 /////// LightDurationScreen /////////
 /////////////////////////////////////
-
-static int light_duration_slider_value;
+static uint16_t light_duration_slider_value;
 static float_t light_duration;
-static float dark_duration;
+static float_t dark_duration;
+static uint16_t now_slider_value;
 
 void light_duration_slider(lv_event_t * e) {
 	
@@ -137,8 +144,56 @@ void light_duration_slider(lv_event_t * e) {
 	light_duration = (float_t)light_duration_slider_value / 2;
 	dark_duration = 24 - light_duration;
 
-	ESP_LOGI(TAG, "%.1f", light_duration);
+	//ESP_LOGI(TAG, "%.1f", light_duration);
 	
 	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
 	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );
+}
+
+void save_light_duration_screen(lv_event_t * e)
+{
+    err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else {
+		
+		err = nvs_set_u16(storage_handle, "light_slider", light_duration_slider_value);
+        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+		
+		err = nvs_commit(storage_handle);
+        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+
+        // Close
+        nvs_close(storage_handle);
+	}
+}
+
+void init_tomatotent(lv_event_t * e)
+{
+	lv_obj_set_adv_hittest(ui_LightDurationSlider, true); 
+	lv_obj_set_adv_hittest(ui_NowSlider, true);
+	
+	err = nvs_open("storage", NVS_READONLY, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else { 
+		
+		// light duration screen
+        uint16_t light_duration_slider_value = 12;
+        err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
+        lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
+		
+		light_duration = (float_t)light_duration_slider_value / 2;
+		dark_duration = 24 - light_duration;
+	
+		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
+		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );  
+		
+
+		  
+
+        // Close
+        nvs_close(storage_handle);
+	}
+	
 }

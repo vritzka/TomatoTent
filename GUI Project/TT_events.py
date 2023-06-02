@@ -6,3 +6,11 @@ def play_intro(event_struct):
 def light_duration_slider(event_struct):
     return
 
+
+def save_light_duration_screen(event_struct):
+    return
+
+
+def init_tomatotent(event_struct):
+    return
+

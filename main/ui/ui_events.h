@@ -11,6 +11,8 @@ extern "C" {
 #endif
 
 void play_intro(lv_event_t * e);
+void init_tomatotent(lv_event_t * e);
+void save_light_duration_screen(lv_event_t * e);
 void light_duration_slider(lv_event_t * e);
 
 #ifdef __cplusplus

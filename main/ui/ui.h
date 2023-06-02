@@ -47,7 +47,6 @@ extern lv_obj_t *ui_Panel1;
 extern lv_obj_t *ui_Label4;
 extern lv_obj_t *ui_Label6;
 extern lv_obj_t *ui_Image3;
-void ui_event_Panel5( lv_event_t * e);
 extern lv_obj_t *ui_Panel5;
 extern lv_obj_t *ui_Label7;
 extern lv_obj_t *ui_Label8;
