@@ -84,8 +84,8 @@ lv_obj_t *ui_arrowdown1;
 lv_obj_t *ui_Label12;
 lv_obj_t *ui_Image4;
 lv_obj_t *ui_Panel6;
-void ui_event_Slider4( lv_event_t * e);
-lv_obj_t *ui_Slider4;
+void ui_event_LEDBrightnessSlider( lv_event_t * e);
+lv_obj_t *ui_LEDBrightnessSlider;
 lv_obj_t *ui_arrowdown2;
 
 // SCREEN: ui_DayCounterScreen
@@ -445,10 +445,10 @@ lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
 }
 }
-void ui_event_Slider4( lv_event_t * e) {
+void ui_event_LEDBrightnessSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      _ui_slider_set_text_value( ui_LCDBrightnessLabel, target, "", "%");
+      LEDBrightnessSlider( e );
 }
 }
 void ui_event_DayCounterScreen( lv_event_t * e) {

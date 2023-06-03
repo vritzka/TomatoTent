@@ -18,3 +18,7 @@ def init_tomatotent(event_struct):
 def now_slider(event_struct):
     return
 
+
+def LEDBrightnessSlider(event_struct):
+    return
+

@@ -87,8 +87,8 @@ extern lv_obj_t *ui_arrowdown1;
 extern lv_obj_t *ui_Label12;
 extern lv_obj_t *ui_Image4;
 extern lv_obj_t *ui_Panel6;
-void ui_event_Slider4( lv_event_t * e);
-extern lv_obj_t *ui_Slider4;
+void ui_event_LEDBrightnessSlider( lv_event_t * e);
+extern lv_obj_t *ui_LEDBrightnessSlider;
 extern lv_obj_t *ui_arrowdown2;
 // SCREEN: ui_DayCounterScreen
 void ui_DayCounterScreen_screen_init(void);

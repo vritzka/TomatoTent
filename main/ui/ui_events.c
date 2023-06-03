@@ -181,6 +181,20 @@ void save_light_duration_screen(lv_event_t * e)
 	}
 }
 
+/////////////////////////////////////
+/////// LED Brightness Screen ///////
+/////////////////////////////////////
+
+void LEDBrightnessSlider(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	led_brightness_slider_value = lv_slider_get_value(target);
+	
+	
+}
+
+
+
 void init_tomatotent(lv_event_t * e)
 {	
 	err = nvs_open("storage", NVS_READONLY, &storage_handle);
