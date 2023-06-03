@@ -14,6 +14,7 @@ void play_intro(lv_event_t * e);
 void init_tomatotent(lv_event_t * e);
 void save_light_duration_screen(lv_event_t * e);
 void light_duration_slider(lv_event_t * e);
+void now_slider(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

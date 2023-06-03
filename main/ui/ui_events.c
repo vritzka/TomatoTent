@@ -20,6 +20,11 @@ esp_err_t err;
 
 //static char str[12];
 
+static uint16_t light_duration_slider_value;
+static float_t light_duration;
+static float_t dark_duration;
+static uint16_t now_slider_value;
+
 
 //SplashScreen
 
@@ -131,10 +136,6 @@ void play_intro(lv_event_t * e)
 /////////////////////////////////////
 /////// LightDurationScreen /////////
 /////////////////////////////////////
-static uint16_t light_duration_slider_value;
-static float_t light_duration;
-static float_t dark_duration;
-static uint16_t now_slider_value;
 
 void light_duration_slider(lv_event_t * e) {
 	
@@ -150,6 +151,15 @@ void light_duration_slider(lv_event_t * e) {
 	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );
 }
 
+void now_slider(lv_event_t * e) {
+	
+	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	now_slider_value = lv_slider_get_value(target);
+
+	ESP_LOGI(TAG, "%d", now_slider_value);
+
+}
+
 void save_light_duration_screen(lv_event_t * e)
 {
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
@@ -159,6 +169,9 @@ void save_light_duration_screen(lv_event_t * e)
 		
 		err = nvs_set_u16(storage_handle, "light_slider", light_duration_slider_value);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+        
+        err = nvs_set_u16(storage_handle, "now_slider", now_slider_value);
+		printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
 		
 		err = nvs_commit(storage_handle);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
@@ -169,17 +182,13 @@ void save_light_duration_screen(lv_event_t * e)
 }
 
 void init_tomatotent(lv_event_t * e)
-{
-	lv_obj_set_adv_hittest(ui_LightDurationSlider, true); 
-	lv_obj_set_adv_hittest(ui_NowSlider, true);
-	
+{	
 	err = nvs_open("storage", NVS_READONLY, &storage_handle);
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else { 
 		
 		// light duration screen
-        uint16_t light_duration_slider_value = 12;
         err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
         lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
 		
@@ -187,12 +196,12 @@ void init_tomatotent(lv_event_t * e)
 		dark_duration = 24 - light_duration;
 	
 		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
-		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );  
+		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
 		
+		err = nvs_get_u16(storage_handle, "now_slider", &now_slider_value); 
+		lv_slider_set_value(ui_NowSlider, now_slider_value, LV_ANIM_OFF);
 
-		  
-
-        // Close
+        // Close NVS
         nvs_close(storage_handle);
 	}
 	

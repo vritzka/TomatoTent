@@ -14,3 +14,7 @@ def save_light_duration_screen(event_struct):
 def init_tomatotent(event_struct):
     return
 
+
+def now_slider(event_struct):
+    return
+

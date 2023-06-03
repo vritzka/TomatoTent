@@ -70,6 +70,7 @@ extern lv_obj_t *ui_LightDurationScreen;
 extern lv_obj_t *ui_Panel8;
 void ui_event_LightDurationSlider( lv_event_t * e);
 extern lv_obj_t *ui_LightDurationSlider;
+void ui_event_NowSlider( lv_event_t * e);
 extern lv_obj_t *ui_NowSlider;
 extern lv_obj_t *ui_Image8;
 extern lv_obj_t *ui_Image9;
