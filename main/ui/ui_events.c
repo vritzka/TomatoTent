@@ -25,6 +25,7 @@ static float_t light_duration;
 static float_t dark_duration;
 static uint16_t now_slider_value;
 
+static uint16_t led_brightness_slider_value;
 
 //SplashScreen
 
@@ -190,6 +191,28 @@ void LEDBrightnessSlider(lv_event_t * e)
 	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 	led_brightness_slider_value = lv_slider_get_value(target);
 	
+	//ESP_LOGI(TAG, "%d", led_brightness_slider_value);
+	
+	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value );
+	
+}
+
+void save_led_brightness_screen(lv_event_t * e)
+{
+    err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else {
+		
+		err = nvs_set_u16(storage_handle, "led_brightness", led_brightness_slider_value);
+        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+		
+		err = nvs_commit(storage_handle);
+        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+
+        // Close
+        nvs_close(storage_handle);	
+	}	
 	
 }
 
@@ -214,6 +237,13 @@ void init_tomatotent(lv_event_t * e)
 		
 		err = nvs_get_u16(storage_handle, "now_slider", &now_slider_value); 
 		lv_slider_set_value(ui_NowSlider, now_slider_value, LV_ANIM_OFF);
+		
+		// led brightness screen
+		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
+        lv_slider_set_value(ui_LEDBrightnessSlider, led_brightness_slider_value, LV_ANIM_OFF);
+		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
+
+
 
         // Close NVS
         nvs_close(storage_handle);

@@ -82,7 +82,7 @@ extern lv_obj_t *ui_LightDurationDarkLabel;
 void ui_LEDBrightnessScreen_screen_init(void);
 void ui_event_LEDBrightnessScreen( lv_event_t * e);
 extern lv_obj_t *ui_LEDBrightnessScreen;
-extern lv_obj_t *ui_LCDBrightnessLabel;
+extern lv_obj_t *ui_LEDBrightnessLabel;
 extern lv_obj_t *ui_arrowdown1;
 extern lv_obj_t *ui_Label12;
 extern lv_obj_t *ui_Image4;

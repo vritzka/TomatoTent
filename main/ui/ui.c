@@ -79,7 +79,7 @@ lv_obj_t *ui_LightDurationDarkLabel;
 void ui_LEDBrightnessScreen_screen_init(void);
 void ui_event_LEDBrightnessScreen( lv_event_t * e);
 lv_obj_t *ui_LEDBrightnessScreen;
-lv_obj_t *ui_LCDBrightnessLabel;
+lv_obj_t *ui_LEDBrightnessLabel;
 lv_obj_t *ui_arrowdown1;
 lv_obj_t *ui_Label12;
 lv_obj_t *ui_Image4;
@@ -443,6 +443,9 @@ lv_indev_wait_release(lv_indev_get_act());
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
+}
+if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
+      save_led_brightness_screen( e );
 }
 }
 void ui_event_LEDBrightnessSlider( lv_event_t * e) {

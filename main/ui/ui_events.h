@@ -15,6 +15,7 @@ void init_tomatotent(lv_event_t * e);
 void save_light_duration_screen(lv_event_t * e);
 void light_duration_slider(lv_event_t * e);
 void now_slider(lv_event_t * e);
+void save_led_brightness_screen(lv_event_t * e);
 void LEDBrightnessSlider(lv_event_t * e);
 
 #ifdef __cplusplus

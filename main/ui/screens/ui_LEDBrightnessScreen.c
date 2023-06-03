@@ -12,14 +12,14 @@ lv_obj_clear_flag( ui_LEDBrightnessScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flag
 lv_obj_set_style_bg_color(ui_LEDBrightnessScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LEDBrightnessScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_LCDBrightnessLabel = lv_label_create(ui_LEDBrightnessScreen);
-lv_obj_set_width( ui_LCDBrightnessLabel, LV_SIZE_CONTENT);  /// 0
-lv_obj_set_height( ui_LCDBrightnessLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_LCDBrightnessLabel, 125 );
-lv_obj_set_y( ui_LCDBrightnessLabel, -93 );
-lv_obj_set_align( ui_LCDBrightnessLabel, LV_ALIGN_LEFT_MID );
-lv_label_set_text(ui_LCDBrightnessLabel,"50%");
-lv_obj_set_style_text_font(ui_LCDBrightnessLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_LEDBrightnessLabel = lv_label_create(ui_LEDBrightnessScreen);
+lv_obj_set_width( ui_LEDBrightnessLabel, LV_SIZE_CONTENT);  /// 0
+lv_obj_set_height( ui_LEDBrightnessLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_LEDBrightnessLabel, 125 );
+lv_obj_set_y( ui_LEDBrightnessLabel, -93 );
+lv_obj_set_align( ui_LEDBrightnessLabel, LV_ALIGN_LEFT_MID );
+lv_label_set_text(ui_LEDBrightnessLabel,"10%");
+lv_obj_set_style_text_font(ui_LEDBrightnessLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_arrowdown1 = lv_img_create(ui_LEDBrightnessScreen);
 lv_img_set_src(ui_arrowdown1, &ui_img_upload_png);
@@ -67,7 +67,7 @@ lv_obj_set_style_border_width(ui_Panel6, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 ui_LEDBrightnessSlider = lv_slider_create(ui_Panel6);
 lv_slider_set_range(ui_LEDBrightnessSlider, 10,100);
 lv_slider_set_value( ui_LEDBrightnessSlider, 50, LV_ANIM_OFF);
-if (lv_slider_get_mode(ui_LEDBrightnessSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_LEDBrightnessSlider, 10, LV_ANIM_OFF);
+if (lv_slider_get_mode(ui_LEDBrightnessSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_LEDBrightnessSlider, 0, LV_ANIM_OFF);
 lv_obj_set_width( ui_LEDBrightnessSlider, 400);
 lv_obj_set_height( ui_LEDBrightnessSlider, 30);
 lv_obj_set_x( ui_LEDBrightnessSlider, 0 );

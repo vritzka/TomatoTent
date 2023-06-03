@@ -22,3 +22,7 @@ def now_slider(event_struct):
 def LEDBrightnessSlider(event_struct):
     return
 
+
+def save_led_brightness_screen(event_struct):
+    return
+
