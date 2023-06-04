@@ -19,13 +19,54 @@ nvs_handle_t storage_handle;
 esp_err_t err;
 
 //static char str[12];
-
+//init values
 static uint16_t light_duration_slider_value;
 static float_t light_duration;
 static float_t dark_duration;
 static uint16_t now_slider_value;
-
 static uint16_t led_brightness_slider_value;
+static uint16_t day_counter = 1;
+
+
+void init_tomatotent(lv_event_t * e)
+{	
+	err = nvs_open("storage", NVS_READONLY, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else { 
+		
+		// light duration screen
+        err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
+        lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
+		
+		light_duration = (float_t)light_duration_slider_value / 2;
+		dark_duration = 24 - light_duration;
+	
+		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
+		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
+		
+		err = nvs_get_u16(storage_handle, "now_slider", &now_slider_value); 
+		lv_slider_set_value(ui_NowSlider, now_slider_value, LV_ANIM_OFF);
+		
+		// led brightness screen
+		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
+        lv_slider_set_value(ui_LEDBrightnessSlider, led_brightness_slider_value, LV_ANIM_OFF);
+		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
+
+		//day counter screen
+		err = nvs_get_u16(storage_handle, "day_counter", &day_counter); 
+		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
+		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
+
+        // Close NVS
+        nvs_close(storage_handle);
+	}
+	
+}
+
+
+
+
 
 //SplashScreen
 
@@ -134,6 +175,8 @@ void play_intro(lv_event_t * e)
     start_animation(ui_SplashScreen);
 }
 
+
+
 /////////////////////////////////////
 /////// LightDurationScreen /////////
 /////////////////////////////////////
@@ -194,7 +237,6 @@ void LEDBrightnessSlider(lv_event_t * e)
 	//ESP_LOGI(TAG, "%d", led_brightness_slider_value);
 	
 	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value );
-	
 }
 
 void save_led_brightness_screen(lv_event_t * e)
@@ -216,37 +258,37 @@ void save_led_brightness_screen(lv_event_t * e)
 	
 }
 
+/////////////////////////////////////
+/////// Day Counter Screen //////////
+/////////////////////////////////////
 
-
-void init_tomatotent(lv_event_t * e)
-{	
-	err = nvs_open("storage", NVS_READONLY, &storage_handle);
-    if (err != ESP_OK) {
-        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-    } else { 
-		
-		// light duration screen
-        err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
-        lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
-		
-		light_duration = (float_t)light_duration_slider_value / 2;
-		dark_duration = 24 - light_duration;
+void increase_day_counter(lv_event_t * e)
+{
+	day_counter += 1;
+	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
 	
-		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
-		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
-		
-		err = nvs_get_u16(storage_handle, "now_slider", &now_slider_value); 
-		lv_slider_set_value(ui_NowSlider, now_slider_value, LV_ANIM_OFF);
-		
-		// led brightness screen
-		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
-        lv_slider_set_value(ui_LEDBrightnessSlider, led_brightness_slider_value, LV_ANIM_OFF);
-		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
-
-
-
-        // Close NVS
-        nvs_close(storage_handle);
-	}
-	
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	err = nvs_set_u16(storage_handle, "day_counter", day_counter);
+	err = nvs_commit(storage_handle);
+	nvs_close(storage_handle);
 }
+
+void decrease_day_counter(lv_event_t * e)
+{
+	if(day_counter == 1)
+		return;
+	
+	day_counter -= 1;
+	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
+
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	err = nvs_set_u16(storage_handle, "day_counter", day_counter);
+	err = nvs_commit(storage_handle);
+	nvs_close(storage_handle);
+}
+
+
+
+

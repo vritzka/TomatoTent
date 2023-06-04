@@ -53,7 +53,7 @@ lv_obj_t *ui_Label13;
 lv_obj_t *ui_fan;
 void ui_event_Panel11( lv_event_t * e);
 lv_obj_t *ui_Panel11;
-lv_obj_t *ui_DayCounterLabel;
+lv_obj_t *ui_DayCounterMainLabel;
 lv_obj_t *ui_Label10;
 lv_obj_t *ui_ArrowUp1;
 void ui_event_ImgButton3( lv_event_t * e);
@@ -93,8 +93,9 @@ void ui_DayCounterScreen_screen_init(void);
 void ui_event_DayCounterScreen( lv_event_t * e);
 lv_obj_t *ui_DayCounterScreen;
 lv_obj_t *ui_Label11;
-lv_obj_t *ui_ImgButton1;
-lv_obj_t *ui_Label15;
+void ui_event_DayDownButton( lv_event_t * e);
+lv_obj_t *ui_DayDownButton;
+lv_obj_t *ui_DayCounterLabel;
 lv_obj_t *ui_Image1;
 lv_obj_t *ui_Panel10;
 lv_obj_t *ui_Image15;
@@ -102,7 +103,8 @@ lv_obj_t *ui_Button1;
 lv_obj_t *ui_Label22;
 void ui_event_ImgButton9( lv_event_t * e);
 lv_obj_t *ui_ImgButton9;
-lv_obj_t *ui_ImgButton8;
+void ui_event_DayUpButton( lv_event_t * e);
+lv_obj_t *ui_DayUpButton;
 
 // SCREEN: ui_GraphScreen
 void ui_GraphScreen_screen_init(void);
@@ -461,10 +463,22 @@ lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_LEDBrightnessScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0);
 }
 }
+void ui_event_DayDownButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      decrease_day_counter( e );
+}
+}
 void ui_event_ImgButton9( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+}
+}
+void ui_event_DayUpButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      increase_day_counter( e );
 }
 }
 void ui_event_GraphScreen( lv_event_t * e) {

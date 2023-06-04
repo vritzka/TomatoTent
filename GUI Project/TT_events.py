@@ -26,3 +26,11 @@ def LEDBrightnessSlider(event_struct):
 def save_led_brightness_screen(event_struct):
     return
 
+
+def increase_day_counter(event_struct):
+    return
+
+
+def decrease_day_counter(event_struct):
+    return
+
