@@ -26,6 +26,7 @@ static float_t dark_duration;
 static uint16_t now_slider_value;
 static uint16_t led_brightness_slider_value;
 static uint16_t day_counter = 1;
+static uint16_t screen_brightness_slider_value;
 
 
 void init_tomatotent(lv_event_t * e)
@@ -290,5 +291,16 @@ void decrease_day_counter(lv_event_t * e)
 }
 
 
+/////////////////////////////////////
+///// General Settings Screen ///////
+/////////////////////////////////////
 
 
+void screen_brightness_slider(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	screen_brightness_slider_value = lv_slider_get_value(target);
+	
+	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", screen_brightness_slider_value);
+	
+}

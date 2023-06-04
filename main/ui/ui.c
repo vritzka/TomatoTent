@@ -169,8 +169,9 @@ lv_obj_t *ui_GeneralSettingsScreen;
 lv_obj_t *ui_Label23;
 lv_obj_t *ui_Panel12;
 lv_obj_t *ui_Label24;
-lv_obj_t *ui_Slider3;
-lv_obj_t *ui_Label25;
+void ui_event_ScreenBrightnessSlider( lv_event_t * e);
+lv_obj_t *ui_ScreenBrightnessSlider;
+lv_obj_t *ui_ScreenBrightnessLabel;
 lv_obj_t *ui_Image17;
 lv_obj_t *ui_Panel18;
 lv_obj_t *ui_Switch4;
@@ -511,6 +512,12 @@ void ui_event_GeneralSettingsScreen( lv_event_t * e) {
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0);
+}
+}
+void ui_event_ScreenBrightnessSlider( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      screen_brightness_slider( e );
 }
 }
 

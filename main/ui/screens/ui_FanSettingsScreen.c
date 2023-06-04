@@ -51,6 +51,7 @@ lv_obj_set_height( ui_Slider2, 30);
 lv_obj_set_x( ui_Slider2, 1 );
 lv_obj_set_y( ui_Slider2, 14 );
 lv_obj_set_align( ui_Slider2, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_Slider2, LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 
 ui_ImgButton5 = lv_imgbtn_create(ui_FanSettingsScreen);
 lv_imgbtn_set_src(ui_ImgButton5, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1668913270, NULL);

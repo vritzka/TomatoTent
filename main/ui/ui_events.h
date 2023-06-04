@@ -19,6 +19,7 @@ void save_led_brightness_screen(lv_event_t * e);
 void LEDBrightnessSlider(lv_event_t * e);
 void decrease_day_counter(lv_event_t * e);
 void increase_day_counter(lv_event_t * e);
+void screen_brightness_slider(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

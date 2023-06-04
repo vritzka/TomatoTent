@@ -38,23 +38,30 @@ lv_obj_set_height( ui_Label24, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Label24, -138 );
 lv_obj_set_y( ui_Label24, -28 );
 lv_obj_set_align( ui_Label24, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label24,"Display Brightness:");
+lv_label_set_text(ui_Label24,"Screen Brightness:");
 lv_obj_set_style_text_font(ui_Label24, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Slider3 = lv_slider_create(ui_Panel12);
-lv_obj_set_width( ui_Slider3, 400);
-lv_obj_set_height( ui_Slider3, 30);
-lv_obj_set_x( ui_Slider3, 0 );
-lv_obj_set_y( ui_Slider3, 18 );
-lv_obj_set_align( ui_Slider3, LV_ALIGN_CENTER );
+ui_ScreenBrightnessSlider = lv_slider_create(ui_Panel12);
+lv_slider_set_range(ui_ScreenBrightnessSlider, 10,100);
+lv_slider_set_value( ui_ScreenBrightnessSlider, 80, LV_ANIM_OFF);
+if (lv_slider_get_mode(ui_ScreenBrightnessSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_ScreenBrightnessSlider, 0, LV_ANIM_OFF);
+lv_obj_set_width( ui_ScreenBrightnessSlider, 400);
+lv_obj_set_height( ui_ScreenBrightnessSlider, 30);
+lv_obj_set_x( ui_ScreenBrightnessSlider, 0 );
+lv_obj_set_y( ui_ScreenBrightnessSlider, 18 );
+lv_obj_set_align( ui_ScreenBrightnessSlider, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_ScreenBrightnessSlider, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_ScreenBrightnessSlider, LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
+lv_obj_set_style_bg_color(ui_ScreenBrightnessSlider, lv_color_hex(0xFAFF82), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_ScreenBrightnessSlider, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Label25 = lv_label_create(ui_Panel12);
-lv_obj_set_width( ui_Label25, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label25, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label25, -30 );
-lv_obj_set_y( ui_Label25, -28 );
-lv_obj_set_align( ui_Label25, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label25,"25%");
+ui_ScreenBrightnessLabel = lv_label_create(ui_Panel12);
+lv_obj_set_width( ui_ScreenBrightnessLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_ScreenBrightnessLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_ScreenBrightnessLabel, -30 );
+lv_obj_set_y( ui_ScreenBrightnessLabel, -28 );
+lv_obj_set_align( ui_ScreenBrightnessLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_ScreenBrightnessLabel,"80%");
 
 ui_Image17 = lv_img_create(ui_GeneralSettingsScreen);
 lv_img_set_src(ui_Image17, &ui_img_upload_png);
@@ -139,6 +146,7 @@ lv_obj_set_align( ui_Image20, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image20, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image20, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
+lv_obj_add_event_cb(ui_ScreenBrightnessSlider, ui_event_ScreenBrightnessSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GeneralSettingsScreen, ui_event_GeneralSettingsScreen, LV_EVENT_ALL, NULL);
 
 }

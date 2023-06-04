@@ -34,3 +34,11 @@ def increase_day_counter(event_struct):
 def decrease_day_counter(event_struct):
     return
 
+
+def display_brightness_slider(event_struct):
+    return
+
+
+def screen_brightness_slider(event_struct):
+    return
+

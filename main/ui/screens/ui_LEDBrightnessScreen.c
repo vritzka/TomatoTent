@@ -74,7 +74,7 @@ lv_obj_set_x( ui_LEDBrightnessSlider, 0 );
 lv_obj_set_y( ui_LEDBrightnessSlider, -16 );
 lv_obj_set_align( ui_LEDBrightnessSlider, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_LEDBrightnessSlider, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
-lv_obj_clear_flag( ui_LEDBrightnessSlider, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
+lv_obj_clear_flag( ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 lv_obj_set_style_radius(ui_LEDBrightnessSlider, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_LEDBrightnessSlider, lv_color_hex(0xFFFE2B), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LEDBrightnessSlider, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
