@@ -318,6 +318,15 @@ void screen_brightness_slider(lv_event_t * e)
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
 }
 
+void temp_unit_switch(lv_event_t * e)
+{
+	lv_obj_t * target = lv_event_get_target(e);
+	
+	
+}
+
+lv_obj_add_state(obj, LV_STATE_CHECKED)
+
 void save_screen_brightness_screen(lv_event_t * e)
 {
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
