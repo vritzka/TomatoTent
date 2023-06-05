@@ -118,15 +118,15 @@ void vGuiTask( void * pvParameters )
 	
  static lv_disp_draw_buf_t disp_buf; // contains internal graphic buffer(s) called draw buffer(s)
     static lv_disp_drv_t disp_drv;      // contains callback functions
-
+/*
     ESP_LOGI(TAG, "Turn off LCD backlight");
     gpio_config_t bk_gpio_config = {
         .mode = GPIO_MODE_OUTPUT,
         .pin_bit_mask = 1ULL << EXAMPLE_PIN_NUM_BK_LIGHT
     };
     ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
-    gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_OFF_LEVEL);
-
+    //gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_OFF_LEVEL);
+*/
     ESP_LOGI(TAG, "Initialize Intel 8080 bus");
     esp_lcd_i80_bus_handle_t i80_bus = NULL;
     esp_lcd_i80_bus_config_t bus_config = {
@@ -231,8 +231,8 @@ void vGuiTask( void * pvParameters )
     // user can flush pre-defined pattern to the screen before we turn on the screen or backlight
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 
-    ESP_LOGI(TAG, "Turn on LCD backlight");
-    gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_ON_LEVEL);
+    //ESP_LOGI(TAG, "Turn on LCD backlight");
+   // gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_ON_LEVEL);
 
 #if CONFIG_EXAMPLE_LCD_TOUCH_ENABLED
     esp_lcd_touch_handle_t tp = NULL;

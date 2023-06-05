@@ -21,7 +21,7 @@ void ledc_init(void)
         .timer_sel      = LEDC_TIMER,
         .intr_type      = LEDC_INTR_DISABLE,
         .gpio_num       = LEDC_OUTPUT_IO,
-        .duty           = 0, // Set duty to 0%
+        .duty           = 4095, // Set duty to 0%
         .hpoint         = 0
     };
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));  

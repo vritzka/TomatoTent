@@ -15,6 +15,7 @@
 #include "nvs.h"
 
 #include "guiTask.h"
+#include "general.h"
 
 static const char *TAG = "main.c";
 
@@ -31,6 +32,8 @@ void app_main(void)
         err = nvs_flash_init();
     }
     ESP_ERROR_CHECK( err );	
+    
+    ledc_init();
 	
 	
    vStartGuiTask( );

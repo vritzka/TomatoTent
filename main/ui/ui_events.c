@@ -13,6 +13,7 @@
 #include "esp_err.h"
 #include "nvs_flash.h"
 #include "nvs.h"
+#include "general.h"
 
 static const char *TAG = "ui_events.c";
 nvs_handle_t storage_handle;
@@ -295,12 +296,26 @@ void decrease_day_counter(lv_event_t * e)
 ///// General Settings Screen ///////
 /////////////////////////////////////
 
-
+uint16_t screen_brightness_value;
+float divider;
 void screen_brightness_slider(lv_event_t * e)
 {
 	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 	screen_brightness_slider_value = lv_slider_get_value(target);
 	
 	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", screen_brightness_slider_value);
+	
+	ESP_LOGI(TAG, "%d", screen_brightness_slider_value);
+	
+	divider = (float)screen_brightness_slider_value / 100;
+	
+	ESP_LOGI(TAG, "%.2f", divider);
+	screen_brightness_value = (8192-1)*divider;
+	
+	ESP_LOGI(TAG, "%d", screen_brightness_value);
+	
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, screen_brightness_value));
+    // Update duty to apply the new value
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));
 	
 }

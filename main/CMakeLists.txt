@@ -1,6 +1,6 @@
 file(GLOB_RECURSE SRC_UI ${CMAKE_SOURCE_DIR} "ui/*.c" "ui/images/*.c")
 
-idf_component_register(SRCS "main.c" "guiTask.c" ${SRC_UI}
+idf_component_register(SRCS "main.c" "guiTask.c" "general.c" ${SRC_UI}
                     INCLUDE_DIRS "." "ui")
 
 
