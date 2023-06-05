@@ -513,6 +513,9 @@ if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_ac
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0);
 }
+if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
+      save_screen_brightness_screen( e );
+}
 }
 void ui_event_ScreenBrightnessSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);

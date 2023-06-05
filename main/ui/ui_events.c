@@ -27,8 +27,8 @@ static float_t dark_duration;
 static uint16_t now_slider_value;
 static uint16_t led_brightness_slider_value;
 static uint16_t day_counter = 1;
-static uint16_t screen_brightness_slider_value;
-
+static uint16_t screen_brightness_slider_value = 80;
+static uint16_t screen_brightness_value;
 
 void init_tomatotent(lv_event_t * e)
 {	
@@ -59,7 +59,15 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_u16(storage_handle, "day_counter", &day_counter); 
 		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
 		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
-
+		
+		//screen brightness screen
+		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
+		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", screen_brightness_slider_value);
+		lv_slider_set_value(ui_ScreenBrightnessSlider, screen_brightness_slider_value, LV_ANIM_OFF);
+		screen_brightness_value = (8192-1)*((float)screen_brightness_slider_value / 100);
+		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, screen_brightness_value));
+		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
+		
         // Close NVS
         nvs_close(storage_handle);
 	}
@@ -296,26 +304,35 @@ void decrease_day_counter(lv_event_t * e)
 ///// General Settings Screen ///////
 /////////////////////////////////////
 
-uint16_t screen_brightness_value;
-float divider;
+
 void screen_brightness_slider(lv_event_t * e)
 {
 	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 	screen_brightness_slider_value = lv_slider_get_value(target);
 	
 	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", screen_brightness_slider_value);
-	
-	ESP_LOGI(TAG, "%d", screen_brightness_slider_value);
-	
-	divider = (float)screen_brightness_slider_value / 100;
-	
-	ESP_LOGI(TAG, "%.2f", divider);
-	screen_brightness_value = (8192-1)*divider;
-	
-	ESP_LOGI(TAG, "%d", screen_brightness_value);
-	
+		
+	screen_brightness_value = (8192-1)*((float)screen_brightness_slider_value / 100);
+		
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, screen_brightness_value));
-    // Update duty to apply the new value
-    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
+}
+
+void save_screen_brightness_screen(lv_event_t * e)
+{
+    err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else {
+		
+		err = nvs_set_u16(storage_handle, "screen_brightns", screen_brightness_slider_value);
+        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+		
+		err = nvs_commit(storage_handle);
+        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+
+        // Close
+        nvs_close(storage_handle);	
+	}	
 	
 }

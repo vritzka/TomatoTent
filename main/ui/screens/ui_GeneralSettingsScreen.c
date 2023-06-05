@@ -42,7 +42,7 @@ lv_label_set_text(ui_Label24,"Screen Brightness:");
 lv_obj_set_style_text_font(ui_Label24, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_ScreenBrightnessSlider = lv_slider_create(ui_Panel12);
-lv_slider_set_range(ui_ScreenBrightnessSlider, 5,100);
+lv_slider_set_range(ui_ScreenBrightnessSlider, 1,100);
 lv_slider_set_value( ui_ScreenBrightnessSlider, 80, LV_ANIM_OFF);
 if (lv_slider_get_mode(ui_ScreenBrightnessSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_ScreenBrightnessSlider, 0, LV_ANIM_OFF);
 lv_obj_set_width( ui_ScreenBrightnessSlider, 400);

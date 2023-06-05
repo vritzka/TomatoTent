@@ -42,3 +42,7 @@ def display_brightness_slider(event_struct):
 def screen_brightness_slider(event_struct):
     return
 
+
+def save_screen_brightness_screen(event_struct):
+    return
+
