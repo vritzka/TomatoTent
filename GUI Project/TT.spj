@@ -7906,7 +7906,7 @@
                   {
                     "nid": -740192905,
                     "strtype": "OBJECT/Name",
-                    "strval": "DayCounterLabel",
+                    "strval": "DayCounterMainLabel",
                     "InheritedType": 10
                   },
                   {
@@ -8151,7 +8151,7 @@
                   {
                     "nid": 1010776282,
                     "strtype": "LABEL/Text",
-                    "strval": "Day 21",
+                    "strval": "Day 0",
                     "InheritedType": 10
                   },
                   {
@@ -10131,7 +10131,7 @@
                   {
                     "nid": 10471856,
                     "strtype": "OBJECT/Press_lock",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -10551,7 +10551,7 @@
                   {
                     "nid": -1741195198,
                     "strtype": "OBJECT/Press_lock",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -14597,7 +14597,7 @@
                   {
                     "nid": 1537117366,
                     "strtype": "OBJECT/Press_lock",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -16208,7 +16208,7 @@
               {
                 "nid": 780034485,
                 "strtype": "OBJECT/Name",
-                "strval": "ImgButton1",
+                "strval": "DayDownButton",
                 "InheritedType": 10
               },
               {
@@ -16514,6 +16514,71 @@
                 "strtype": "IMGBUTTON/Style_main",
                 "strval": "lv.PART.MAIN, Rectangle, Image, Text",
                 "InheritedType": 11
+              },
+              {
+                "disabled": false,
+                "nid": -703606575,
+                "strtype": "IMGBUTTON/EventHandler",
+                "strval": "CLICKED",
+                "childs": [
+                  {
+                    "nid": 791192405,
+                    "strtype": "_custom/name",
+                    "strval": "Event26",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -1493673441,
+                    "strtype": "_custom/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 2077175177,
+                    "strtype": "_custom/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 382278206,
+                    "strtype": "_custom/action",
+                    "strval": "CALL FUNCTION",
+                    "childs": [
+                      {
+                        "nid": 2017876153,
+                        "strtype": "CALL FUNCTION/Name",
+                        "strval": "CALL FUNCTION",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -459526249,
+                        "strtype": "CALL FUNCTION/Call",
+                        "strval": "<{Function_name}>( event_struct )",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 854202537,
+                        "strtype": "CALL FUNCTION/CallC",
+                        "strval": "<{Function_name}>( e );",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1617155246,
+                        "strtype": "CALL FUNCTION/Function_name",
+                        "strval": "decrease_day_counter",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -803048750,
+                        "strtype": "CALL FUNCTION/Dont_export_function",
+                        "strval": "False",
+                        "InheritedType": 2
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "IMGBUTTON"
@@ -16526,7 +16591,7 @@
               {
                 "nid": -1512215285,
                 "strtype": "OBJECT/Name",
-                "strval": "Label15",
+                "strval": "DayCounterLabel",
                 "InheritedType": 10
               },
               {
@@ -16772,7 +16837,7 @@
               {
                 "nid": -1266255815,
                 "strtype": "LABEL/Text",
-                "strval": "21",
+                "strval": "0",
                 "InheritedType": 10
               },
               {
@@ -18643,7 +18708,7 @@
               {
                 "nid": 443900088,
                 "strtype": "OBJECT/Name",
-                "strval": "ImgButton8",
+                "strval": "DayUpButton",
                 "InheritedType": 10
               },
               {
@@ -18924,11 +18989,96 @@
               },
               {
                 "part": "lv.PART.MAIN",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 773564891,
+                    "strtype": "_style/StyleState",
+                    "strval": "PRESSED",
+                    "childs": [
+                      {
+                        "nid": -901352822,
+                        "strtype": "_style/Image_reColor",
+                        "intarray": [
+                          36,
+                          36,
+                          36,
+                          255
+                        ],
+                        "InheritedType": 7
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 284684653,
                 "strtype": "IMGBUTTON/Style_main",
                 "strval": "lv.PART.MAIN, Rectangle, Image, Text",
                 "InheritedType": 11
+              },
+              {
+                "disabled": false,
+                "nid": -1653016213,
+                "strtype": "IMGBUTTON/EventHandler",
+                "strval": "CLICKED",
+                "childs": [
+                  {
+                    "nid": 1666817646,
+                    "strtype": "_custom/name",
+                    "strval": "Event25",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -286889228,
+                    "strtype": "_custom/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 980625560,
+                    "strtype": "_custom/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -215451127,
+                    "strtype": "_custom/action",
+                    "strval": "CALL FUNCTION",
+                    "childs": [
+                      {
+                        "nid": 2057453743,
+                        "strtype": "CALL FUNCTION/Name",
+                        "strval": "CALL FUNCTION",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1118113144,
+                        "strtype": "CALL FUNCTION/Call",
+                        "strval": "<{Function_name}>( event_struct )",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1149706475,
+                        "strtype": "CALL FUNCTION/CallC",
+                        "strval": "<{Function_name}>( e );",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -761640543,
+                        "strtype": "CALL FUNCTION/Function_name",
+                        "strval": "increase_day_counter",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1635950747,
+                        "strtype": "CALL FUNCTION/Dont_export_function",
+                        "strval": "False",
+                        "InheritedType": 2
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "IMGBUTTON"
@@ -23187,7 +23337,6 @@
                   },
                   {
                     "nid": -1092037730,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -23218,7 +23367,7 @@
                   {
                     "nid": -1293665121,
                     "strtype": "OBJECT/Click_focusable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -23254,13 +23403,13 @@
                   {
                     "nid": 73693468,
                     "strtype": "OBJECT/Gesture_bubble",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
                     "nid": 577564383,
                     "strtype": "OBJECT/Snappable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -31567,7 +31716,7 @@
                   {
                     "nid": -1287962969,
                     "strtype": "LABEL/Text",
-                    "strval": "Display Brightness:",
+                    "strval": "Screen Brightness:",
                     "InheritedType": 10
                   },
                   {
@@ -31610,7 +31759,7 @@
                   {
                     "nid": 437246282,
                     "strtype": "OBJECT/Name",
-                    "strval": "Slider3",
+                    "strval": "ScreenBrightnessSlider",
                     "InheritedType": 10
                   },
                   {
@@ -31664,7 +31813,6 @@
                   },
                   {
                     "nid": 1381203237,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -31695,7 +31843,7 @@
                   {
                     "nid": -1064045921,
                     "strtype": "OBJECT/Click_focusable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -31731,13 +31879,13 @@
                   {
                     "nid": 2026313099,
                     "strtype": "OBJECT/Gesture_bubble",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
                     "nid": -310854513,
                     "strtype": "OBJECT/Snappable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -31809,7 +31957,7 @@
                     "nid": -699724312,
                     "strtype": "SLIDER/Range",
                     "intarray": [
-                      0,
+                      5,
                       100
                     ],
                     "InheritedType": 7
@@ -31823,6 +31971,7 @@
                   {
                     "nid": -741465745,
                     "strtype": "SLIDER/Value",
+                    "integer": 80,
                     "InheritedType": 6
                   },
                   {
@@ -31832,7 +31981,27 @@
                   },
                   {
                     "part": "lv.PART.MAIN",
-                    "childs": [],
+                    "childs": [
+                      {
+                        "nid": 396121876,
+                        "strtype": "_style/StyleState",
+                        "strval": "DEFAULT",
+                        "childs": [
+                          {
+                            "nid": 1688008360,
+                            "strtype": "_style/Bg_Color",
+                            "intarray": [
+                              250,
+                              255,
+                              130,
+                              255
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      }
+                    ],
                     "nid": -1069453521,
                     "strtype": "SLIDER/Style_main",
                     "strval": "lv.PART.MAIN, Rectangle, Pad",
@@ -31853,6 +32022,71 @@
                     "strtype": "SLIDER/Style_knob",
                     "strval": "lv.PART.KNOB, Rectangle, Pad",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": 1536408931,
+                    "strtype": "SLIDER/EventHandler",
+                    "strval": "VALUE_CHANGED",
+                    "childs": [
+                      {
+                        "nid": -628246752,
+                        "strtype": "_custom/name",
+                        "strval": "Event27",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1575968073,
+                        "strtype": "_custom/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 477111665,
+                        "strtype": "_custom/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1511073653,
+                        "strtype": "_custom/action",
+                        "strval": "CALL FUNCTION",
+                        "childs": [
+                          {
+                            "nid": -390382951,
+                            "strtype": "CALL FUNCTION/Name",
+                            "strval": "CALL FUNCTION",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1212556743,
+                            "strtype": "CALL FUNCTION/Call",
+                            "strval": "<{Function_name}>( event_struct )",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1985896177,
+                            "strtype": "CALL FUNCTION/CallC",
+                            "strval": "<{Function_name}>( e );",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1007172612,
+                            "strtype": "CALL FUNCTION/Function_name",
+                            "strval": "screen_brightness_slider",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -770621520,
+                            "strtype": "CALL FUNCTION/Dont_export_function",
+                            "strval": "False",
+                            "InheritedType": 2
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "SLIDER"
@@ -31865,7 +32099,7 @@
                   {
                     "nid": -1538725885,
                     "strtype": "OBJECT/Name",
-                    "strval": "Label25",
+                    "strval": "ScreenBrightnessLabel",
                     "InheritedType": 10
                   },
                   {
@@ -32111,7 +32345,7 @@
                   {
                     "nid": 453375565,
                     "strtype": "LABEL/Text",
-                    "strval": "25%",
+                    "strval": "80%",
                     "InheritedType": 10
                   },
                   {
@@ -36334,7 +36568,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 32,
+    "backup_cnt": 33,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
