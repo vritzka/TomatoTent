@@ -1,4 +1,13 @@
 #include "driver/ledc.h"
+#include "esp_wifi.h"
+#include "esp_event.h"
+#include <string.h>
+//#include "freertos/FreeRTOS.h"
+//#include "freertos/event_groups.h"
+#include "esp_wifi.h"
+#include "esp_log.h"
+#include "esp_event.h"
+#include "nvs_flash.h"
 	
 
 #define LEDC_TIMER              LEDC_TIMER_0
@@ -10,3 +19,6 @@
 
 
 void ledc_init(void);
+void wifi_on(void);
+void wifi_scan(void);
+void wifi_off(void);

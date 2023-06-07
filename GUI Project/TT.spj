@@ -31957,7 +31957,7 @@
                     "nid": -699724312,
                     "strtype": "SLIDER/Range",
                     "intarray": [
-                      5,
+                      1,
                       100
                     ],
                     "InheritedType": 7
@@ -33760,7 +33760,7 @@
                   {
                     "nid": 769536534,
                     "strtype": "OBJECT/Name",
-                    "strval": "Switch3",
+                    "strval": "TempUnitSwitch",
                     "InheritedType": 10
                   },
                   {
@@ -33946,6 +33946,7 @@
                   },
                   {
                     "nid": -247110133,
+                    "flags": 1048576,
                     "strtype": "SWITCH/Switch",
                     "InheritedType": 1
                   },
@@ -33959,7 +33960,46 @@
                   },
                   {
                     "part": "lv.PART.INDICATOR",
-                    "childs": [],
+                    "childs": [
+                      {
+                        "nid": -220899521,
+                        "strtype": "_style/StyleState",
+                        "strval": "DEFAULT",
+                        "childs": [
+                          {
+                            "nid": 1886314016,
+                            "strtype": "_style/Bg_Color",
+                            "intarray": [
+                              20,
+                              3,
+                              150,
+                              255
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": -907048242,
+                        "strtype": "_style/StyleState",
+                        "strval": "CHECKED",
+                        "childs": [
+                          {
+                            "nid": 1418089856,
+                            "strtype": "_style/Bg_Color",
+                            "intarray": [
+                              20,
+                              3,
+                              150,
+                              255
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      }
+                    ],
                     "nid": -78801,
                     "strtype": "SWITCH/Style_indicator",
                     "strval": "lv.PART.INDICATOR, Rectangle",
@@ -33972,6 +34012,71 @@
                     "strtype": "SWITCH/Style_knob",
                     "strval": "lv.PART.KNOB, Rectangle, Pad",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": 822432357,
+                    "strtype": "SWITCH/EventHandler",
+                    "strval": "VALUE_CHANGED",
+                    "childs": [
+                      {
+                        "nid": -1764825292,
+                        "strtype": "_custom/name",
+                        "strval": "Event29",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1373930215,
+                        "strtype": "_custom/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1632131723,
+                        "strtype": "_custom/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 2094818521,
+                        "strtype": "_custom/action",
+                        "strval": "CALL FUNCTION",
+                        "childs": [
+                          {
+                            "nid": -1858123187,
+                            "strtype": "CALL FUNCTION/Name",
+                            "strval": "CALL FUNCTION",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 911656276,
+                            "strtype": "CALL FUNCTION/Call",
+                            "strval": "<{Function_name}>( event_struct )",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1274233654,
+                            "strtype": "CALL FUNCTION/CallC",
+                            "strval": "<{Function_name}>( e );",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 2015609502,
+                            "strtype": "CALL FUNCTION/Function_name",
+                            "strval": "temp_unit_switch",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 215189994,
+                            "strtype": "CALL FUNCTION/Dont_export_function",
+                            "strval": "True",
+                            "InheritedType": 2
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "SWITCH"
@@ -35394,6 +35499,71 @@
               }
             ],
             "InheritedType": 4
+          },
+          {
+            "disabled": false,
+            "nid": 247130309,
+            "strtype": "SCREEN/EventHandler",
+            "strval": "SCREEN_UNLOAD_START",
+            "childs": [
+              {
+                "nid": -1612551963,
+                "strtype": "_custom/name",
+                "strval": "Event28",
+                "InheritedType": 10
+              },
+              {
+                "nid": -1219650170,
+                "strtype": "_custom/condition_C",
+                "strval": "",
+                "InheritedType": 10
+              },
+              {
+                "nid": -11366123,
+                "strtype": "_custom/condition_P",
+                "strval": "",
+                "InheritedType": 10
+              },
+              {
+                "nid": -743372626,
+                "strtype": "_custom/action",
+                "strval": "CALL FUNCTION",
+                "childs": [
+                  {
+                    "nid": 303057592,
+                    "strtype": "CALL FUNCTION/Name",
+                    "strval": "CALL FUNCTION",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 2053130842,
+                    "strtype": "CALL FUNCTION/Call",
+                    "strval": "<{Function_name}>( event_struct )",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -464463876,
+                    "strtype": "CALL FUNCTION/CallC",
+                    "strval": "<{Function_name}>( e );",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1633924279,
+                    "strtype": "CALL FUNCTION/Function_name",
+                    "strval": "save_general_settings_screen",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -1568387286,
+                    "strtype": "CALL FUNCTION/Dont_export_function",
+                    "strval": "True",
+                    "InheritedType": 2
+                  }
+                ],
+                "InheritedType": 10
+              }
+            ],
+            "InheritedType": 4
           }
         ],
         "saved_objtypeKey": "SCREEN"
@@ -36568,7 +36738,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 33,
+    "backup_cnt": 34,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

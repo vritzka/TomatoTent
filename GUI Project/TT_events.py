@@ -46,3 +46,15 @@ def screen_brightness_slider(event_struct):
 def save_screen_brightness_screen(event_struct):
     return
 
+
+def temp_unit_switch(event_struct):
+    return
+
+
+def save_general_settings_screen(event_struct):
+    return
+
+
+def wifi_switch(event_struct):
+    return
+

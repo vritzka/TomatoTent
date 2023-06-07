@@ -15,6 +15,7 @@
 #include "nvs.h"
 #include "general.h"
 
+
 static const char *TAG = "ui_events.c";
 nvs_handle_t storage_handle;
 esp_err_t err;
@@ -29,6 +30,7 @@ static uint16_t led_brightness_slider_value;
 static uint16_t day_counter = 1;
 static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_value;
+static uint16_t temp_unit;
 
 void init_tomatotent(lv_event_t * e)
 {	
@@ -60,13 +62,20 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
 		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
 		
-		//screen brightness screen
+		//general settings screen
 		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
 		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", screen_brightness_slider_value);
 		lv_slider_set_value(ui_ScreenBrightnessSlider, screen_brightness_slider_value, LV_ANIM_OFF);
 		screen_brightness_value = (8192-1)*((float)screen_brightness_slider_value / 100);
 		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, screen_brightness_value));
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
+		
+		err = nvs_get_u16(storage_handle, "temp_unit", &temp_unit);
+		if(temp_unit == 1)
+			 lv_obj_add_state(ui_TempUnitSwitch, LV_STATE_CHECKED);
+		//code to set everything to F or C	
+		
+	
 		
         // Close NVS
         nvs_close(storage_handle);
@@ -318,16 +327,23 @@ void screen_brightness_slider(lv_event_t * e)
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
 }
 
+
 void temp_unit_switch(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	
+	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
+		//on = F = 1
+		temp_unit = 1;
+	} else { 
+		//off = C = 0	
+		temp_unit = 0;
+	}
 	
 }
 
-lv_obj_add_state(obj, LV_STATE_CHECKED)
-
-void save_screen_brightness_screen(lv_event_t * e)
+void save_general_settings_screen(lv_event_t * e)
 {
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
@@ -335,13 +351,30 @@ void save_screen_brightness_screen(lv_event_t * e)
     } else {
 		
 		err = nvs_set_u16(storage_handle, "screen_brightns", screen_brightness_slider_value);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		
-		err = nvs_commit(storage_handle);
-        printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+        err = nvs_set_u16(storage_handle, "temp_unit", temp_unit);
+        //code to set everything to F or C
 
         // Close
+        err = nvs_commit(storage_handle);
         nvs_close(storage_handle);	
 	}	
 	
+}
+
+//////////////////////////////////////
+////////// WIFI Screen ///////////////
+//////////////////////////////////////
+void wifi_switch(lv_event_t * e)
+{
+	lv_obj_t * target = lv_event_get_target(e);
+	//err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	
+	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
+		wifi_on();
+		wifi_scan();
+	} else { 
+		//off = 0	
+
+	}
+
 }
