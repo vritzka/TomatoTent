@@ -55,12 +55,12 @@ lv_obj_set_align( ui_WifiSwitch, LV_ALIGN_CENTER );
 lv_obj_set_style_bg_color(ui_WifiSwitch, lv_color_hex(0x7E7E7E), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_WifiSwitch, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Label21 = lv_label_create(ui_WifiSettingsScreen);
-lv_obj_set_width( ui_Label21, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label21, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label21, 21 );
-lv_obj_set_y( ui_Label21, 90 );
-lv_label_set_text(ui_Label21,"connected");
+ui_WifiStatusLabel = lv_label_create(ui_WifiSettingsScreen);
+lv_obj_set_width( ui_WifiStatusLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_WifiStatusLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_WifiStatusLabel, 21 );
+lv_obj_set_y( ui_WifiStatusLabel, 90 );
+lv_label_set_text(ui_WifiStatusLabel,"connected");
 
 ui_ImgButton4 = lv_imgbtn_create(ui_WifiSettingsScreen);
 lv_imgbtn_set_src(ui_ImgButton4, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_refresh_png, NULL);

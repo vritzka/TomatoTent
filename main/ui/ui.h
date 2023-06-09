@@ -156,7 +156,7 @@ extern lv_obj_t *ui_WifiDropdown;
 extern lv_obj_t *ui_Image13;
 void ui_event_WifiSwitch( lv_event_t * e);
 extern lv_obj_t *ui_WifiSwitch;
-extern lv_obj_t *ui_Label21;
+extern lv_obj_t *ui_WifiStatusLabel;
 extern lv_obj_t *ui_ImgButton4;
 void ui_event_ImgButton7( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton7;

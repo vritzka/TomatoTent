@@ -1,3 +1,5 @@
+#include "lvgl.h"
+#include "ui.h"
 #include "driver/ledc.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
@@ -19,6 +21,9 @@
 
 
 void ledc_init(void);
+void event_loop_init(void);
 void wifi_on(void);
 void wifi_scan(void);
 void wifi_off(void);
+void wifi_scan_done_handler(void* handler_args, esp_event_base_t base, int32_t id, void* event_data);
+

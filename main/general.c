@@ -2,6 +2,8 @@
 
 static const char *TAG = "general.c";
 
+static char somestring[36];
+
 /////////////////////////////////////////////////////////
 ///////////////// LEDC (PWM) ////////////////////////////
 /////////////////////////////////////////////////////////
@@ -31,7 +33,16 @@ void ledc_init(void)
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));  
 }
 
+/////////////////////////////////////////////////////////
+///////////////// Event Loop ////////////////////////////
+/////////////////////////////////////////////////////////
 
+
+void event_loop_init(void) {
+	
+	ESP_ERROR_CHECK(esp_event_loop_create_default());
+	ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, WIFI_EVENT_SCAN_DONE, wifi_scan_done_handler, NULL, NULL));
+}
 
 /////////////////////////////////////////////////////////
 ///////////////// WIFI //////////////////////////////////
@@ -150,7 +161,7 @@ static void print_cipher_type(int pairwise_cipher, int group_cipher)
 void wifi_on(void)
 {
 	ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    //ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
     assert(sta_netif);
 
@@ -163,24 +174,37 @@ void wifi_on(void)
 
 void wifi_scan(void)
 {
-	uint16_t number = DEFAULT_SCAN_LIST_SIZE;
+    
+    esp_wifi_scan_start(NULL, false);
+   
+}
+
+
+    uint16_t number = DEFAULT_SCAN_LIST_SIZE;
     wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
     uint16_t ap_count = 0;
-    memset(ap_info, 0, sizeof(ap_info));
     
-    esp_wifi_scan_start(NULL, true);
+    
+void wifi_scan_done_handler(void* handler_args, esp_event_base_t base, int32_t id, void* event_data)
+{
+    ESP_LOGI(TAG, "%s: wifi_scan_done_handler", base);
+    memset(ap_info, 0, sizeof(ap_info));
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
+
     ESP_LOGI(TAG, "Total APs scanned = %u", ap_count);
     for (int i = 0; (i < DEFAULT_SCAN_LIST_SIZE) && (i < ap_count); i++) {
-        ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
-        ESP_LOGI(TAG, "RSSI \t\t%d", ap_info[i].rssi);
-        print_auth_mode(ap_info[i].authmode);
+        //ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
+        //ESP_LOGI(TAG, "RSSI \t\t%d", ap_info[i].rssi);
+        sprintf(somestring, "%s", ap_info[i].ssid);
+        lv_dropdown_add_option(ui_WifiDropdown, somestring, i);
+        //print_auth_mode(ap_info[i].authmode);
         if (ap_info[i].authmode != WIFI_AUTH_WEP) {
             print_cipher_type(ap_info[i].pairwise_cipher, ap_info[i].group_cipher);
         }
-        ESP_LOGI(TAG, "Channel \t\t%d\n", ap_info[i].primary);
+        //ESP_LOGI(TAG, "Channel \t\t%d\n", ap_info[i].primary);
     }
+	//lv_label_set_text(ui_WifiStatusLabel, "");
 
 }
 

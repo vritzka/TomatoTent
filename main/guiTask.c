@@ -359,7 +359,7 @@ TaskHandle_t xGuiTaskHandle = NULL;
   // must exist for the lifetime of the task, so in this case is declared static.  If it was just an
   // an automatic stack variable it might no longer exist, or at least have been corrupted, by the time
   // the new task attempts to access it.
-  xTaskCreatePinnedToCore( vGuiTask, "GUITASK", 4096, &ucParameterToPass, 10, &xGuiTaskHandle, 1 );
+  xTaskCreatePinnedToCore( vGuiTask, "GUITASK", 4096, &ucParameterToPass, 10, &xGuiTaskHandle, 0 );
   configASSERT( xGuiTaskHandle );
 
   // Use the handle to delete the task.
