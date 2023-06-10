@@ -150,6 +150,7 @@ extern lv_obj_t *ui_ImgButton6;
 // SCREEN: ui_WifiSettingsScreen
 void ui_WifiSettingsScreen_screen_init(void);
 extern lv_obj_t *ui_WifiSettingsScreen;
+void ui_event_Keyboard2( lv_event_t * e);
 extern lv_obj_t *ui_Keyboard2;
 extern lv_obj_t *ui_WifiPasword;
 extern lv_obj_t *ui_WifiDropdown;
@@ -157,7 +158,7 @@ extern lv_obj_t *ui_Image13;
 void ui_event_WifiSwitch( lv_event_t * e);
 extern lv_obj_t *ui_WifiSwitch;
 extern lv_obj_t *ui_WifiStatusLabel;
-extern lv_obj_t *ui_ImgButton4;
+extern lv_obj_t *ui_WifiScanButton;
 void ui_event_ImgButton7( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton7;
 // SCREEN: ui_GeneralSettingsScreen

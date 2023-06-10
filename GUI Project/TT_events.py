@@ -58,3 +58,7 @@ def save_general_settings_screen(event_struct):
 def wifi_switch(event_struct):
     return
 
+
+def WifiKeyboard(event_struct):
+    return
+

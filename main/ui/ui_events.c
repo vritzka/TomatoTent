@@ -378,3 +378,9 @@ void wifi_switch(lv_event_t * e)
 	}
 
 }
+
+void WifiKeyboard(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	ESP_LOGI(TAG, "%d", event_code);
+}
