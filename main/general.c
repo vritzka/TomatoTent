@@ -39,8 +39,8 @@ void ledc_init(void)
 
 
 void event_loop_init(void) {
-	ESP_ERROR_CHECK(esp_event_loop_create_default());
-	ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, WIFI_EVENT_SCAN_DONE, wifi_scan_done_handler, NULL, NULL));
+	//ESP_ERROR_CHECK(esp_event_loop_create_default());
+	//ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, WIFI_EVENT_SCAN_DONE, wifi_scan_done_handler, NULL, NULL));
 }
 
 /////////////////////////////////////////////////////////
@@ -157,58 +157,45 @@ switch (group_cipher) {
     }
 }
 
-void wifi_on(void)
-{
-	ESP_ERROR_CHECK(esp_netif_init());
-    //ESP_ERROR_CHECK(esp_event_loop_create_default());
-    esp_netif_t *sta_netif = esp_netif_create_default_wifi_sta();
-    assert(sta_netif);
-
-    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-    ESP_ERROR_CHECK(esp_wifi_start());
-}
-
-void wifi_scan(void)
-{
-    esp_wifi_scan_start(NULL, false);
-    lv_label_set_text(ui_WifiStatusLabel, "searching...");  
-}
-
 uint16_t number = DEFAULT_SCAN_LIST_SIZE;
 wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
-uint16_t ap_count = 0;    
-    
-void wifi_scan_done_handler(void* handler_args, esp_event_base_t base, int32_t id, void* event_data)
+uint16_t ap_count = 0;   
+
+static int s_retry_num = 0;
+#define EXAMPLE_ESP_MAXIMUM_RETRY  3
+static EventGroupHandle_t s_wifi_event_group;
+#define WIFI_CONNECTED_BIT BIT0
+#define WIFI_FAIL_BIT      BIT1
+#define ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD WIFI_AUTH_OPEN
+#define ESP_WIFI_SAE_MODE WPA3_SAE_PWE_HUNT_AND_PECK
+#define EXAMPLE_H2E_IDENTIFIER ""
+
+static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {
-    ESP_LOGI(TAG, "%s: wifi_scan_done_handler", base);
-    memset(ap_info, 0, sizeof(ap_info));
-    ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
-    ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
+	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE)
+	{
+		memset(ap_info, 0, sizeof(ap_info));
+		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
+		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
 
-    for (int i = 0; (i < DEFAULT_SCAN_LIST_SIZE) && (i < ap_count); i++) {
-        //ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
-        //ESP_LOGI(TAG, "RSSI \t\t%d", ap_info[i].rssi);
-        sprintf(somestring, "%s", ap_info[i].ssid);
-        lv_dropdown_add_option(ui_WifiDropdown, somestring, i);
-        //print_auth_mode(ap_info[i].authmode);
-        if (ap_info[i].authmode != WIFI_AUTH_WEP) {
-            //print_cipher_type(ap_info[i].pairwise_cipher, ap_info[i].group_cipher);
-        }
-        //ESP_LOGI(TAG, "Channel \t\t%d\n", ap_info[i].primary);
-    }
-    if (ap_count == 0)
-		lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
-		
-	lv_label_set_text(ui_WifiStatusLabel, "");
+		for (int i = 0; (i < DEFAULT_SCAN_LIST_SIZE) && (i < ap_count); i++) {
+			//ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
+			//ESP_LOGI(TAG, "RSSI \t\t%d", ap_info[i].rssi);
+			sprintf(somestring, "%s", ap_info[i].ssid);
+			lv_dropdown_add_option(ui_WifiDropdown, somestring, i);
+			//print_auth_mode(ap_info[i].authmode);
+			if (ap_info[i].authmode != WIFI_AUTH_WEP) {
+				//print_cipher_type(ap_info[i].pairwise_cipher, ap_info[i].group_cipher);
+			}
+			//ESP_LOGI(TAG, "Channel \t\t%d\n", ap_info[i].primary);
+		}
+		if (ap_count == 0)
+			lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
+			
+		lv_label_set_text(ui_WifiStatusLabel, "");		
 
-}
-
-static void wifi_event_handler(void* arg, esp_event_base_t event_base,
-                                int32_t event_id, void* event_data)
-{
+	}
+	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
@@ -228,20 +215,23 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
     }
 }
 
+esp_netif_t *sta_netif;
+esp_event_handler_instance_t instance_any_id;
+esp_event_handler_instance_t instance_got_ip;
 static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
-void wifi_init_sta(void)
+void wifi_on(void)
 {
     s_wifi_event_group = xEventGroupCreate();
 
-    //ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_netif_init());
 
-    //ESP_ERROR_CHECK(esp_event_loop_create_default());
-    //esp_netif_create_default_wifi_sta();
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    sta_netif = esp_netif_create_default_wifi_sta();
 
-    //wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    //ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
     esp_event_handler_instance_t instance_any_id;
     esp_event_handler_instance_t instance_got_ip;
@@ -256,6 +246,22 @@ void wifi_init_sta(void)
                                                         NULL,
                                                         &instance_got_ip));
 
+
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_start());
+    
+}
+
+void wifi_scan(void)
+{
+	lv_dropdown_clear_options(ui_WifiDropdown);
+    esp_wifi_scan_start(NULL, false);
+    lv_label_set_text(ui_WifiStatusLabel, "searching...");  
+}
+
+
+void wifi_connect2(void)
+{
     wifi_config_t wifi_config = {
         .sta = {
             .ssid = "SSID",
@@ -270,12 +276,13 @@ void wifi_init_sta(void)
             .sae_h2e_identifier = EXAMPLE_H2E_IDENTIFIER,
         },
     };
-    //ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
-    //ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
-    //ESP_ERROR_CHECK(esp_wifi_start() );
 
     ESP_LOGI(TAG, "wifi_init_sta finished.");
-
+    
+    //ESP_ERROR_CHECK(esp_wifi_stop() );
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
+    ESP_ERROR_CHECK(esp_wifi_start() );
+    
     /* Waiting until either the connection is established (WIFI_CONNECTED_BIT) or connection failed for the maximum
      * number of re-tries (WIFI_FAIL_BIT). The bits are set by wifi_event_handler() (see above) */
     EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
@@ -287,11 +294,9 @@ void wifi_init_sta(void)
     /* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
      * happened. */
     if (bits & WIFI_CONNECTED_BIT) {
-        ESP_LOGI(TAG, "connected to ap SSID:%s password:%s",
-                 "SSID", "PASS");
+        ESP_LOGI(TAG, "connected to ap SSID:%s password:%s", "SSID", "PASS");
     } else if (bits & WIFI_FAIL_BIT) {
-        ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s",
-                 "SSID", "PASS");
+        ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s", "SSID", "PASS");
     } else {
         ESP_LOGE(TAG, "UNEXPECTED EVENT");
     }
@@ -300,5 +305,10 @@ void wifi_init_sta(void)
 
 void wifi_off(void)
 {
-	
+	esp_netif_destroy_default_wifi(sta_netif);
+	esp_wifi_disconnect();
+	esp_wifi_stop();
+	esp_wifi_deinit();
+	esp_event_loop_delete_default();
+	lv_dropdown_clear_options(ui_WifiDropdown);
 }

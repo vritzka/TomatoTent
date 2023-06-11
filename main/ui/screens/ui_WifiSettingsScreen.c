@@ -71,20 +71,6 @@ lv_obj_set_style_text_color(ui_WifiStatusLabel, lv_color_hex(0xBDBDBD), LV_PART_
 lv_obj_set_style_text_opa(ui_WifiStatusLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_align(ui_WifiStatusLabel, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_WifiScanButton = lv_imgbtn_create(ui_WifiSettingsScreen);
-lv_imgbtn_set_src(ui_WifiScanButton, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_refresh_png, NULL);
-lv_imgbtn_set_src(ui_WifiScanButton, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_refresh_png, NULL);
-lv_obj_set_height( ui_WifiScanButton, 32);
-lv_obj_set_width( ui_WifiScanButton, LV_SIZE_CONTENT);  /// 32
-lv_obj_set_x( ui_WifiScanButton, 156 );
-lv_obj_set_y( ui_WifiScanButton, -18 );
-lv_obj_set_align( ui_WifiScanButton, LV_ALIGN_CENTER );
-lv_obj_set_style_radius(ui_WifiScanButton, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_WifiScanButton, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_WifiScanButton, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_WifiScanButton, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_PRESSED );
-lv_obj_set_style_bg_opa(ui_WifiScanButton, 50, LV_PART_MAIN| LV_STATE_PRESSED);
-
 ui_ImgButton7 = lv_imgbtn_create(ui_WifiSettingsScreen);
 lv_imgbtn_set_src(ui_ImgButton7, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1668913270, NULL);
 lv_obj_set_width( ui_ImgButton7, 32);

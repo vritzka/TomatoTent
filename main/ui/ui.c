@@ -160,7 +160,6 @@ lv_obj_t *ui_Image13;
 void ui_event_WifiSwitch( lv_event_t * e);
 lv_obj_t *ui_WifiSwitch;
 lv_obj_t *ui_WifiStatusLabel;
-lv_obj_t *ui_WifiScanButton;
 void ui_event_ImgButton7( lv_event_t * e);
 lv_obj_t *ui_ImgButton7;
 
@@ -505,8 +504,8 @@ if ( event_code == LV_EVENT_CLICKED) {
 }
 void ui_event_Keyboard2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      WifiKeyboard( e );
+if ( event_code == LV_EVENT_READY) {
+      WifiKeyboardReady( e );
 }
 }
 void ui_event_WifiSwitch( lv_event_t * e) {

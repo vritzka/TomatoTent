@@ -10,7 +10,6 @@ screens/ui_WifiSettingsScreen.c
 screens/ui_GeneralSettingsScreen.c
 ui.c
 ui_helpers.c
-ui_events.c
 images/ui_img_plant_png.c
 images/ui_img_dry_png.c
 images/ui_img_tomato_png.c
@@ -34,7 +33,6 @@ images/ui_img_2060199463.c
 images/ui_img_60476769.c
 images/ui_img_261459337.c
 images/ui_img_953604683.c
-images/ui_img_refresh_png.c
 images/ui_img_bg2_png.c
 images/ui_img_1669444289.c
 images/ui_img_182264864.c

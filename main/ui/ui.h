@@ -158,7 +158,6 @@ extern lv_obj_t *ui_Image13;
 void ui_event_WifiSwitch( lv_event_t * e);
 extern lv_obj_t *ui_WifiSwitch;
 extern lv_obj_t *ui_WifiStatusLabel;
-extern lv_obj_t *ui_WifiScanButton;
 void ui_event_ImgButton7( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton7;
 // SCREEN: ui_GeneralSettingsScreen
@@ -205,7 +204,6 @@ LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
 LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
 LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
-LV_IMG_DECLARE( ui_img_refresh_png);   // assets/refresh.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png

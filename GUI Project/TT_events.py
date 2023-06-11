@@ -62,3 +62,7 @@ def wifi_switch(event_struct):
 def WifiKeyboard(event_struct):
     return
 
+
+def WifiKeyboardReady(event_struct):
+    return
+
