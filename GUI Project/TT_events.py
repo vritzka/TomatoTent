@@ -66,3 +66,7 @@ def WifiKeyboard(event_struct):
 def WifiKeyboardReady(event_struct):
     return
 
+
+def save_wifi_screen(event_struct):
+    return
+

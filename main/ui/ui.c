@@ -151,10 +151,11 @@ lv_obj_t *ui_ImgButton6;
 
 // SCREEN: ui_WifiSettingsScreen
 void ui_WifiSettingsScreen_screen_init(void);
+void ui_event_WifiSettingsScreen( lv_event_t * e);
 lv_obj_t *ui_WifiSettingsScreen;
 void ui_event_Keyboard2( lv_event_t * e);
 lv_obj_t *ui_Keyboard2;
-lv_obj_t *ui_WifiPasword;
+lv_obj_t *ui_WifiPassword;
 lv_obj_t *ui_WifiDropdown;
 lv_obj_t *ui_Image13;
 void ui_event_WifiSwitch( lv_event_t * e);
@@ -500,6 +501,12 @@ void ui_event_ImgButton6( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+}
+}
+void ui_event_WifiSettingsScreen( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
+      save_wifi_screen( e );
 }
 }
 void ui_event_Keyboard2( lv_event_t * e) {

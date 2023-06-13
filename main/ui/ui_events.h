@@ -19,6 +19,7 @@ void save_led_brightness_screen(lv_event_t * e);
 void LEDBrightnessSlider(lv_event_t * e);
 void decrease_day_counter(lv_event_t * e);
 void increase_day_counter(lv_event_t * e);
+void save_wifi_screen(lv_event_t * e);
 void WifiKeyboardReady(lv_event_t * e);
 void wifi_switch(lv_event_t * e);
 void save_general_settings_screen(lv_event_t * e);

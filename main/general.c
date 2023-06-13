@@ -197,14 +197,12 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 	}
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
-        lv_label_set_text(ui_WifiStatusLabel, "connecting..."); 
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_num++;
             ESP_LOGI(TAG, "retry to connect to the AP");
-            lv_label_set_text(ui_WifiStatusLabel, "trying to\nre-connect"); 
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
@@ -264,21 +262,23 @@ void wifi_scan(void)
 
 void wifi_connect(void)
 {
-    wifi_config_t wifi_config = {
-        .sta = {
-            .ssid = "Volker",
-            .password = "kk1wnxz3rbq6t",
+	
+	const char *pw = lv_textarea_get_text(ui_WifiPassword);
+	char ssid[128];
+    lv_dropdown_get_selected_str(ui_WifiDropdown, ssid, sizeof(ssid));
+        
+    wifi_config_t wifi_config = {};
+    strcpy((char *)wifi_config.sta.ssid, ssid);
+    strcpy((char *)wifi_config.sta.password, pw);  //"kk1wnxz3rbq6t",
             /* Authmode threshold resets to WPA2 as default if password matches WPA2 standards (pasword len => 8).
              * If you want to connect the device to deprecated WEP/WPA networks, Please set the threshold value
              * to WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK and set the password with length and format matching to
              * WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK standards.
-             */
-            .threshold.authmode = ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD,
-            .sae_pwe_h2e = ESP_WIFI_SAE_MODE,
-            .sae_h2e_identifier = EXAMPLE_H2E_IDENTIFIER,
-        },
-    };
-
+             */    
+    wifi_config.sta.threshold.authmode = ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD;
+    wifi_config.sta.sae_pwe_h2e = WPA3_SAE_PWE_BOTH;    
+	//wifi_config.sta.sae_pwe_h2e = EXAMPLE_H2E_IDENTIFIER;
+	
     ESP_LOGI(TAG, "wifi_init_sta finished.");
     
     ESP_ERROR_CHECK(esp_wifi_stop() );
@@ -302,11 +302,6 @@ void wifi_connect(void)
     } else {
         ESP_LOGE(TAG, "UNEXPECTED EVENT");
     }
-}
-
-void wifi_save_access_details() 
-{
-	
 }
 
 void wifi_off(void)
