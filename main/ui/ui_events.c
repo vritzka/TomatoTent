@@ -367,11 +367,10 @@ void save_general_settings_screen(lv_event_t * e)
 void wifi_switch(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
-	//err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
 		wifi_on();
-		//wifi_scan();
+		wifi_scan();
 	} else { 
 		//off = 0	
 		wifi_off();
@@ -383,5 +382,5 @@ void WifiKeyboardReady(lv_event_t * e)
 {
 	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 	ESP_LOGI(TAG, "%d", event_code);
-	wifi_connect2();
+	wifi_connect();
 }

@@ -162,7 +162,7 @@ wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
 uint16_t ap_count = 0;   
 
 static int s_retry_num = 0;
-#define EXAMPLE_ESP_MAXIMUM_RETRY  3
+#define EXAMPLE_ESP_MAXIMUM_RETRY  5
 static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
@@ -197,12 +197,14 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 	}
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        lv_label_set_text(ui_WifiStatusLabel, "connecting..."); 
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_num++;
             ESP_LOGI(TAG, "retry to connect to the AP");
+            lv_label_set_text(ui_WifiStatusLabel, "trying to\nre-connect"); 
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
@@ -210,6 +212,7 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        lv_label_set_text(ui_WifiStatusLabel, "connected"); 
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
@@ -226,7 +229,6 @@ void wifi_on(void)
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
-
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     sta_netif = esp_netif_create_default_wifi_sta();
 
@@ -260,12 +262,12 @@ void wifi_scan(void)
 }
 
 
-void wifi_connect2(void)
+void wifi_connect(void)
 {
     wifi_config_t wifi_config = {
         .sta = {
-            .ssid = "SSID",
-            .password = "PASS",
+            .ssid = "Volker",
+            .password = "kk1wnxz3rbq6t",
             /* Authmode threshold resets to WPA2 as default if password matches WPA2 standards (pasword len => 8).
              * If you want to connect the device to deprecated WEP/WPA networks, Please set the threshold value
              * to WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK and set the password with length and format matching to
@@ -279,7 +281,7 @@ void wifi_connect2(void)
 
     ESP_LOGI(TAG, "wifi_init_sta finished.");
     
-    //ESP_ERROR_CHECK(esp_wifi_stop() );
+    ESP_ERROR_CHECK(esp_wifi_stop() );
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
     ESP_ERROR_CHECK(esp_wifi_start() );
     
@@ -302,6 +304,10 @@ void wifi_connect2(void)
     }
 }
 
+void wifi_save_access_details() 
+{
+	
+}
 
 void wifi_off(void)
 {
