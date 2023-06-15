@@ -23,7 +23,7 @@
 
 void ledc_init(void);
 void event_loop_init(void);
-void wifi_on(void);
+void wifi_init(void);
 void wifi_scan(void);
 void wifi_connect(void);
 void wifi_off(void);

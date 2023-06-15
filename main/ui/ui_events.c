@@ -30,6 +30,7 @@ static uint16_t day_counter = 1;
 static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_value;
 static uint16_t temp_unit;
+static uint16_t wifi;
 
 void init_tomatotent(lv_event_t * e)
 {	
@@ -85,6 +86,13 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_str(storage_handle, "pw", pw, &required_size);
 		if (err == ESP_OK)		
 			lv_textarea_set_text(ui_WifiPassword, pw);
+			
+		nvs_get_u16(storage_handle, "wifi", &wifi);
+		if(wifi == 1) {
+			lv_obj_add_state(ui_WifiSwitch, LV_STATE_CHECKED);
+			wifi_init();
+			wifi_scan();
+		}
 		
         // Close NVS
         nvs_close(storage_handle);
@@ -379,7 +387,7 @@ void wifi_switch(lv_event_t * e)
 	lv_obj_t * target = lv_event_get_target(e);
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
-		wifi_on();
+		wifi_init();
 		wifi_scan();
 	} else { 
 		//off = 0	
@@ -403,6 +411,12 @@ void save_wifi_screen(lv_event_t * e)
     lv_dropdown_get_selected_str(ui_WifiDropdown, ssid, sizeof(ssid));
     nvs_set_str(storage_handle, "pw", pw);
     nvs_set_str(storage_handle, "ssid", ssid);
+    
+    if( lv_obj_has_state(ui_WifiSwitch, LV_STATE_CHECKED) ) {
+		err = nvs_set_u16(storage_handle, "wifi", 1);
+	} else {
+		err = nvs_set_u16(storage_handle, "wifi", 0);
+	}
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }

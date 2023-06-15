@@ -174,6 +174,16 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 {
 	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE)
 	{
+		
+		size_t required_size;
+		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
+		char* ssid = malloc(required_size);
+		err = nvs_get_str(storage_handle, "ssid", ssid, &required_size);
+		
+		nvs_get_str(storage_handle, "pw", NULL, &required_size);
+		char* pw = malloc(required_size);
+		err = nvs_get_str(storage_handle, "pw", pw, &required_size);
+		
 		memset(ap_info, 0, sizeof(ap_info));
 		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
 		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
@@ -192,8 +202,7 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 		if (ap_count == 0)
 			lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
 			
-		lv_label_set_text(ui_WifiStatusLabel, "");		
-
+		lv_label_set_text(ui_WifiStatusLabel, "");
 	}
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
@@ -222,7 +231,8 @@ esp_event_handler_instance_t instance_got_ip;
 static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
-void wifi_on(void)
+
+void wifi_init(void)
 {
     s_wifi_event_group = xEventGroupCreate();
 
