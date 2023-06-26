@@ -127,6 +127,7 @@ lv_obj_t *ui_FanSettingsScreen;
 lv_obj_t *ui_Label14;
 lv_obj_t *ui_Image12;
 lv_obj_t *ui_Panel13;
+void ui_event_Slider2( lv_event_t * e);
 lv_obj_t *ui_Slider2;
 void ui_event_ImgButton5( lv_event_t * e);
 lv_obj_t *ui_ImgButton5;
@@ -489,6 +490,12 @@ void ui_event_GraphScreen( lv_event_t * e) {
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
+}
+}
+void ui_event_Slider2( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      fanspeed_slider( e );
 }
 }
 void ui_event_ImgButton5( lv_event_t * e) {

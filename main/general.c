@@ -2,6 +2,8 @@
 
 static const char *TAG = "general.c";
 
+static nvs_handle_t storage_handle;
+static esp_err_t err;
 static char somestring[36];
 
 /////////////////////////////////////////////////////////
@@ -174,19 +176,25 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 {
 	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE)
 	{
+		char* ssid = "";
+		err = nvs_open("storage", NVS_READONLY, &storage_handle);
+		if (err != ESP_OK) {
+			printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+		} else { 
 		
 		size_t required_size;
 		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
-		char* ssid = malloc(required_size);
+		ssid = malloc(required_size);
 		err = nvs_get_str(storage_handle, "ssid", ssid, &required_size);
-		
-		nvs_get_str(storage_handle, "pw", NULL, &required_size);
-		char* pw = malloc(required_size);
-		err = nvs_get_str(storage_handle, "pw", pw, &required_size);
+		nvs_close(storage_handle);
+		//ESP_LOGI(TAG, "SSID %s", ssid);
+		}
 		
 		memset(ap_info, 0, sizeof(ap_info));
 		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
 		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
+		
+		uint8_t saved_ssid_index = 232;
 
 		for (int i = 0; (i < DEFAULT_SCAN_LIST_SIZE) && (i < ap_count); i++) {
 			//ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
@@ -198,11 +206,22 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 				//print_cipher_type(ap_info[i].pairwise_cipher, ap_info[i].group_cipher);
 			}
 			//ESP_LOGI(TAG, "Channel \t\t%d\n", ap_info[i].primary);
-		}
-		if (ap_count == 0)
-			lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
 			
+			if( strcmp( somestring, ssid ) == 0 )
+				saved_ssid_index = i;
+			
+		}
+		
 		lv_label_set_text(ui_WifiStatusLabel, "");
+		
+		if (ap_count == 0) {
+			lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
+		} else if (saved_ssid_index != 232) {
+			lv_dropdown_set_selected(ui_WifiDropdown, saved_ssid_index);
+			//lv_label_set_text(ui_WifiStatusLabel, "connecting ...");
+			//wifi_connect();
+		}
+		
 	}
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {

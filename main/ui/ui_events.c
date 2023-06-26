@@ -31,6 +31,10 @@ static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_value;
 static uint16_t temp_unit;
 static uint16_t wifi;
+static int16_t fanspeed_slider_left_value = 30;
+static int16_t fanspeed_slider_value = 60;
+
+
 
 void init_tomatotent(lv_event_t * e)
 {	
@@ -92,6 +96,8 @@ void init_tomatotent(lv_event_t * e)
 			lv_obj_add_state(ui_WifiSwitch, LV_STATE_CHECKED);
 			wifi_init();
 			wifi_scan();
+		} else {
+			lv_label_set_text(ui_WifiStatusLabel, "off");
 		}
 		
         // Close NVS
@@ -392,6 +398,7 @@ void wifi_switch(lv_event_t * e)
 	} else { 
 		//off = 0	
 		wifi_off();
+		lv_label_set_text(ui_WifiStatusLabel, "off");
 	}
 
 }
@@ -407,16 +414,27 @@ void save_wifi_screen(lv_event_t * e)
 {
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	const char *pw = lv_textarea_get_text(ui_WifiPassword);
-	char ssid[128];
-    lv_dropdown_get_selected_str(ui_WifiDropdown, ssid, sizeof(ssid));
     nvs_set_str(storage_handle, "pw", pw);
-    nvs_set_str(storage_handle, "ssid", ssid);
     
     if( lv_obj_has_state(ui_WifiSwitch, LV_STATE_CHECKED) ) {
 		err = nvs_set_u16(storage_handle, "wifi", 1);
+		char ssid[128];
+		lv_dropdown_get_selected_str(ui_WifiDropdown, ssid, sizeof(ssid));
+		nvs_set_str(storage_handle, "ssid", ssid);
 	} else {
 		err = nvs_set_u16(storage_handle, "wifi", 0);
 	}
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
+}
+
+void fanspeed_slider(lv_event_t * e)
+{
+	lv_obj_t * target = lv_event_get_target(e);
+	
+	fanspeed_slider_left_value = lv_slider_get_value(target);
+	fanspeed_slider_value = lv_slider_get_left_value(target);
+	
+	ESP_LOGI(TAG, "%d", fanspeed_slider_left_value);
+	ESP_LOGI(TAG, "%d", fanspeed_slider_value);
 }

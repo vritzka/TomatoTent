@@ -63,6 +63,7 @@ lv_obj_set_align( ui_ImgButton5, LV_ALIGN_CENTER );
 lv_obj_set_style_img_recolor(ui_ImgButton5, lv_color_hex(0xC3C3C3), LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor_opa(ui_ImgButton5, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+lv_obj_add_event_cb(ui_Slider2, ui_event_Slider2, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_ImgButton5, ui_event_ImgButton5, LV_EVENT_ALL, NULL);
 
 }

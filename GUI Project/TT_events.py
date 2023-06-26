@@ -70,3 +70,7 @@ def WifiKeyboardReady(event_struct):
 def save_wifi_screen(event_struct):
     return
 
+
+def fanspeed_slider(event_struct):
+    return
+

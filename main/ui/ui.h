@@ -127,6 +127,7 @@ extern lv_obj_t *ui_FanSettingsScreen;
 extern lv_obj_t *ui_Label14;
 extern lv_obj_t *ui_Image12;
 extern lv_obj_t *ui_Panel13;
+void ui_event_Slider2( lv_event_t * e);
 extern lv_obj_t *ui_Slider2;
 void ui_event_ImgButton5( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton5;

@@ -11,6 +11,7 @@
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "esp_system.h"
+#include "esp_err.h"
 	
 
 #define LEDC_TIMER              LEDC_TIMER_0
