@@ -12,6 +12,12 @@
 #include "nvs_flash.h"
 #include "esp_system.h"
 #include "esp_err.h"
+#include "freertos/task.h"
+#include "esp_mac.h"
+
+
+#include "lwip/err.h"
+#include "lwip/sys.h"
 	
 
 #define LEDC_TIMER              LEDC_TIMER_0

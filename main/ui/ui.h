@@ -127,10 +127,13 @@ extern lv_obj_t *ui_FanSettingsScreen;
 extern lv_obj_t *ui_Label14;
 extern lv_obj_t *ui_Image12;
 extern lv_obj_t *ui_Panel13;
-void ui_event_Slider2( lv_event_t * e);
-extern lv_obj_t *ui_Slider2;
+void ui_event_fanspeedSlider( lv_event_t * e);
+extern lv_obj_t *ui_fanspeedSlider;
 void ui_event_ImgButton5( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton5;
+extern lv_obj_t *ui_FanSpeedMinLabel;
+extern lv_obj_t *ui_FanSpeedMaxLabel;
+extern lv_obj_t *ui_Label25;
 // SCREEN: ui_ClimateControlScreen
 void ui_ClimateControlScreen_screen_init(void);
 extern lv_obj_t *ui_ClimateControlScreen;

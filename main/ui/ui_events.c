@@ -432,9 +432,12 @@ void fanspeed_slider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	fanspeed_slider_left_value = lv_slider_get_value(target);
-	fanspeed_slider_value = lv_slider_get_left_value(target);
+	fanspeed_slider_left_value = lv_slider_get_left_value(target);
+	fanspeed_slider_value = lv_slider_get_value(target);
 	
-	ESP_LOGI(TAG, "%d", fanspeed_slider_left_value);
-	ESP_LOGI(TAG, "%d", fanspeed_slider_value);
+	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu%%", fanspeed_slider_left_value);
+	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu%%", fanspeed_slider_value);
+	
+	//ESP_LOGI(TAG, "%d", fanspeed_slider_left_value);
+	//ESP_LOGI(TAG, "%d", fanspeed_slider_value);
 }

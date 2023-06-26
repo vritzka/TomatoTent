@@ -10,7 +10,6 @@ SET(SOURCES screens/ui_SplashScreen.c
     screens/ui_GeneralSettingsScreen.c
     ui.c
     ui_helpers.c
-    ui_events.c
     images/ui_img_plant_png.c
     images/ui_img_dry_png.c
     images/ui_img_tomato_png.c

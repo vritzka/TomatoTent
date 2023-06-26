@@ -127,10 +127,13 @@ lv_obj_t *ui_FanSettingsScreen;
 lv_obj_t *ui_Label14;
 lv_obj_t *ui_Image12;
 lv_obj_t *ui_Panel13;
-void ui_event_Slider2( lv_event_t * e);
-lv_obj_t *ui_Slider2;
+void ui_event_fanspeedSlider( lv_event_t * e);
+lv_obj_t *ui_fanspeedSlider;
 void ui_event_ImgButton5( lv_event_t * e);
 lv_obj_t *ui_ImgButton5;
+lv_obj_t *ui_FanSpeedMinLabel;
+lv_obj_t *ui_FanSpeedMaxLabel;
+lv_obj_t *ui_Label25;
 
 // SCREEN: ui_ClimateControlScreen
 void ui_ClimateControlScreen_screen_init(void);
@@ -492,7 +495,7 @@ lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
 }
 }
-void ui_event_Slider2( lv_event_t * e) {
+void ui_event_fanspeedSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       fanspeed_slider( e );
