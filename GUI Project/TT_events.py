@@ -74,3 +74,7 @@ def save_wifi_screen(event_struct):
 def fanspeed_slider(event_struct):
     return
 
+
+def save_fan_settings_screen(event_struct):
+    return
+

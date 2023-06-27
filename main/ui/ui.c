@@ -123,12 +123,13 @@ lv_obj_t *ui_Image21;
 
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
+void ui_event_FanSettingsScreen( lv_event_t * e);
 lv_obj_t *ui_FanSettingsScreen;
 lv_obj_t *ui_Label14;
 lv_obj_t *ui_Image12;
 lv_obj_t *ui_Panel13;
-void ui_event_fanspeedSlider( lv_event_t * e);
-lv_obj_t *ui_fanspeedSlider;
+void ui_event_fanSpeedSlider( lv_event_t * e);
+lv_obj_t *ui_fanSpeedSlider;
 void ui_event_ImgButton5( lv_event_t * e);
 lv_obj_t *ui_ImgButton5;
 lv_obj_t *ui_FanSpeedMinLabel;
@@ -147,7 +148,7 @@ lv_obj_t *ui_Panel7;
 lv_obj_t *ui_Dropdown1;
 lv_obj_t *ui_Label17;
 lv_obj_t *ui_Panel2;
-lv_obj_t *ui_Switch2;
+lv_obj_t *ui_climateModeSwitch;
 lv_obj_t *ui_Label19;
 lv_obj_t *ui_Label20;
 void ui_event_ImgButton6( lv_event_t * e);
@@ -495,7 +496,13 @@ lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
 }
 }
-void ui_event_fanspeedSlider( lv_event_t * e) {
+void ui_event_FanSettingsScreen( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
+      save_fan_settings_screen( e );
+}
+}
+void ui_event_fanSpeedSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       fanspeed_slider( e );

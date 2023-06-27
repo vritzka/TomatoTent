@@ -42,16 +42,16 @@ lv_obj_set_style_bg_color(ui_Panel13, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_
 lv_obj_set_style_bg_opa(ui_Panel13, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_Panel13, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_fanspeedSlider = lv_slider_create(ui_Panel13);
-lv_slider_set_mode(ui_fanspeedSlider, LV_SLIDER_MODE_RANGE);
-lv_slider_set_value( ui_fanspeedSlider, 20, LV_ANIM_OFF);
-if (lv_slider_get_mode(ui_fanspeedSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_fanspeedSlider, 0, LV_ANIM_OFF);
-lv_obj_set_width( ui_fanspeedSlider, 400);
-lv_obj_set_height( ui_fanspeedSlider, 30);
-lv_obj_set_x( ui_fanspeedSlider, 1 );
-lv_obj_set_y( ui_fanspeedSlider, 14 );
-lv_obj_set_align( ui_fanspeedSlider, LV_ALIGN_CENTER );
-lv_obj_clear_flag( ui_fanspeedSlider, LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
+ui_fanSpeedSlider = lv_slider_create(ui_Panel13);
+lv_slider_set_mode(ui_fanSpeedSlider, LV_SLIDER_MODE_RANGE);
+lv_slider_set_value( ui_fanSpeedSlider, 20, LV_ANIM_OFF);
+if (lv_slider_get_mode(ui_fanSpeedSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_fanSpeedSlider, 0, LV_ANIM_OFF);
+lv_obj_set_width( ui_fanSpeedSlider, 400);
+lv_obj_set_height( ui_fanSpeedSlider, 30);
+lv_obj_set_x( ui_fanSpeedSlider, 1 );
+lv_obj_set_y( ui_fanSpeedSlider, 14 );
+lv_obj_set_align( ui_fanSpeedSlider, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_fanSpeedSlider, LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 
 ui_ImgButton5 = lv_imgbtn_create(ui_FanSettingsScreen);
 lv_imgbtn_set_src(ui_ImgButton5, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1668913270, NULL);
@@ -90,7 +90,8 @@ lv_obj_set_align( ui_Label25, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label25,"-");
 lv_obj_set_style_text_font(ui_Label25, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-lv_obj_add_event_cb(ui_fanspeedSlider, ui_event_fanspeedSlider, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_fanSpeedSlider, ui_event_fanSpeedSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_ImgButton5, ui_event_ImgButton5, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_FanSettingsScreen, ui_event_FanSettingsScreen, LV_EVENT_ALL, NULL);
 
 }

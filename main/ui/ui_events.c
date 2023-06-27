@@ -31,8 +31,8 @@ static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_value;
 static uint16_t temp_unit;
 static uint16_t wifi;
-static int16_t fanspeed_slider_left_value = 30;
-static int16_t fanspeed_slider_value = 60;
+static uint16_t fanspeed_slider_left_value = 30;
+static uint16_t fanspeed_slider_value = 60;
 
 
 
@@ -99,6 +99,16 @@ void init_tomatotent(lv_event_t * e)
 		} else {
 			lv_label_set_text(ui_WifiStatusLabel, "off");
 		}
+		
+		// Fan Settings Screen
+		err = nvs_get_u16(storage_handle, "fanspeed_min", &fanspeed_slider_left_value);
+		err = nvs_get_u16(storage_handle, "fanspeed_max", &fanspeed_slider_value);
+		
+		lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%d %%", fanspeed_slider_left_value);
+		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", fanspeed_slider_value);
+		lv_slider_set_value(ui_fanSpeedSlider, fanspeed_slider_value, LV_ANIM_OFF);
+		lv_slider_set_left_value(ui_fanSpeedSlider, fanspeed_slider_left_value, LV_ANIM_OFF);
+				
 		
         // Close NVS
         nvs_close(storage_handle);
@@ -225,7 +235,8 @@ void play_intro(lv_event_t * e)
 
 void light_duration_slider(lv_event_t * e) {
 	
-	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	//lv_event_code_t event_code = lv_event_get_code(e);
+	lv_obj_t * target = lv_event_get_target(e);
 	light_duration_slider_value = lv_slider_get_value(target);
 	
 	light_duration = (float_t)light_duration_slider_value / 2;
@@ -239,7 +250,7 @@ void light_duration_slider(lv_event_t * e) {
 
 void now_slider(lv_event_t * e) {
 	
-	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	lv_obj_t * target = lv_event_get_target(e);
 	now_slider_value = lv_slider_get_value(target);
 
 	ESP_LOGI(TAG, "%d", now_slider_value);
@@ -273,7 +284,7 @@ void save_light_duration_screen(lv_event_t * e)
 
 void LEDBrightnessSlider(lv_event_t * e)
 {
-	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	lv_obj_t * target = lv_event_get_target(e);
 	led_brightness_slider_value = lv_slider_get_value(target);
 	
 	//ESP_LOGI(TAG, "%d", led_brightness_slider_value);
@@ -339,7 +350,7 @@ void decrease_day_counter(lv_event_t * e)
 
 void screen_brightness_slider(lv_event_t * e)
 {
-	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+	lv_obj_t * target = lv_event_get_target(e);
 	screen_brightness_slider_value = lv_slider_get_value(target);
 	
 	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", screen_brightness_slider_value);
@@ -405,8 +416,8 @@ void wifi_switch(lv_event_t * e)
 
 void WifiKeyboardReady(lv_event_t * e)
 {
-	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-	ESP_LOGI(TAG, "%d", event_code);
+	//lv_event_code_t event_code = lv_event_get_code(e);
+	//ESP_LOGI(TAG, "%d", event_code);
 	wifi_connect();
 }
 
@@ -428,6 +439,10 @@ void save_wifi_screen(lv_event_t * e)
     nvs_close(storage_handle);
 }
 
+//////////////////////////////////////
+/////// Fan Speed Screen /////////////
+//////////////////////////////////////
+
 void fanspeed_slider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
@@ -435,9 +450,23 @@ void fanspeed_slider(lv_event_t * e)
 	fanspeed_slider_left_value = lv_slider_get_left_value(target);
 	fanspeed_slider_value = lv_slider_get_value(target);
 	
-	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu%%", fanspeed_slider_left_value);
-	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu%%", fanspeed_slider_value);
 	
-	//ESP_LOGI(TAG, "%d", fanspeed_slider_left_value);
-	//ESP_LOGI(TAG, "%d", fanspeed_slider_value);
+	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu %%", fanspeed_slider_left_value);
+	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu %%", fanspeed_slider_value);
 }
+
+void save_fan_settings_screen(lv_event_t * e)
+{
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	err = nvs_set_u16(storage_handle, "fanspeed_min", fanspeed_slider_left_value);
+	err = nvs_set_u16(storage_handle, "fanspeed_max", fanspeed_slider_value);
+	
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+}
+
+//////////////////////////////////////
+///////// Climate screen /////////////
+//////////////////////////////////////
+
+

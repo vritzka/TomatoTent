@@ -109,12 +109,12 @@ lv_obj_set_style_bg_color(ui_Panel2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_S
 lv_obj_set_style_bg_opa(ui_Panel2, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_Panel2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Switch2 = lv_switch_create(ui_Panel2);
-lv_obj_set_width( ui_Switch2, 50);
-lv_obj_set_height( ui_Switch2, 25);
-lv_obj_set_x( ui_Switch2, 0 );
-lv_obj_set_y( ui_Switch2, 3 );
-lv_obj_set_align( ui_Switch2, LV_ALIGN_CENTER );
+ui_climateModeSwitch = lv_switch_create(ui_Panel2);
+lv_obj_set_width( ui_climateModeSwitch, 50);
+lv_obj_set_height( ui_climateModeSwitch, 25);
+lv_obj_set_x( ui_climateModeSwitch, 0 );
+lv_obj_set_y( ui_climateModeSwitch, 3 );
+lv_obj_set_align( ui_climateModeSwitch, LV_ALIGN_CENTER );
 
 ui_Label19 = lv_label_create(ui_Panel2);
 lv_obj_set_width( ui_Label19, LV_SIZE_CONTENT);  /// 1

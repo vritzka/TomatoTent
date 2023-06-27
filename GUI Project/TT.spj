@@ -23283,7 +23283,7 @@
                   {
                     "nid": -1567413785,
                     "strtype": "OBJECT/Name",
-                    "strval": "fanspeedSlider",
+                    "strval": "fanSpeedSlider",
                     "InheritedType": 10
                   },
                   {
@@ -25338,6 +25338,71 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "disabled": false,
+            "nid": -48699048,
+            "strtype": "SCREEN/EventHandler",
+            "strval": "SCREEN_UNLOAD_START",
+            "childs": [
+              {
+                "nid": -2047043248,
+                "strtype": "_custom/name",
+                "strval": "Event34",
+                "InheritedType": 10
+              },
+              {
+                "nid": -527541908,
+                "strtype": "_custom/condition_C",
+                "strval": "",
+                "InheritedType": 10
+              },
+              {
+                "nid": -286809794,
+                "strtype": "_custom/condition_P",
+                "strval": "",
+                "InheritedType": 10
+              },
+              {
+                "nid": 1267022882,
+                "strtype": "_custom/action",
+                "strval": "CALL FUNCTION",
+                "childs": [
+                  {
+                    "nid": 759836568,
+                    "strtype": "CALL FUNCTION/Name",
+                    "strval": "CALL FUNCTION",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1297961456,
+                    "strtype": "CALL FUNCTION/Call",
+                    "strval": "<{Function_name}>( event_struct )",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -1797054129,
+                    "strtype": "CALL FUNCTION/CallC",
+                    "strval": "<{Function_name}>( e );",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 624476293,
+                    "strtype": "CALL FUNCTION/Function_name",
+                    "strval": "save_fan_settings_screen",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -458189780,
+                    "strtype": "CALL FUNCTION/Dont_export_function",
+                    "strval": "False",
+                    "InheritedType": 2
+                  }
+                ],
+                "InheritedType": 10
+              }
+            ],
+            "InheritedType": 4
           }
         ],
         "saved_objtypeKey": "SCREEN"
@@ -25983,7 +26048,6 @@
                   },
                   {
                     "nid": -1941324061,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -27779,7 +27843,7 @@
                   {
                     "nid": 1289878812,
                     "strtype": "OBJECT/Name",
-                    "strval": "Switch2",
+                    "strval": "climateModeSwitch",
                     "InheritedType": 10
                   },
                   {
@@ -37289,7 +37353,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 39,
+    "backup_cnt": 40,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
