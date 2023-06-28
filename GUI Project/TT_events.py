@@ -78,3 +78,15 @@ def fanspeed_slider(event_struct):
 def save_fan_settings_screen(event_struct):
     return
 
+
+def climate_mode_switch(event_struct):
+    return
+
+
+def humidity_dropdown(event_struct):
+    return
+
+
+def temperature_dropdown(event_struct):
+    return
+

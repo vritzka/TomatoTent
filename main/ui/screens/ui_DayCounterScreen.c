@@ -103,6 +103,7 @@ lv_obj_set_height( ui_ImgButton9, 32);
 lv_obj_set_x( ui_ImgButton9, 203 );
 lv_obj_set_y( ui_ImgButton9, -126 );
 lv_obj_set_align( ui_ImgButton9, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_ImgButton9, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_set_style_img_recolor(ui_ImgButton9, lv_color_hex(0xC3C3C3), LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor_opa(ui_ImgButton9, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 

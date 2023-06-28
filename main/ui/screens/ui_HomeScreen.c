@@ -239,6 +239,7 @@ lv_obj_set_height( ui_ImgButton3, 24);
 lv_obj_set_x( ui_ImgButton3, 203 );
 lv_obj_set_y( ui_ImgButton3, -126 );
 lv_obj_set_align( ui_ImgButton3, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_ImgButton3, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 
 lv_obj_add_event_cb(ui_TemperaturePanel, ui_event_TemperaturePanel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Panel1, ui_event_Panel1, LV_EVENT_ALL, NULL);

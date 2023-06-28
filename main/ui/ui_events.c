@@ -33,8 +33,11 @@ static uint16_t temp_unit;
 static uint16_t wifi;
 static uint16_t fanspeed_slider_left_value = 30;
 static uint16_t fanspeed_slider_value = 60;
-
-
+static uint8_t climate_mode = 0; //0 = auto
+static uint16_t target_humidity_sel_index;
+static uint16_t target_temperature_sel_index;
+static uint16_t target_humidity;
+static uint16_t target_temperature;
 
 void init_tomatotent(lv_event_t * e)
 {	
@@ -108,7 +111,25 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", fanspeed_slider_value);
 		lv_slider_set_value(ui_fanSpeedSlider, fanspeed_slider_value, LV_ANIM_OFF);
 		lv_slider_set_left_value(ui_fanSpeedSlider, fanspeed_slider_left_value, LV_ANIM_OFF);
-				
+		
+		
+		// Climate Screen
+		err = nvs_get_u8(storage_handle, "climate_mode", &climate_mode);
+		err = nvs_get_u16(storage_handle, "sel_hum_index", &target_humidity_sel_index);
+		err = nvs_get_u16(storage_handle, "sel_temp_index", &target_temperature_sel_index);
+		
+		//ESP_LOGI(TAG, "%d", target_humidity);
+		lv_dropdown_set_selected(ui_HumidityDropdown, target_humidity_sel_index);
+		lv_dropdown_set_selected(ui_TemperatureDropdown, target_temperature_sel_index);
+		
+		if( climate_mode == 1 ) { //manual climate
+			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
+			//char buf[3];
+			//lv_dropdown_get_selected_str(target, buf, sizeof(buf));
+		} else { //auto climate
+			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
+			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+		}		
 		
         // Close NVS
         nvs_close(storage_handle);
@@ -470,3 +491,50 @@ void save_fan_settings_screen(lv_event_t * e)
 //////////////////////////////////////
 
 
+void climate_mode_switch(lv_event_t * e)
+{
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	
+	lv_obj_t * target = lv_event_get_target(e);
+	
+	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) { //manual climate
+		climate_mode = 1;
+		lv_obj_clear_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+	} else { //auto climate
+		climate_mode = 0;
+		lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+	}
+	
+	err = nvs_set_u8(storage_handle, "climate_mode", climate_mode);
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+	
+}
+
+void humidity_dropdown(lv_event_t * e)
+{
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	lv_obj_t * target = lv_event_get_target(e);
+	
+	target_humidity_sel_index = lv_dropdown_get_selected(target);
+	
+	err = nvs_set_u16(storage_handle, "sel_hum_index", target_humidity_sel_index );
+	
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+}
+
+void temperature_dropdown(lv_event_t * e)
+{
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	lv_obj_t * target = lv_event_get_target(e);
+	
+	target_temperature_sel_index = lv_dropdown_get_selected(target);
+	
+	err = nvs_set_u16(storage_handle, "sel_temp_index", target_temperature_sel_index );
+	
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+}

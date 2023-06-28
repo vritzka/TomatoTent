@@ -107,6 +107,7 @@ ui_TempUnitSwitch = lv_switch_create(ui_Panel17);
 lv_obj_set_width( ui_TempUnitSwitch, 50);
 lv_obj_set_height( ui_TempUnitSwitch, 25);
 lv_obj_set_align( ui_TempUnitSwitch, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_TempUnitSwitch, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 
 lv_obj_set_style_bg_color(ui_TempUnitSwitch, lv_color_hex(0x140396), LV_PART_INDICATOR | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_TempUnitSwitch, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT);

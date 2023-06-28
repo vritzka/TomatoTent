@@ -141,14 +141,17 @@ void ui_ClimateControlScreen_screen_init(void);
 lv_obj_t *ui_ClimateControlScreen;
 lv_obj_t *ui_ClimateSettingsScreen;
 lv_obj_t *ui_Image14;
-lv_obj_t *ui_Panel3;
-lv_obj_t *ui_Dropdown2;
+lv_obj_t *ui_HumiditySwitchPanel;
+void ui_event_HumidityDropdown( lv_event_t * e);
+lv_obj_t *ui_HumidityDropdown;
 lv_obj_t *ui_Label18;
-lv_obj_t *ui_Panel7;
-lv_obj_t *ui_Dropdown1;
+lv_obj_t *ui_TemperatureSwitchPanel;
+void ui_event_TemperatureDropdown( lv_event_t * e);
+lv_obj_t *ui_TemperatureDropdown;
 lv_obj_t *ui_Label17;
 lv_obj_t *ui_Panel2;
-lv_obj_t *ui_climateModeSwitch;
+void ui_event_ClimateModeSwitch( lv_event_t * e);
+lv_obj_t *ui_ClimateModeSwitch;
 lv_obj_t *ui_Label19;
 lv_obj_t *ui_Label20;
 void ui_event_ImgButton6( lv_event_t * e);
@@ -512,6 +515,24 @@ void ui_event_ImgButton5( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+}
+}
+void ui_event_HumidityDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      humidity_dropdown( e );
+}
+}
+void ui_event_TemperatureDropdown( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      temperature_dropdown( e );
+}
+}
+void ui_event_ClimateModeSwitch( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      climate_mode_switch( e );
 }
 }
 void ui_event_ImgButton6( lv_event_t * e) {
