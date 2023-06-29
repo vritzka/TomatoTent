@@ -40,7 +40,7 @@ extern lv_obj_t *ui_sun;
 void ui_event_TemperaturePanel( lv_event_t * e);
 extern lv_obj_t *ui_TemperaturePanel;
 extern lv_obj_t *ui_Label5;
-extern lv_obj_t *ui_Label1;
+extern lv_obj_t *ui_HomeTempUnitLabel;
 extern lv_obj_t *ui_Image5;
 void ui_event_Panel1( lv_event_t * e);
 extern lv_obj_t *ui_Panel1;
@@ -61,8 +61,8 @@ extern lv_obj_t *ui_Panel11;
 extern lv_obj_t *ui_DayCounterMainLabel;
 extern lv_obj_t *ui_Label10;
 extern lv_obj_t *ui_ArrowUp1;
-void ui_event_ImgButton3( lv_event_t * e);
-extern lv_obj_t *ui_ImgButton3;
+void ui_event_WifiIcon( lv_event_t * e);
+extern lv_obj_t *ui_WifiIcon;
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
 void ui_event_LightDurationScreen( lv_event_t * e);
@@ -210,6 +210,7 @@ LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_harvest_png);   // assets/harvest.png
 LV_IMG_DECLARE( ui_img_1668913270);   // assets/back-up.png
 LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
+LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
 LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
 LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png

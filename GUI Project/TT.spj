@@ -3269,7 +3269,7 @@
                   {
                     "nid": 1477224287,
                     "strtype": "OBJECT/Name",
-                    "strval": "Label1",
+                    "strval": "HomeTempUnitLabel",
                     "InheritedType": 10
                   },
                   {
@@ -3597,6 +3597,7 @@
                           {
                             "nid": 924913165,
                             "strtype": "PLAY ANIMATION/Target",
+                            "strval": "-",
                             "InheritedType": 9
                           },
                           {
@@ -9162,7 +9163,7 @@
               {
                 "nid": 1280186802,
                 "strtype": "OBJECT/Name",
-                "strval": "ImgButton3",
+                "strval": "WifiIcon",
                 "InheritedType": 10
               },
               {
@@ -9193,8 +9194,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  203,
-                  -126
+                  205,
+                  -136
                 ],
                 "InheritedType": 7
               },
@@ -9216,7 +9217,6 @@
               },
               {
                 "nid": 307819298,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -9253,7 +9253,7 @@
               {
                 "nid": -1577002423,
                 "strtype": "OBJECT/Adv_hittest",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -18368,7 +18368,6 @@
               },
               {
                 "nid": -1715968696,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -18405,7 +18404,7 @@
               {
                 "nid": 1292384949,
                 "strtype": "OBJECT/Adv_hittest",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -21324,7 +21323,7 @@
                     "strtype": "OBJECT/Position",
                     "intarray": [
                       -29,
-                      1
+                      -1
                     ],
                     "InheritedType": 7
                   },
@@ -21532,7 +21531,7 @@
                   {
                     "nid": 1620841329,
                     "strtype": "IMAGE/Asset",
-                    "strval": "assets/dew.png",
+                    "strval": "assets/co2.png",
                     "InheritedType": 5
                   },
                   {
@@ -23939,7 +23938,6 @@
               },
               {
                 "nid": 1480102806,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -23976,7 +23974,7 @@
               {
                 "nid": 592451764,
                 "strtype": "OBJECT/Adv_hittest",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -25994,7 +25992,7 @@
                   {
                     "nid": 1752683328,
                     "strtype": "OBJECT/Name",
-                    "strval": "Dropdown2",
+                    "strval": "HumidityDropdown",
                     "InheritedType": 10
                   },
                   {
@@ -26035,7 +26033,7 @@
                     "flags": 49,
                     "strtype": "OBJECT/Size",
                     "intarray": [
-                      150,
+                      100,
                       1
                     ],
                     "InheritedType": 7
@@ -26233,7 +26231,7 @@
                   {
                     "nid": 1459540249,
                     "strtype": "DROPDOWN/Options",
-                    "strval": "10%\\n20%\\n30%\\n40%\\n50%\\n60%\\n70%\\n80%\\n90%",
+                    "strval": "10%\\n20%\\n25%\\n30%\\n35%\\n40%\\n45%\\n50%\\n55%\\n60%\\n65%\\n70%\\n75%\\n80%\\n85%\\n90%\\n95%",
                     "InheritedType": 10
                   },
                   {
@@ -26334,6 +26332,71 @@
                     "strtype": "DROPDOWN/Style_list_selected",
                     "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.SELECTED, Text, Rectangle",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": -2022290098,
+                    "strtype": "DROPDOWN/EventHandler",
+                    "strval": "VALUE_CHANGED",
+                    "childs": [
+                      {
+                        "nid": 171781702,
+                        "strtype": "_custom/name",
+                        "strval": "Event36",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -756959178,
+                        "strtype": "_custom/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -156744058,
+                        "strtype": "_custom/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 161167922,
+                        "strtype": "_custom/action",
+                        "strval": "CALL FUNCTION",
+                        "childs": [
+                          {
+                            "nid": 249731209,
+                            "strtype": "CALL FUNCTION/Name",
+                            "strval": "CALL FUNCTION",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1364496434,
+                            "strtype": "CALL FUNCTION/Call",
+                            "strval": "<{Function_name}>( event_struct )",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1844019977,
+                            "strtype": "CALL FUNCTION/CallC",
+                            "strval": "<{Function_name}>( e );",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -2016911680,
+                            "strtype": "CALL FUNCTION/Function_name",
+                            "strval": "humidity_dropdown",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1149414294,
+                            "strtype": "CALL FUNCTION/Dont_export_function",
+                            "strval": "False",
+                            "InheritedType": 2
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "DROPDOWN"
@@ -26633,7 +26696,7 @@
               {
                 "nid": -2106267176,
                 "strtype": "OBJECT/Name",
-                "strval": "Panel3",
+                "strval": "HumiditySwitchPanel",
                 "InheritedType": 10
               },
               {
@@ -26687,7 +26750,6 @@
               },
               {
                 "nid": 231484003,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -26921,7 +26983,7 @@
                   {
                     "nid": -1408132569,
                     "strtype": "OBJECT/Name",
-                    "strval": "Dropdown1",
+                    "strval": "TemperatureDropdown",
                     "InheritedType": 10
                   },
                   {
@@ -26962,7 +27024,7 @@
                     "flags": 49,
                     "strtype": "OBJECT/Size",
                     "intarray": [
-                      150,
+                      100,
                       1
                     ],
                     "InheritedType": 7
@@ -27161,7 +27223,7 @@
                   {
                     "nid": 1201445008,
                     "strtype": "DROPDOWN/Options",
-                    "strval": "10°C\\n12°C\\n14°C\\n16°C\\n18°C\\n20°C\\n22°C\\n24°C\\n26°C\\n28°C\\n30°C\\n32°C",
+                    "strval": "",
                     "InheritedType": 10
                   },
                   {
@@ -27256,6 +27318,71 @@
                     "strtype": "DROPDOWN/Style_list_selected",
                     "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.SELECTED, Text, Rectangle",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": -92553133,
+                    "strtype": "DROPDOWN/EventHandler",
+                    "strval": "VALUE_CHANGED",
+                    "childs": [
+                      {
+                        "nid": -797769824,
+                        "strtype": "_custom/name",
+                        "strval": "Event37",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 36568434,
+                        "strtype": "_custom/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -210750972,
+                        "strtype": "_custom/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 161928297,
+                        "strtype": "_custom/action",
+                        "strval": "CALL FUNCTION",
+                        "childs": [
+                          {
+                            "nid": -175926517,
+                            "strtype": "CALL FUNCTION/Name",
+                            "strval": "CALL FUNCTION",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -311467489,
+                            "strtype": "CALL FUNCTION/Call",
+                            "strval": "<{Function_name}>( event_struct )",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -268035677,
+                            "strtype": "CALL FUNCTION/CallC",
+                            "strval": "<{Function_name}>( e );",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1252396437,
+                            "strtype": "CALL FUNCTION/Function_name",
+                            "strval": "temperature_dropdown",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 543542158,
+                            "strtype": "CALL FUNCTION/Dont_export_function",
+                            "strval": "False",
+                            "InheritedType": 2
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "DROPDOWN"
@@ -27555,7 +27682,7 @@
               {
                 "nid": 1023751389,
                 "strtype": "OBJECT/Name",
-                "strval": "Panel7",
+                "strval": "TemperatureSwitchPanel",
                 "InheritedType": 10
               },
               {
@@ -27843,7 +27970,7 @@
                   {
                     "nid": 1289878812,
                     "strtype": "OBJECT/Name",
-                    "strval": "climateModeSwitch",
+                    "strval": "ClimateModeSwitch",
                     "InheritedType": 10
                   },
                   {
@@ -27875,7 +28002,7 @@
                     "strtype": "OBJECT/Position",
                     "intarray": [
                       0,
-                      3
+                      0
                     ],
                     "InheritedType": 7
                   },
@@ -27897,7 +28024,6 @@
                   },
                   {
                     "nid": -548736223,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -27928,7 +28054,7 @@
                   {
                     "nid": 1992385968,
                     "strtype": "OBJECT/Adv_hittest",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -28055,6 +28181,71 @@
                     "strtype": "SWITCH/Style_knob",
                     "strval": "lv.PART.KNOB, Rectangle, Pad",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": 1749960428,
+                    "strtype": "SWITCH/EventHandler",
+                    "strval": "CLICKED",
+                    "childs": [
+                      {
+                        "nid": 199093745,
+                        "strtype": "_custom/name",
+                        "strval": "Event35",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1524268026,
+                        "strtype": "_custom/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1272689891,
+                        "strtype": "_custom/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 340522001,
+                        "strtype": "_custom/action",
+                        "strval": "CALL FUNCTION",
+                        "childs": [
+                          {
+                            "nid": -480094646,
+                            "strtype": "CALL FUNCTION/Name",
+                            "strval": "CALL FUNCTION",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1920172972,
+                            "strtype": "CALL FUNCTION/Call",
+                            "strval": "<{Function_name}>( event_struct )",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1115488702,
+                            "strtype": "CALL FUNCTION/CallC",
+                            "strval": "<{Function_name}>( e );",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 2131231170,
+                            "strtype": "CALL FUNCTION/Function_name",
+                            "strval": "climate_mode_switch",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1431205371,
+                            "strtype": "CALL FUNCTION/Dont_export_function",
+                            "strval": "False",
+                            "InheritedType": 2
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "SWITCH"
@@ -28981,7 +29172,6 @@
               },
               {
                 "nid": 401514951,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -29018,7 +29208,7 @@
               {
                 "nid": -819563286,
                 "strtype": "OBJECT/Adv_hittest",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -31468,7 +31658,6 @@
               },
               {
                 "nid": 2044670395,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -31505,7 +31694,7 @@
               {
                 "nid": 466232071,
                 "strtype": "OBJECT/Adv_hittest",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -34429,7 +34618,6 @@
                   },
                   {
                     "nid": 455157407,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -34460,7 +34648,7 @@
                   {
                     "nid": 1729188489,
                     "strtype": "OBJECT/Adv_hittest",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -37353,7 +37541,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 40,
+    "backup_cnt": 42,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

@@ -29,7 +29,7 @@ static uint16_t led_brightness_slider_value;
 static uint16_t day_counter = 1;
 static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_value;
-static uint16_t temp_unit;
+static uint16_t temp_unit; //1 = C
 static uint16_t wifi;
 static uint16_t fanspeed_slider_left_value = 30;
 static uint16_t fanspeed_slider_value = 60;
@@ -78,9 +78,7 @@ void init_tomatotent(lv_event_t * e)
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
 		
 		err = nvs_get_u16(storage_handle, "temp_unit", &temp_unit);
-		if(temp_unit == 1)
-			 lv_obj_add_state(ui_TempUnitSwitch, LV_STATE_CHECKED);
-		//code to set everything to F or C	
+		update_temp_units(temp_unit);
 		
 		//wifi screen
 		size_t required_size;
@@ -395,6 +393,8 @@ void temp_unit_switch(lv_event_t * e)
 		//off = C = 0	
 		temp_unit = 0;
 	}
+	
+	update_temp_units(temp_unit);
 	
 }
 

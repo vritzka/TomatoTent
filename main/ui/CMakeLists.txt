@@ -30,6 +30,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_harvest_png.c
     images/ui_img_1668913270.c
     images/ui_img_2060199463.c
+    images/ui_img_co2_png.c
     images/ui_img_60476769.c
     images/ui_img_261459337.c
     images/ui_img_953604683.c

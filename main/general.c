@@ -7,6 +7,23 @@ static esp_err_t err;
 static char somestring[36];
 
 /////////////////////////////////////////////////////////
+///////////////// TEMP UNIT /////////////////////////////
+/////////////////////////////////////////////////////////
+
+void update_temp_units(uint16_t temp_unit) {
+	
+	if(temp_unit == 1) { //F
+		lv_obj_add_state(ui_TempUnitSwitch, LV_STATE_CHECKED);
+		lv_dropdown_set_options(ui_TemperatureDropdown, "53°F\n57°F\n60°F\n63°F\n66°F\n68°F\n70°F\n72°F\n74°F\n76°F\n78°F\n");
+		lv_label_set_text(ui_HomeTempUnitLabel, "°F");
+	} else {
+		lv_dropdown_set_options(ui_TemperatureDropdown, "12°C\n14°C\n16°C\n18°C\n20°C\n22°C\n24°C\n26°C\n28°C\n30°C\n32°C");
+		lv_label_set_text(ui_HomeTempUnitLabel, "°C"); 
+	}
+	
+}
+
+/////////////////////////////////////////////////////////
 ///////////////// LEDC (PWM) ////////////////////////////
 /////////////////////////////////////////////////////////
 
@@ -34,6 +51,8 @@ void ledc_init(void)
     };
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));  
 }
+
+
 
 /////////////////////////////////////////////////////////
 ///////////////// Event Loop ////////////////////////////

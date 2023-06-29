@@ -45,14 +45,14 @@ lv_obj_set_align( ui_Label5, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label5,"68");
 lv_obj_set_style_text_font(ui_Label5, &lv_font_montserrat_44, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Label1 = lv_label_create(ui_TemperaturePanel);
-lv_obj_set_width( ui_Label1, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label1, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label1, 69 );
-lv_obj_set_y( ui_Label1, -10 );
-lv_obj_set_align( ui_Label1, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label1,"°F");
-lv_obj_set_style_text_font(ui_Label1, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_HomeTempUnitLabel = lv_label_create(ui_TemperaturePanel);
+lv_obj_set_width( ui_HomeTempUnitLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_HomeTempUnitLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_HomeTempUnitLabel, 69 );
+lv_obj_set_y( ui_HomeTempUnitLabel, -10 );
+lv_obj_set_align( ui_HomeTempUnitLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_HomeTempUnitLabel,"°F");
+lv_obj_set_style_text_font(ui_HomeTempUnitLabel, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image5 = lv_img_create(ui_TemperaturePanel);
 lv_img_set_src(ui_Image5, &ui_img_1484485426);
@@ -232,20 +232,20 @@ lv_img_set_zoom(ui_ArrowUp1,200);
 lv_obj_set_style_img_recolor(ui_ArrowUp1, lv_color_hex(0x145B0A), LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor_opa(ui_ArrowUp1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_ImgButton3 = lv_imgbtn_create(ui_HomeScreen);
-lv_imgbtn_set_src(ui_ImgButton3, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_wifi_png, NULL);
-lv_obj_set_width( ui_ImgButton3, 24);
-lv_obj_set_height( ui_ImgButton3, 24);
-lv_obj_set_x( ui_ImgButton3, 203 );
-lv_obj_set_y( ui_ImgButton3, -126 );
-lv_obj_set_align( ui_ImgButton3, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_ImgButton3, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+ui_WifiIcon = lv_imgbtn_create(ui_HomeScreen);
+lv_imgbtn_set_src(ui_WifiIcon, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_wifi_png, NULL);
+lv_obj_set_width( ui_WifiIcon, 24);
+lv_obj_set_height( ui_WifiIcon, 24);
+lv_obj_set_x( ui_WifiIcon, 205 );
+lv_obj_set_y( ui_WifiIcon, -136 );
+lv_obj_set_align( ui_WifiIcon, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_WifiIcon, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 
 lv_obj_add_event_cb(ui_TemperaturePanel, ui_event_TemperaturePanel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Panel1, ui_event_Panel1, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Panel4, ui_event_Panel4, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Panel11, ui_event_Panel11, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_ImgButton3, ui_event_ImgButton3, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_WifiIcon, ui_event_WifiIcon, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_HomeScreen, ui_event_HomeScreen, LV_EVENT_ALL, NULL);
 
 }

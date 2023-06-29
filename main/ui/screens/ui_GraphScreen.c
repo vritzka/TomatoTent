@@ -106,11 +106,11 @@ lv_obj_set_style_bg_opa(ui_Panel15, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_Panel15, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image11 = lv_img_create(ui_Panel15);
-lv_img_set_src(ui_Image11, &ui_img_dew_png);
+lv_img_set_src(ui_Image11, &ui_img_co2_png);
 lv_obj_set_width( ui_Image11, LV_SIZE_CONTENT);  /// 64
 lv_obj_set_height( ui_Image11, LV_SIZE_CONTENT);   /// 64
 lv_obj_set_x( ui_Image11, -29 );
-lv_obj_set_y( ui_Image11, 1 );
+lv_obj_set_y( ui_Image11, -1 );
 lv_obj_set_align( ui_Image11, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image11, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image11, LV_OBJ_FLAG_SCROLLABLE );    /// Flags

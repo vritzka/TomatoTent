@@ -35,7 +35,7 @@ lv_obj_t *ui_sun;
 void ui_event_TemperaturePanel( lv_event_t * e);
 lv_obj_t *ui_TemperaturePanel;
 lv_obj_t *ui_Label5;
-lv_obj_t *ui_Label1;
+lv_obj_t *ui_HomeTempUnitLabel;
 lv_obj_t *ui_Image5;
 void ui_event_Panel1( lv_event_t * e);
 lv_obj_t *ui_Panel1;
@@ -56,8 +56,8 @@ lv_obj_t *ui_Panel11;
 lv_obj_t *ui_DayCounterMainLabel;
 lv_obj_t *ui_Label10;
 lv_obj_t *ui_ArrowUp1;
-void ui_event_ImgButton3( lv_event_t * e);
-lv_obj_t *ui_ImgButton3;
+void ui_event_WifiIcon( lv_event_t * e);
+lv_obj_t *ui_WifiIcon;
 
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
@@ -203,6 +203,7 @@ const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
+const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -415,7 +416,7 @@ if ( event_code == LV_EVENT_LONG_PRESSED) {
       _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
-void ui_event_ImgButton3( lv_event_t * e) {
+void ui_event_WifiIcon( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_WifiSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);

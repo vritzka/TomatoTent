@@ -44,7 +44,7 @@ lv_obj_set_style_border_width(ui_HumiditySwitchPanel, 0, LV_PART_MAIN| LV_STATE_
 
 ui_HumidityDropdown = lv_dropdown_create(ui_HumiditySwitchPanel);
 lv_dropdown_set_options( ui_HumidityDropdown, "10%\n20%\n25%\n30%\n35%\n40%\n45%\n50%\n55%\n60%\n65%\n70%\n75%\n80%\n85%\n90%\n95%" );
-lv_obj_set_width( ui_HumidityDropdown, 150);
+lv_obj_set_width( ui_HumidityDropdown, 100);
 lv_obj_set_height( ui_HumidityDropdown, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_HumidityDropdown, 0 );
 lv_obj_set_y( ui_HumidityDropdown, 17 );
@@ -77,8 +77,8 @@ lv_obj_set_style_bg_opa(ui_TemperatureSwitchPanel, 20, LV_PART_MAIN| LV_STATE_DE
 lv_obj_set_style_border_width(ui_TemperatureSwitchPanel, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_TemperatureDropdown = lv_dropdown_create(ui_TemperatureSwitchPanel);
-lv_dropdown_set_options( ui_TemperatureDropdown, "12°C\n14°C\n16°C\n18°C\n20°C\n22°C\n24°C\n26°C\n28°C\n30°C\n32°C" );
-lv_obj_set_width( ui_TemperatureDropdown, 150);
+lv_dropdown_set_options( ui_TemperatureDropdown, "" );
+lv_obj_set_width( ui_TemperatureDropdown, 100);
 lv_obj_set_height( ui_TemperatureDropdown, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_TemperatureDropdown, 0 );
 lv_obj_set_y( ui_TemperatureDropdown, 17 );

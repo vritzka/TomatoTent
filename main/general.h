@@ -27,7 +27,7 @@
 #define LEDC_DUTY_RES           LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
 #define LEDC_FREQUENCY          (5000) // Frequency in Hertz. Set frequency at 5 kHz
 
-
+void update_temp_units(uint16_t temp_unit);
 void ledc_init(void);
 void event_loop_init(void);
 void wifi_init(void);
