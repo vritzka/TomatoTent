@@ -6,6 +6,38 @@ static nvs_handle_t storage_handle;
 static esp_err_t err;
 static char somestring[36];
 
+
+/////////////////////////////////////////////////////////
+///////////////////// TIMER /////////////////////////////
+/////////////////////////////////////////////////////////
+/*
+typedef struct {
+    int minute_count;
+    int 
+} minute_timer_context_t;
+*/
+gptimer_handle_t gptimer = NULL;
+
+void timer_init() {
+	    
+    gptimer_config_t timer_config = {
+        .clk_src = GPTIMER_CLK_SRC_DEFAULT,
+        .direction = GPTIMER_COUNT_UP,
+        .resolution_hz = 1000000, // 1MHz, 1 tick=1us
+    };
+    ESP_ERROR_CHECK(gptimer_new_timer(&timer_config, &gptimer));
+    
+    ESP_LOGI(TAG, "Enable timer");
+    ESP_ERROR_CHECK(gptimer_enable(gptimer));
+    
+    ESP_ERROR_CHECK(gptimer_start(gptimer));
+    
+        uint64_t count;
+    ESP_ERROR_CHECK(gptimer_get_raw_count(gptimer, &count));
+    ESP_LOGI(TAG, "Timer count value=%llu", count);
+
+}
+
 /////////////////////////////////////////////////////////
 ///////////////// TEMP UNIT /////////////////////////////
 /////////////////////////////////////////////////////////
@@ -29,12 +61,12 @@ void update_temp_units(uint16_t temp_unit) {
 
 void ledc_init(void)
 {
-  // Prepare and then apply the LEDC PWM timer configuration
+  // Prepare and then apply the LEDC PWM BACKLIGHT timer configuration
     ledc_timer_config_t ledc_timer = {
         .speed_mode       = LEDC_MODE,
-        .timer_num        = LEDC_TIMER,
-        .duty_resolution  = LEDC_DUTY_RES,
-        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency
+        .timer_num        = LEDC_BACKLIGHT_TIMER,
+        .duty_resolution  = LEDC_BACKLIGHT_DUTY_RES,
+        .freq_hz          = LEDC_BACKLIGHT_FREQUENCY,  // Set output frequency
         .clk_cfg          = LEDC_AUTO_CLK
     };
     ESP_ERROR_CHECK(ledc_timer_config(&ledc_timer));
@@ -42,14 +74,57 @@ void ledc_init(void)
     // Prepare and then apply the LEDC PWM channel configuration
     ledc_channel_config_t ledc_channel = {
         .speed_mode     = LEDC_MODE,
-        .channel        = LEDC_CHANNEL,
-        .timer_sel      = LEDC_TIMER,
+        .channel        = LEDC_BACKLIGHT_CHANNEL,
+        .timer_sel      = LEDC_BACKLIGHT_TIMER,
         .intr_type      = LEDC_INTR_DISABLE,
-        .gpio_num       = LEDC_OUTPUT_IO,
+        .gpio_num       = LEDC_BACKLIGHT_OUTPUT_IO,
         .duty           = 0, // Set duty to 0%
         .hpoint         = 0
     };
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));  
+    
+  // FAN PWM
+    ledc_timer_config_t ledc_fan_timer = {
+        .speed_mode       = LEDC_MODE,
+        .timer_num        = LEDC_FAN_TIMER,
+        .duty_resolution  = LEDC_FAN_DUTY_RES,
+        .freq_hz          = LEDC_FAN_FREQUENCY,  // Set output frequency
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&ledc_fan_timer));
+
+    ledc_channel_config_t ledc_fan_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_FAN_CHANNEL,
+        .timer_sel      = LEDC_FAN_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_FAN_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_fan_channel));      
+   
+  // DIMMER PWM
+    ledc_timer_config_t ledc_dimmer_timer = {
+        .speed_mode       = LEDC_MODE,
+        .timer_num        = LEDC_DIMMER_TIMER,
+        .duty_resolution  = LEDC_DIMMER_DUTY_RES,
+        .freq_hz          = LEDC_DIMMER_FREQUENCY,  // Set output frequency
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&ledc_dimmer_timer));
+
+    ledc_channel_config_t ledc_dimmer_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_DIMMER_CHANNEL,
+        .timer_sel      = LEDC_DIMMER_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_DIMMER_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_dimmer_channel));       
+    
 }
 
 

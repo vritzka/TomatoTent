@@ -26,9 +26,10 @@ static float_t light_duration;
 static float_t dark_duration;
 static uint16_t now_slider_value;
 static uint16_t led_brightness_slider_value;
+static uint16_t dimmer_brightness_duty;
 static uint16_t day_counter = 1;
 static uint16_t screen_brightness_slider_value = 80;
-static uint16_t screen_brightness_value;
+static uint16_t screen_brightness_duty;
 static uint16_t temp_unit; //1 = C
 static uint16_t wifi;
 static uint16_t fanspeed_slider_left_value = 30;
@@ -73,9 +74,9 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
 		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", screen_brightness_slider_value);
 		lv_slider_set_value(ui_ScreenBrightnessSlider, screen_brightness_slider_value, LV_ANIM_OFF);
-		screen_brightness_value = (8192-1)*((float)screen_brightness_slider_value / 100);
-		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, screen_brightness_value));
-		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
+		screen_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
+		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
+		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 		
 		err = nvs_get_u16(storage_handle, "temp_unit", &temp_unit);
 		update_temp_units(temp_unit);
@@ -152,7 +153,7 @@ typedef struct {
 
 my_timer_context_t my_tim_ctx;
 lv_obj_t *arc[3];
- lv_obj_t *img_text = NULL;
+lv_obj_t *img_text = NULL;
 lv_color_t arc_color[] = {
     LV_COLOR_MAKE(0, 116, 0),
     LV_COLOR_MAKE(0, 162, 0),
@@ -309,6 +310,11 @@ void LEDBrightnessSlider(lv_event_t * e)
 	//ESP_LOGI(TAG, "%d", led_brightness_slider_value);
 	
 	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value );
+	
+	dimmer_brightness_duty = (128-1)*((float)led_brightness_slider_value / 100);
+		
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, dimmer_brightness_duty));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
 }
 
 void save_led_brightness_screen(lv_event_t * e)
@@ -374,10 +380,10 @@ void screen_brightness_slider(lv_event_t * e)
 	
 	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", screen_brightness_slider_value);
 		
-	screen_brightness_value = (8192-1)*((float)screen_brightness_slider_value / 100);
+	screen_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
 		
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, screen_brightness_value));
-    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));	
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 }
 
 
