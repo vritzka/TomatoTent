@@ -1,3 +1,6 @@
+#ifndef GUITASK_H
+#define GUITASK_H
+
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -10,6 +13,7 @@
 #include "esp_log.h"
 #include "lvgl.h"
 #include "ui/ui.h"
+#include "general.h"
 
 #if CONFIG_EXAMPLE_LCD_TOUCH_ENABLED
 #include "driver/i2c.h"
@@ -24,3 +28,5 @@
 
 void vGuiTask( void * pvParameters );
 void vStartGuiTask( void );
+
+#endif

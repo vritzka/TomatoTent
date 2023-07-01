@@ -6,36 +6,11 @@ static nvs_handle_t storage_handle;
 static esp_err_t err;
 static char somestring[36];
 
+timer_queue_element_t tenttime;
 
-/////////////////////////////////////////////////////////
-///////////////////// TIMER /////////////////////////////
-/////////////////////////////////////////////////////////
-/*
-typedef struct {
-    int minute_count;
-    int 
-} minute_timer_context_t;
-*/
-gptimer_handle_t gptimer = NULL;
-
-void timer_init() {
-	    
-    gptimer_config_t timer_config = {
-        .clk_src = GPTIMER_CLK_SRC_DEFAULT,
-        .direction = GPTIMER_COUNT_UP,
-        .resolution_hz = 1000000, // 1MHz, 1 tick=1us
-    };
-    ESP_ERROR_CHECK(gptimer_new_timer(&timer_config, &gptimer));
-    
-    ESP_LOGI(TAG, "Enable timer");
-    ESP_ERROR_CHECK(gptimer_enable(gptimer));
-    
-    ESP_ERROR_CHECK(gptimer_start(gptimer));
-    
-        uint64_t count;
-    ESP_ERROR_CHECK(gptimer_get_raw_count(gptimer, &count));
-    ESP_LOGI(TAG, "Timer count value=%llu", count);
-
+void update_time_left() {
+	
+	lv_label_set_text_fmt(ui_TimeLeftLabel, "%d hr %d min", 12, tenttime.minutes);
 }
 
 /////////////////////////////////////////////////////////

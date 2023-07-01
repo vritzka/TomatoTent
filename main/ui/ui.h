@@ -59,7 +59,7 @@ extern lv_obj_t *ui_fan;
 void ui_event_Panel11( lv_event_t * e);
 extern lv_obj_t *ui_Panel11;
 extern lv_obj_t *ui_DayCounterMainLabel;
-extern lv_obj_t *ui_Label10;
+extern lv_obj_t *ui_TimeLeftLabel;
 extern lv_obj_t *ui_ArrowUp1;
 void ui_event_WifiIcon( lv_event_t * e);
 extern lv_obj_t *ui_WifiIcon;

@@ -52,6 +52,8 @@ void init_tomatotent(lv_event_t * e)
         lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
 		
 		light_duration = (float_t)light_duration_slider_value / 2;
+		tenttime.day_period_minutes = light_duration * 60;
+		
 		dark_duration = 24 - light_duration;
 	
 		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
@@ -135,9 +137,6 @@ void init_tomatotent(lv_event_t * e)
 	}
 	
 }
-
-
-
 
 
 //SplashScreen
@@ -260,6 +259,8 @@ void light_duration_slider(lv_event_t * e) {
 	light_duration_slider_value = lv_slider_get_value(target);
 	
 	light_duration = (float_t)light_duration_slider_value / 2;
+	tenttime.day_period_minutes = light_duration * 60;
+	
 	dark_duration = 24 - light_duration;
 
 	//ESP_LOGI(TAG, "%.1f", light_duration);

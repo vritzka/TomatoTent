@@ -207,16 +207,16 @@ lv_obj_add_flag( ui_DayCounterMainLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
 lv_obj_clear_flag( ui_DayCounterMainLabel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 lv_obj_set_style_text_font(ui_DayCounterMainLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Label10 = lv_label_create(ui_Panel11);
-lv_obj_set_width( ui_Label10, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label10, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label10, -4 );
-lv_obj_set_y( ui_Label10, 14 );
-lv_obj_set_align( ui_Label10, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label10,"- 1 hr  12 min");
-lv_obj_add_flag( ui_Label10, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
-lv_obj_clear_flag( ui_Label10, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
-lv_obj_set_style_text_font(ui_Label10, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_TimeLeftLabel = lv_label_create(ui_Panel11);
+lv_obj_set_width( ui_TimeLeftLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_TimeLeftLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_TimeLeftLabel, -4 );
+lv_obj_set_y( ui_TimeLeftLabel, 14 );
+lv_obj_set_align( ui_TimeLeftLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_TimeLeftLabel,"- 1 hr  12 min");
+lv_obj_add_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
+lv_obj_clear_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
+lv_obj_set_style_text_font(ui_TimeLeftLabel, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_ArrowUp1 = lv_img_create(ui_HomeScreen);
 lv_img_set_src(ui_ArrowUp1, &ui_img_upload_png);

@@ -1,3 +1,6 @@
+#ifndef GENERAL_H
+#define GENERAL_H
+
 #include "lvgl.h"
 #include "ui.h"
 #include "driver/ledc.h"
@@ -14,11 +17,20 @@
 #include "esp_err.h"
 #include "freertos/task.h"
 #include "esp_mac.h"
-#include "driver/gptimer.h"
-
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
+
+typedef struct {
+    uint8_t event_count;
+    uint8_t seconds;
+    uint16_t minutes;
+    uint16_t days;
+    bool is_day;
+    uint16_t day_period_minutes;
+} timer_queue_element_t;
+
+extern timer_queue_element_t tenttime;
 	
 
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
@@ -52,4 +64,6 @@ void wifi_init(void);
 void wifi_scan(void);
 void wifi_connect(void);
 void wifi_off(void);
-void timer_init();
+void update_time_left();
+
+#endif
