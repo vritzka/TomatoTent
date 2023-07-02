@@ -63,8 +63,8 @@ void wifi_init(void);
 void wifi_scan(void);
 void wifi_connect(void);
 void wifi_off(void);
-void update_time_left();
-void make_it_day();
+void update_time_left(bool count_day);
+void make_it_day(bool count_day);
 void make_it_night();
 
 #endif

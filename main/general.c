@@ -15,15 +15,20 @@ uint32_t seconds_left_in_period;
 uint16_t minutes_left_in_period;
 uint16_t hours_left_in_period;
 
-void update_time_left() {
+void update_time_left(bool count_day) {
 	
-	if(tenttime.seconds <= tenttime.day_period_seconds) { //day
+    if(tenttime.seconds == 86400) {
+		increase_day_counter(NULL);
+		tenttime.seconds = 0;
+	}		
+	
+	if(tenttime.seconds < tenttime.day_period_seconds) { //day
 		if(!tenttime.is_day)
-			make_it_day();
+			make_it_day(count_day);
 		seconds_left_in_period = tenttime.day_period_seconds - tenttime.seconds;
 	} else { 
-		if(tenttime.is_day)
-			make_it_night();                                           //night
+		if(tenttime.is_day)                              //night
+			make_it_night();         
 		seconds_left_in_period = 86400 - tenttime.seconds;
 	}
 	
@@ -31,9 +36,9 @@ void update_time_left() {
 	hours_left_in_period = minutes_left_in_period / 60;
 	
 	if (tenttime.seconds % 2) {
-		lv_label_set_text_fmt(ui_TimeLeftLabel, "-%d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
+		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
 	} else {
-		lv_label_set_text_fmt(ui_TimeLeftLabel, "-%d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
+		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
 	}
 	
 	if(tenttime.seconds % 300 == 0) {
@@ -51,10 +56,13 @@ void update_time_left() {
 	
 }
 
-void make_it_day() {
+void make_it_day(bool count_day) {
 	tenttime.is_day = true;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
+	if(count_day)
+		increase_day_counter(NULL);
+
 }
 
 void make_it_night() {

@@ -13,6 +13,7 @@
 #include "esp_err.h"
 #include "nvs.h"
 #include "general.h"
+#include "timerTask.h"
 
 
 static const char *TAG = "ui_events.c";
@@ -27,7 +28,6 @@ static float_t dark_duration;
 static uint16_t now_slider_value;
 static uint16_t led_brightness_slider_value;
 static uint16_t dimmer_brightness_duty;
-static uint16_t day_counter = 1;
 static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_duty;
 static uint16_t temp_unit; //1 = C
@@ -68,10 +68,9 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
 
 		//day counter screen
-		err = nvs_get_u16(storage_handle, "day_counter", &day_counter); 
-		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
-		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
-		tenttime.days = day_counter;
+		err = nvs_get_u16(storage_handle, "days", &tenttime.days); 
+		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
+		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", tenttime.days);
 		
 		//general settings screen
 		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
@@ -126,15 +125,13 @@ void init_tomatotent(lv_event_t * e)
 		
 		if( climate_mode == 1 ) { //manual climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
-			//char buf[3];
-			//lv_dropdown_get_selected_str(target, buf, sizeof(buf));
 		} else { //auto climate
 			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
 			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
 		}		
 		
-        // Close NVS
         nvs_close(storage_handle);
+        
 	}
 	
 }
@@ -203,6 +200,19 @@ void anim_timer_cb(lv_timer_t *timer)
     // Delete timer when all animation finished
     if ((count += 5) == 220) {
         lv_timer_del(timer);
+        
+        //is there an active grow?
+		if(tenttime.seconds > 0 || tenttime.days > 0) {
+			if(tenttime.seconds < tenttime.day_period_seconds) {
+				make_it_day(false);
+			} else {
+				make_it_night();
+			}
+			vStartTimerTask();
+			lv_scr_load(ui_HomeScreen);
+		 }
+		 
+		 
         
     } else {
         timer_ctx->count_val = count;
@@ -277,6 +287,7 @@ void now_slider(lv_event_t * e) {
 	now_slider_value = lv_slider_get_value(target);
 	
 	tenttime.seconds = now_slider_value*30*60;
+	update_time_left(false);
 
 }
 
@@ -339,27 +350,27 @@ void save_led_brightness_screen(lv_event_t * e)
 
 void increase_day_counter(lv_event_t * e)
 {
-	day_counter += 1;
-	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
-	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
+	tenttime.days += 1;
+	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", tenttime.days);
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-	err = nvs_set_u16(storage_handle, "day_counter", day_counter);
+	err = nvs_set_u16(storage_handle, "days", tenttime.days);
 	err = nvs_commit(storage_handle);
 	nvs_close(storage_handle);
 }
 
 void decrease_day_counter(lv_event_t * e)
 {
-	if(day_counter == 1)
+	if(tenttime.days == 1)
 		return;
 	
-	day_counter -= 1;
-	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
-	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
+	tenttime.days -= 1;
+	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", tenttime.days);
 
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-	err = nvs_set_u16(storage_handle, "day_counter", day_counter);
+	err = nvs_set_u16(storage_handle, "days", tenttime.days);
 	err = nvs_commit(storage_handle);
 	nvs_close(storage_handle);
 }

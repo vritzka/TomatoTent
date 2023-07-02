@@ -15,12 +15,7 @@ static bool IRAM_ATTR example_timer_on_alarm_cb_v1(gptimer_handle_t timer, const
     // Retrieve count value and send to queue
     tenttime.event_count = edata->count_value;
     
-    if(tenttime.seconds == (60*60*24)) {
-		tenttime.seconds = 0;
-		tenttime.days = tenttime.days+1;
-	} else {
-		tenttime.seconds = tenttime.seconds+1;
-	}
+	tenttime.seconds = tenttime.seconds+1;
     
     xQueueSendFromISR(queue, &tenttime, &high_task_awoken);
     // return whether we need to yield at the end of ISR
@@ -68,7 +63,7 @@ void vTimerTask( void * pvParameters )
   {
         if (xQueueReceive(queue, &tenttime, pdMS_TO_TICKS(2000))) {
             ESP_LOGI(TAG, "Seconds, count=%lu", tenttime.seconds);
-            update_time_left();
+            update_time_left(true);
         } else {
             ESP_LOGW(TAG, "Missed one count event");
         }
