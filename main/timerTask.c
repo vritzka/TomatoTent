@@ -15,9 +15,9 @@ static bool IRAM_ATTR example_timer_on_alarm_cb_v1(gptimer_handle_t timer, const
     // Retrieve count value and send to queue
     tenttime.event_count = edata->count_value;
     
-    if(tenttime.seconds == 59) {
+    if(tenttime.seconds == (60*60*24)) {
 		tenttime.seconds = 0;
-		tenttime.minutes = tenttime.minutes+1;
+		tenttime.days = tenttime.days+1;
 	} else {
 		tenttime.seconds = tenttime.seconds+1;
 	}
@@ -67,8 +67,7 @@ void vTimerTask( void * pvParameters )
   for( ;; )
   {
         if (xQueueReceive(queue, &tenttime, pdMS_TO_TICKS(2000))) {
-            ESP_LOGI(TAG, "Seconds, count=%d", tenttime.seconds);
-            ESP_LOGI(TAG, "Minutes, count=%d", tenttime.minutes);
+            ESP_LOGI(TAG, "Seconds, count=%lu", tenttime.seconds);
             update_time_left();
         } else {
             ESP_LOGW(TAG, "Missed one count event");

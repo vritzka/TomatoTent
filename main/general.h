@@ -23,11 +23,10 @@
 
 typedef struct {
     uint8_t event_count;
-    uint8_t seconds;
-    uint16_t minutes;
+    uint32_t seconds;
     uint16_t days;
     bool is_day;
-    uint16_t day_period_minutes;
+    uint32_t day_period_seconds;
 } timer_queue_element_t;
 
 extern timer_queue_element_t tenttime;

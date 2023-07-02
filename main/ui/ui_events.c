@@ -52,7 +52,7 @@ void init_tomatotent(lv_event_t * e)
         lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
 		
 		light_duration = (float_t)light_duration_slider_value / 2;
-		tenttime.day_period_minutes = light_duration * 60;
+		tenttime.day_period_seconds = light_duration * 60 * 60;
 		
 		dark_duration = 24 - light_duration;
 	
@@ -259,7 +259,7 @@ void light_duration_slider(lv_event_t * e) {
 	light_duration_slider_value = lv_slider_get_value(target);
 	
 	light_duration = (float_t)light_duration_slider_value / 2;
-	tenttime.day_period_minutes = light_duration * 60;
+	tenttime.day_period_seconds = light_duration * 60 * 60;
 	
 	dark_duration = 24 - light_duration;
 
@@ -267,6 +267,17 @@ void light_duration_slider(lv_event_t * e) {
 	
 	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
 	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );
+	/*
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else {
+		err = nvs_set_u16(storage_handle, "light_slider", light_duration_slider_value);
+		err = nvs_commit(storage_handle);
+		printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+		nvs_close(storage_handle);
+	}
+	* */
 }
 
 void now_slider(lv_event_t * e) {
@@ -292,8 +303,6 @@ void save_light_duration_screen(lv_event_t * e)
 		printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
 		
 		err = nvs_commit(storage_handle);
-        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-
         // Close
         nvs_close(storage_handle);
 	}

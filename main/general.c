@@ -7,10 +7,32 @@ static esp_err_t err;
 static char somestring[36];
 
 timer_queue_element_t tenttime;
+uint32_t seconds_left_in_period;
+uint16_t minutes_left_in_period;
+uint16_t hours_left_in_period;
 
 void update_time_left() {
 	
-	lv_label_set_text_fmt(ui_TimeLeftLabel, "%d hr %d min", 12, tenttime.minutes);
+	if(tenttime.seconds <= tenttime.day_period_seconds) { //day
+		seconds_left_in_period = tenttime.day_period_seconds - tenttime.seconds;
+	} else {                                            //night
+		seconds_left_in_period = 86400 - tenttime.seconds;
+	}
+	
+	minutes_left_in_period = seconds_left_in_period / 60;
+	hours_left_in_period = minutes_left_in_period / 60;
+	
+	if (tenttime.seconds % 2) {
+		lv_label_set_text_fmt(ui_TimeLeftLabel, "-%d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
+	} else {
+		lv_label_set_text_fmt(ui_TimeLeftLabel, "-%d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
+	}
+	
+	//if(!tenttime.seconds % 60) {
+	//	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+		
+	//}
+	
 }
 
 /////////////////////////////////////////////////////////
