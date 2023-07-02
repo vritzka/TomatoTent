@@ -53,14 +53,14 @@ void init_tomatotent(lv_event_t * e)
 		
 		light_duration = (float_t)light_duration_slider_value / 2;
 		tenttime.day_period_seconds = light_duration * 60 * 60;
+		err = nvs_get_u32(storage_handle, "seconds", &tenttime.seconds);
 		
 		dark_duration = 24 - light_duration;
 	
 		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
 		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
-		
-		err = nvs_get_u16(storage_handle, "now_slider", &now_slider_value); 
-		lv_slider_set_value(ui_NowSlider, now_slider_value, LV_ANIM_OFF);
+				
+		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
 		
 		// led brightness screen
 		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
@@ -71,6 +71,7 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_u16(storage_handle, "day_counter", &day_counter); 
 		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", day_counter);
 		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", day_counter);
+		tenttime.days = day_counter;
 		
 		//general settings screen
 		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
@@ -267,25 +268,15 @@ void light_duration_slider(lv_event_t * e) {
 	
 	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
 	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );
-	/*
-	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-    if (err != ESP_OK) {
-        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-    } else {
-		err = nvs_set_u16(storage_handle, "light_slider", light_duration_slider_value);
-		err = nvs_commit(storage_handle);
-		printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		nvs_close(storage_handle);
-	}
-	* */
+
 }
 
 void now_slider(lv_event_t * e) {
 	
 	lv_obj_t * target = lv_event_get_target(e);
 	now_slider_value = lv_slider_get_value(target);
-
-	ESP_LOGI(TAG, "%d", now_slider_value);
+	
+	tenttime.seconds = now_slider_value*30*60;
 
 }
 
@@ -298,12 +289,8 @@ void save_light_duration_screen(lv_event_t * e)
 		
 		err = nvs_set_u16(storage_handle, "light_slider", light_duration_slider_value);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-        
-        err = nvs_set_u16(storage_handle, "now_slider", now_slider_value);
-		printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		
+		err = nvs_set_u32(storage_handle, "seconds", tenttime.seconds);
 		err = nvs_commit(storage_handle);
-        // Close
         nvs_close(storage_handle);
 	}
 }

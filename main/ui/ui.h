@@ -36,7 +36,7 @@ extern lv_obj_t *ui_tomato;
 void ui_HomeScreen_screen_init(void);
 void ui_event_HomeScreen( lv_event_t * e);
 extern lv_obj_t *ui_HomeScreen;
-extern lv_obj_t *ui_sun;
+extern lv_obj_t *ui_HomeSky;
 void ui_event_TemperaturePanel( lv_event_t * e);
 extern lv_obj_t *ui_TemperaturePanel;
 extern lv_obj_t *ui_Label5;

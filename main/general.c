@@ -6,6 +6,10 @@ static nvs_handle_t storage_handle;
 static esp_err_t err;
 static char somestring[36];
 
+/////////////////////////////////////////////////////////
+////////////////////// TIME /////////////////////////////
+/////////////////////////////////////////////////////////
+
 timer_queue_element_t tenttime;
 uint32_t seconds_left_in_period;
 uint16_t minutes_left_in_period;
@@ -14,8 +18,12 @@ uint16_t hours_left_in_period;
 void update_time_left() {
 	
 	if(tenttime.seconds <= tenttime.day_period_seconds) { //day
+		if(!tenttime.is_day)
+			make_it_day();
 		seconds_left_in_period = tenttime.day_period_seconds - tenttime.seconds;
-	} else {                                            //night
+	} else { 
+		if(tenttime.is_day)
+			make_it_night();                                           //night
 		seconds_left_in_period = 86400 - tenttime.seconds;
 	}
 	
@@ -28,11 +36,31 @@ void update_time_left() {
 		lv_label_set_text_fmt(ui_TimeLeftLabel, "-%d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
 	}
 	
-	//if(!tenttime.seconds % 60) {
-	//	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	if(tenttime.seconds % 300 == 0) {
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+		if (err != ESP_OK) {
+			printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+		} else {
+			err = nvs_set_u32(storage_handle, "seconds", tenttime.seconds);
+			err = nvs_commit(storage_handle);
+			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
+			nvs_close(storage_handle);
+		}
 		
-	//}
+	}
 	
+}
+
+void make_it_day() {
+	tenttime.is_day = true;
+	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
+}
+
+void make_it_night() {
+	tenttime.is_day = false;
+	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
 }
 
 /////////////////////////////////////////////////////////

@@ -2693,7 +2693,7 @@
               {
                 "nid": 624762751,
                 "strtype": "OBJECT/Name",
-                "strval": "sun",
+                "strval": "HomeSky",
                 "InheritedType": 10
               },
               {
@@ -8195,7 +8195,7 @@
                   {
                     "nid": 1542382626,
                     "strtype": "OBJECT/Name",
-                    "strval": "Label10",
+                    "strval": "TimeLeftLabel",
                     "InheritedType": 10
                   },
                   {
@@ -37541,7 +37541,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 42,
+    "backup_cnt": 43,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
