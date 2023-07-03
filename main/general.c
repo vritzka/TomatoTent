@@ -17,11 +17,6 @@ uint16_t hours_left_in_period;
 
 void update_time_left(bool count_day) {
 	
-    if(tenttime.seconds == 86400) {
-		increase_day_counter(NULL);
-		tenttime.seconds = 0;
-	}		
-	
 	if(tenttime.seconds < tenttime.day_period_seconds) { //day
 		if(!tenttime.is_day)
 			make_it_day(count_day);
@@ -34,7 +29,7 @@ void update_time_left(bool count_day) {
 	
 	minutes_left_in_period = seconds_left_in_period / 60;
 	hours_left_in_period = minutes_left_in_period / 60;
-	
+		
 	if (tenttime.seconds % 2) {
 		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
 	} else {
@@ -51,7 +46,10 @@ void update_time_left(bool count_day) {
 			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
 			nvs_close(storage_handle);
 		}
-		
+	}
+	
+	if(tenttime.seconds % 1800 == 0) {
+		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
 	}
 	
 }
