@@ -552,3 +552,30 @@ void temperature_dropdown(lv_event_t * e)
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }
+
+//////////////////////////////////////
+/////////  Start Screen  /////////////
+//////////////////////////////////////
+
+void start_grow(lv_event_t * e)
+{
+
+	_ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+	vStartTimerTask();
+	make_it_day(true);
+	fanspin_Animation(ui_Fan, 1000);
+	fanspin_Animation(ui_Fan2, 1000);
+	
+}
+
+void finish_grow(lv_event_t * e)
+{
+	lv_anim_del_all();
+	vStopTimerTask();
+	
+	tenttime.event_count = 0;
+    tenttime.seconds = 0;
+    tenttime.days = 0;
+    tenttime.is_day = true;
+    //tenttime.day_period_seconds;
+}

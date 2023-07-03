@@ -12,12 +12,14 @@ extern "C" {
 
 void play_intro(lv_event_t * e);
 void init_tomatotent(lv_event_t * e);
+void start_grow(lv_event_t * e);
 void save_light_duration_screen(lv_event_t * e);
 void light_duration_slider(lv_event_t * e);
 void now_slider(lv_event_t * e);
 void save_led_brightness_screen(lv_event_t * e);
 void LEDBrightnessSlider(lv_event_t * e);
 void decrease_day_counter(lv_event_t * e);
+void finish_grow(lv_event_t * e);
 void increase_day_counter(lv_event_t * e);
 void save_fan_settings_screen(lv_event_t * e);
 void fanspeed_slider(lv_event_t * e);

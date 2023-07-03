@@ -118,6 +118,7 @@ lv_obj_set_style_img_recolor(ui_DayUpButton, lv_color_hex(0x242424), LV_PART_MAI
 lv_obj_set_style_img_recolor_opa(ui_DayUpButton, 255, LV_PART_MAIN| LV_STATE_PRESSED);
 
 lv_obj_add_event_cb(ui_DayDownButton, ui_event_DayDownButton, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_Button1, ui_event_Button1, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_ImgButton9, ui_event_ImgButton9, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_DayUpButton, ui_event_DayUpButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_DayCounterScreen, ui_event_DayCounterScreen, LV_EVENT_ALL, NULL);

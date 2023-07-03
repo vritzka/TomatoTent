@@ -2,10 +2,8 @@
 
 static const char *TAG = "timerTask.c";
 
-TaskHandle_t xTimerTaskHandle = NULL;
-
-
 gptimer_handle_t gptimer = NULL;
+static TaskHandle_t xTimerTaskHandle = NULL;
 
 static bool IRAM_ATTR example_timer_on_alarm_cb_v1(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data)
 {
@@ -74,17 +72,22 @@ void vTimerTask( void * pvParameters )
 // Function that creates a task.
 void vStartTimerTask( void )
 {
-static uint8_t ucParameterToPass;
+  static uint8_t ucParameterToPass;
 
-  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 4096, &ucParameterToPass, 10, &xTimerTaskHandle, 0 );
+  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 4096, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
   configASSERT( xTimerTaskHandle );
 
-  // Use the handle to delete the task.
-  /*
-  if( xGuiTaskHandle != NULL )
+}
+
+
+extern void vStopTimerTask( void )
+{
+  if( xTimerTaskHandle != NULL )
   {
      vTaskDelete( xTimerTaskHandle );
   }
-  * */
+
 }
+
+
 

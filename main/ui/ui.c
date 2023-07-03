@@ -21,8 +21,8 @@ void ui_event_StartNewGrowButton( lv_event_t * e);
 lv_obj_t *ui_StartNewGrowButton;
 lv_obj_t *ui_Label3;
 lv_obj_t *ui_Image7;
-void ui_event_DryAHarverstButton( lv_event_t * e);
-lv_obj_t *ui_DryAHarverstButton;
+void ui_event_DryAHarvestButton( lv_event_t * e);
+lv_obj_t *ui_DryAHarvestButton;
 lv_obj_t *ui_Label2;
 lv_obj_t *ui_Image10;
 lv_obj_t *ui_tomato;
@@ -50,7 +50,7 @@ void ui_event_Panel4( lv_event_t * e);
 lv_obj_t *ui_Panel4;
 lv_obj_t *ui_Label9;
 lv_obj_t *ui_Label13;
-lv_obj_t *ui_fan;
+lv_obj_t *ui_Fan;
 void ui_event_Panel11( lv_event_t * e);
 lv_obj_t *ui_Panel11;
 lv_obj_t *ui_DayCounterMainLabel;
@@ -99,6 +99,7 @@ lv_obj_t *ui_DayCounterLabel;
 lv_obj_t *ui_Image1;
 lv_obj_t *ui_Panel10;
 lv_obj_t *ui_Image15;
+void ui_event_Button1( lv_event_t * e);
 lv_obj_t *ui_Button1;
 lv_obj_t *ui_Label22;
 void ui_event_ImgButton9( lv_event_t * e);
@@ -119,7 +120,7 @@ lv_obj_t *ui_Image19;
 lv_obj_t *ui_Panel15;
 lv_obj_t *ui_Image11;
 lv_obj_t *ui_Panel16;
-lv_obj_t *ui_Image21;
+lv_obj_t *ui_Fan2;
 
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
@@ -355,7 +356,7 @@ void ui_event_SplashScreen( lv_event_t * e) {
 if ( event_code == LV_EVENT_SCREEN_LOADED) {
       play_intro( e );
       startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
-      dryHarvestButtonAppear_Animation(ui_DryAHarverstButton, 2400);
+      dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
       moveTomato_Animation(ui_tomato, 2000);
 }
 if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
@@ -365,10 +366,10 @@ if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
 void ui_event_StartNewGrowButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+      start_grow( e );
 }
 }
-void ui_event_DryAHarverstButton( lv_event_t * e) {
+void ui_event_DryAHarvestButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
@@ -376,9 +377,6 @@ if ( event_code == LV_EVENT_CLICKED) {
 }
 void ui_event_HomeScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_SCREEN_LOADED) {
-      fanspin_Animation(ui_fan, 1000);
-}
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_LightDurationScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 300, 0);
@@ -479,6 +477,12 @@ void ui_event_DayDownButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       decrease_day_counter( e );
+}
+}
+void ui_event_Button1( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      finish_grow( e );
 }
 }
 void ui_event_ImgButton9( lv_event_t * e) {

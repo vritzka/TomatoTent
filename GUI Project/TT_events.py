@@ -90,3 +90,15 @@ def humidity_dropdown(event_struct):
 def temperature_dropdown(event_struct):
     return
 
+
+def start_a_grow(event_struct):
+    return
+
+
+def finish_grow(event_struct):
+    return
+
+
+def start_grow(event_struct):
+    return
+
