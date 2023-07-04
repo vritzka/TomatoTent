@@ -40,103 +40,6 @@ static uint16_t target_temperature_sel_index;
 static uint16_t target_humidity;
 static uint16_t target_temperature;
 
-void init_tomatotent(lv_event_t * e)
-{	
-	err = nvs_open("storage", NVS_READONLY, &storage_handle);
-    if (err != ESP_OK) {
-        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-    } else { 
-		
-		// light duration screen
-        err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
-        lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
-		
-		light_duration = (float_t)light_duration_slider_value / 2;
-		tenttime.day_period_seconds = light_duration * 60 * 60;
-		err = nvs_get_u32(storage_handle, "seconds", &tenttime.seconds);
-		
-		dark_duration = 24 - light_duration;
-	
-		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
-		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
-				
-		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
-		
-		// led brightness screen
-		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
-        lv_slider_set_value(ui_LEDBrightnessSlider, led_brightness_slider_value, LV_ANIM_OFF);
-		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
-
-		//day counter screen
-		err = nvs_get_u16(storage_handle, "days", &tenttime.days); 
-		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
-		lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", tenttime.days);
-		
-		//general settings screen
-		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
-		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", screen_brightness_slider_value);
-		lv_slider_set_value(ui_ScreenBrightnessSlider, screen_brightness_slider_value, LV_ANIM_OFF);
-		screen_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
-		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
-		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
-		
-		err = nvs_get_u16(storage_handle, "temp_unit", &temp_unit);
-		update_temp_units(temp_unit);
-		
-		//wifi screen
-		size_t required_size;
-		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
-		char* ssid = malloc(required_size);
-		nvs_get_str(storage_handle, "ssid", ssid, &required_size);
-		
-		nvs_get_str(storage_handle, "pw", NULL, &required_size);
-		char* pw = malloc(required_size);
-		err = nvs_get_str(storage_handle, "pw", pw, &required_size);
-		if (err == ESP_OK)		
-			lv_textarea_set_text(ui_WifiPassword, pw);
-			
-		nvs_get_u16(storage_handle, "wifi", &wifi);
-		if(wifi == 1) {
-			lv_obj_add_state(ui_WifiSwitch, LV_STATE_CHECKED);
-			wifi_init();
-			wifi_scan();
-		} else {
-			lv_label_set_text(ui_WifiStatusLabel, "off");
-		}
-		
-		// Fan Settings Screen
-		err = nvs_get_u16(storage_handle, "fanspeed_min", &fanspeed_slider_left_value);
-		err = nvs_get_u16(storage_handle, "fanspeed_max", &fanspeed_slider_value);
-		
-		lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%d %%", fanspeed_slider_left_value);
-		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", fanspeed_slider_value);
-		lv_slider_set_value(ui_fanSpeedSlider, fanspeed_slider_value, LV_ANIM_OFF);
-		lv_slider_set_left_value(ui_fanSpeedSlider, fanspeed_slider_left_value, LV_ANIM_OFF);
-		
-		
-		// Climate Screen
-		err = nvs_get_u8(storage_handle, "climate_mode", &climate_mode);
-		err = nvs_get_u16(storage_handle, "sel_hum_index", &target_humidity_sel_index);
-		err = nvs_get_u16(storage_handle, "sel_temp_index", &target_temperature_sel_index);
-		
-		//ESP_LOGI(TAG, "%d", target_humidity);
-		lv_dropdown_set_selected(ui_HumidityDropdown, target_humidity_sel_index);
-		lv_dropdown_set_selected(ui_TemperatureDropdown, target_temperature_sel_index);
-		
-		if( climate_mode == 1 ) { //manual climate
-			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
-		} else { //auto climate
-			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
-			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
-		}		
-		
-        nvs_close(storage_handle);
-        
-	}
-	
-}
-
-
 //SplashScreen
 
 #ifndef PI
@@ -201,19 +104,6 @@ void anim_timer_cb(lv_timer_t *timer)
     if ((count += 5) == 220) {
         lv_timer_del(timer);
         
-        //is there an active grow?
-		if(tenttime.seconds > 0 || tenttime.days > 0) {
-			if(tenttime.seconds < tenttime.day_period_seconds) {
-				make_it_day(false);
-			} else {
-				make_it_night();
-			}
-			vStartTimerTask();
-			lv_scr_load(ui_HomeScreen);
-		 }
-		 
-		 
-        
     } else {
         timer_ctx->count_val = count;
     }
@@ -252,11 +142,130 @@ void start_animation(lv_obj_t *scr)
 
 }
 
-void play_intro(lv_event_t * e)
-{
-    start_animation(ui_SplashScreen);
-}
+/////////////////////////////////////
+///////// INIT TomatoTent ///////////
+/////////////////////////////////////
 
+void init_tomatotent(lv_event_t * e)
+{	
+	err = nvs_open("storage", NVS_READONLY, &storage_handle);
+    if (err != ESP_OK) {
+        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else { 
+		
+		// light duration screen
+        err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
+        lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
+		
+		light_duration = (float_t)light_duration_slider_value / 2;
+		tenttime.day_period_seconds = light_duration * 60 * 60;
+		err = nvs_get_u32(storage_handle, "seconds", &tenttime.seconds);
+		
+		if(tenttime.seconds < tenttime.day_period_seconds) {
+			tenttime.is_day = true;
+		} else {
+			tenttime.is_day = false;
+		}
+		
+		dark_duration = 24 - light_duration;
+	
+		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
+		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
+				
+		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
+		
+		// led brightness screen
+		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
+        lv_slider_set_value(ui_LEDBrightnessSlider, led_brightness_slider_value, LV_ANIM_OFF);
+		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
+
+		//day counter screen
+		err = nvs_get_u16(storage_handle, "days", &tenttime.days); 
+		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
+		lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", tenttime.days);
+		
+		//general settings screen
+		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
+		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", screen_brightness_slider_value);
+		lv_slider_set_value(ui_ScreenBrightnessSlider, screen_brightness_slider_value, LV_ANIM_OFF);
+		screen_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
+		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
+		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
+		
+		err = nvs_get_u16(storage_handle, "temp_unit", &temp_unit);
+		update_temp_units(temp_unit);
+		
+		//wifi screen
+		size_t required_size;
+		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
+		char* ssid = malloc(required_size);
+		nvs_get_str(storage_handle, "ssid", ssid, &required_size);
+		
+		nvs_get_str(storage_handle, "pw", NULL, &required_size);
+		char* pw = malloc(required_size);
+		err = nvs_get_str(storage_handle, "pw", pw, &required_size);
+		if (err == ESP_OK)		
+			lv_textarea_set_text(ui_WifiPassword, pw);
+			
+		nvs_get_u16(storage_handle, "wifi", &wifi);
+		if(wifi == 1) {
+			lv_obj_add_state(ui_WifiSwitch, LV_STATE_CHECKED);
+			wifi_init();
+			wifi_scan();
+		} else {
+			lv_label_set_text(ui_WifiStatusLabel, "off");
+		}
+		
+		// Fan Settings Screen
+		err = nvs_get_u16(storage_handle, "fanspeed_min", &fanspeed_slider_left_value);
+		err = nvs_get_u16(storage_handle, "fanspeed_max", &fanspeed_slider_value);
+		
+		lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%d %%", fanspeed_slider_left_value);
+		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", fanspeed_slider_value);
+		lv_slider_set_value(ui_fanSpeedSlider, fanspeed_slider_value, LV_ANIM_OFF);
+		lv_slider_set_left_value(ui_fanSpeedSlider, fanspeed_slider_left_value, LV_ANIM_OFF);
+		
+		
+		// Climate Screen
+		err = nvs_get_u8(storage_handle, "climate_mode", &climate_mode);
+		err = nvs_get_u16(storage_handle, "sel_hum_index", &target_humidity_sel_index);
+		err = nvs_get_u16(storage_handle, "sel_temp_index", &target_temperature_sel_index);
+		
+		//ESP_LOGI(TAG, "%d", target_humidity);
+		lv_dropdown_set_selected(ui_HumidityDropdown, target_humidity_sel_index);
+		lv_dropdown_set_selected(ui_TemperatureDropdown, target_temperature_sel_index);
+		
+		if( climate_mode == 1 ) { //manual climate
+			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
+		} else { //auto climate
+			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
+			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+		}		
+		
+        //is there an active grow?
+		if(tenttime.seconds > 0 || tenttime.days > 0) {
+			ESP_LOGI(TAG, "Continuing existing Grow");
+			if(tenttime.seconds < tenttime.day_period_seconds) {
+				make_it_day(false);
+			} else {
+				make_it_night();
+			}
+			vStartTimerTask();
+			lv_scr_load(ui_HomeScreen);
+			fanspin_Animation(ui_Fan, 1000);
+			fanspin_Animation(ui_Fan2, 1000);
+		 } else {
+		  start_animation(ui_SplashScreen);
+		  startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
+		  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
+		  moveTomato_Animation(ui_tomato, 2000);			 
+		 }
+		 		
+        nvs_close(storage_handle);
+        
+	}
+	
+}
 
 
 /////////////////////////////////////
@@ -285,6 +294,8 @@ void now_slider(lv_event_t * e) {
 	
 	lv_obj_t * target = lv_event_get_target(e);
 	now_slider_value = lv_slider_get_value(target);
+	if(now_slider_value == 48)
+		return;
 	
 	tenttime.seconds = now_slider_value*30*60;
 	update_time_left(false);
@@ -352,7 +363,7 @@ void increase_day_counter(lv_event_t * e)
 {
 	tenttime.days += 1;
 	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
-	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", tenttime.days);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", tenttime.days);
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	err = nvs_set_u16(storage_handle, "days", tenttime.days);
@@ -367,7 +378,7 @@ void decrease_day_counter(lv_event_t * e)
 	
 	tenttime.days -= 1;
 	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
-	lv_label_set_text_fmt(ui_DayCounterMainLabel, "Day %hu", tenttime.days);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", tenttime.days);
 
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	err = nvs_set_u16(storage_handle, "days", tenttime.days);

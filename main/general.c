@@ -17,6 +17,13 @@ uint16_t hours_left_in_period;
 
 void update_time_left(bool count_day) {
 	
+	if (tenttime.seconds == 86400)
+		tenttime.seconds = 0;
+	
+	if(tenttime.seconds % 1800 == 0) {
+		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
+	}
+	
 	if(tenttime.seconds < tenttime.day_period_seconds) { //day
 		if(!tenttime.is_day)
 			make_it_day(count_day);
@@ -29,11 +36,19 @@ void update_time_left(bool count_day) {
 	
 	minutes_left_in_period = seconds_left_in_period / 60;
 	hours_left_in_period = minutes_left_in_period / 60;
+	
+	if(seconds_left_in_period > 59) {
 		
-	if (tenttime.seconds % 2) {
-		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
+		if (tenttime.seconds % 2) {
+			lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
+		} else {
+			lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
+		}
+		
 	} else {
-		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
+		
+		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %lu", seconds_left_in_period);
+		
 	}
 	
 	if(tenttime.seconds % 300 == 0) {
@@ -48,22 +63,22 @@ void update_time_left(bool count_day) {
 		}
 	}
 	
-	if(tenttime.seconds % 1800 == 0) {
-		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
-	}
-	
 }
 
 void make_it_day(bool count_day) {
+	ESP_LOGI(TAG, "Making it Day");
 	tenttime.is_day = true;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
-	if(count_day)
+	if(count_day) {
+		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
+	}
 
 }
 
 void make_it_night() {
+	ESP_LOGI(TAG, "Making it Night");
 	tenttime.is_day = false;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);

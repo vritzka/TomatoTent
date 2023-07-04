@@ -354,12 +354,6 @@ lv_anim_start(&PropertyAnimation_1);
 void ui_event_SplashScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_LOADED) {
-      play_intro( e );
-      startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
-      dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
-      moveTomato_Animation(ui_tomato, 2000);
-}
-if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
       init_tomatotent( e );
 }
 }

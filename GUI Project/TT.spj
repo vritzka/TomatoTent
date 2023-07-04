@@ -884,73 +884,62 @@
               },
               {
                 "disabled": false,
-                "nid": -512856294,
-                "strtype": "_event/EventHandler",
+                "nid": -99172525,
+                "strtype": "BUTTON/EventHandler",
                 "strval": "CLICKED",
                 "childs": [
                   {
-                    "nid": 1946815438,
+                    "nid": -721268848,
                     "strtype": "_custom/name",
-                    "strval": "start",
+                    "strval": "Event38",
                     "InheritedType": 10
                   },
                   {
-                    "nid": -1798737852,
+                    "nid": 706878033,
                     "strtype": "_custom/condition_C",
                     "strval": "",
                     "InheritedType": 10
                   },
                   {
-                    "nid": 1490392926,
+                    "nid": -1979691699,
                     "strtype": "_custom/condition_P",
                     "strval": "",
                     "InheritedType": 10
                   },
                   {
-                    "nid": 1741812504,
-                    "strtype": "_event/action",
-                    "strval": "CHANGE SCREEN",
+                    "nid": 297017204,
+                    "strtype": "_custom/action",
+                    "strval": "CALL FUNCTION",
                     "childs": [
                       {
-                        "nid": 423984674,
-                        "strtype": "CHANGE SCREEN/Name",
-                        "strval": "CHANGE SCREEN",
+                        "nid": 125019351,
+                        "strtype": "CALL FUNCTION/Name",
+                        "strval": "CALL FUNCTION",
                         "InheritedType": 10
                       },
                       {
-                        "nid": 833761627,
-                        "strtype": "CHANGE SCREEN/Call",
-                        "strval": "ChangeScreen( <{Screen_to}>, lv.SCR_LOAD_ANIM.<{Fade_mode}>, <{Speed}>, <{Delay}>)",
+                        "nid": -1307036818,
+                        "strtype": "CALL FUNCTION/Call",
+                        "strval": "<{Function_name}>( event_struct )",
                         "InheritedType": 10
                       },
                       {
-                        "nid": 450220674,
-                        "strtype": "CHANGE SCREEN/CallC",
-                        "strval": "_ui_screen_change( <{Screen_to}>, LV_SCR_LOAD_ANIM_<{Fade_mode}>, <{Speed}>, <{Delay}>);",
+                        "nid": 1400846113,
+                        "strtype": "CALL FUNCTION/CallC",
+                        "strval": "<{Function_name}>( e );",
                         "InheritedType": 10
                       },
                       {
-                        "nid": 1012770926,
-                        "strtype": "CHANGE SCREEN/Screen_to",
-                        "strval": "GUID15524738-471498S9362140",
-                        "InheritedType": 9
+                        "nid": 458633171,
+                        "strtype": "CALL FUNCTION/Function_name",
+                        "strval": "start_grow",
+                        "InheritedType": 10
                       },
                       {
-                        "nid": 477128839,
-                        "strtype": "CHANGE SCREEN/Fade_mode",
-                        "strval": "FADE_ON",
-                        "InheritedType": 3
-                      },
-                      {
-                        "nid": 290404106,
-                        "strtype": "CHANGE SCREEN/Speed",
-                        "integer": 1000,
-                        "InheritedType": 6
-                      },
-                      {
-                        "nid": -317676510,
-                        "strtype": "CHANGE SCREEN/Delay",
-                        "InheritedType": 6
+                        "nid": -573002218,
+                        "strtype": "CALL FUNCTION/Dont_export_function",
+                        "strval": "False",
+                        "InheritedType": 2
                       }
                     ],
                     "InheritedType": 10
@@ -1542,7 +1531,7 @@
               {
                 "nid": 1624373109,
                 "strtype": "OBJECT/Name",
-                "strval": "DryAHarverstButton",
+                "strval": "DryAHarvestButton",
                 "InheritedType": 10
               },
               {
@@ -2400,224 +2389,9 @@
           },
           {
             "disabled": false,
-            "nid": -2097760495,
-            "strtype": "_event/EventHandler",
-            "strval": "SCREEN_LOADED",
-            "childs": [
-              {
-                "nid": 179911601,
-                "strtype": "_custom/name",
-                "strval": "intro",
-                "InheritedType": 10
-              },
-              {
-                "nid": 937210571,
-                "strtype": "_custom/condition_C",
-                "strval": "",
-                "InheritedType": 10
-              },
-              {
-                "nid": -559971039,
-                "strtype": "_custom/condition_P",
-                "strval": "",
-                "InheritedType": 10
-              },
-              {
-                "nid": -562620478,
-                "strtype": "_event/action",
-                "strval": "CALL FUNCTION",
-                "childs": [
-                  {
-                    "nid": -1239588708,
-                    "strtype": "CALL FUNCTION/Name",
-                    "strval": "CALL FUNCTION",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 1520337214,
-                    "strtype": "CALL FUNCTION/Call",
-                    "strval": "<{Function_name}>( event_struct )",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 152102978,
-                    "strtype": "CALL FUNCTION/CallC",
-                    "strval": "<{Function_name}>( e );",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": -676684527,
-                    "strtype": "CALL FUNCTION/Function_name",
-                    "strval": "play_intro",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": -1639697062,
-                    "strtype": "CALL FUNCTION/Dont_export_function",
-                    "strval": "False",
-                    "InheritedType": 2
-                  }
-                ],
-                "InheritedType": 10
-              },
-              {
-                "nid": 2020305742,
-                "strtype": "_event/action",
-                "strval": "PLAY ANIMATION",
-                "childs": [
-                  {
-                    "nid": -1451701740,
-                    "strtype": "PLAY ANIMATION/Name",
-                    "strval": "PLAY ANIMATION",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": -120674847,
-                    "strtype": "PLAY ANIMATION/FunctionName",
-                    "strval": "startGrowButtonAppear_Animation",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 910672675,
-                    "strtype": "PLAY ANIMATION/Animation",
-                    "strval": "startGrowButtonAppear",
-                    "InheritedType": 8
-                  },
-                  {
-                    "nid": -39101231,
-                    "strtype": "PLAY ANIMATION/Target",
-                    "strval": "GUID13331327-491289S902140",
-                    "InheritedType": 9
-                  },
-                  {
-                    "nid": -1100961595,
-                    "strtype": "PLAY ANIMATION/Delay",
-                    "integer": 2000,
-                    "InheritedType": 6
-                  },
-                  {
-                    "nid": 1721554903,
-                    "strtype": "PLAY ANIMATION/Call",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>)",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 1567169729,
-                    "strtype": "PLAY ANIMATION/CallC",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>);",
-                    "InheritedType": 10
-                  }
-                ],
-                "InheritedType": 10
-              },
-              {
-                "nid": -532915910,
-                "strtype": "_event/action",
-                "strval": "PLAY ANIMATION",
-                "childs": [
-                  {
-                    "nid": 2037982215,
-                    "strtype": "PLAY ANIMATION/Name",
-                    "strval": "PLAY ANIMATION",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 320502476,
-                    "strtype": "PLAY ANIMATION/FunctionName",
-                    "strval": "dryHarvestButtonAppear_Animation",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": -659486229,
-                    "strtype": "PLAY ANIMATION/Animation",
-                    "strval": "dryHarvestButtonAppear",
-                    "InheritedType": 8
-                  },
-                  {
-                    "nid": -1009055106,
-                    "strtype": "PLAY ANIMATION/Target",
-                    "strval": "GUID17062526-492914S632140",
-                    "InheritedType": 9
-                  },
-                  {
-                    "nid": 386412487,
-                    "strtype": "PLAY ANIMATION/Delay",
-                    "integer": 2400,
-                    "InheritedType": 6
-                  },
-                  {
-                    "nid": 614129028,
-                    "strtype": "PLAY ANIMATION/Call",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>)",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 988781893,
-                    "strtype": "PLAY ANIMATION/CallC",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>);",
-                    "InheritedType": 10
-                  }
-                ],
-                "InheritedType": 10
-              },
-              {
-                "nid": -422513275,
-                "strtype": "_event/action",
-                "strval": "PLAY ANIMATION",
-                "childs": [
-                  {
-                    "nid": 865801680,
-                    "strtype": "PLAY ANIMATION/Name",
-                    "strval": "PLAY ANIMATION",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 98729630,
-                    "strtype": "PLAY ANIMATION/FunctionName",
-                    "strval": "moveTomato_Animation",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": -1591062555,
-                    "strtype": "PLAY ANIMATION/Animation",
-                    "strval": "moveTomato",
-                    "InheritedType": 8
-                  },
-                  {
-                    "nid": 1769193221,
-                    "strtype": "PLAY ANIMATION/Target",
-                    "strval": "GUID20410833-491288S1542140",
-                    "InheritedType": 9
-                  },
-                  {
-                    "nid": -964589921,
-                    "strtype": "PLAY ANIMATION/Delay",
-                    "integer": 2000,
-                    "InheritedType": 6
-                  },
-                  {
-                    "nid": -1539300691,
-                    "strtype": "PLAY ANIMATION/Call",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>)",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 355707051,
-                    "strtype": "PLAY ANIMATION/CallC",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>);",
-                    "InheritedType": 10
-                  }
-                ],
-                "InheritedType": 10
-              }
-            ],
-            "InheritedType": 4
-          },
-          {
-            "disabled": false,
             "nid": 1531737346,
             "strtype": "_event/EventHandler",
-            "strval": "SCREEN_LOAD_START",
+            "strval": "SCREEN_LOADED",
             "childs": [
               {
                 "nid": -408892318,
@@ -7244,7 +7018,7 @@
                   {
                     "nid": 1938957262,
                     "strtype": "OBJECT/Name",
-                    "strval": "fan",
+                    "strval": "Fan",
                     "InheritedType": 10
                   },
                   {
@@ -7938,8 +7712,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -20,
-                      -16
+                      0,
+                      -20
                     ],
                     "InheritedType": 7
                   },
@@ -8163,6 +7937,17 @@
                         "strtype": "_style/StyleState",
                         "strval": "DEFAULT",
                         "childs": [
+                          {
+                            "nid": 1566758994,
+                            "strtype": "_style/Text_Color",
+                            "intarray": [
+                              225,
+                              225,
+                              225,
+                              255
+                            ],
+                            "InheritedType": 7
+                          },
                           {
                             "nid": 537503029,
                             "strtype": "_style/Text_Font",
@@ -8512,7 +8297,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -61,
+                  -59,
                   -111
                 ],
                 "InheritedType": 7
@@ -9728,83 +9513,6 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
-          },
-          {
-            "disabled": false,
-            "nid": 1152747885,
-            "strtype": "_event/EventHandler",
-            "strval": "SCREEN_LOADED",
-            "childs": [
-              {
-                "nid": -185851467,
-                "strtype": "_custom/name",
-                "strval": "fan",
-                "InheritedType": 10
-              },
-              {
-                "nid": -1812060677,
-                "strtype": "_custom/condition_C",
-                "strval": "",
-                "InheritedType": 10
-              },
-              {
-                "nid": -914447975,
-                "strtype": "_custom/condition_P",
-                "strval": "",
-                "InheritedType": 10
-              },
-              {
-                "nid": 815645946,
-                "strtype": "_event/action",
-                "strval": "PLAY ANIMATION",
-                "childs": [
-                  {
-                    "nid": -778843827,
-                    "strtype": "PLAY ANIMATION/Name",
-                    "strval": "PLAY ANIMATION",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 2127446361,
-                    "strtype": "PLAY ANIMATION/FunctionName",
-                    "strval": "fanspin_Animation",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": -1207541085,
-                    "strtype": "PLAY ANIMATION/Animation",
-                    "strval": "fanspin",
-                    "InheritedType": 8
-                  },
-                  {
-                    "nid": -1082285281,
-                    "strtype": "PLAY ANIMATION/Target",
-                    "strval": "GUID47864592-177965S2042142",
-                    "InheritedType": 9
-                  },
-                  {
-                    "nid": 1573187023,
-                    "strtype": "PLAY ANIMATION/Delay",
-                    "integer": 1000,
-                    "InheritedType": 6
-                  },
-                  {
-                    "nid": -1874710468,
-                    "strtype": "PLAY ANIMATION/Call",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>)",
-                    "InheritedType": 10
-                  },
-                  {
-                    "nid": 1134674073,
-                    "strtype": "PLAY ANIMATION/CallC",
-                    "strval": "<{FunctionName}>(<{Target}>, <{Delay}>);",
-                    "InheritedType": 10
-                  }
-                ],
-                "InheritedType": 10
-              }
-            ],
-            "InheritedType": 4
           },
           {
             "disabled": false,
@@ -18025,6 +17733,71 @@
                     "strtype": "BUTTON/Style_main",
                     "strval": "lv.PART.MAIN, Rectangle, Pad, Text ",
                     "InheritedType": 11
+                  },
+                  {
+                    "disabled": false,
+                    "nid": -252213278,
+                    "strtype": "BUTTON/EventHandler",
+                    "strval": "CLICKED",
+                    "childs": [
+                      {
+                        "nid": -584835765,
+                        "strtype": "_custom/name",
+                        "strval": "Event39",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -610955050,
+                        "strtype": "_custom/condition_C",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -1158083713,
+                        "strtype": "_custom/condition_P",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -2074052205,
+                        "strtype": "_custom/action",
+                        "strval": "CALL FUNCTION",
+                        "childs": [
+                          {
+                            "nid": -1658348796,
+                            "strtype": "CALL FUNCTION/Name",
+                            "strval": "CALL FUNCTION",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1928751250,
+                            "strtype": "CALL FUNCTION/Call",
+                            "strval": "<{Function_name}>( event_struct )",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1730366352,
+                            "strtype": "CALL FUNCTION/CallC",
+                            "strval": "<{Function_name}>( e );",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -2087741147,
+                            "strtype": "CALL FUNCTION/Function_name",
+                            "strval": "finish_grow",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": -1239032128,
+                            "strtype": "CALL FUNCTION/Dont_export_function",
+                            "strval": "False",
+                            "InheritedType": 2
+                          }
+                        ],
+                        "InheritedType": 10
+                      }
+                    ],
+                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "BUTTON"
@@ -21859,7 +21632,7 @@
                   {
                     "nid": -1583586615,
                     "strtype": "OBJECT/Name",
-                    "strval": "Image21",
+                    "strval": "Fan2",
                     "InheritedType": 10
                   },
                   {
@@ -37541,7 +37314,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 43,
+    "backup_cnt": 44,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
