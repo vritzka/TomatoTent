@@ -48,7 +48,7 @@ void vTimerTask( void * pvParameters )
     ESP_LOGI(TAG, "Start timer");
     gptimer_alarm_config_t alarm_config1 = {
         .reload_count = 0,
-        .alarm_count = 200000, // period = 1s
+        .alarm_count = 1000000, // period = 1s
         .flags.auto_reload_on_alarm = true,
     };
     ESP_ERROR_CHECK(gptimer_set_alarm_action(gptimer, &alarm_config1));

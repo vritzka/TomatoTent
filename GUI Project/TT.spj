@@ -7926,7 +7926,7 @@
                   {
                     "nid": 1010776282,
                     "strtype": "LABEL/Text",
-                    "strval": "Day 0",
+                    "strval": "0",
                     "InheritedType": 10
                   },
                   {
@@ -8225,7 +8225,7 @@
                   {
                     "nid": -1978845426,
                     "strtype": "LABEL/Text",
-                    "strval": "- 1 hr  12 min",
+                    "strval": "- 0 hr  00 min",
                     "InheritedType": 10
                   },
                   {
@@ -37314,7 +37314,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 44,
+    "backup_cnt": 45,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

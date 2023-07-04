@@ -245,11 +245,7 @@ void init_tomatotent(lv_event_t * e)
         //is there an active grow?
 		if(tenttime.seconds > 0 || tenttime.days > 0) {
 			ESP_LOGI(TAG, "Continuing existing Grow");
-			if(tenttime.seconds < tenttime.day_period_seconds) {
-				make_it_day(false);
-			} else {
-				make_it_night();
-			}
+			update_time_left(false);
 			vStartTimerTask();
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
