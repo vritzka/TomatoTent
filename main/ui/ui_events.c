@@ -579,10 +579,14 @@ void finish_grow(lv_event_t * e)
 {
 	lv_anim_del_all();
 	vStopTimerTask();
-	
-	tenttime.event_count = 0;
-    tenttime.seconds = 0;
-    tenttime.days = 0;
-    tenttime.is_day = true;
-    //tenttime.day_period_seconds;
+    
+    err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    err = nvs_set_u32(storage_handle, "seconds", 0);
+    err = nvs_set_u16(storage_handle, "days", 0);
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+    lv_obj_set_pos(ui_tomato, 0,0);
+    lv_obj_set_pos(ui_StartNewGrowButton, -430,-9);
+    lv_obj_set_pos(ui_DryAHarvestButton, 435,96);
+    lv_scr_load(ui_SplashScreen);
 }
