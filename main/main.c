@@ -15,6 +15,7 @@
 #include "nvs.h"
 
 #include "guiTask.h"
+#include "timerTask.h"
 #include "general.h"
 
 static const char *TAG = "main.c";
@@ -33,9 +34,8 @@ void app_main(void)
     }
     
    ledc_init();
-	
    vStartGuiTask();
-
+   vStartTimerTask();
 
 }
 

@@ -246,7 +246,7 @@ void init_tomatotent(lv_event_t * e)
 		if(tenttime.seconds > 0 || tenttime.days > 0) {
 			ESP_LOGI(TAG, "Continuing existing Grow");
 			update_time_left(false);
-			vStartTimerTask();
+			ESP_ERROR_CHECK(gptimer_start(gptimer));
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
@@ -568,17 +568,25 @@ void start_grow(lv_event_t * e)
 {
 
 	_ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
-	vStartTimerTask();
+	
+	ESP_ERROR_CHECK(gptimer_start(gptimer));
 	make_it_day(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
 	
 }
 
-void finish_grow(lv_event_t * e)
+static void event_cb(lv_event_t * e)
 {
+    lv_obj_t * obj = lv_event_get_current_target(e);
+    int id = lv_msgbox_get_active_btn(obj);
+    ESP_LOGI(TAG, "Button %d clicked", id);
+    if(id != 0)
+		return;
+	
+	lv_msgbox_close(obj);	
 	lv_anim_del_all();
-	vStopTimerTask();
+	ESP_ERROR_CHECK(gptimer_stop(gptimer));
     
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u32(storage_handle, "seconds", 0);
@@ -588,5 +596,16 @@ void finish_grow(lv_event_t * e)
     lv_obj_set_pos(ui_tomato, 0,0);
     lv_obj_set_pos(ui_StartNewGrowButton, -430,-9);
     lv_obj_set_pos(ui_DryAHarvestButton, 435,96);
-    lv_scr_load(ui_SplashScreen);
+    lv_scr_load(ui_SplashScreen);    
+    
+}
+
+void stop_grow(lv_event_t * e)
+{
+	static const char * btns[] = {"Finish it!", "No, go back.", ""};
+
+    lv_obj_t * mbox1 = lv_msgbox_create(NULL, "Finished?", "This will end the current grow/dry.", btns, true);
+    lv_obj_add_event_cb(mbox1, event_cb, LV_EVENT_VALUE_CHANGED, NULL);
+    lv_obj_center(mbox1);
+	
 }

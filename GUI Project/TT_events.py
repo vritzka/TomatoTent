@@ -102,3 +102,7 @@ def finish_grow(event_struct):
 def start_grow(event_struct):
     return
 
+
+def stop_grow(event_struct):
+    return
+

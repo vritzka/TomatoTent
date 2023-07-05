@@ -8,7 +8,7 @@
 #include "esp_log.h"
 #include "general.h"
 
-
+extern gptimer_handle_t gptimer;
 void vTimerTask( void * pvParameters );
 void vStartTimerTask( void );
 void vStopTimerTask( void );

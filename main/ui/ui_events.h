@@ -18,7 +18,7 @@ void now_slider(lv_event_t * e);
 void save_led_brightness_screen(lv_event_t * e);
 void LEDBrightnessSlider(lv_event_t * e);
 void decrease_day_counter(lv_event_t * e);
-void finish_grow(lv_event_t * e);
+void stop_grow(lv_event_t * e);
 void increase_day_counter(lv_event_t * e);
 void save_fan_settings_screen(lv_event_t * e);
 void fanspeed_slider(lv_event_t * e);
