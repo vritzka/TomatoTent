@@ -8,6 +8,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     screens/ui_ClimateControlScreen.c
     screens/ui_WifiSettingsScreen.c
     screens/ui_GeneralSettingsScreen.c
+    screens/ui_SoftwareUpdateScreen.c
     ui.c
     ui_helpers.c
     images/ui_img_plant_png.c
@@ -34,6 +35,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_60476769.c
     images/ui_img_261459337.c
     images/ui_img_953604683.c
+    images/ui_img_1126512945.c
     images/ui_img_bg2_png.c
     images/ui_img_1669444289.c
     images/ui_img_182264864.c

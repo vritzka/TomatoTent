@@ -17784,7 +17784,7 @@
                           {
                             "nid": -2087741147,
                             "strtype": "CALL FUNCTION/Function_name",
-                            "strval": "finish_grow",
+                            "strval": "stop_grow",
                             "InheritedType": 10
                           },
                           {
@@ -37314,7 +37314,7 @@
     "theme_color2": 0,
     "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/squareline export",
-    "backup_cnt": 45,
+    "backup_cnt": 46,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

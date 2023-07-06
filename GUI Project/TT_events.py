@@ -106,3 +106,7 @@ def start_grow(event_struct):
 def stop_grow(event_struct):
     return
 
+
+def software_upgrade_button(event_struct):
+    return
+

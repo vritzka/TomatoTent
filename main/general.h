@@ -17,9 +17,20 @@
 #include "esp_err.h"
 #include "freertos/task.h"
 #include "esp_mac.h"
+#include "esp_http_client.h"
+#include "esp_tls.h"
+#include "esp_netif.h"
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
+
+#include "esp_event.h"
+#include "esp_netif.h"
+//#include "protocol_examples_common.h"
+//#include "protocol_examples_utils.h"
+#include "esp_tls.h"
+//#include "esp_crt_bundle.h"
+#include "esp_https_ota.h"
 
 typedef struct {
     uint8_t event_count;
@@ -66,5 +77,6 @@ void wifi_off(void);
 void update_time_left(bool count_day);
 void make_it_day(bool count_day);
 void make_it_night();
+esp_err_t do_firmware_upgrade();
 
 #endif

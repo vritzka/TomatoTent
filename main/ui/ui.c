@@ -172,6 +172,8 @@ lv_obj_t *ui_WifiSwitch;
 lv_obj_t *ui_WifiStatusLabel;
 void ui_event_ImgButton7( lv_event_t * e);
 lv_obj_t *ui_ImgButton7;
+void ui_event_ImgButton2( lv_event_t * e);
+lv_obj_t *ui_ImgButton2;
 
 // SCREEN: ui_GeneralSettingsScreen
 void ui_GeneralSettingsScreen_screen_init(void);
@@ -192,6 +194,12 @@ lv_obj_t *ui_TempUnitSwitch;
 lv_obj_t *ui_Label27;
 lv_obj_t *ui_Label16;
 lv_obj_t *ui_Image20;
+
+// SCREEN: ui_SoftwareUpdateScreen
+void ui_SoftwareUpdateScreen_screen_init(void);
+lv_obj_t *ui_SoftwareUpdateScreen;
+void ui_event_Button3( lv_event_t * e);
+lv_obj_t *ui_Button3;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
@@ -564,6 +572,12 @@ if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
+void ui_event_ImgButton2( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( ui_SoftwareUpdateScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+}
+}
 void ui_event_GeneralSettingsScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
@@ -586,6 +600,12 @@ if ( event_code == LV_EVENT_VALUE_CHANGED) {
       temp_unit_switch( e );
 }
 }
+void ui_event_Button3( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      software_upgrade_button( e );
+}
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -604,6 +624,7 @@ ui_FanSettingsScreen_screen_init();
 ui_ClimateControlScreen_screen_init();
 ui_WifiSettingsScreen_screen_init();
 ui_GeneralSettingsScreen_screen_init();
+ui_SoftwareUpdateScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_SplashScreen);
 }

@@ -482,3 +482,24 @@ void wifi_off(void)
 	esp_event_loop_delete_default();
 	lv_dropdown_clear_options(ui_WifiDropdown);
 }
+
+extern const char awss3_pem_start[] asm("_binary_awss3_pem_start");
+extern const char awss3_pem_end[]   asm("_binary_awss3_pem_end");
+
+esp_err_t do_firmware_upgrade()
+{
+    esp_http_client_config_t config = {
+        .url = "https://tomatotent-update.s3.ap-southeast-2.amazonaws.com",
+        .cert_pem = awss3_pem_start,
+    };
+    esp_https_ota_config_t ota_config = {
+        .http_config = &config,
+    };
+    esp_err_t ret = esp_https_ota(&ota_config);
+    if (ret == ESP_OK) {
+        esp_restart();
+    } else {
+        return ESP_FAIL;
+    }
+    return ESP_OK;
+}

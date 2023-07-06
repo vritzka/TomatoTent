@@ -170,6 +170,8 @@ extern lv_obj_t *ui_WifiSwitch;
 extern lv_obj_t *ui_WifiStatusLabel;
 void ui_event_ImgButton7( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton7;
+void ui_event_ImgButton2( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton2;
 // SCREEN: ui_GeneralSettingsScreen
 void ui_GeneralSettingsScreen_screen_init(void);
 void ui_event_GeneralSettingsScreen( lv_event_t * e);
@@ -189,6 +191,11 @@ extern lv_obj_t *ui_TempUnitSwitch;
 extern lv_obj_t *ui_Label27;
 extern lv_obj_t *ui_Label16;
 extern lv_obj_t *ui_Image20;
+// SCREEN: ui_SoftwareUpdateScreen
+void ui_SoftwareUpdateScreen_screen_init(void);
+extern lv_obj_t *ui_SoftwareUpdateScreen;
+void ui_event_Button3( lv_event_t * e);
+extern lv_obj_t *ui_Button3;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png
@@ -215,6 +222,7 @@ LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
 LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
 LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
+LV_IMG_DECLARE( ui_img_1126512945);   // assets/cloud-computing.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png

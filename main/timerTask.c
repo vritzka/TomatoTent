@@ -61,7 +61,7 @@ void vTimerTask( void * pvParameters )
             ESP_LOGI(TAG, "Seconds, count=%lu", tenttime.seconds);
             update_time_left(true);
         } else {
-            ESP_LOGW(TAG, "Missed one count event");
+            ESP_LOGW(TAG, "Missed one count event or Timer stopped");
         }
 			
   }

@@ -148,6 +148,9 @@ void start_animation(lv_obj_t *scr)
 
 void init_tomatotent(lv_event_t * e)
 {	
+	//do_firmware_upgrade();
+	//return;
+	
 	err = nvs_open("storage", NVS_READONLY, &storage_handle);
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
@@ -608,4 +611,9 @@ void stop_grow(lv_event_t * e)
     lv_obj_add_event_cb(mbox1, event_cb, LV_EVENT_VALUE_CHANGED, NULL);
     lv_obj_center(mbox1);
 	
+}
+
+void software_upgrade_button(lv_event_t * e)
+{
+	do_firmware_upgrade();
 }
