@@ -24,8 +24,9 @@ static const char *TAG = "main.c";
 void app_main(void)
 {
 	
-    // Initialize NVS
+	 // Initialize NVS
     esp_err_t err = nvs_flash_init();
+    ESP_LOGI(TAG,"Opened NVS");
     if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         // NVS partition was truncated and needs to be erased
         // Retry nvs_flash_init

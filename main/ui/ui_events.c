@@ -148,10 +148,10 @@ void start_animation(lv_obj_t *scr)
 
 void init_tomatotent(lv_event_t * e)
 {	
-	
-	err = nvs_open("storage", NVS_READONLY, &storage_handle);
+   
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
-        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+        printf("Error (%s) opening NVS handle!!!\n", esp_err_to_name(err));
     } else { 
 		
 		// light duration screen

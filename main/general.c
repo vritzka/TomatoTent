@@ -317,12 +317,12 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE)
 	{
 		char* ssid = "";
-		err = nvs_open("storage", NVS_READONLY, &storage_handle);
+		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 		if (err != ESP_OK) {
 			printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
 		} else { 
 		
-		size_t required_size;
+		size_t required_size = 1;
 		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
 		ssid = malloc(required_size);
 		err = nvs_get_str(storage_handle, "ssid", ssid, &required_size);
@@ -491,9 +491,13 @@ esp_err_t do_firmware_upgrade()
     esp_http_client_config_t config = {
         .url = "https://tomatotent-update.s3.ap-southeast-2.amazonaws.com/TomatoTent.bin",
         .crt_bundle_attach = esp_crt_bundle_attach,
+        .timeout_ms = 5000,
+        .keep_alive_enable = true,
     };
     esp_https_ota_config_t ota_config = {
         .http_config = &config,
+        .partial_http_download = true,
+        .max_http_request_size = 16384,        
     };
     esp_err_t ret = esp_https_ota(&ota_config);
     if (ret == ESP_OK) {
