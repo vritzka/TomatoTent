@@ -148,8 +148,6 @@ void start_animation(lv_obj_t *scr)
 
 void init_tomatotent(lv_event_t * e)
 {	
-	//do_firmware_upgrade();
-	//return;
 	
 	err = nvs_open("storage", NVS_READONLY, &storage_handle);
     if (err != ESP_OK) {

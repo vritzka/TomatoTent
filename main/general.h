@@ -25,11 +25,7 @@
 #include "lwip/sys.h"
 
 #include "esp_event.h"
-#include "esp_netif.h"
-//#include "protocol_examples_common.h"
-//#include "protocol_examples_utils.h"
-#include "esp_tls.h"
-//#include "esp_crt_bundle.h"
+#include "esp_crt_bundle.h"
 #include "esp_https_ota.h"
 
 typedef struct {

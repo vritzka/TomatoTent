@@ -6,6 +6,7 @@ static nvs_handle_t storage_handle;
 static esp_err_t err;
 static char somestring[36];
 
+
 /////////////////////////////////////////////////////////
 ////////////////////// TIME /////////////////////////////
 /////////////////////////////////////////////////////////
@@ -172,7 +173,6 @@ void ledc_init(void)
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_dimmer_channel));       
     
 }
-
 
 
 /////////////////////////////////////////////////////////
@@ -483,14 +483,14 @@ void wifi_off(void)
 	lv_dropdown_clear_options(ui_WifiDropdown);
 }
 
-extern const char awss3_pem_start[] asm("_binary_awss3_pem_start");
-extern const char awss3_pem_end[]   asm("_binary_awss3_pem_end");
+//extern const char awss3_pem_start[] asm("_binary_awss3_pem_start");
+//extern const char awss3_pem_end[]   asm("_binary_awss3_pem_end");
 
 esp_err_t do_firmware_upgrade()
 {
     esp_http_client_config_t config = {
-        .url = "https://tomatotent-update.s3.ap-southeast-2.amazonaws.com",
-        .cert_pem = awss3_pem_start,
+        .url = "https://tomatotent-update.s3.ap-southeast-2.amazonaws.com/TomatoTent.bin",
+        .crt_bundle_attach = esp_crt_bundle_attach,
     };
     esp_https_ota_config_t ota_config = {
         .http_config = &config,
