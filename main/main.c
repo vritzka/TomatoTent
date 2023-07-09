@@ -36,6 +36,7 @@ void app_main(void)
     }
    ESP_ERROR_CHECK( err );
    
+   event_loop_init();
    ledc_init();
    vStartGuiTask();
    vStartTimerTask();

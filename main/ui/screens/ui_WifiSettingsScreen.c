@@ -84,8 +84,8 @@ lv_obj_set_style_img_recolor_opa(ui_ImgButton7, 255, LV_PART_MAIN| LV_STATE_DEFA
 
 ui_ImgButton2 = lv_imgbtn_create(ui_WifiSettingsScreen);
 lv_imgbtn_set_src(ui_ImgButton2, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1126512945, NULL);
+lv_obj_set_width( ui_ImgButton2, 32);
 lv_obj_set_height( ui_ImgButton2, 32);
-lv_obj_set_width( ui_ImgButton2, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_x( ui_ImgButton2, 139 );
 lv_obj_set_y( ui_ImgButton2, -124 );
 lv_obj_set_align( ui_ImgButton2, LV_ALIGN_CENTER );

@@ -200,6 +200,12 @@ void ui_SoftwareUpdateScreen_screen_init(void);
 lv_obj_t *ui_SoftwareUpdateScreen;
 void ui_event_Button3( lv_event_t * e);
 lv_obj_t *ui_Button3;
+lv_obj_t *ui_Label21;
+lv_obj_t *ui_Image21;
+lv_obj_t *ui_Label10;
+void ui_event_ImgButton1( lv_event_t * e);
+lv_obj_t *ui_ImgButton1;
+lv_obj_t *ui_UpgradeStatusBar;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
@@ -213,6 +219,7 @@ const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_7917115
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
+const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -604,6 +611,12 @@ void ui_event_Button3( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       software_upgrade_button( e );
+}
+}
+void ui_event_ImgButton1( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( ui_WifiSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
 

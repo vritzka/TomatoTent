@@ -19,6 +19,49 @@ lv_obj_set_align( ui_Button3, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Button3, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_Button3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
+ui_Label21 = lv_label_create(ui_Button3);
+lv_obj_set_width( ui_Label21, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label21, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_align( ui_Label21, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label21,"Upgrade");
+
+ui_Image21 = lv_img_create(ui_SoftwareUpdateScreen);
+lv_img_set_src(ui_Image21, &ui_img_713338696);
+lv_obj_set_width( ui_Image21, LV_SIZE_CONTENT);  /// 64
+lv_obj_set_height( ui_Image21, LV_SIZE_CONTENT);   /// 64
+lv_obj_set_x( ui_Image21, -176 );
+lv_obj_set_y( ui_Image21, -99 );
+lv_obj_set_align( ui_Image21, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Image21, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_Image21, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+ui_Label10 = lv_label_create(ui_SoftwareUpdateScreen);
+lv_obj_set_width( ui_Label10, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label10, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_Label10, 24 );
+lv_obj_set_y( ui_Label10, -100 );
+lv_obj_set_align( ui_Label10, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label10,"Software Upgrade");
+lv_obj_set_style_text_font(ui_Label10, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_ImgButton1 = lv_imgbtn_create(ui_SoftwareUpdateScreen);
+lv_imgbtn_set_src(ui_ImgButton1, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1668913270, NULL);
+lv_obj_set_width( ui_ImgButton1, 32);
+lv_obj_set_height( ui_ImgButton1, 32);
+lv_obj_set_x( ui_ImgButton1, 203 );
+lv_obj_set_y( ui_ImgButton1, -125 );
+lv_obj_set_align( ui_ImgButton1, LV_ALIGN_CENTER );
+lv_obj_set_style_img_recolor(ui_ImgButton1, lv_color_hex(0xC3C3C3), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_ImgButton1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_UpgradeStatusBar = lv_bar_create(ui_SoftwareUpdateScreen);
+lv_obj_set_width( ui_UpgradeStatusBar, 250);
+lv_obj_set_height( ui_UpgradeStatusBar, 15);
+lv_obj_set_x( ui_UpgradeStatusBar, 0 );
+lv_obj_set_y( ui_UpgradeStatusBar, 80 );
+lv_obj_set_align( ui_UpgradeStatusBar, LV_ALIGN_CENTER );
+
 lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_ImgButton1, ui_event_ImgButton1, LV_EVENT_ALL, NULL);
 
 }

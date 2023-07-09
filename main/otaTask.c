@@ -93,7 +93,7 @@ void advanced_ota_example_task(void *pvParameter)
         ESP_LOGE(TAG, "image header verification failed");
         goto ota_end;
     }
-
+	uint16_t bar_value;
     while (1) {
         err = esp_https_ota_perform(https_ota_handle);
         if (err != ESP_ERR_HTTPS_OTA_IN_PROGRESS) {
@@ -103,6 +103,8 @@ void advanced_ota_example_task(void *pvParameter)
         // monitor the status of OTA upgrade by calling esp_https_ota_get_image_len_read, which gives length of image
         // data read so far.
         ESP_LOGD(TAG, "Image bytes read: %d", esp_https_ota_get_image_len_read(https_ota_handle));
+        bar_value = (100*esp_https_ota_get_image_len_read(https_ota_handle) / esp_https_ota_get_image_size(https_ota_handle));
+        lv_bar_set_value(ui_UpgradeStatusBar, bar_value, LV_ANIM_ON);
     }
 
     if (esp_https_ota_is_complete_data_received(https_ota_handle) != true) {
