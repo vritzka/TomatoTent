@@ -14,6 +14,7 @@
 #include "nvs.h"
 #include "general.h"
 #include "timerTask.h"
+#include "otaTask.h"
 
 
 static const char *TAG = "ui_events.c";
@@ -613,5 +614,6 @@ void stop_grow(lv_event_t * e)
 
 void software_upgrade_button(lv_event_t * e)
 {
-	do_firmware_upgrade();
+	//do_firmware_upgrade();
+	   vStartOtaTask();
 }

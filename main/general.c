@@ -129,7 +129,7 @@ void ledc_init(void)
         .hpoint         = 0
     };
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));  
-    
+   
   // FAN PWM
     ledc_timer_config_t ledc_fan_timer = {
         .speed_mode       = LEDC_MODE,
@@ -170,8 +170,7 @@ void ledc_init(void)
         .duty           = 0, // Set duty to 0%
         .hpoint         = 0
     };
-    ESP_ERROR_CHECK(ledc_channel_config(&ledc_dimmer_channel));       
-    
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_dimmer_channel));        
 }
 
 
