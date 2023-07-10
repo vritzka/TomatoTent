@@ -315,6 +315,7 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 {
 	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE)
 	{
+		
 		char* ssid = "";
 		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 		if (err != ESP_OK) {
@@ -350,20 +351,17 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 				saved_ssid_index = i;
 			
 		}
-		
-		lv_label_set_text(ui_WifiStatusLabel, "");
-		
+				
 		if (ap_count == 0) {
 			lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
 		} else if (saved_ssid_index != 232) {
 			lv_dropdown_set_selected(ui_WifiDropdown, saved_ssid_index);
-			//lv_label_set_text(ui_WifiStatusLabel, "connecting ...");
-			//wifi_connect();
 		}
 		
 	}
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+		ESP_LOGI(TAG, "Wifi Connect");
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
@@ -380,6 +378,7 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
         lv_label_set_text(ui_WifiStatusLabel, "connected"); 
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+        wifi_scan();
     }
 }
 
@@ -421,7 +420,6 @@ void wifi_scan(void)
 {
 	lv_dropdown_clear_options(ui_WifiDropdown);
     esp_wifi_scan_start(NULL, false);
-    lv_label_set_text(ui_WifiStatusLabel, "searching...");  
 }
 
 
@@ -485,24 +483,19 @@ void wifi_off(void)
                                                         &wifi_event_handler));
 }
 
-esp_err_t do_firmware_upgrade()
-{
-    esp_http_client_config_t config = {
-        .url = "https://tomatotent-update.s3.ap-southeast-2.amazonaws.com/TomatoTent.bin",
-        .crt_bundle_attach = esp_crt_bundle_attach,
-        .timeout_ms = 5000,
-        .keep_alive_enable = true,
-    };
-    esp_https_ota_config_t ota_config = {
-        .http_config = &config,
-        .partial_http_download = true,
-        .max_http_request_size = 16384,        
-    };
-    esp_err_t ret = esp_https_ota(&ota_config);
-    if (ret == ESP_OK) {
-        esp_restart();
-    } else {
-        return ESP_FAIL;
-    }
-    return ESP_OK;
+void draw_qr_codes() {
+	
+	lv_color_t bg_color = lv_palette_lighten(LV_PALETTE_LIGHT_BLUE, 5);
+    lv_color_t fg_color = lv_palette_darken(LV_PALETTE_BLUE, 4);
+
+    lv_obj_t * qr = lv_qrcode_create(ui_QrCode1, 64, fg_color, bg_color);
+
+    /*Set data*/
+    const char * data = "https://lvgl.io";
+    lv_qrcode_update(qr, data, strlen(data));
+    lv_obj_center(qr);
+
+    /*Add a border with bg_color*/
+    lv_obj_set_style_border_color(qr, bg_color, 0);
+    lv_obj_set_style_border_width(qr, 5, 0);
 }

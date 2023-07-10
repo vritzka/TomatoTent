@@ -19,6 +19,8 @@ static esp_err_t validate_image_header(esp_app_desc_t *new_app_info)
 #ifndef CONFIG_EXAMPLE_SKIP_VERSION_CHECK
     if (memcmp(new_app_info->version, running_app_info.version, sizeof(new_app_info->version)) == 0) {
         ESP_LOGW(TAG, "Current running version is the same as a new. We will not continue the update.");
+		lv_label_set_text_fmt(ui_CurrentVersionLabel, "Already on latest version (%s)", running_app_info.version);	
+		lv_obj_add_flag(ui_FirmwareUpgradeButton, LV_OBJ_FLAG_HIDDEN);
         return ESP_FAIL;
     }
 #endif
@@ -47,7 +49,7 @@ static esp_err_t _http_client_init_cb(esp_http_client_handle_t http_client)
     return err;
 }
 
-void advanced_ota_example_task(void *pvParameter)
+static void advanced_ota_example_task(void *pvParameter)
 {
     ESP_LOGI(TAG, "Starting Advanced OTA example");
     
@@ -82,17 +84,23 @@ void advanced_ota_example_task(void *pvParameter)
         vTaskDelete(NULL);
     }
 
-    esp_app_desc_t app_desc;
-    err = esp_https_ota_get_img_desc(https_ota_handle, &app_desc);
+    esp_app_desc_t new_app_info;
+    err = esp_https_ota_get_img_desc(https_ota_handle, &new_app_info);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_https_ota_read_img_desc failed");
         goto ota_end;
     }
-    err = validate_image_header(&app_desc);
+
+    err = validate_image_header(&new_app_info);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "image header verification failed");
         goto ota_end;
     }
+    
+    lv_obj_add_flag(ui_FirmwareUpgradeButton, LV_OBJ_FLAG_HIDDEN);
+	lv_label_set_text_fmt(ui_CurrentVersionLabel, "updating to: %s (please wait)", new_app_info.version);	
+
+    
 	uint16_t bar_value;
     while (1) {
         err = esp_https_ota_perform(https_ota_handle);
@@ -134,31 +142,3 @@ ota_end:
 void vStartOtaTask() {
 	   xTaskCreate(&advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 5, NULL);
 }
-
-//void app_main(void)
-//{
-  //  ESP_LOGI(TAG, "OTA example app_main start");
-
-
-    //ESP_ERROR_CHECK(esp_netif_init());
-   // ESP_ERROR_CHECK(esp_event_loop_create_default());
-
-    /* This helper function configures Wi-Fi or Ethernet, as selected in menuconfig.
-     * Read "Establishing Wi-Fi or Ethernet Connection" section in
-     * examples/protocols/README.md for more information about this function.
-    */
-    //ESP_ERROR_CHECK(example_connect());
-
-
-
-
-    /* Ensure to disable any WiFi power save mode, this allows best throughput
-     * and hence timings for overall OTA operation.
-     */
-    
-
-
-
-
-    
-//}

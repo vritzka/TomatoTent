@@ -110,3 +110,11 @@ def stop_grow(event_struct):
 def software_upgrade_button(event_struct):
     return
 
+
+def wifi_scan(event_struct):
+    return
+
+
+def wifi_scan_button(event_struct):
+    return
+

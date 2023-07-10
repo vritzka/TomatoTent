@@ -174,6 +174,9 @@ void ui_event_ImgButton7( lv_event_t * e);
 lv_obj_t *ui_ImgButton7;
 void ui_event_ImgButton2( lv_event_t * e);
 lv_obj_t *ui_ImgButton2;
+void ui_event_ImgButton4( lv_event_t * e);
+lv_obj_t *ui_ImgButton4;
+lv_obj_t *ui_QrCode1;
 
 // SCREEN: ui_GeneralSettingsScreen
 void ui_GeneralSettingsScreen_screen_init(void);
@@ -198,14 +201,16 @@ lv_obj_t *ui_Image20;
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
 lv_obj_t *ui_SoftwareUpdateScreen;
-void ui_event_Button3( lv_event_t * e);
-lv_obj_t *ui_Button3;
+void ui_event_FirmwareUpgradeButton( lv_event_t * e);
+lv_obj_t *ui_FirmwareUpgradeButton;
 lv_obj_t *ui_Label21;
 lv_obj_t *ui_Image21;
 lv_obj_t *ui_Label10;
 void ui_event_ImgButton1( lv_event_t * e);
 lv_obj_t *ui_ImgButton1;
 lv_obj_t *ui_UpgradeStatusBar;
+lv_obj_t *ui_SoftwareVersionsPanel;
+lv_obj_t *ui_CurrentVersionLabel;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
@@ -585,6 +590,12 @@ if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_SoftwareUpdateScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
+void ui_event_ImgButton4( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      wifi_scan_button( e );
+}
+}
 void ui_event_GeneralSettingsScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
@@ -607,7 +618,7 @@ if ( event_code == LV_EVENT_VALUE_CHANGED) {
       temp_unit_switch( e );
 }
 }
-void ui_event_Button3( lv_event_t * e) {
+void ui_event_FirmwareUpgradeButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       software_upgrade_button( e );

@@ -213,7 +213,6 @@ void init_tomatotent(lv_event_t * e)
 		if(wifi == 1) {
 			lv_obj_add_state(ui_WifiSwitch, LV_STATE_CHECKED);
 			wifi_init();
-			wifi_scan();
 		} else {
 			lv_label_set_text(ui_WifiStatusLabel, "off");
 		}
@@ -242,8 +241,15 @@ void init_tomatotent(lv_event_t * e)
 		} else { //auto climate
 			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
 			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
-		}		
+		}
 		
+		// Software Upgrade Screen
+		const esp_partition_t *running = esp_ota_get_running_partition();
+		esp_app_desc_t running_app_info;
+		esp_ota_get_partition_description(running, &running_app_info);
+		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
+			
+			
         //is there an active grow?
 		if(tenttime.seconds > 0 || tenttime.days > 0) {
 			ESP_LOGI(TAG, "Continuing existing Grow");
@@ -258,6 +264,8 @@ void init_tomatotent(lv_event_t * e)
 		  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
 		  moveTomato_Animation(ui_tomato, 2000);			 
 		 }
+		 
+		 draw_qr_codes();
 		 		
         nvs_close(storage_handle);
         
@@ -449,13 +457,17 @@ void wifi_switch(lv_event_t * e)
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
 		wifi_init();
-		wifi_scan();
 	} else { 
 		//off = 0	
 		wifi_off();
 		lv_label_set_text(ui_WifiStatusLabel, "off");
 	}
 
+}
+
+void wifi_scan_button(lv_event_t * e)
+{
+	wifi_scan();
 }
 
 void WifiKeyboardReady(lv_event_t * e)
@@ -614,6 +626,5 @@ void stop_grow(lv_event_t * e)
 
 void software_upgrade_button(lv_event_t * e)
 {
-	//do_firmware_upgrade();
 	   vStartOtaTask();
 }

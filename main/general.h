@@ -73,6 +73,6 @@ void wifi_off(void);
 void update_time_left(bool count_day);
 void make_it_day(bool count_day);
 void make_it_night();
-esp_err_t do_firmware_upgrade();
+void draw_qr_codes();
 
 #endif
