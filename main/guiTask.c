@@ -339,6 +339,7 @@ void vGuiTask( void * pvParameters )
     ESP_LOGI(TAG, "Start UI");
     ui_init();	
 	
+	bool screen_lit = 1;
 	
   for( ;; )
   {
@@ -346,6 +347,20 @@ void vGuiTask( void * pvParameters )
         vTaskDelay(pdMS_TO_TICKS(10));
         // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
         lv_timer_handler();
+        if(lv_disp_get_inactive_time(NULL) < 240000) {
+			
+			if(!screen_lit) {
+				ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, 100));
+				ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));
+				screen_lit = 1;		
+			}
+		} else {
+			if(screen_lit) {
+				ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, 0));
+				ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));
+				screen_lit = 0;	
+			}
+    	}
      
   }
 }
