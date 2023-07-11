@@ -2,7 +2,7 @@
 
 static const char *TAG = "guiTask.c";
 
-
+bool screen_lit = 1;
 
 #if CONFIG_EXAMPLE_LCD_I80_COLOR_IN_PSRAM
 // PCLK frequency can't go too high as the limitation of PSRAM bandwidth
@@ -338,8 +338,8 @@ void vGuiTask( void * pvParameters )
 
     ESP_LOGI(TAG, "Start UI");
     ui_init();	
-	
-	bool screen_lit = 1;
+    
+  static uint16_t screen_brightness_slider_value; 
 	
   for( ;; )
   {
@@ -348,9 +348,9 @@ void vGuiTask( void * pvParameters )
         // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
         lv_timer_handler();
         if(lv_disp_get_inactive_time(NULL) < 240000) {
-			
 			if(!screen_lit) {
-				ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, 100));
+				screen_brightness_slider_value = lv_slider_get_value(ui_ScreenBrightnessSlider);
+				ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, (128-1)*((float)screen_brightness_slider_value / 100) ));
 				ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));
 				screen_lit = 1;		
 			}
