@@ -17,6 +17,7 @@
 #include "guiTask.h"
 #include "timerTask.h"
 #include "otaTask.h"
+#include "sensorTask.h"
 #include "general.h"
 
 static const char *TAG = "main.c";
@@ -37,10 +38,11 @@ void app_main(void)
    ESP_ERROR_CHECK( err );
    
    event_loop_init();
-   ledc_init();
+   init_ledc();
+   init_i2c();
    vStartGuiTask();
    vStartTimerTask();
- 
+   vCreateSensorTask();
    
  #if defined(CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE)
     /**

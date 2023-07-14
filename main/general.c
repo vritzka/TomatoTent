@@ -6,6 +6,7 @@ static nvs_handle_t storage_handle;
 static esp_err_t err;
 static char somestring[36];
 
+climate_data_t climate;
 
 /////////////////////////////////////////////////////////
 ////////////////////// TIME /////////////////////////////
@@ -21,9 +22,11 @@ void update_time_left(bool count_day) {
 	if (tenttime.seconds == 86400)
 		tenttime.seconds = 0;
 	
-	if(tenttime.seconds % 1800 == 0) {
+	if(tenttime.seconds % 1800 == 0)
 		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
-	}
+	
+	if(tenttime.seconds % 60 == 0)	
+		setGrowLampBrightness();
 	
 	if(tenttime.seconds < tenttime.day_period_seconds) { //day
 		if(!tenttime.is_day)
@@ -106,7 +109,7 @@ void update_temp_units(uint16_t temp_unit) {
 ///////////////// LEDC (PWM) ////////////////////////////
 /////////////////////////////////////////////////////////
 
-void ledc_init(void)
+void init_ledc(void)
 {
   // Prepare and then apply the LEDC PWM BACKLIGHT timer configuration
     ledc_timer_config_t ledc_timer = {
@@ -499,3 +502,90 @@ void draw_qr_codes() {
     lv_obj_set_style_border_color(qr, bg_color, 0);
     lv_obj_set_style_border_width(qr, 5, 0);
 }
+
+/////////////////////////////////////////////////////////
+///////////////////////  I2C  ///////////////////////////
+/////////////////////////////////////////////////////////
+
+void init_i2c() {
+	
+	 i2c_config_t i2c_config = {
+        .mode = I2C_MODE_MASTER,
+        .sda_io_num = I2C_MASTER_SDA,
+        .sda_pullup_en = GPIO_PULLUP_ENABLE,
+        .scl_io_num = I2C_MASTER_SCL,
+        .scl_pullup_en = GPIO_PULLUP_ENABLE,
+        .master.clk_speed = I2C_MASTER_FREQ_HZ
+    };
+
+    ESP_ERROR_CHECK(i2c_param_config(I2C_MASTER_NUM, &i2c_config));
+    ESP_ERROR_CHECK(i2c_driver_install(I2C_MASTER_NUM, i2c_config.mode, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0));
+	
+}
+
+
+/////////////////////////////////////////////////////////
+////////////////////  SENSORS  //////////////////////////
+/////////////////////////////////////////////////////////
+
+void readSensors() {
+
+
+	
+}
+
+
+
+
+/////////////////////////////////////////////////////////
+////////////////////////  FAN   /////////////////////////
+/////////////////////////////////////////////////////////
+
+void setFanSpeed() {
+	
+	
+	
+}
+
+
+/////////////////////////////////////////////////////////
+///////////////////  GROW LAMP   ////////////////////////
+/////////////////////////////////////////////////////////
+
+void setGrowLampBrightness() {
+	
+	max = dimmer_brightness_duty;
+	min = 0;
+	
+	
+	//are we in a sunset?
+	if() {
+		
+		long map(long x, long in_min, long in_max, long out_min, long out_max)	
+	}
+	
+	
+	//are we in a sunrise?
+	if() {
+		
+		long map(long x, long in_min, long in_max, long out_min, long out_max)	
+	}
+	
+	
+		
+	//grow_lamp_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
+	ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
+	
+}
+
+
+/////////////////////////////////////////////////////////
+///////////////////  HELPERS  ///////////////////////////
+/////////////////////////////////////////////////////////
+
+long map(long x, long in_min, long in_max, long out_min, long out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+

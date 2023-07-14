@@ -14,6 +14,7 @@
 #include "nvs.h"
 #include "general.h"
 #include "timerTask.h"
+#include "sensorTask.h"
 #include "otaTask.h"
 
 
@@ -28,7 +29,7 @@ static float_t light_duration;
 static float_t dark_duration;
 static uint16_t now_slider_value;
 static uint16_t led_brightness_slider_value;
-static uint16_t dimmer_brightness_duty;
+extern uint16_t dimmer_brightness_duty;
 static uint16_t screen_brightness_slider_value = 80;
 static uint16_t screen_brightness_duty;
 static uint16_t temp_unit; //1 = C
@@ -255,6 +256,7 @@ void init_tomatotent(lv_event_t * e)
 			ESP_LOGI(TAG, "Continuing existing Grow");
 			update_time_left(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
+			ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
@@ -584,6 +586,7 @@ void start_grow(lv_event_t * e)
 	_ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
+	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 	make_it_day(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
@@ -601,6 +604,7 @@ static void event_cb(lv_event_t * e)
 	lv_msgbox_close(obj);	
 	lv_anim_del_all();
 	ESP_ERROR_CHECK(gptimer_stop(gptimer));
+	ESP_ERROR_CHECK(gptimer_stop(sensorTimerHandle));
     
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u32(storage_handle, "seconds", 0);

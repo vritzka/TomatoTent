@@ -4,6 +4,8 @@
 #include "lvgl.h"
 #include "ui.h"
 #include "driver/ledc.h"
+#include "driver/i2c.h"
+#include "includes/scd4x/scd4x.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include <string.h>
@@ -20,7 +22,7 @@
 #include "esp_http_client.h"
 #include "esp_tls.h"
 #include "esp_netif.h"
-
+//#include <float.h> 
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
@@ -37,7 +39,28 @@ typedef struct {
 } timer_queue_element_t;
 
 extern timer_queue_element_t tenttime;
-	
+
+
+typedef struct {
+    float temperature_c;
+    float temperature_f;
+    uint8_t humidity;
+    double co2;
+} climate_data_t;
+
+extern climate_data_t climate;
+
+#define I2C_MASTER_SDA              (12)
+#define I2C_MASTER_SCL              (13)
+#define I2C_MASTER_RX_BUF_DISABLE   (0)
+#define I2C_MASTER_TX_BUF_DISABLE   (0)
+#define I2C_MASTER_FREQ_HZ          (100000)
+#define I2C_MASTER_TIMEOUT_MS       (1000)
+#define I2C_MASTER_NUM              (1)
+#define I2C_ACK_CHECK_DIS           (0x00)
+#define I2C_ACK_CHECK_EN            (0x01)
+#define I2C_ACK_VAL                 (0x00)
+#define I2C_NACK_VAL                (0x01)	
 
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
 //backlight
@@ -64,7 +87,7 @@ extern timer_queue_element_t tenttime;
 //gptimer_handle_t gptimer;
 
 void update_temp_units(uint16_t temp_unit);
-void ledc_init(void);
+void init_ledc(void);
 void event_loop_init(void);
 void wifi_init(void);
 void wifi_scan(void);
@@ -74,5 +97,10 @@ void update_time_left(bool count_day);
 void make_it_day(bool count_day);
 void make_it_night();
 void draw_qr_codes();
+void readSensors();
+void setFanSpeed();
+void init_i2c();
+void setGrowLampBrightness();
+long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 #endif
