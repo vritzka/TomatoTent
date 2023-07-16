@@ -6,36 +6,35 @@ static nvs_handle_t storage_handle;
 static esp_err_t err;
 static char somestring[36];
 
-climate_data_t climate;
+tent_data_t my_tent;
 
 /////////////////////////////////////////////////////////
 ////////////////////// TIME /////////////////////////////
 /////////////////////////////////////////////////////////
 
-timer_queue_element_t tenttime;
 uint32_t seconds_left_in_period;
 uint16_t minutes_left_in_period;
 uint16_t hours_left_in_period;
 
 void update_time_left(bool count_day) {
 	
-	if (tenttime.seconds == 86400)
-		tenttime.seconds = 0;
+	if (my_tent.seconds == 86400)
+		my_tent.seconds = 0;
 	
-	if(tenttime.seconds % 1800 == 0)
-		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
+	if(my_tent.seconds % 1800 == 0)
+		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
 	
-	if(tenttime.seconds % 60 == 0)	
+	if(my_tent.seconds % 60 == 0)	
 		setGrowLampBrightness();
 	
-	if(tenttime.seconds < tenttime.day_period_seconds) { //day
-		if(!tenttime.is_day)
+	if(my_tent.seconds < my_tent.day_period_seconds) { //day
+		if(!my_tent.is_day)
 			make_it_day(count_day);
-		seconds_left_in_period = tenttime.day_period_seconds - tenttime.seconds;
+		seconds_left_in_period = my_tent.day_period_seconds - my_tent.seconds;
 	} else { 
-		if(tenttime.is_day)                              //night
+		if(my_tent.is_day)                              //night
 			make_it_night();         
-		seconds_left_in_period = 86400 - tenttime.seconds;
+		seconds_left_in_period = 86400 - my_tent.seconds;
 	}
 	
 	minutes_left_in_period = seconds_left_in_period / 60;
@@ -43,7 +42,7 @@ void update_time_left(bool count_day) {
 	
 	if(seconds_left_in_period > 59) {
 		
-		if (tenttime.seconds % 2) {
+		if (my_tent.seconds % 2) {
 			lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs   %d min", hours_left_in_period, minutes_left_in_period % 60);
 		} else {
 			lv_label_set_text_fmt(ui_TimeLeftLabel, "- %d hrs . %d min", hours_left_in_period, minutes_left_in_period % 60);
@@ -55,12 +54,12 @@ void update_time_left(bool count_day) {
 		
 	}
 	
-	if(tenttime.seconds % 300 == 0) {
+	if(my_tent.seconds % 300 == 0) {
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 		if (err != ESP_OK) {
 			printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
 		} else {
-			err = nvs_set_u32(storage_handle, "seconds", tenttime.seconds);
+			err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds);
 			err = nvs_commit(storage_handle);
 			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
 			nvs_close(storage_handle);
@@ -71,7 +70,7 @@ void update_time_left(bool count_day) {
 
 void make_it_day(bool count_day) {
 	ESP_LOGI(TAG, "Making it Day");
-	tenttime.is_day = true;
+	my_tent.is_day = true;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
 	if(count_day) {
@@ -83,7 +82,7 @@ void make_it_day(bool count_day) {
 
 void make_it_night() {
 	ESP_LOGI(TAG, "Making it Night");
-	tenttime.is_day = false;
+	my_tent.is_day = false;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
 }
@@ -553,13 +552,21 @@ void setFanSpeed() {
 /////////////////////////////////////////////////////////
 
 void setGrowLampBrightness() {
-	
+	/*
 	max = dimmer_brightness_duty;
 	min = 0;
 	
+	if(my_tent.is_day) {
+		brightness = max;
+	}
+	
+	
+	
+	
+	
 	
 	//are we in a sunset?
-	if() {
+	if(my_tent.is_day && (my_tent.seconds >= (86400-900)) {
 		
 		long map(long x, long in_min, long in_max, long out_min, long out_max)	
 	}
@@ -576,7 +583,7 @@ void setGrowLampBrightness() {
 	//grow_lamp_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
 	ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
-	
+	*/
 }
 
 

@@ -22,6 +22,9 @@
 #include "esp_http_client.h"
 #include "esp_tls.h"
 #include "esp_netif.h"
+#include <stdio.h>
+#include "esp_system.h"
+#include <math.h> 
 //#include <float.h> 
 #include "lwip/err.h"
 #include "lwip/sys.h"
@@ -36,19 +39,30 @@ typedef struct {
     uint16_t days;
     bool is_day;
     uint32_t day_period_seconds;
-} timer_queue_element_t;
-
-extern timer_queue_element_t tenttime;
-
-
-typedef struct {
-    float temperature_c;
-    float temperature_f;
+    uint16_t light_duration_slider_value;
+	float_t light_duration;
+	float_t dark_duration;
+	uint16_t now_slider_value;
+	uint16_t led_brightness_slider_value;
+	uint16_t dimmer_brightness_duty;
+	uint16_t screen_brightness_slider_value;
+	uint16_t screen_brightness_duty;
+	uint16_t temp_unit; //1 = C
+	uint16_t wifi;
+	uint16_t fanspeed_slider_left_value;
+	uint16_t fanspeed_slider_value;
+	uint8_t climate_mode; //0 = auto
+	uint16_t target_humidity_sel_index;
+	uint16_t target_temperature_sel_index;
+	uint16_t target_humidity;
+	uint16_t target_temperature;
+	float_t temperature_c;
+    float_t temperature_f;
     uint8_t humidity;
-    double co2;
-} climate_data_t;
+    uint16_t co2;
+} tent_data_t;
 
-extern climate_data_t climate;
+extern tent_data_t my_tent;
 
 #define I2C_MASTER_SDA              (12)
 #define I2C_MASTER_SCL              (13)

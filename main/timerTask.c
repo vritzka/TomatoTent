@@ -11,11 +11,11 @@ static bool IRAM_ATTR example_timer_on_alarm_cb_v1(gptimer_handle_t timer, const
     QueueHandle_t queue = (QueueHandle_t)user_data;
 
     // Retrieve count value and send to queue
-    tenttime.event_count = edata->count_value;
+    my_tent.event_count = edata->count_value;
     
-	tenttime.seconds = tenttime.seconds+1;
+	my_tent.seconds = my_tent.seconds+1;
     
-    xQueueSendFromISR(queue, &tenttime, &high_task_awoken);
+    xQueueSendFromISR(queue, &my_tent, &high_task_awoken);
     // return whether we need to yield at the end of ISR
     return (high_task_awoken == pdTRUE);
 }
@@ -24,7 +24,7 @@ static bool IRAM_ATTR example_timer_on_alarm_cb_v1(gptimer_handle_t timer, const
 void vTimerTask( void * pvParameters )
 {
 	
-	QueueHandle_t queue = xQueueCreate(10, sizeof(timer_queue_element_t));
+	QueueHandle_t queue = xQueueCreate(10, sizeof(tent_data_t));
     if (!queue) {
         ESP_LOGE(TAG, "Creating queue failed");
         return;
@@ -57,8 +57,8 @@ void vTimerTask( void * pvParameters )
 	
   for( ;; )
   {
-        if (xQueueReceive(queue, &tenttime, pdMS_TO_TICKS(2000))) {
-            ESP_LOGI(TAG, "Seconds, count=%lu", tenttime.seconds);
+        if (xQueueReceive(queue, &my_tent, pdMS_TO_TICKS(2000))) {
+            ESP_LOGI(TAG, "Seconds, count=%lu", my_tent.seconds);
             update_time_left(true);
         } else {
             ESP_LOGW(TAG, "Missed one count event or Timer stopped");

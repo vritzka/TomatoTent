@@ -22,25 +22,6 @@ static const char *TAG = "ui_events.c";
 nvs_handle_t storage_handle;
 esp_err_t err;
 
-//static char str[12];
-//init values
-static uint16_t light_duration_slider_value;
-static float_t light_duration;
-static float_t dark_duration;
-static uint16_t now_slider_value;
-static uint16_t led_brightness_slider_value;
-extern uint16_t dimmer_brightness_duty;
-static uint16_t screen_brightness_slider_value = 80;
-static uint16_t screen_brightness_duty;
-static uint16_t temp_unit; //1 = C
-static uint16_t wifi;
-static uint16_t fanspeed_slider_left_value = 30;
-static uint16_t fanspeed_slider_value = 60;
-static uint8_t climate_mode = 0; //0 = auto
-static uint16_t target_humidity_sel_index;
-static uint16_t target_temperature_sel_index;
-static uint16_t target_humidity;
-static uint16_t target_temperature;
 
 //SplashScreen
 
@@ -157,46 +138,46 @@ void init_tomatotent(lv_event_t * e)
     } else { 
 		
 		// light duration screen
-        err = nvs_get_u16(storage_handle, "light_slider", &light_duration_slider_value);
-        lv_slider_set_value(ui_LightDurationSlider, light_duration_slider_value, LV_ANIM_OFF);
+        err = nvs_get_u16(storage_handle, "light_slider", &my_tent.light_duration_slider_value);
+        lv_slider_set_value(ui_LightDurationSlider, my_tent.light_duration_slider_value, LV_ANIM_OFF);
 		
-		light_duration = (float_t)light_duration_slider_value / 2;
-		tenttime.day_period_seconds = light_duration * 60 * 60;
-		err = nvs_get_u32(storage_handle, "seconds", &tenttime.seconds);
+		my_tent.light_duration = (float_t)my_tent.light_duration_slider_value / 2;
+		my_tent.day_period_seconds = my_tent.light_duration * 60 * 60;
+		err = nvs_get_u32(storage_handle, "seconds", &my_tent.seconds);
 		
-		if(tenttime.seconds < tenttime.day_period_seconds) {
-			tenttime.is_day = true;
+		if(my_tent.seconds < my_tent.day_period_seconds) {
+			my_tent.is_day = true;
 		} else {
-			tenttime.is_day = false;
+			my_tent.is_day = false;
 		}
 		
-		dark_duration = 24 - light_duration;
+		my_tent.dark_duration = 24 - my_tent.light_duration;
 	
-		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
-		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration ); 
+		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", my_tent.light_duration );
+		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", my_tent.dark_duration ); 
 				
-		lv_slider_set_value(ui_NowSlider, (tenttime.seconds/30/60), LV_ANIM_OFF);
+		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
 		
 		// led brightness screen
-		err = nvs_get_u16(storage_handle, "led_brightness", &led_brightness_slider_value);
-        lv_slider_set_value(ui_LEDBrightnessSlider, led_brightness_slider_value, LV_ANIM_OFF);
-		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value);
+		err = nvs_get_u16(storage_handle, "led_brightness", &my_tent.led_brightness_slider_value);
+        lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
+		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 
 		//day counter screen
-		err = nvs_get_u16(storage_handle, "days", &tenttime.days); 
-		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
-		lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", tenttime.days);
+		err = nvs_get_u16(storage_handle, "days", &my_tent.days); 
+		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", my_tent.days);
+		lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", my_tent.days);
 		
 		//general settings screen
-		err = nvs_get_u16(storage_handle, "screen_brightns", &screen_brightness_slider_value); 
-		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", screen_brightness_slider_value);
-		lv_slider_set_value(ui_ScreenBrightnessSlider, screen_brightness_slider_value, LV_ANIM_OFF);
-		screen_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
-		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
+		err = nvs_get_u16(storage_handle, "screen_brightns", &my_tent.screen_brightness_slider_value); 
+		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", my_tent.screen_brightness_slider_value);
+		lv_slider_set_value(ui_ScreenBrightnessSlider, my_tent.screen_brightness_slider_value, LV_ANIM_OFF);
+		my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
+		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 		
-		err = nvs_get_u16(storage_handle, "temp_unit", &temp_unit);
-		update_temp_units(temp_unit);
+		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
+		update_temp_units(my_tent.temp_unit);
 		
 		//wifi screen
 		size_t required_size;
@@ -210,8 +191,8 @@ void init_tomatotent(lv_event_t * e)
 		if (err == ESP_OK)		
 			lv_textarea_set_text(ui_WifiPassword, pw);
 			
-		nvs_get_u16(storage_handle, "wifi", &wifi);
-		if(wifi == 1) {
+		nvs_get_u16(storage_handle, "wifi", &my_tent.wifi);
+		if(my_tent.wifi == 1) {
 			lv_obj_add_state(ui_WifiSwitch, LV_STATE_CHECKED);
 			wifi_init();
 		} else {
@@ -219,25 +200,25 @@ void init_tomatotent(lv_event_t * e)
 		}
 		
 		// Fan Settings Screen
-		err = nvs_get_u16(storage_handle, "fanspeed_min", &fanspeed_slider_left_value);
-		err = nvs_get_u16(storage_handle, "fanspeed_max", &fanspeed_slider_value);
+		err = nvs_get_u16(storage_handle, "fanspeed_min", &my_tent.fanspeed_slider_left_value);
+		err = nvs_get_u16(storage_handle, "fanspeed_max", &my_tent.fanspeed_slider_value);
 		
-		lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%d %%", fanspeed_slider_left_value);
-		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", fanspeed_slider_value);
-		lv_slider_set_value(ui_fanSpeedSlider, fanspeed_slider_value, LV_ANIM_OFF);
-		lv_slider_set_left_value(ui_fanSpeedSlider, fanspeed_slider_left_value, LV_ANIM_OFF);
+		lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%d %%", my_tent.fanspeed_slider_left_value);
+		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", my_tent.fanspeed_slider_value);
+		lv_slider_set_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_value, LV_ANIM_OFF);
+		lv_slider_set_left_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_left_value, LV_ANIM_OFF);
 		
 		
 		// Climate Screen
-		err = nvs_get_u8(storage_handle, "climate_mode", &climate_mode);
-		err = nvs_get_u16(storage_handle, "sel_hum_index", &target_humidity_sel_index);
-		err = nvs_get_u16(storage_handle, "sel_temp_index", &target_temperature_sel_index);
+		err = nvs_get_u8(storage_handle, "climate_mode", &my_tent.climate_mode);
+		err = nvs_get_u16(storage_handle, "sel_hum_index", &my_tent.target_humidity_sel_index);
+		err = nvs_get_u16(storage_handle, "sel_temp_index", &my_tent.target_temperature_sel_index);
 		
 		//ESP_LOGI(TAG, "%d", target_humidity);
-		lv_dropdown_set_selected(ui_HumidityDropdown, target_humidity_sel_index);
-		lv_dropdown_set_selected(ui_TemperatureDropdown, target_temperature_sel_index);
+		lv_dropdown_set_selected(ui_HumidityDropdown, my_tent.target_humidity_sel_index);
+		lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
 		
-		if( climate_mode == 1 ) { //manual climate
+		if( my_tent.climate_mode == 1 ) { //manual climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
 		} else { //auto climate
 			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
@@ -252,7 +233,7 @@ void init_tomatotent(lv_event_t * e)
 			
 			
         //is there an active grow?
-		if(tenttime.seconds > 0 || tenttime.days > 0) {
+		if(my_tent.seconds > 0 || my_tent.days > 0) {
 			ESP_LOGI(TAG, "Continuing existing Grow");
 			update_time_left(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
@@ -284,28 +265,28 @@ void light_duration_slider(lv_event_t * e) {
 	
 	//lv_event_code_t event_code = lv_event_get_code(e);
 	lv_obj_t * target = lv_event_get_target(e);
-	light_duration_slider_value = lv_slider_get_value(target);
+	my_tent.light_duration_slider_value = lv_slider_get_value(target);
 	
-	light_duration = (float_t)light_duration_slider_value / 2;
-	tenttime.day_period_seconds = light_duration * 60 * 60;
+	my_tent.light_duration = (float_t)my_tent.light_duration_slider_value / 2;
+	my_tent.day_period_seconds = my_tent.light_duration * 60 * 60;
 	
-	dark_duration = 24 - light_duration;
+	my_tent.dark_duration = 24 - my_tent.light_duration;
 
 	//ESP_LOGI(TAG, "%.1f", light_duration);
 	
-	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", light_duration );
-	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", dark_duration );
+	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", my_tent.light_duration );
+	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", my_tent.dark_duration );
 
 }
 
 void now_slider(lv_event_t * e) {
 	
 	lv_obj_t * target = lv_event_get_target(e);
-	now_slider_value = lv_slider_get_value(target);
-	if(now_slider_value == 48)
+	my_tent.now_slider_value = lv_slider_get_value(target);
+	if(my_tent.now_slider_value == 48)
 		return;
 	
-	tenttime.seconds = now_slider_value*30*60;
+	my_tent.seconds = my_tent.now_slider_value*30*60;
 	update_time_left(false);
 
 }
@@ -317,9 +298,9 @@ void save_light_duration_screen(lv_event_t * e)
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else {
 		
-		err = nvs_set_u16(storage_handle, "light_slider", light_duration_slider_value);
+		err = nvs_set_u16(storage_handle, "light_slider", my_tent.light_duration_slider_value);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		err = nvs_set_u32(storage_handle, "seconds", tenttime.seconds);
+		err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds);
 		err = nvs_commit(storage_handle);
         nvs_close(storage_handle);
 	}
@@ -332,15 +313,15 @@ void save_light_duration_screen(lv_event_t * e)
 void LEDBrightnessSlider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
-	led_brightness_slider_value = lv_slider_get_value(target);
+	my_tent.led_brightness_slider_value = lv_slider_get_value(target);
 	
 	//ESP_LOGI(TAG, "%d", led_brightness_slider_value);
 	
-	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", led_brightness_slider_value );
+	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value );
 	
-	dimmer_brightness_duty = (128-1)*((float)led_brightness_slider_value / 100);
+	my_tent.dimmer_brightness_duty = (128-1)*((float)my_tent.led_brightness_slider_value / 100);
 		
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, dimmer_brightness_duty));
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, my_tent.dimmer_brightness_duty));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
 }
 
@@ -351,7 +332,7 @@ void save_led_brightness_screen(lv_event_t * e)
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else {
 		
-		err = nvs_set_u16(storage_handle, "led_brightness", led_brightness_slider_value);
+		err = nvs_set_u16(storage_handle, "led_brightness", my_tent.led_brightness_slider_value);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
 		
 		err = nvs_commit(storage_handle);
@@ -369,27 +350,27 @@ void save_led_brightness_screen(lv_event_t * e)
 
 void increase_day_counter(lv_event_t * e)
 {
-	tenttime.days += 1;
-	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
-	lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", tenttime.days);
+	my_tent.days += 1;
+	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", my_tent.days);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", my_tent.days);
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-	err = nvs_set_u16(storage_handle, "days", tenttime.days);
+	err = nvs_set_u16(storage_handle, "days", my_tent.days);
 	err = nvs_commit(storage_handle);
 	nvs_close(storage_handle);
 }
 
 void decrease_day_counter(lv_event_t * e)
 {
-	if(tenttime.days == 1)
+	if(my_tent.days == 1)
 		return;
 	
-	tenttime.days -= 1;
-	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", tenttime.days);
-	lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", tenttime.days);
+	my_tent.days -= 1;
+	lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", my_tent.days);
+	lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", my_tent.days);
 
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-	err = nvs_set_u16(storage_handle, "days", tenttime.days);
+	err = nvs_set_u16(storage_handle, "days", my_tent.days);
 	err = nvs_commit(storage_handle);
 	nvs_close(storage_handle);
 }
@@ -403,13 +384,13 @@ void decrease_day_counter(lv_event_t * e)
 void screen_brightness_slider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
-	screen_brightness_slider_value = lv_slider_get_value(target);
+	my_tent.screen_brightness_slider_value = lv_slider_get_value(target);
 	
-	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", screen_brightness_slider_value);
+	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", my_tent.screen_brightness_slider_value);
 		
-	screen_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
+	my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
 		
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 }
 
@@ -421,13 +402,13 @@ void temp_unit_switch(lv_event_t * e)
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
 		//on = F = 1
-		temp_unit = 1;
+		my_tent.temp_unit = 1;
 	} else { 
 		//off = C = 0	
-		temp_unit = 0;
+		my_tent.temp_unit = 0;
 	}
 	
-	update_temp_units(temp_unit);
+	update_temp_units(my_tent.temp_unit);
 	
 }
 
@@ -438,8 +419,8 @@ void save_general_settings_screen(lv_event_t * e)
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else {
 		
-		err = nvs_set_u16(storage_handle, "screen_brightns", screen_brightness_slider_value);
-        err = nvs_set_u16(storage_handle, "temp_unit", temp_unit);
+		err = nvs_set_u16(storage_handle, "screen_brightns", my_tent.screen_brightness_slider_value);
+        err = nvs_set_u16(storage_handle, "temp_unit", my_tent.temp_unit);
         //code to set everything to F or C
 
         // Close
@@ -459,9 +440,11 @@ void wifi_switch(lv_event_t * e)
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
 		wifi_init();
+		my_tent.wifi = 1;
 	} else { 
 		//off = 0	
 		wifi_off();
+		my_tent.wifi = 0;
 		lv_label_set_text(ui_WifiStatusLabel, "off");
 	}
 
@@ -505,19 +488,19 @@ void fanspeed_slider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	fanspeed_slider_left_value = lv_slider_get_left_value(target);
-	fanspeed_slider_value = lv_slider_get_value(target);
+	my_tent.fanspeed_slider_left_value = lv_slider_get_left_value(target);
+	my_tent.fanspeed_slider_value = lv_slider_get_value(target);
 	
 	
-	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu %%", fanspeed_slider_left_value);
-	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu %%", fanspeed_slider_value);
+	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu %%", my_tent.fanspeed_slider_left_value);
+	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu %%", my_tent.fanspeed_slider_value);
 }
 
 void save_fan_settings_screen(lv_event_t * e)
 {
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-	err = nvs_set_u16(storage_handle, "fanspeed_min", fanspeed_slider_left_value);
-	err = nvs_set_u16(storage_handle, "fanspeed_max", fanspeed_slider_value);
+	err = nvs_set_u16(storage_handle, "fanspeed_min", my_tent.fanspeed_slider_left_value);
+	err = nvs_set_u16(storage_handle, "fanspeed_max", my_tent.fanspeed_slider_value);
 	
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -535,16 +518,16 @@ void climate_mode_switch(lv_event_t * e)
 	lv_obj_t * target = lv_event_get_target(e);
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) { //manual climate
-		climate_mode = 1;
+		my_tent.climate_mode = 1;
 		lv_obj_clear_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_clear_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
 	} else { //auto climate
-		climate_mode = 0;
+		my_tent.climate_mode = 0;
 		lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
 	}
 	
-	err = nvs_set_u8(storage_handle, "climate_mode", climate_mode);
+	err = nvs_set_u8(storage_handle, "climate_mode", my_tent.climate_mode);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 	
@@ -555,9 +538,9 @@ void humidity_dropdown(lv_event_t * e)
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	target_humidity_sel_index = lv_dropdown_get_selected(target);
+	my_tent.target_humidity_sel_index = lv_dropdown_get_selected(target);
 	
-	err = nvs_set_u16(storage_handle, "sel_hum_index", target_humidity_sel_index );
+	err = nvs_set_u16(storage_handle, "sel_hum_index", my_tent.target_humidity_sel_index );
 	
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -568,9 +551,9 @@ void temperature_dropdown(lv_event_t * e)
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	target_temperature_sel_index = lv_dropdown_get_selected(target);
+	my_tent.target_temperature_sel_index = lv_dropdown_get_selected(target);
 	
-	err = nvs_set_u16(storage_handle, "sel_temp_index", target_temperature_sel_index );
+	err = nvs_set_u16(storage_handle, "sel_temp_index", my_tent.target_temperature_sel_index );
 	
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -593,7 +576,7 @@ void start_grow(lv_event_t * e)
 	
 }
 
-static void event_cb(lv_event_t * e)
+static void stop_grow_cb(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_current_target(e);
     int id = lv_msgbox_get_active_btn(obj);
@@ -623,7 +606,7 @@ void stop_grow(lv_event_t * e)
 	static const char * btns[] = {"Finish it!", "No, go back.", ""};
 
     lv_obj_t * mbox1 = lv_msgbox_create(NULL, "Finished?", "This will end the current grow/dry.", btns, true);
-    lv_obj_add_event_cb(mbox1, event_cb, LV_EVENT_VALUE_CHANGED, NULL);
+    lv_obj_add_event_cb(mbox1, stop_grow_cb, LV_EVENT_VALUE_CHANGED, NULL);
     lv_obj_center(mbox1);
 	
 }

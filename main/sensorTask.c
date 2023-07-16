@@ -114,12 +114,12 @@ void vSensorTask( void * pvParameters )
 				continue;
 			}
 			
-			climate.temperature_c = sensors_values.temperature;
-			climate.temperature_f = FAHRENHEIT(sensors_values.temperature);
-			climate.humidity = sensors_values.humidity;
-			climate.co2 = sensors_values.co2;
+			my_tent.temperature_c = sensors_values.temperature;
+			my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
+			my_tent.humidity = sensors_values.humidity;
+			my_tent.co2 = sensors_values.co2;
 			
-			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %2.1f%%", sensors_values.co2, climate.temperature_c, sensors_values.humidity);
+			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
 			
 			
 		} else {
