@@ -73,6 +73,7 @@ void make_it_day(bool count_day) {
 	my_tent.is_day = true;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
+	lv_label_set_text(ui_DayNightLabel, "day");
 	if(count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
@@ -85,6 +86,7 @@ void make_it_night() {
 	my_tent.is_day = false;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
+	lv_label_set_text(ui_DayNightLabel, "night");
 }
 
 /////////////////////////////////////////////////////////
@@ -526,23 +528,11 @@ void init_i2c() {
 
 
 /////////////////////////////////////////////////////////
-////////////////////  SENSORS  //////////////////////////
-/////////////////////////////////////////////////////////
-
-void readSensors() {
-
-
-	
-}
-
-
-
-
-/////////////////////////////////////////////////////////
 ////////////////////////  FAN   /////////////////////////
 /////////////////////////////////////////////////////////
 
 void setFanSpeed() {
+	
 	
 	
 	
@@ -590,13 +580,11 @@ void setGrowLampBrightness() {
 	my_tent.dimmer_brightness_duty = (128-1)*((float)dimmer_brightness / 100);
 	
 	//ESP_LOGI(TAG, "dimmer_brightness %d%%", my_tent.dimmer_brightness_duty);
-		
-	//grow_lamp_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
-	//ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, screen_brightness_duty));
-	//ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
+	
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, my_tent.dimmer_brightness_duty));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
 	
 }
-
 
 /////////////////////////////////////////////////////////
 ///////////////////  HELPERS  ///////////////////////////

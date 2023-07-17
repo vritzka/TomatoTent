@@ -16,8 +16,8 @@ ui_HomeSky = lv_img_create(ui_HomeScreen);
 lv_img_set_src(ui_HomeSky, &ui_img_791711567);
 lv_obj_set_width( ui_HomeSky, LV_SIZE_CONTENT);  /// 128
 lv_obj_set_height( ui_HomeSky, LV_SIZE_CONTENT);   /// 128
-lv_obj_set_x( ui_HomeSky, -208 );
-lv_obj_set_y( ui_HomeSky, -137 );
+lv_obj_set_x( ui_HomeSky, -193 );
+lv_obj_set_y( ui_HomeSky, -116 );
 lv_obj_set_align( ui_HomeSky, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_HomeSky, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_HomeSky, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -219,6 +219,15 @@ lv_label_set_text(ui_TimeLeftLabel,"- 0 hr  00 min");
 lv_obj_add_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
 lv_obj_clear_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 lv_obj_set_style_text_font(ui_TimeLeftLabel, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_DayNightLabel = lv_label_create(ui_Panel11);
+lv_obj_set_width( ui_DayNightLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_DayNightLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_DayNightLabel, -34 );
+lv_obj_set_y( ui_DayNightLabel, -9 );
+lv_obj_set_align( ui_DayNightLabel, LV_ALIGN_TOP_MID );
+lv_label_set_text(ui_DayNightLabel,"day");
+lv_obj_set_style_text_font(ui_DayNightLabel, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_ArrowUp1 = lv_img_create(ui_HomeScreen);
 lv_img_set_src(ui_ArrowUp1, &ui_img_upload_png);

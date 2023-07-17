@@ -55,6 +55,7 @@ void ui_event_Panel11( lv_event_t * e);
 lv_obj_t *ui_Panel11;
 lv_obj_t *ui_DayCounterMainLabel;
 lv_obj_t *ui_TimeLeftLabel;
+lv_obj_t *ui_DayNightLabel;
 lv_obj_t *ui_ArrowUp1;
 void ui_event_WifiIcon( lv_event_t * e);
 lv_obj_t *ui_WifiIcon;

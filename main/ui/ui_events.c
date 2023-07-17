@@ -320,10 +320,7 @@ void LEDBrightnessSlider(lv_event_t * e)
 	
 	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value );
 	
-	my_tent.dimmer_brightness_duty = (128-1)*((float)my_tent.led_brightness_slider_value / 100);
-		
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, my_tent.dimmer_brightness_duty));
-    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
+	setGrowLampBrightness();
 }
 
 void save_led_brightness_screen(lv_event_t * e)
