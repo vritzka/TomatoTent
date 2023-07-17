@@ -149,6 +149,7 @@ void init_tomatotent(lv_event_t * e)
 			my_tent.is_day = true;
 		} else {
 			my_tent.is_day = false;
+			make_it_night();
 		}
 		
 		my_tent.dark_duration = 24 - my_tent.light_duration;

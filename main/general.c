@@ -130,7 +130,8 @@ void init_ledc(void)
         .duty           = 0, // Set duty to 0%
         .hpoint         = 0
     };
-    ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));  
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel)); 
+     
    
   // FAN PWM
     ledc_timer_config_t ledc_fan_timer = {
@@ -151,7 +152,8 @@ void init_ledc(void)
         .duty           = 0, // Set duty to 0%
         .hpoint         = 0
     };
-    ESP_ERROR_CHECK(ledc_channel_config(&ledc_fan_channel));      
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_fan_channel));
+          
    
   // DIMMER PWM
     ledc_timer_config_t ledc_dimmer_timer = {
@@ -551,39 +553,48 @@ void setFanSpeed() {
 ///////////////////  GROW LAMP   ////////////////////////
 /////////////////////////////////////////////////////////
 
+uint16_t dimmer_brightness;
 void setGrowLampBrightness() {
-	/*
-	max = dimmer_brightness_duty;
-	min = 0;
 	
 	if(my_tent.is_day) {
-		brightness = max;
-	}
-	
-	
-	
-	
-	
-	
-	//are we in a sunset?
-	if(my_tent.is_day && (my_tent.seconds >= (86400-900)) {
 		
-		long map(long x, long in_min, long in_max, long out_min, long out_max)	
-	}
-	
-	
-	//are we in a sunrise?
-	if() {
+		ESP_LOGI(TAG, "Daytime");
 		
-		long map(long x, long in_min, long in_max, long out_min, long out_max)	
+		if(my_tent.seconds < (15*60)) {  // sunrise
+			
+			ESP_LOGI(TAG, "Sunrise");
+			
+			dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * (my_tent.seconds/60);
+			
+		} else if( (my_tent.seconds >= (my_tent.day_period_seconds - (15*60)) ) ) {   // sunset
+		
+			ESP_LOGI(TAG, "Sunset");
+			dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * ((my_tent.day_period_seconds - my_tent.seconds)/60);
+			
+		} else {
+			
+			ESP_LOGI(TAG, "Normal Daytime");
+			dimmer_brightness = my_tent.led_brightness_slider_value; // normal daytime
+		}
+			
+		
+			
+	} else { // night
+		
+		ESP_LOGI(TAG, "Nighttime");
+		dimmer_brightness = 0;
+				
 	}
+	ESP_LOGI(TAG, "dimmer_brightness %d%%", dimmer_brightness);
 	
+	my_tent.dimmer_brightness_duty = (128-1)*((float)dimmer_brightness / 100);
 	
+	//ESP_LOGI(TAG, "dimmer_brightness %d%%", my_tent.dimmer_brightness_duty);
 		
 	//grow_lamp_brightness_duty = (128-1)*((float)screen_brightness_slider_value / 100);
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, screen_brightness_duty));
-	ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
-	*/
+	//ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, screen_brightness_duty));
+	//ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
+	
 }
 
 

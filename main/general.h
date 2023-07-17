@@ -40,8 +40,8 @@ typedef struct {
     bool is_day;
     uint32_t day_period_seconds;
     uint16_t light_duration_slider_value;
-	float_t light_duration;
-	float_t dark_duration;
+	float_t light_duration; // in hrs
+	float_t dark_duration; // in hrs
 	uint16_t now_slider_value;
 	uint16_t led_brightness_slider_value;
 	uint16_t dimmer_brightness_duty;
