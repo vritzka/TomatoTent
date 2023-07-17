@@ -530,12 +530,153 @@ void init_i2c() {
 /////////////////////////////////////////////////////////
 ////////////////////////  FAN   /////////////////////////
 /////////////////////////////////////////////////////////
-
+static int8_t diff_temp, diff_hum;
+static uint8_t fan_speed_temp, fan_speed_hum, fanspeed_range;
 void setFanSpeed() {
+		
+	diff_temp = my_tent.temperature_c - my_tent.target_temperature;
+	
+	if(diff_temp > 5) {
+		diff_temp = 5;
+	} else if(diff_temp < -5) {
+		diff_temp = -5;
+	}
+	
+	ESP_LOGI(TAG, "Diff Temp: %d%%", diff_temp);
+	
+	fanspeed_range = my_tent.fanspeed_slider_value - my_tent.fanspeed_slider_left_value;
+	
+	ESP_LOGI(TAG, "Fanspeed Range: %d%%", fanspeed_range);
+	
+	switch(diff_temp) {
+	  case -5:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value;
+		break;
+	  case -4:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + (fanspeed_range / 10);
+		break;
+	  case -3:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 2);
+		break;
+	  case -2:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 3);
+		break;
+	  case -1:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 4);
+		break;
+	  case 0:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 5);
+		break;
+	  case 1:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 6);
+		break;
+	  case 2:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 7);
+		break;
+	  case 3:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 8);
+		break;
+	  case 4:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 9);
+		break;
+	  case 5:
+		fan_speed_temp = my_tent.fanspeed_slider_value;
+		break;
+	  default:
+		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 6);
+	}
+	
+	ESP_LOGI(TAG, "Fanspeed by Temp: %d%%", fan_speed_temp);
+
+	
+	diff_hum = my_tent.humidity - my_tent.target_humidity;
+	
+	if(diff_hum > 10) {
+		diff_hum = 10;
+	} else if(diff_hum < -10) {
+		diff_hum = -10;
+	}
+	
+	ESP_LOGI(TAG, "Diff Hum: %d%%", diff_hum);
 	
 	
+	switch(diff_hum) {
+	  case -10:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value;
+		break;
+	  case -9:	
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + (fanspeed_range / 20);
+		break;
+	  case -8:	
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 2);
+		break;
+	  case -7:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 3);
+		break;
+	  case -6:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 4);
+		break;
+	  case -5:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 5);
+		break;
+	  case -4:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 6);
+		break;
+	  case -3:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 7);
+		break;
+	  case -2:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 8);
+		break;
+	  case -1:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 9);
+		break;
+	  case 0:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 10);
+	    break;
+	  case 1:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 11);
+		break;
+	  case 2:	
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 12);
+		break;
+	  case 3:	
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 13);
+		break;
+	  case 4:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 14);
+		break;
+	  case 5:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 15);
+		break;
+	  case 6:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 16);
+		break;
+	  case 7:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 17);
+		break;
+	  case 8:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 18);
+		break;
+	  case 9:
+		fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 19);
+		break;
+	  case 10:
+		fan_speed_hum = my_tent.fanspeed_slider_value;
+		break;
+	  default:
+	  fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 11);	  	  	  	  	  	  	  	  	  	
+	}
+
+	ESP_LOGI(TAG, "Fanspeed by Hum: %d%%", fan_speed_hum);
 	
+	my_tent.fanspeed = fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp;
 	
+	ESP_LOGI(TAG, "Fanspeed: %d%%", my_tent.fanspeed);
+	
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_FAN_CHANNEL, my_tent.fanspeed));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_FAN_CHANNEL));	
+
 }
 
 
@@ -543,7 +684,7 @@ void setFanSpeed() {
 ///////////////////  GROW LAMP   ////////////////////////
 /////////////////////////////////////////////////////////
 
-uint16_t dimmer_brightness;
+static uint16_t dimmer_brightness;
 void setGrowLampBrightness() {
 	
 	if(my_tent.is_day) {
@@ -578,9 +719,7 @@ void setGrowLampBrightness() {
 	ESP_LOGI(TAG, "dimmer_brightness %d%%", dimmer_brightness);
 	
 	my_tent.dimmer_brightness_duty = (128-1)*((float)dimmer_brightness / 100);
-	
-	//ESP_LOGI(TAG, "dimmer_brightness %d%%", my_tent.dimmer_brightness_duty);
-	
+		
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, my_tent.dimmer_brightness_duty));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
 	

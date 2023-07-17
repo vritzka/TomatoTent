@@ -215,9 +215,11 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_u16(storage_handle, "sel_hum_index", &my_tent.target_humidity_sel_index);
 		err = nvs_get_u16(storage_handle, "sel_temp_index", &my_tent.target_temperature_sel_index);
 		
-		//ESP_LOGI(TAG, "%d", target_humidity);
 		lv_dropdown_set_selected(ui_HumidityDropdown, my_tent.target_humidity_sel_index);
 		lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
+		
+		
+		my_tent.target_humidity = lv_dropdown_get_selected_str(const lv_obj_t *obj, char *buf, uint32_t buf_size);
 		
 		if( my_tent.climate_mode == 1 ) { //manual climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 

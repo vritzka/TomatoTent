@@ -111,16 +111,22 @@ void vSensorTask( void * pvParameters )
 			
 			if(scd4x_read_measurement(&sensors_values) != ESP_OK) {
 				ESP_LOGE(TAG, "Sensors read measurement error!");
-				continue;
+				//continue;
 			}
-			
+			/*
 			my_tent.temperature_c = sensors_values.temperature;
 			my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
 			my_tent.humidity = sensors_values.humidity;
 			my_tent.co2 = sensors_values.co2;
+			*/
+			my_tent.temperature_c = 22;
+			my_tent.temperature_f = FAHRENHEIT(my_tent.temperature_c);
+			my_tent.humidity = 56;
+			my_tent.co2 = 400;			
 			
 			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
-			
+			//update_displayed_values();
+			setFanSpeed();
 			
 		} else {
 			ESP_LOGW(TAG, "Missed 1 count event or Timer stopped");
