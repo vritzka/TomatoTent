@@ -27,6 +27,7 @@
 
 
 #define FAHRENHEIT(celcius)         (((celcius * 9.0) / 5.0) + 32.0)
+#define CELSIUS(fahrenheit)         ((fahrenheit - 32) * 5/9)
 #define KELVIN(celcius)             (celcius + 273.15)
 #define SCALE_CELCIUS               ('C')
 #define SCALE_FAHRENHEIT            ('F')

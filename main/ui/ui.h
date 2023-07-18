@@ -157,6 +157,11 @@ extern lv_obj_t *ui_Label19;
 extern lv_obj_t *ui_Label20;
 void ui_event_ImgButton6( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton6;
+extern lv_obj_t *ui_Panel17;
+void ui_event_TempUnitSwitch( lv_event_t * e);
+extern lv_obj_t *ui_TempUnitSwitch;
+extern lv_obj_t *ui_Label27;
+extern lv_obj_t *ui_Label16;
 // SCREEN: ui_WifiSettingsScreen
 void ui_WifiSettingsScreen_screen_init(void);
 void ui_event_WifiSettingsScreen( lv_event_t * e);
@@ -189,11 +194,6 @@ extern lv_obj_t *ui_ScreenBrightnessLabel;
 extern lv_obj_t *ui_Image17;
 extern lv_obj_t *ui_Panel18;
 extern lv_obj_t *ui_Switch4;
-extern lv_obj_t *ui_Panel17;
-void ui_event_TempUnitSwitch( lv_event_t * e);
-extern lv_obj_t *ui_TempUnitSwitch;
-extern lv_obj_t *ui_Label27;
-extern lv_obj_t *ui_Label16;
 extern lv_obj_t *ui_Image20;
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);

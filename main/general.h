@@ -47,7 +47,7 @@ typedef struct {
 	uint16_t dimmer_brightness_duty;
 	uint16_t screen_brightness_slider_value;
 	uint16_t screen_brightness_duty;
-	uint16_t temp_unit; //1 = C
+	uint16_t temp_unit; //1 = F
 	uint16_t wifi;
 	uint16_t fanspeed_slider_left_value;
 	uint16_t fanspeed_slider_value;
@@ -55,8 +55,9 @@ typedef struct {
 	uint8_t climate_mode; //0 = auto
 	uint16_t target_humidity_sel_index;
 	uint16_t target_temperature_sel_index;
-	uint16_t target_humidity;
-	uint16_t target_temperature;
+	uint8_t target_humidity;
+	float_t target_temperature_c;
+	float_t target_temperature_f;
 	float_t temperature_c;
     float_t temperature_f;
     uint8_t humidity;
@@ -116,6 +117,7 @@ void readSensors();
 void setFanSpeed();
 void init_i2c();
 void setGrowLampBrightness();
+void set_target_climate();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 #endif

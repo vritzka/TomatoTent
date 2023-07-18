@@ -218,15 +218,14 @@ void init_tomatotent(lv_event_t * e)
 		lv_dropdown_set_selected(ui_HumidityDropdown, my_tent.target_humidity_sel_index);
 		lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
 		
-		
-		my_tent.target_humidity = lv_dropdown_get_selected_str(const lv_obj_t *obj, char *buf, uint32_t buf_size);
-		
 		if( my_tent.climate_mode == 1 ) { //manual climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
 		} else { //auto climate
 			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
 			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
 		}
+		
+		set_target_climate();
 		
 		// Software Upgrade Screen
 		const esp_partition_t *running = esp_ota_get_running_partition();
@@ -409,7 +408,11 @@ void temp_unit_switch(lv_event_t * e)
 	}
 	
 	update_temp_units(my_tent.temp_unit);
+	set_target_climate();
 	
+	err = nvs_set_u16(storage_handle, "temp_unit", my_tent.temp_unit);
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
 }
 
 void save_general_settings_screen(lv_event_t * e)
@@ -420,7 +423,6 @@ void save_general_settings_screen(lv_event_t * e)
     } else {
 		
 		err = nvs_set_u16(storage_handle, "screen_brightns", my_tent.screen_brightness_slider_value);
-        err = nvs_set_u16(storage_handle, "temp_unit", my_tent.temp_unit);
         //code to set everything to F or C
 
         // Close
@@ -538,6 +540,8 @@ void humidity_dropdown(lv_event_t * e)
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	lv_obj_t * target = lv_event_get_target(e);
 	
+	set_target_climate();
+	
 	my_tent.target_humidity_sel_index = lv_dropdown_get_selected(target);
 	
 	err = nvs_set_u16(storage_handle, "sel_hum_index", my_tent.target_humidity_sel_index );
@@ -550,6 +554,8 @@ void temperature_dropdown(lv_event_t * e)
 {
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	lv_obj_t * target = lv_event_get_target(e);
+	
+	set_target_climate();
 	
 	my_tent.target_temperature_sel_index = lv_dropdown_get_selected(target);
 	

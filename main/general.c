@@ -90,20 +90,55 @@ void make_it_night() {
 }
 
 /////////////////////////////////////////////////////////
-///////////////// TEMP UNIT /////////////////////////////
+/////////////////// CLIMATE /////////////////////////////
 /////////////////////////////////////////////////////////
 
 void update_temp_units(uint16_t temp_unit) {
 	
 	if(temp_unit == 1) { //F
 		lv_obj_add_state(ui_TempUnitSwitch, LV_STATE_CHECKED);
-		lv_dropdown_set_options(ui_TemperatureDropdown, "53°F\n57°F\n60°F\n63°F\n66°F\n68°F\n70°F\n72°F\n74°F\n76°F\n78°F\n");
+		lv_dropdown_set_options(ui_TemperatureDropdown, "53°F\n57°F\n60°F\n63°F\n66°F\n68°F\n70°F\n72°F\n74°F\n76°F\n78°F");
 		lv_label_set_text(ui_HomeTempUnitLabel, "°F");
 	} else {
 		lv_dropdown_set_options(ui_TemperatureDropdown, "12°C\n14°C\n16°C\n18°C\n20°C\n22°C\n24°C\n26°C\n28°C\n30°C\n32°C");
 		lv_label_set_text(ui_HomeTempUnitLabel, "°C"); 
 	}
-	
+	lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
+}
+
+void set_target_climate() {
+
+	if(my_tent.climate_mode == 1) { //manual
+		
+		ESP_LOGI(TAG, "Manual Climate");
+		static char buf[3];
+		lv_dropdown_get_selected_str(ui_HumidityDropdown, buf, sizeof(buf));
+		char humidity_number_from_string[3];
+		strncpy(humidity_number_from_string, buf, 2);
+		humidity_number_from_string[3] = '\0';
+		sscanf(humidity_number_from_string, "%hhu", &my_tent.target_humidity);
+		
+		lv_dropdown_get_selected_str(ui_TemperatureDropdown, buf, sizeof(buf));
+		char temperature_number_from_string[3];
+		strncpy(temperature_number_from_string, buf, 2);
+		temperature_number_from_string[3] = '\0';
+		
+		if(my_tent.temp_unit == 1) { //f
+			sscanf(temperature_number_from_string, "%f", &my_tent.target_temperature_f);
+			my_tent.target_temperature_c = CELSIUS(my_tent.target_temperature_f);
+		} else { //f
+			sscanf(temperature_number_from_string, "%f", &my_tent.target_temperature_c);
+			my_tent.target_temperature_f = FAHRENHEIT(my_tent.target_temperature_c);
+		}		
+
+	} else { //auto
+		
+		ESP_LOGI(TAG, "Auto CLimate");
+		my_tent.target_humidity = 66;
+		my_tent.target_temperature_c = 22;
+		my_tent.target_temperature_f = 71.6;
+				
+	}
 }
 
 /////////////////////////////////////////////////////////
@@ -534,7 +569,7 @@ static int8_t diff_temp, diff_hum;
 static uint8_t fan_speed_temp, fan_speed_hum, fanspeed_range;
 void setFanSpeed() {
 		
-	diff_temp = my_tent.temperature_c - my_tent.target_temperature;
+	diff_temp = my_tent.temperature_c - my_tent.target_temperature_c;
 	
 	if(diff_temp > 5) {
 		diff_temp = 5;

@@ -158,6 +158,11 @@ lv_obj_t *ui_Label19;
 lv_obj_t *ui_Label20;
 void ui_event_ImgButton6( lv_event_t * e);
 lv_obj_t *ui_ImgButton6;
+lv_obj_t *ui_Panel17;
+void ui_event_TempUnitSwitch( lv_event_t * e);
+lv_obj_t *ui_TempUnitSwitch;
+lv_obj_t *ui_Label27;
+lv_obj_t *ui_Label16;
 
 // SCREEN: ui_WifiSettingsScreen
 void ui_WifiSettingsScreen_screen_init(void);
@@ -192,11 +197,6 @@ lv_obj_t *ui_ScreenBrightnessLabel;
 lv_obj_t *ui_Image17;
 lv_obj_t *ui_Panel18;
 lv_obj_t *ui_Switch4;
-lv_obj_t *ui_Panel17;
-void ui_event_TempUnitSwitch( lv_event_t * e);
-lv_obj_t *ui_TempUnitSwitch;
-lv_obj_t *ui_Label27;
-lv_obj_t *ui_Label16;
 lv_obj_t *ui_Image20;
 
 // SCREEN: ui_SoftwareUpdateScreen
@@ -561,6 +561,12 @@ if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
 }
 }
+void ui_event_TempUnitSwitch( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      temp_unit_switch( e );
+}
+}
 void ui_event_WifiSettingsScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
@@ -611,12 +617,6 @@ void ui_event_ScreenBrightnessSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       screen_brightness_slider( e );
-}
-}
-void ui_event_TempUnitSwitch( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      temp_unit_switch( e );
 }
 }
 void ui_event_FirmwareUpgradeButton( lv_event_t * e) {
