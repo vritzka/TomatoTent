@@ -118,6 +118,7 @@ void setFanSpeed();
 void init_i2c();
 void setGrowLampBrightness();
 void set_target_climate();
+void update_displayed_values();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 #endif

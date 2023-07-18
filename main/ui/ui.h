@@ -39,22 +39,24 @@ extern lv_obj_t *ui_HomeScreen;
 extern lv_obj_t *ui_HomeSky;
 void ui_event_TemperaturePanel( lv_event_t * e);
 extern lv_obj_t *ui_TemperaturePanel;
-extern lv_obj_t *ui_Label5;
+extern lv_obj_t *ui_TemperatureLabel;
 extern lv_obj_t *ui_HomeTempUnitLabel;
 extern lv_obj_t *ui_Image5;
 void ui_event_Panel1( lv_event_t * e);
 extern lv_obj_t *ui_Panel1;
-extern lv_obj_t *ui_Label4;
+extern lv_obj_t *ui_HumidityLabel;
 extern lv_obj_t *ui_Label6;
 extern lv_obj_t *ui_Image3;
 extern lv_obj_t *ui_Panel5;
-extern lv_obj_t *ui_Label7;
-extern lv_obj_t *ui_Label8;
-extern lv_obj_t *ui_Image2;
+extern lv_obj_t *ui_Co2Label;
+extern lv_obj_t *ui_Label1;
 void ui_event_Panel4( lv_event_t * e);
 extern lv_obj_t *ui_Panel4;
-extern lv_obj_t *ui_Label9;
-extern lv_obj_t *ui_Label13;
+extern lv_obj_t *ui_Image2;
+extern lv_obj_t *ui_DewPointLabel;
+void ui_event_Panel3( lv_event_t * e);
+extern lv_obj_t *ui_Panel3;
+extern lv_obj_t *ui_FanSpeedLabel;
 extern lv_obj_t *ui_Fan;
 void ui_event_Panel11( lv_event_t * e);
 extern lv_obj_t *ui_Panel11;
@@ -64,6 +66,7 @@ extern lv_obj_t *ui_DayNightLabel;
 extern lv_obj_t *ui_ArrowUp1;
 void ui_event_WifiIcon( lv_event_t * e);
 extern lv_obj_t *ui_WifiIcon;
+extern lv_obj_t *ui_Image22;
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
 void ui_event_LightDurationScreen( lv_event_t * e);
@@ -117,12 +120,19 @@ extern lv_obj_t *ui_Chart2;
 extern lv_obj_t *ui_Image18;
 extern lv_obj_t *ui_Panel14;
 extern lv_obj_t *ui_Image6;
+extern lv_obj_t *ui_TemperatureLabel2;
 extern lv_obj_t *ui_Panel9;
 extern lv_obj_t *ui_Image19;
+extern lv_obj_t *ui_HumidityLabel2;
 extern lv_obj_t *ui_Panel15;
 extern lv_obj_t *ui_Image11;
+extern lv_obj_t *ui_Label4;
 extern lv_obj_t *ui_Panel16;
 extern lv_obj_t *ui_Fan2;
+extern lv_obj_t *ui_FanSpeedLabel2;
+extern lv_obj_t *ui_Panel7;
+extern lv_obj_t *ui_Image16;
+extern lv_obj_t *ui_TemperatureLabel1;
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
 void ui_event_FanSettingsScreen( lv_event_t * e);
@@ -216,10 +226,11 @@ LV_IMG_DECLARE( ui_img_tomato_png);   // assets/tomato.png
 LV_IMG_DECLARE( ui_img_791711567);   // assets/sun-3.png
 LV_IMG_DECLARE( ui_img_1484485426);   // assets/thermometer-2.png
 LV_IMG_DECLARE( ui_img_humidity_png);   // assets/humidity.png
-LV_IMG_DECLARE( ui_img_dew_png);   // assets/dew.png
-LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
+LV_IMG_DECLARE( ui_img_1774250380);   // assets/dew-4.png
+LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_upload_png);   // assets/upload.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
+LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
@@ -230,8 +241,7 @@ LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_harvest_png);   // assets/harvest.png
 LV_IMG_DECLARE( ui_img_1668913270);   // assets/back-up.png
 LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
-LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
-LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
+LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
 LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
 LV_IMG_DECLARE( ui_img_1126512945);   // assets/cloud-computing.png
@@ -242,6 +252,7 @@ LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
+LV_IMG_DECLARE( ui_img_17176521);   // assets/dew-3.png
 
 void ui_init(void);
 

@@ -17,10 +17,11 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_791711567.c
     images/ui_img_1484485426.c
     images/ui_img_humidity_png.c
-    images/ui_img_dew_png.c
-    images/ui_img_1142205948.c
+    images/ui_img_1774250380.c
+    images/ui_img_60476769.c
     images/ui_img_upload_png.c
     images/ui_img_wifi_png.c
+    images/ui_img_co2_png.c
     images/ui_img_303216376.c
     images/ui_img_now_arrow_2_png.c
     images/ui_img_432815713.c
@@ -31,8 +32,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_harvest_png.c
     images/ui_img_1668913270.c
     images/ui_img_2060199463.c
-    images/ui_img_co2_png.c
-    images/ui_img_60476769.c
+    images/ui_img_1142205948.c
     images/ui_img_261459337.c
     images/ui_img_953604683.c
     images/ui_img_1126512945.c
@@ -42,6 +42,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_1669444289.c
     images/ui_img_182264864.c
     images/ui_img_1180469587.c
-    images/ui_img_290017612.c)
+    images/ui_img_290017612.c
+    images/ui_img_17176521.c)
 
 add_library(ui ${SOURCES})

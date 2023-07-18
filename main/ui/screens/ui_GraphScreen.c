@@ -51,9 +51,9 @@ lv_obj_set_style_img_recolor(ui_Image18, lv_color_hex(0x145B0A), LV_PART_MAIN| L
 lv_obj_set_style_img_recolor_opa(ui_Image18, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel14 = lv_obj_create(ui_GraphScreen);
-lv_obj_set_width( ui_Panel14, 100);
+lv_obj_set_width( ui_Panel14, 80);
 lv_obj_set_height( ui_Panel14, 40);
-lv_obj_set_x( ui_Panel14, -176 );
+lv_obj_set_x( ui_Panel14, -188 );
 lv_obj_set_y( ui_Panel14, -133 );
 lv_obj_set_align( ui_Panel14, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel14, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -63,8 +63,8 @@ lv_obj_set_style_border_width(ui_Panel14, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image6 = lv_img_create(ui_Panel14);
 lv_img_set_src(ui_Image6, &ui_img_1484485426);
-lv_obj_set_width( ui_Image6, LV_SIZE_CONTENT);  /// 64
-lv_obj_set_height( ui_Image6, LV_SIZE_CONTENT);   /// 64
+lv_obj_set_width( ui_Image6, 64);
+lv_obj_set_height( ui_Image6, 64);
 lv_obj_set_x( ui_Image6, -29 );
 lv_obj_set_y( ui_Image6, 0 );
 lv_obj_set_align( ui_Image6, LV_ALIGN_CENTER );
@@ -72,10 +72,18 @@ lv_obj_add_flag( ui_Image6, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image6, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_img_set_zoom(ui_Image6,125);
 
+ui_TemperatureLabel2 = lv_label_create(ui_Panel14);
+lv_obj_set_width( ui_TemperatureLabel2, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_TemperatureLabel2, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_TemperatureLabel2, 12 );
+lv_obj_set_y( ui_TemperatureLabel2, 0 );
+lv_obj_set_align( ui_TemperatureLabel2, LV_ALIGN_CENTER );
+lv_label_set_text(ui_TemperatureLabel2,"77 F");
+
 ui_Panel9 = lv_obj_create(ui_GraphScreen);
-lv_obj_set_width( ui_Panel9, 100);
+lv_obj_set_width( ui_Panel9, 80);
 lv_obj_set_height( ui_Panel9, 40);
-lv_obj_set_x( ui_Panel9, -58 );
+lv_obj_set_x( ui_Panel9, -95 );
 lv_obj_set_y( ui_Panel9, -133 );
 lv_obj_set_align( ui_Panel9, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel9, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -94,10 +102,18 @@ lv_obj_add_flag( ui_Image19, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image19, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_img_set_zoom(ui_Image19,125);
 
+ui_HumidityLabel2 = lv_label_create(ui_Panel9);
+lv_obj_set_width( ui_HumidityLabel2, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_HumidityLabel2, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_HumidityLabel2, 10 );
+lv_obj_set_y( ui_HumidityLabel2, 0 );
+lv_obj_set_align( ui_HumidityLabel2, LV_ALIGN_CENTER );
+lv_label_set_text(ui_HumidityLabel2,"100%");
+
 ui_Panel15 = lv_obj_create(ui_GraphScreen);
-lv_obj_set_width( ui_Panel15, 100);
+lv_obj_set_width( ui_Panel15, 90);
 lv_obj_set_height( ui_Panel15, 40);
-lv_obj_set_x( ui_Panel15, 58 );
+lv_obj_set_x( ui_Panel15, 6 );
 lv_obj_set_y( ui_Panel15, -133 );
 lv_obj_set_align( ui_Panel15, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel15, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -109,17 +125,25 @@ ui_Image11 = lv_img_create(ui_Panel15);
 lv_img_set_src(ui_Image11, &ui_img_co2_png);
 lv_obj_set_width( ui_Image11, LV_SIZE_CONTENT);  /// 64
 lv_obj_set_height( ui_Image11, LV_SIZE_CONTENT);   /// 64
-lv_obj_set_x( ui_Image11, -29 );
+lv_obj_set_x( ui_Image11, -28 );
 lv_obj_set_y( ui_Image11, -1 );
 lv_obj_set_align( ui_Image11, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image11, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image11, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_img_set_zoom(ui_Image11,125);
 
+ui_Label4 = lv_label_create(ui_Panel15);
+lv_obj_set_width( ui_Label4, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label4, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_Label4, 17 );
+lv_obj_set_y( ui_Label4, 1 );
+lv_obj_set_align( ui_Label4, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label4,"1000");
+
 ui_Panel16 = lv_obj_create(ui_GraphScreen);
-lv_obj_set_width( ui_Panel16, 100);
+lv_obj_set_width( ui_Panel16, 85);
 lv_obj_set_height( ui_Panel16, 40);
-lv_obj_set_x( ui_Panel16, 176 );
+lv_obj_set_x( ui_Panel16, 185 );
 lv_obj_set_y( ui_Panel16, -133 );
 lv_obj_set_align( ui_Panel16, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel16, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -136,6 +160,44 @@ lv_obj_set_y( ui_Fan2, 0 );
 lv_obj_set_align( ui_Fan2, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Fan2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Fan2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+ui_FanSpeedLabel2 = lv_label_create(ui_Panel16);
+lv_obj_set_width( ui_FanSpeedLabel2, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_FanSpeedLabel2, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_FanSpeedLabel2, 13 );
+lv_obj_set_y( ui_FanSpeedLabel2, 0 );
+lv_obj_set_align( ui_FanSpeedLabel2, LV_ALIGN_CENTER );
+lv_label_set_text(ui_FanSpeedLabel2,"100%");
+
+ui_Panel7 = lv_obj_create(ui_GraphScreen);
+lv_obj_set_width( ui_Panel7, 80);
+lv_obj_set_height( ui_Panel7, 40);
+lv_obj_set_x( ui_Panel7, 98 );
+lv_obj_set_y( ui_Panel7, -133 );
+lv_obj_set_align( ui_Panel7, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_Panel7, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_bg_color(ui_Panel7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_Panel7, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_width(ui_Panel7, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_Image16 = lv_img_create(ui_Panel7);
+lv_img_set_src(ui_Image16, &ui_img_1484485426);
+lv_obj_set_width( ui_Image16, 64);
+lv_obj_set_height( ui_Image16, 64);
+lv_obj_set_x( ui_Image16, -29 );
+lv_obj_set_y( ui_Image16, 0 );
+lv_obj_set_align( ui_Image16, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Image16, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_Image16, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_img_set_zoom(ui_Image16,125);
+
+ui_TemperatureLabel1 = lv_label_create(ui_Panel7);
+lv_obj_set_width( ui_TemperatureLabel1, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_TemperatureLabel1, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_TemperatureLabel1, 12 );
+lv_obj_set_y( ui_TemperatureLabel1, 0 );
+lv_obj_set_align( ui_TemperatureLabel1, LV_ALIGN_CENTER );
+lv_label_set_text(ui_TemperatureLabel1,"77 F");
 
 lv_obj_add_event_cb(ui_GraphScreen, ui_event_GraphScreen, LV_EVENT_ALL, NULL);
 

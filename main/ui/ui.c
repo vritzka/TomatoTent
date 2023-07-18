@@ -34,22 +34,24 @@ lv_obj_t *ui_HomeScreen;
 lv_obj_t *ui_HomeSky;
 void ui_event_TemperaturePanel( lv_event_t * e);
 lv_obj_t *ui_TemperaturePanel;
-lv_obj_t *ui_Label5;
+lv_obj_t *ui_TemperatureLabel;
 lv_obj_t *ui_HomeTempUnitLabel;
 lv_obj_t *ui_Image5;
 void ui_event_Panel1( lv_event_t * e);
 lv_obj_t *ui_Panel1;
-lv_obj_t *ui_Label4;
+lv_obj_t *ui_HumidityLabel;
 lv_obj_t *ui_Label6;
 lv_obj_t *ui_Image3;
 lv_obj_t *ui_Panel5;
-lv_obj_t *ui_Label7;
-lv_obj_t *ui_Label8;
-lv_obj_t *ui_Image2;
+lv_obj_t *ui_Co2Label;
+lv_obj_t *ui_Label1;
 void ui_event_Panel4( lv_event_t * e);
 lv_obj_t *ui_Panel4;
-lv_obj_t *ui_Label9;
-lv_obj_t *ui_Label13;
+lv_obj_t *ui_Image2;
+lv_obj_t *ui_DewPointLabel;
+void ui_event_Panel3( lv_event_t * e);
+lv_obj_t *ui_Panel3;
+lv_obj_t *ui_FanSpeedLabel;
 lv_obj_t *ui_Fan;
 void ui_event_Panel11( lv_event_t * e);
 lv_obj_t *ui_Panel11;
@@ -59,6 +61,7 @@ lv_obj_t *ui_DayNightLabel;
 lv_obj_t *ui_ArrowUp1;
 void ui_event_WifiIcon( lv_event_t * e);
 lv_obj_t *ui_WifiIcon;
+lv_obj_t *ui_Image22;
 
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
@@ -116,12 +119,19 @@ lv_obj_t *ui_Chart2;
 lv_obj_t *ui_Image18;
 lv_obj_t *ui_Panel14;
 lv_obj_t *ui_Image6;
+lv_obj_t *ui_TemperatureLabel2;
 lv_obj_t *ui_Panel9;
 lv_obj_t *ui_Image19;
+lv_obj_t *ui_HumidityLabel2;
 lv_obj_t *ui_Panel15;
 lv_obj_t *ui_Image11;
+lv_obj_t *ui_Label4;
 lv_obj_t *ui_Panel16;
 lv_obj_t *ui_Fan2;
+lv_obj_t *ui_FanSpeedLabel2;
+lv_obj_t *ui_Panel7;
+lv_obj_t *ui_Image16;
+lv_obj_t *ui_TemperatureLabel1;
 
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
@@ -226,6 +236,7 @@ const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
+const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -418,6 +429,12 @@ if ( event_code == LV_EVENT_LONG_PRESSED) {
 }
 }
 void ui_event_Panel4( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_LONG_PRESSED) {
+      _ui_screen_change( ui_FanSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+}
+}
+void ui_event_Panel3( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
       _ui_screen_change( ui_FanSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
