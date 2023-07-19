@@ -48,7 +48,7 @@ lv_obj_t *ui_Label1;
 void ui_event_Panel4( lv_event_t * e);
 lv_obj_t *ui_Panel4;
 lv_obj_t *ui_Image2;
-lv_obj_t *ui_DewPointLabel;
+lv_obj_t *ui_VPDLabel;
 void ui_event_Panel3( lv_event_t * e);
 lv_obj_t *ui_Panel3;
 lv_obj_t *ui_FanSpeedLabel;
@@ -115,23 +115,27 @@ lv_obj_t *ui_DayUpButton;
 void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen( lv_event_t * e);
 lv_obj_t *ui_GraphScreen;
-lv_obj_t *ui_Chart2;
-lv_obj_t *ui_Image18;
-lv_obj_t *ui_Panel14;
+lv_obj_t *ui_Chart;
+void ui_event_TempSeriesPanel( lv_event_t * e);
+lv_obj_t *ui_TempSeriesPanel;
 lv_obj_t *ui_Image6;
 lv_obj_t *ui_TemperatureLabel2;
-lv_obj_t *ui_Panel9;
+void ui_event_HumiditySeriesPanel( lv_event_t * e);
+lv_obj_t *ui_HumiditySeriesPanel;
 lv_obj_t *ui_Image19;
 lv_obj_t *ui_HumidityLabel2;
-lv_obj_t *ui_Panel15;
+void ui_event_CO2SeriesPanel( lv_event_t * e);
+lv_obj_t *ui_CO2SeriesPanel;
 lv_obj_t *ui_Image11;
-lv_obj_t *ui_Label4;
-lv_obj_t *ui_Panel16;
+lv_obj_t *ui_Co2Label2;
+void ui_event_FanspeedSeriesPanel( lv_event_t * e);
+lv_obj_t *ui_FanspeedSeriesPanel;
 lv_obj_t *ui_Fan2;
 lv_obj_t *ui_FanSpeedLabel2;
-lv_obj_t *ui_Panel7;
+lv_obj_t *ui_VPDSeriesPanel;
 lv_obj_t *ui_Image16;
-lv_obj_t *ui_TemperatureLabel1;
+lv_obj_t *ui_VPDLabel2;
+lv_obj_t *ui_Label5;
 
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
@@ -224,8 +228,11 @@ lv_obj_t *ui_SoftwareVersionsPanel;
 lv_obj_t *ui_CurrentVersionLabel;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
+const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
+const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
 const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
+const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
 const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
 const lv_img_dsc_t *ui_imgset_1334665161[2] = {&ui_img_320680866, &ui_img_1756057095};
 const lv_img_dsc_t *ui_imgset_1554743838[1] = {&ui_img_1180469587};
@@ -234,9 +241,6 @@ const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
-const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
-const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
-const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -534,6 +538,42 @@ void ui_event_GraphScreen( lv_event_t * e) {
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
+}
+}
+void ui_event_TempSeriesPanel( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      show_temperature_series( e );
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      hide_temperature_series( e );
+}
+}
+void ui_event_HumiditySeriesPanel( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      show_humidity_series( e );
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      hide_humidity_series( e );
+}
+}
+void ui_event_CO2SeriesPanel( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      show_co2_series( e );
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      hide_co2_series( e );
+}
+}
+void ui_event_FanspeedSeriesPanel( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      show_fanspeed_series( e );
+}
+if ( event_code == LV_EVENT_VALUE_CHANGED &&  !lv_obj_has_state(target,LV_STATE_CHECKED)  ) {
+      hide_fanspeed_series( e );
 }
 }
 void ui_event_FanSettingsScreen( lv_event_t * e) {

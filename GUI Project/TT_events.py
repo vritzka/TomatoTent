@@ -118,3 +118,39 @@ def wifi_scan(event_struct):
 def wifi_scan_button(event_struct):
     return
 
+
+def toggle_temperature_series(event_struct):
+    return
+
+
+def show_temperature_series(event_struct):
+    return
+
+
+def hide_temperature_series(event_struct):
+    return
+
+
+def show_humidity_series(event_struct):
+    return
+
+
+def hide_humidity_series(event_struct):
+    return
+
+
+def show_co2_series(event_struct):
+    return
+
+
+def hide_co2_series(event_struct):
+    return
+
+
+def show_fanspeed_series(event_struct):
+    return
+
+
+def hide_fanspeed_series(event_struct):
+    return
+

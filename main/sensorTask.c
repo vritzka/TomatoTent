@@ -21,9 +21,11 @@ static bool IRAM_ATTR sensor_cb(gptimer_handle_t timer, const gptimer_alarm_even
 }
 
 char scale = SCALE_CELCIUS;
-float temperature = 0.0;
-float humidity = 0.0;
-float co2_level = 0.0;
+static float temperature = 0.0;
+static float humidity = 0.0;
+static float co2_level = 0.0;
+static float es;
+static float ae;
 
 // Task to be created.
 void vSensorTask( void * pvParameters )
@@ -119,13 +121,17 @@ void vSensorTask( void * pvParameters )
 			my_tent.humidity = sensors_values.humidity;
 			my_tent.co2 = sensors_values.co2;
 			*/
-			my_tent.temperature_c = 22;
+			my_tent.temperature_c = lv_rand(12,38);
 			my_tent.temperature_f = FAHRENHEIT(my_tent.temperature_c);
-			my_tent.humidity = 56;
-			my_tent.co2 = 400;			
+			my_tent.humidity = lv_rand(40,70);
+			my_tent.co2 = lv_rand(400,600);	
+			es = 0.61078 * exp(17.2694 * my_tent.temperature_c / (my_tent.temperature_c + 238.3));
+			ae = humidity / 100 * es;
+			my_tent.vpd = es - ae;  //kPa
+        		
 			
 			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
-			//update_displayed_values();
+			update_displayed_values();
 			setFanSpeed();
 			
 		} else {

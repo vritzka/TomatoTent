@@ -7,6 +7,7 @@ static esp_err_t err;
 static char somestring[36];
 
 tent_data_t my_tent;
+climate_history_t climate_history;
 
 /////////////////////////////////////////////////////////
 ////////////////////// TIME /////////////////////////////
@@ -24,8 +25,10 @@ void update_time_left(bool count_day) {
 	if(my_tent.seconds % 1800 == 0)
 		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
 	
-	if(my_tent.seconds % 60 == 0)	
+	if(my_tent.seconds % 60 == 0) {	
 		setGrowLampBrightness();
+		add_climate_point();
+	}
 	
 	if(my_tent.seconds < my_tent.day_period_seconds) { //day
 		if(!my_tent.is_day)
@@ -59,7 +62,7 @@ void update_time_left(bool count_day) {
 		if (err != ESP_OK) {
 			printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
 		} else {
-			err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds);
+			err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds+1);
 			err = nvs_commit(storage_handle);
 			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
 			nvs_close(storage_handle);
@@ -139,6 +142,41 @@ void set_target_climate() {
 		my_tent.target_temperature_f = 71.6;
 				
 	}
+}
+
+void add_climate_point() {
+	
+	if(my_tent.temp_unit) {
+		lv_chart_set_next_value(ui_Chart, chart_series_temperature, my_tent.temperature_f);
+	} else {
+		lv_chart_set_next_value(ui_Chart, chart_series_temperature, my_tent.temperature_c);
+	}
+	lv_chart_set_next_value(ui_Chart, chart_series_humidity, my_tent.humidity);
+	lv_chart_set_next_value(ui_Chart, chart_series_fanspeed, my_tent.fanspeed);
+	lv_chart_set_next_value(ui_Chart, chart_series_co2, my_tent.co2);
+	
+	/*
+	float temporary;
+	uint16_t length = sizeof(climate_history.temperature_c) / sizeof(float_t);
+	for(int i=length-1; i>=0; i--)
+    {
+		
+		if(i==0) {
+			climate_history.temperature_c[i] = my_tent.temperature_c;
+		} else {
+			temporary = climate_history.temperature_c[i-1];
+			climate_history.temperature_c[i] = temporary;
+		}
+			
+		//ESP_LOGI(TAG, "Climate Point %d: %f", i, climate_history.temperature_c[i]);
+    }
+	
+
+	climate_history.temperature_c[0] = my_tent.temperature_c;
+	climate_history.humidity[0] = my_tent.humidity;
+	climate_history.fanspeed[0] = my_tent.fanspeed;
+	climate_history.co2[0] = my_tent.co2;
+	*/
 }
 
 /////////////////////////////////////////////////////////
@@ -577,12 +615,10 @@ void setFanSpeed() {
 		diff_temp = -5;
 	}
 	
-	ESP_LOGI(TAG, "Diff Temp: %d%%", diff_temp);
+	//ESP_LOGI(TAG, "Diff Temp: %d", diff_temp);
 	
 	fanspeed_range = my_tent.fanspeed_slider_value - my_tent.fanspeed_slider_left_value;
-	
-	ESP_LOGI(TAG, "Fanspeed Range: %d%%", fanspeed_range);
-	
+		
 	switch(diff_temp) {
 	  case -5:
 		fan_speed_temp = my_tent.fanspeed_slider_left_value;
@@ -621,7 +657,7 @@ void setFanSpeed() {
 		fan_speed_temp = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 10) * 6);
 	}
 	
-	ESP_LOGI(TAG, "Fanspeed by Temp: %d%%", fan_speed_temp);
+	//ESP_LOGI(TAG, "Fanspeed by Temp: %d%%", fan_speed_temp);
 
 	
 	diff_hum = my_tent.humidity - my_tent.target_humidity;
@@ -632,7 +668,7 @@ void setFanSpeed() {
 		diff_hum = -10;
 	}
 	
-	ESP_LOGI(TAG, "Diff Hum: %d%%", diff_hum);
+	//ESP_LOGI(TAG, "Diff Hum: %d%%", diff_hum);
 	
 	
 	switch(diff_hum) {
@@ -703,7 +739,7 @@ void setFanSpeed() {
 	  fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 11);	  	  	  	  	  	  	  	  	  	
 	}
 
-	ESP_LOGI(TAG, "Fanspeed by Hum: %d%%", fan_speed_hum);
+	//ESP_LOGI(TAG, "Fanspeed by Hum: %d%%", fan_speed_hum);
 	
 	my_tent.fanspeed = fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp;
 	
@@ -761,8 +797,127 @@ void setGrowLampBrightness() {
 }
 
 /////////////////////////////////////////////////////////
+////////////////////  CHART  ////////////////////////////
+/////////////////////////////////////////////////////////
+
+
+static void chart_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t * chart = lv_event_get_target(e);
+
+    if(code == LV_EVENT_VALUE_CHANGED) {
+        lv_obj_invalidate(chart);
+    }
+    if(code == LV_EVENT_REFR_EXT_DRAW_SIZE) {
+        lv_coord_t * s = lv_event_get_param(e);
+        *s = LV_MAX(*s, 20);
+    }
+    else if(code == LV_EVENT_DRAW_POST_END) {
+        int32_t id = lv_chart_get_pressed_point(chart);
+        if(id == LV_CHART_POINT_NONE) return;
+
+        LV_LOG_USER("Selected point %d", (int)id);
+
+        lv_chart_series_t * ser = lv_chart_get_series_next(chart, NULL);
+        while(ser) {
+            lv_point_t p;
+            lv_chart_get_point_pos_by_id(chart, ser, id, &p);
+
+            lv_coord_t * y_array = lv_chart_get_y_array(chart, ser);
+            lv_coord_t value = y_array[id];
+
+            char buf[16];
+            lv_snprintf(buf, sizeof(buf), LV_SYMBOL_DUMMY"$%d", value);
+
+            lv_draw_rect_dsc_t draw_rect_dsc;
+            lv_draw_rect_dsc_init(&draw_rect_dsc);
+            draw_rect_dsc.bg_color = lv_color_black();
+            draw_rect_dsc.bg_opa = LV_OPA_50;
+            draw_rect_dsc.radius = 3;
+            draw_rect_dsc.bg_img_src = buf;
+            draw_rect_dsc.bg_img_recolor = lv_color_white();
+
+            lv_area_t a;
+            a.x1 = chart->coords.x1 + p.x - 20;
+            a.x2 = chart->coords.x1 + p.x + 20;
+            a.y1 = chart->coords.y1 + p.y - 30;
+            a.y2 = chart->coords.y1 + p.y - 10;
+
+            lv_draw_ctx_t * draw_ctx = lv_event_get_draw_ctx(e);
+            lv_draw_rect(draw_ctx, &draw_rect_dsc, &a);
+
+            ser = lv_chart_get_series_next(chart, ser);
+        }
+    }
+    else if(code == LV_EVENT_RELEASED) {
+        lv_obj_invalidate(chart);
+    }
+}
+
+lv_chart_series_t * chart_series_temperature;
+lv_chart_series_t * chart_series_humidity;
+lv_chart_series_t * chart_series_fanspeed;
+lv_chart_series_t * chart_series_co2;
+
+void init_chart() {
+
+lv_chart_set_point_count(ui_Chart, 96);
+chart_series_temperature = lv_chart_add_series(ui_Chart, lv_color_hex(0xEF5F3C), LV_CHART_AXIS_PRIMARY_Y);
+chart_series_humidity = lv_chart_add_series(ui_Chart, lv_color_hex(0x3CB7FF), LV_CHART_AXIS_PRIMARY_Y);
+chart_series_fanspeed = lv_chart_add_series(ui_Chart, lv_color_hex(0x272727), LV_CHART_AXIS_PRIMARY_Y);
+chart_series_co2 = lv_chart_add_series(ui_Chart, lv_color_hex(0xAFBDC4), LV_CHART_AXIS_SECONDARY_Y);
+
+lv_chart_set_zoom_x(ui_Chart, 256);
+
+lv_obj_add_event_cb(ui_Chart, chart_cb, LV_EVENT_ALL, NULL);
+lv_obj_refresh_ext_draw_size(ui_Chart);
+
+lv_obj_add_state(ui_TempSeriesPanel, LV_STATE_CHECKED);
+lv_obj_add_state(ui_HumiditySeriesPanel, LV_STATE_CHECKED);
+
+lv_chart_hide_series(ui_Chart, chart_series_co2, true);
+lv_chart_hide_series(ui_Chart, chart_series_fanspeed, true);
+
+	int i = 0;
+	while(i < 0) {
+		lv_chart_set_next_value(ui_Chart, chart_series_temperature, lv_rand(18,25));
+		lv_chart_set_next_value(ui_Chart, chart_series_humidity, lv_rand(50,60));
+		lv_chart_set_next_value(ui_Chart, chart_series_fanspeed, lv_rand(60,80));
+		lv_chart_set_next_value(ui_Chart, chart_series_co2, lv_rand(350,450));
+		i++;
+	}
+	
+}
+
+
+
+/////////////////////////////////////////////////////////
 ///////////////////  HELPERS  ///////////////////////////
 /////////////////////////////////////////////////////////
+
+void update_displayed_values() {
+	
+	if(my_tent.temp_unit) {
+		lv_label_set_text_fmt(ui_TemperatureLabel, "%2.0f", my_tent.temperature_f);
+		lv_label_set_text_fmt(ui_TemperatureLabel2, "%2.0f°f", my_tent.temperature_f);
+	} else {
+		lv_label_set_text_fmt(ui_TemperatureLabel, "%2.0f", my_tent.temperature_c);
+		lv_label_set_text_fmt(ui_TemperatureLabel2, "%2.0f°c", my_tent.temperature_c);
+	}
+	
+	lv_label_set_text_fmt(ui_HumidityLabel, "%d", my_tent.humidity);
+	lv_label_set_text_fmt(ui_HumidityLabel2, "%d%%", my_tent.humidity);
+	
+	lv_label_set_text_fmt(ui_FanSpeedLabel, "%d%%", my_tent.fanspeed);
+	lv_label_set_text_fmt(ui_FanSpeedLabel2, "%d%%", my_tent.fanspeed);
+	
+	lv_label_set_text_fmt(ui_VPDLabel, "%.1f kpa", my_tent.vpd);
+	lv_label_set_text_fmt(ui_VPDLabel2, "%.1f", my_tent.vpd);
+	
+	lv_label_set_text_fmt(ui_Co2Label, "%d", my_tent.co2);
+	lv_label_set_text_fmt(ui_Co2Label2, "%d", my_tent.co2);
+}
 
 long map(long x, long in_min, long in_max, long out_min, long out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;

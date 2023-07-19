@@ -53,7 +53,7 @@ extern lv_obj_t *ui_Label1;
 void ui_event_Panel4( lv_event_t * e);
 extern lv_obj_t *ui_Panel4;
 extern lv_obj_t *ui_Image2;
-extern lv_obj_t *ui_DewPointLabel;
+extern lv_obj_t *ui_VPDLabel;
 void ui_event_Panel3( lv_event_t * e);
 extern lv_obj_t *ui_Panel3;
 extern lv_obj_t *ui_FanSpeedLabel;
@@ -116,23 +116,27 @@ extern lv_obj_t *ui_DayUpButton;
 void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen( lv_event_t * e);
 extern lv_obj_t *ui_GraphScreen;
-extern lv_obj_t *ui_Chart2;
-extern lv_obj_t *ui_Image18;
-extern lv_obj_t *ui_Panel14;
+extern lv_obj_t *ui_Chart;
+void ui_event_TempSeriesPanel( lv_event_t * e);
+extern lv_obj_t *ui_TempSeriesPanel;
 extern lv_obj_t *ui_Image6;
 extern lv_obj_t *ui_TemperatureLabel2;
-extern lv_obj_t *ui_Panel9;
+void ui_event_HumiditySeriesPanel( lv_event_t * e);
+extern lv_obj_t *ui_HumiditySeriesPanel;
 extern lv_obj_t *ui_Image19;
 extern lv_obj_t *ui_HumidityLabel2;
-extern lv_obj_t *ui_Panel15;
+void ui_event_CO2SeriesPanel( lv_event_t * e);
+extern lv_obj_t *ui_CO2SeriesPanel;
 extern lv_obj_t *ui_Image11;
-extern lv_obj_t *ui_Label4;
-extern lv_obj_t *ui_Panel16;
+extern lv_obj_t *ui_Co2Label2;
+void ui_event_FanspeedSeriesPanel( lv_event_t * e);
+extern lv_obj_t *ui_FanspeedSeriesPanel;
 extern lv_obj_t *ui_Fan2;
 extern lv_obj_t *ui_FanSpeedLabel2;
-extern lv_obj_t *ui_Panel7;
+extern lv_obj_t *ui_VPDSeriesPanel;
 extern lv_obj_t *ui_Image16;
-extern lv_obj_t *ui_TemperatureLabel1;
+extern lv_obj_t *ui_VPDLabel2;
+extern lv_obj_t *ui_Label5;
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
 void ui_event_FanSettingsScreen( lv_event_t * e);
@@ -241,6 +245,7 @@ LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_harvest_png);   // assets/harvest.png
 LV_IMG_DECLARE( ui_img_1668913270);   // assets/back-up.png
 LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
+LV_IMG_DECLARE( ui_img_17176521);   // assets/dew-3.png
 LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
 LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
@@ -252,7 +257,6 @@ LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
-LV_IMG_DECLARE( ui_img_17176521);   // assets/dew-3.png
 
 void ui_init(void);
 
