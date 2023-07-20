@@ -189,7 +189,7 @@ lv_obj_clear_flag( ui_FanspeedSeriesPanel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_
 lv_obj_set_style_bg_color(ui_FanspeedSeriesPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_FanspeedSeriesPanel, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_FanspeedSeriesPanel, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_border_color(ui_FanspeedSeriesPanel, lv_color_hex(0x272727), LV_PART_MAIN | LV_STATE_CHECKED );
+lv_obj_set_style_border_color(ui_FanspeedSeriesPanel, lv_color_hex(0x787373), LV_PART_MAIN | LV_STATE_CHECKED );
 lv_obj_set_style_border_opa(ui_FanspeedSeriesPanel, 255, LV_PART_MAIN| LV_STATE_CHECKED);
 lv_obj_set_style_border_width(ui_FanspeedSeriesPanel, 3, LV_PART_MAIN| LV_STATE_CHECKED);
 

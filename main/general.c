@@ -65,8 +65,12 @@ void update_time_left(bool count_day) {
 			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
 			nvs_close(storage_handle);
 		}
-		chart_add_climate_point();
+		if(count_day)
+			chart_add_climate_point();
 	}
+	
+	if(my_tent.seconds < 60 && (my_tent.seconds % 10 == 0)) //to quickly display something on the graph for newly started grows
+		chart_add_climate_point();
 	
 }
 
@@ -74,6 +78,7 @@ void make_it_day(bool count_day) {
 	ESP_LOGI(TAG, "Making it Day");
 	my_tent.is_day = true;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
 	lv_label_set_text(ui_DayNightLabel, "day");
 	if(count_day) {
@@ -87,6 +92,7 @@ void make_it_night() {
 	ESP_LOGI(TAG, "Making it Night");
 	my_tent.is_day = false;
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
 	lv_label_set_text(ui_DayNightLabel, "night");
 }
@@ -776,7 +782,7 @@ void chart_init() {
 lv_chart_set_point_count(ui_Chart, 96);
 chart_series_temperature = lv_chart_add_series(ui_Chart, lv_color_hex(0xEF5F3C), LV_CHART_AXIS_PRIMARY_Y);
 chart_series_humidity = lv_chart_add_series(ui_Chart, lv_color_hex(0x3CB7FF), LV_CHART_AXIS_PRIMARY_Y);
-chart_series_fanspeed = lv_chart_add_series(ui_Chart, lv_color_hex(0x272727), LV_CHART_AXIS_PRIMARY_Y);
+chart_series_fanspeed = lv_chart_add_series(ui_Chart, lv_color_hex(0x787373), LV_CHART_AXIS_PRIMARY_Y);
 chart_series_co2 = lv_chart_add_series(ui_Chart, lv_color_hex(0xAFBDC4), LV_CHART_AXIS_SECONDARY_Y);
 
 //lv_chart_set_zoom_x(ui_Chart, 256);
