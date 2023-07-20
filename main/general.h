@@ -67,16 +67,6 @@ typedef struct {
 
 extern tent_data_t my_tent;
 
-
-typedef struct {
-	float temperature_c[1440];
-	float humidity[1440];
-	float fanspeed[1440];
-	float co2[1440];
-} climate_history_t;
-
-extern climate_history_t climate_history;
-
 extern lv_chart_series_t * chart_series_temperature;
 extern lv_chart_series_t * chart_series_humidity;
 extern lv_chart_series_t * chart_series_fanspeed;
@@ -135,8 +125,8 @@ void init_i2c();
 void setGrowLampBrightness();
 void set_target_climate();
 void update_displayed_values();
-void add_climate_point();
-void init_chart();
+void chart_add_climate_point();
+void chart_init();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 #endif

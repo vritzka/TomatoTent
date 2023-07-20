@@ -251,7 +251,7 @@ void init_tomatotent(lv_event_t * e)
 		 }
 		 
 		 draw_qr_codes();
-		 init_chart();
+		 chart_init();
 		 		
         nvs_close(storage_handle);
         
@@ -626,7 +626,7 @@ void software_upgrade_button(lv_event_t * e)
 
 void hide_temperature_series(lv_event_t * e)
 {
-	 lv_chart_hide_series(ui_Chart, chart_series_temperature, true);
+	lv_chart_hide_series(ui_Chart, chart_series_temperature, true);
 }
 
 void show_temperature_series(lv_event_t * e)
@@ -647,11 +647,13 @@ void show_humidity_series(lv_event_t * e)
 void hide_co2_series(lv_event_t * e)
 {
 	 lv_chart_hide_series(ui_Chart, chart_series_co2, true);
+	 lv_chart_set_axis_tick(ui_Chart, LV_CHART_AXIS_SECONDARY_Y, 0, 1, 8, 1, false, 20);
 }
 
 void show_co2_series(lv_event_t * e)
 {
 	 lv_chart_hide_series(ui_Chart, chart_series_co2, false);
+	 lv_chart_set_axis_tick(ui_Chart, LV_CHART_AXIS_SECONDARY_Y, 0, 1, 8, 1, true, 20);
 }
 
 void hide_fanspeed_series(lv_event_t * e)

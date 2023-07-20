@@ -7,7 +7,6 @@ static esp_err_t err;
 static char somestring[36];
 
 tent_data_t my_tent;
-climate_history_t climate_history;
 
 /////////////////////////////////////////////////////////
 ////////////////////// TIME /////////////////////////////
@@ -27,7 +26,6 @@ void update_time_left(bool count_day) {
 	
 	if(my_tent.seconds % 60 == 0) {	
 		setGrowLampBrightness();
-		add_climate_point();
 	}
 	
 	if(my_tent.seconds < my_tent.day_period_seconds) { //day
@@ -67,6 +65,7 @@ void update_time_left(bool count_day) {
 			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
 			nvs_close(storage_handle);
 		}
+		chart_add_climate_point();
 	}
 	
 }
@@ -102,9 +101,11 @@ void update_temp_units(uint16_t temp_unit) {
 		lv_obj_add_state(ui_TempUnitSwitch, LV_STATE_CHECKED);
 		lv_dropdown_set_options(ui_TemperatureDropdown, "53°F\n57°F\n60°F\n63°F\n66°F\n68°F\n70°F\n72°F\n74°F\n76°F\n78°F");
 		lv_label_set_text(ui_HomeTempUnitLabel, "°F");
+		lv_label_set_text(ui_TempUnitLabel2, "°F");
 	} else {
 		lv_dropdown_set_options(ui_TemperatureDropdown, "12°C\n14°C\n16°C\n18°C\n20°C\n22°C\n24°C\n26°C\n28°C\n30°C\n32°C");
-		lv_label_set_text(ui_HomeTempUnitLabel, "°C"); 
+		lv_label_set_text(ui_HomeTempUnitLabel, "°C");
+		lv_label_set_text(ui_TempUnitLabel2, "°C"); 
 	}
 	lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
 }
@@ -142,41 +143,6 @@ void set_target_climate() {
 		my_tent.target_temperature_f = 71.6;
 				
 	}
-}
-
-void add_climate_point() {
-	
-	if(my_tent.temp_unit) {
-		lv_chart_set_next_value(ui_Chart, chart_series_temperature, my_tent.temperature_f);
-	} else {
-		lv_chart_set_next_value(ui_Chart, chart_series_temperature, my_tent.temperature_c);
-	}
-	lv_chart_set_next_value(ui_Chart, chart_series_humidity, my_tent.humidity);
-	lv_chart_set_next_value(ui_Chart, chart_series_fanspeed, my_tent.fanspeed);
-	lv_chart_set_next_value(ui_Chart, chart_series_co2, my_tent.co2);
-	
-	/*
-	float temporary;
-	uint16_t length = sizeof(climate_history.temperature_c) / sizeof(float_t);
-	for(int i=length-1; i>=0; i--)
-    {
-		
-		if(i==0) {
-			climate_history.temperature_c[i] = my_tent.temperature_c;
-		} else {
-			temporary = climate_history.temperature_c[i-1];
-			climate_history.temperature_c[i] = temporary;
-		}
-			
-		//ESP_LOGI(TAG, "Climate Point %d: %f", i, climate_history.temperature_c[i]);
-    }
-	
-
-	climate_history.temperature_c[0] = my_tent.temperature_c;
-	climate_history.humidity[0] = my_tent.humidity;
-	climate_history.fanspeed[0] = my_tent.fanspeed;
-	climate_history.co2[0] = my_tent.co2;
-	*/
 }
 
 /////////////////////////////////////////////////////////
@@ -800,67 +766,12 @@ void setGrowLampBrightness() {
 ////////////////////  CHART  ////////////////////////////
 /////////////////////////////////////////////////////////
 
-
-static void chart_cb(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t * chart = lv_event_get_target(e);
-
-    if(code == LV_EVENT_VALUE_CHANGED) {
-        lv_obj_invalidate(chart);
-    }
-    if(code == LV_EVENT_REFR_EXT_DRAW_SIZE) {
-        lv_coord_t * s = lv_event_get_param(e);
-        *s = LV_MAX(*s, 20);
-    }
-    else if(code == LV_EVENT_DRAW_POST_END) {
-        int32_t id = lv_chart_get_pressed_point(chart);
-        if(id == LV_CHART_POINT_NONE) return;
-
-        LV_LOG_USER("Selected point %d", (int)id);
-
-        lv_chart_series_t * ser = lv_chart_get_series_next(chart, NULL);
-        while(ser) {
-            lv_point_t p;
-            lv_chart_get_point_pos_by_id(chart, ser, id, &p);
-
-            lv_coord_t * y_array = lv_chart_get_y_array(chart, ser);
-            lv_coord_t value = y_array[id];
-
-            char buf[16];
-            lv_snprintf(buf, sizeof(buf), LV_SYMBOL_DUMMY"$%d", value);
-
-            lv_draw_rect_dsc_t draw_rect_dsc;
-            lv_draw_rect_dsc_init(&draw_rect_dsc);
-            draw_rect_dsc.bg_color = lv_color_black();
-            draw_rect_dsc.bg_opa = LV_OPA_50;
-            draw_rect_dsc.radius = 3;
-            draw_rect_dsc.bg_img_src = buf;
-            draw_rect_dsc.bg_img_recolor = lv_color_white();
-
-            lv_area_t a;
-            a.x1 = chart->coords.x1 + p.x - 20;
-            a.x2 = chart->coords.x1 + p.x + 20;
-            a.y1 = chart->coords.y1 + p.y - 30;
-            a.y2 = chart->coords.y1 + p.y - 10;
-
-            lv_draw_ctx_t * draw_ctx = lv_event_get_draw_ctx(e);
-            lv_draw_rect(draw_ctx, &draw_rect_dsc, &a);
-
-            ser = lv_chart_get_series_next(chart, ser);
-        }
-    }
-    else if(code == LV_EVENT_RELEASED) {
-        lv_obj_invalidate(chart);
-    }
-}
-
 lv_chart_series_t * chart_series_temperature;
 lv_chart_series_t * chart_series_humidity;
 lv_chart_series_t * chart_series_fanspeed;
 lv_chart_series_t * chart_series_co2;
 
-void init_chart() {
+void chart_init() {
 
 lv_chart_set_point_count(ui_Chart, 96);
 chart_series_temperature = lv_chart_add_series(ui_Chart, lv_color_hex(0xEF5F3C), LV_CHART_AXIS_PRIMARY_Y);
@@ -868,10 +779,7 @@ chart_series_humidity = lv_chart_add_series(ui_Chart, lv_color_hex(0x3CB7FF), LV
 chart_series_fanspeed = lv_chart_add_series(ui_Chart, lv_color_hex(0x272727), LV_CHART_AXIS_PRIMARY_Y);
 chart_series_co2 = lv_chart_add_series(ui_Chart, lv_color_hex(0xAFBDC4), LV_CHART_AXIS_SECONDARY_Y);
 
-lv_chart_set_zoom_x(ui_Chart, 256);
-
-lv_obj_add_event_cb(ui_Chart, chart_cb, LV_EVENT_ALL, NULL);
-lv_obj_refresh_ext_draw_size(ui_Chart);
+//lv_chart_set_zoom_x(ui_Chart, 256);
 
 lv_obj_add_state(ui_TempSeriesPanel, LV_STATE_CHECKED);
 lv_obj_add_state(ui_HumiditySeriesPanel, LV_STATE_CHECKED);
@@ -890,6 +798,20 @@ lv_chart_hide_series(ui_Chart, chart_series_fanspeed, true);
 	
 }
 
+void chart_add_climate_point() {
+	
+	if(my_tent.temp_unit) {
+		lv_chart_set_next_value(ui_Chart, chart_series_temperature, my_tent.temperature_f);
+	} else {
+		lv_chart_set_next_value(ui_Chart, chart_series_temperature, my_tent.temperature_c);
+	}
+	lv_chart_set_next_value(ui_Chart, chart_series_humidity, my_tent.humidity);
+	lv_chart_set_next_value(ui_Chart, chart_series_fanspeed, my_tent.fanspeed);
+	lv_chart_set_next_value(ui_Chart, chart_series_co2, my_tent.co2);
+	
+	ESP_LOGI(TAG,"Y Points: %d", sizeof(chart_series_humidity->x_points));
+}
+
 
 
 /////////////////////////////////////////////////////////
@@ -900,17 +822,17 @@ void update_displayed_values() {
 	
 	if(my_tent.temp_unit) {
 		lv_label_set_text_fmt(ui_TemperatureLabel, "%2.0f", my_tent.temperature_f);
-		lv_label_set_text_fmt(ui_TemperatureLabel2, "%2.0f°f", my_tent.temperature_f);
+		lv_label_set_text_fmt(ui_TemperatureLabel2, "%2.0f", my_tent.temperature_f);
 	} else {
 		lv_label_set_text_fmt(ui_TemperatureLabel, "%2.0f", my_tent.temperature_c);
-		lv_label_set_text_fmt(ui_TemperatureLabel2, "%2.0f°c", my_tent.temperature_c);
+		lv_label_set_text_fmt(ui_TemperatureLabel2, "%2.0f", my_tent.temperature_c);
 	}
 	
 	lv_label_set_text_fmt(ui_HumidityLabel, "%d", my_tent.humidity);
-	lv_label_set_text_fmt(ui_HumidityLabel2, "%d%%", my_tent.humidity);
+	lv_label_set_text_fmt(ui_HumidityLabel2, "%d", my_tent.humidity);
 	
 	lv_label_set_text_fmt(ui_FanSpeedLabel, "%d%%", my_tent.fanspeed);
-	lv_label_set_text_fmt(ui_FanSpeedLabel2, "%d%%", my_tent.fanspeed);
+	lv_label_set_text_fmt(ui_FanSpeedLabel2, "%d", my_tent.fanspeed);
 	
 	lv_label_set_text_fmt(ui_VPDLabel, "%.1f kpa", my_tent.vpd);
 	lv_label_set_text_fmt(ui_VPDLabel2, "%.1f", my_tent.vpd);
