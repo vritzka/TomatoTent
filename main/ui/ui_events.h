@@ -12,6 +12,7 @@ extern "C" {
 
 void init_tomatotent(lv_event_t * e);
 void start_grow(lv_event_t * e);
+void grow_lamp_dim_toggle(lv_event_t * e);
 void save_light_duration_screen(lv_event_t * e);
 void light_duration_slider(lv_event_t * e);
 void now_slider(lv_event_t * e);

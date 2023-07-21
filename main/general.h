@@ -5,6 +5,7 @@
 #include "ui.h"
 #include "driver/ledc.h"
 #include "driver/i2c.h"
+#include "driver/gptimer.h"
 #include "includes/scd4x/scd4x.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
@@ -25,13 +26,13 @@
 #include <stdio.h>
 #include "esp_system.h"
 #include <math.h> 
-//#include <float.h> 
 #include "lwip/err.h"
 #include "lwip/sys.h"
-
 #include "esp_event.h"
 #include "esp_crt_bundle.h"
 #include "esp_https_ota.h"
+
+#include "timerTask.h"
 
 typedef struct {
     uint8_t event_count;
@@ -45,6 +46,7 @@ typedef struct {
 	uint16_t now_slider_value;
 	uint16_t led_brightness_slider_value;
 	uint16_t dimmer_brightness_duty;
+	bool grow_lamp_dimmed;
 	uint16_t screen_brightness_slider_value;
 	uint16_t screen_brightness_duty;
 	uint16_t temp_unit; //1 = F
@@ -84,6 +86,8 @@ extern lv_chart_series_t * chart_series_co2;
 #define I2C_ACK_VAL                 (0x00)
 #define I2C_NACK_VAL                (0x01)	
 
+#define CAP_TOUCH_PIN (14)
+
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
 //backlight
 #define LEDC_BACKLIGHT_TIMER              LEDC_TIMER_0
@@ -106,7 +110,7 @@ extern lv_chart_series_t * chart_series_co2;
 #define LEDC_DIMMER_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
 #define LEDC_DIMMER_FREQUENCY          (5000) // Frequency in Hertz.
 
-//gptimer_handle_t gptimer;
+
 
 void update_temp_units(uint16_t temp_unit);
 void init_ledc(void);

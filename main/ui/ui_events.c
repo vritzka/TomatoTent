@@ -244,14 +244,15 @@ void init_tomatotent(lv_event_t * e)
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
 		 } else {
-		  start_animation(ui_SplashScreen);
-		  startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
-		  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
-		  moveTomato_Animation(ui_tomato, 2000);			 
+			  start_animation(ui_SplashScreen);
+			  startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
+			  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
+			  moveTomato_Animation(ui_tomato, 2000);			 
 		 }
 		 
 		 draw_qr_codes();
 		 chart_init();
+		 lv_obj_add_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
 		 		
         nvs_close(storage_handle);
         
@@ -342,6 +343,27 @@ void save_led_brightness_screen(lv_event_t * e)
         nvs_close(storage_handle);	
 	}	
 	
+}
+
+void grow_lamp_dim_toggle(lv_event_t * e)
+{
+	if(!my_tent.is_day)
+		return;
+		
+	if(my_tent.grow_lamp_dimmed != 1) {
+		my_tent.grow_lamp_dimmed = true;
+		lv_obj_clear_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
+		ESP_ERROR_CHECK(gptimer_set_raw_count(grow_lamp_dimmer_timer_handle,0));
+		ESP_ERROR_CHECK(gptimer_start(grow_lamp_dimmer_timer_handle));
+		ESP_LOGI(TAG, "Dimmed");
+	} else {
+		my_tent.grow_lamp_dimmed = false;
+		lv_obj_add_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
+		lv_arc_set_value(ui_DimmerArc, 900);
+		ESP_ERROR_CHECK(gptimer_stop(grow_lamp_dimmer_timer_handle));
+		ESP_LOGI(TAG, "Un-Dimmed");		
+	}
+	setGrowLampBrightness();
 }
 
 /////////////////////////////////////
@@ -665,3 +687,5 @@ void show_fanspeed_series(lv_event_t * e)
 {
 	 lv_chart_hide_series(ui_Chart, chart_series_fanspeed, false);
 }
+
+

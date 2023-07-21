@@ -67,6 +67,9 @@ extern lv_obj_t *ui_ArrowUp1;
 void ui_event_WifiIcon( lv_event_t * e);
 extern lv_obj_t *ui_WifiIcon;
 extern lv_obj_t *ui_Image22;
+extern lv_obj_t *ui_DimmerIconPanel;
+extern lv_obj_t *ui_DimmerArc;
+extern lv_obj_t *ui_Image23;
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
 void ui_event_LightDurationScreen( lv_event_t * e);
@@ -248,6 +251,7 @@ LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_upload_png);   // assets/upload.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
+LV_IMG_DECLARE( ui_img_dimmer_png);   // assets/dimmer.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
@@ -270,6 +274,7 @@ LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
+LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 
 void ui_init(void);
 

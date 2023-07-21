@@ -71,6 +71,15 @@ void update_time_left(bool count_day) {
 	
 	if(my_tent.seconds < 60 && (my_tent.seconds % 10 == 0)) //to quickly display something on the graph for newly started grows
 		chart_add_climate_point();
+		
+	if(my_tent.grow_lamp_dimmed) {	
+		static uint64_t dimmer_timer_raw_count;
+		gptimer_get_raw_count(grow_lamp_dimmer_timer_handle, &dimmer_timer_raw_count);
+		
+		uint16_t dimmed_seconds = dimmer_timer_raw_count/1000000;
+		lv_arc_set_value(ui_DimmerArc, 900-dimmed_seconds);
+		ESP_LOGI(TAG, "ARC: %d", 900-dimmed_seconds); 
+	}
 	
 }
 
@@ -750,8 +759,9 @@ void setGrowLampBrightness() {
 			ESP_LOGI(TAG, "Normal Daytime");
 			dimmer_brightness = my_tent.led_brightness_slider_value; // normal daytime
 		}
-			
 		
+		if(my_tent.grow_lamp_dimmed && dimmer_brightness > 15)
+			dimmer_brightness = 15;
 			
 	} else { // night
 		

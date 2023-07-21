@@ -154,3 +154,19 @@ def show_fanspeed_series(event_struct):
 def hide_fanspeed_series(event_struct):
     return
 
+
+def grow_light_dim_toggle(event_struct):
+    return
+
+
+def dim_grow_lamp(event_struct):
+    return
+
+
+def grow_lamp_dim(event_struct):
+    return
+
+
+def grow_lamp_dim_toggle(event_struct):
+    return
+

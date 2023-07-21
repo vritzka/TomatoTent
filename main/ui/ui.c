@@ -62,6 +62,9 @@ lv_obj_t *ui_ArrowUp1;
 void ui_event_WifiIcon( lv_event_t * e);
 lv_obj_t *ui_WifiIcon;
 lv_obj_t *ui_Image22;
+lv_obj_t *ui_DimmerIconPanel;
+lv_obj_t *ui_DimmerArc;
+lv_obj_t *ui_Image23;
 
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
@@ -254,6 +257,7 @@ const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
+const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -431,6 +435,10 @@ lv_indev_wait_release(lv_indev_get_act());
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( ui_GraphScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0);
+}
+if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
+lv_indev_wait_release(lv_indev_get_act());
+      grow_lamp_dim_toggle( e );
 }
 }
 void ui_event_TemperaturePanel( lv_event_t * e) {
