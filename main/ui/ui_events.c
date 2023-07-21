@@ -252,7 +252,6 @@ void init_tomatotent(lv_event_t * e)
 		 
 		 draw_qr_codes();
 		 chart_init();
-		 lv_obj_add_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
 		 		
         nvs_close(storage_handle);
         
@@ -352,13 +351,15 @@ void grow_lamp_dim_toggle(lv_event_t * e)
 		
 	if(my_tent.grow_lamp_dimmed != 1) {
 		my_tent.grow_lamp_dimmed = true;
-		lv_obj_clear_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
+		//lv_obj_clear_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
+		ShowDimmerIndication_Animation(ui_DimmerIconPanel, 0);
 		ESP_ERROR_CHECK(gptimer_set_raw_count(grow_lamp_dimmer_timer_handle,0));
 		ESP_ERROR_CHECK(gptimer_start(grow_lamp_dimmer_timer_handle));
 		ESP_LOGI(TAG, "Dimmed");
 	} else {
 		my_tent.grow_lamp_dimmed = false;
-		lv_obj_add_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
+		HideDimmerIndication_Animation(ui_DimmerIconPanel, 0);
+		//lv_obj_add_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
 		lv_arc_set_value(ui_DimmerArc, 900);
 		ESP_ERROR_CHECK(gptimer_stop(grow_lamp_dimmer_timer_handle));
 		ESP_LOGI(TAG, "Un-Dimmed");		

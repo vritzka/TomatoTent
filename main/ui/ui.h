@@ -19,6 +19,8 @@ void Gentle_rock_Animation( lv_obj_t *TargetObject, int delay);
 void startGrowButtonAppear_Animation( lv_obj_t *TargetObject, int delay);
 void dryHarvestButtonAppear_Animation( lv_obj_t *TargetObject, int delay);
 void moveTomato_Animation( lv_obj_t *TargetObject, int delay);
+void ShowDimmerIndication_Animation( lv_obj_t *TargetObject, int delay);
+void HideDimmerIndication_Animation( lv_obj_t *TargetObject, int delay);
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
 void ui_event_SplashScreen( lv_event_t * e);

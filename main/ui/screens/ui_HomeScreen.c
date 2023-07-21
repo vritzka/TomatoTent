@@ -278,8 +278,8 @@ lv_obj_clear_flag( ui_Image22, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_DimmerIconPanel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_DimmerIconPanel, 56);
 lv_obj_set_height( ui_DimmerIconPanel, 50);
-lv_obj_set_x( ui_DimmerIconPanel, 159 );
-lv_obj_set_y( ui_DimmerIconPanel, -135 );
+lv_obj_set_x( ui_DimmerIconPanel, 0 );
+lv_obj_set_y( ui_DimmerIconPanel, -190 );
 lv_obj_set_align( ui_DimmerIconPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_DimmerIconPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_DimmerIconPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
