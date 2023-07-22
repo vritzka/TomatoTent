@@ -21,6 +21,8 @@ void dryHarvestButtonAppear_Animation( lv_obj_t *TargetObject, int delay);
 void moveTomato_Animation( lv_obj_t *TargetObject, int delay);
 void ShowDimmerIndication_Animation( lv_obj_t *TargetObject, int delay);
 void HideDimmerIndication_Animation( lv_obj_t *TargetObject, int delay);
+void ShowDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
+void HideDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
 void ui_event_SplashScreen( lv_event_t * e);
@@ -70,8 +72,8 @@ void ui_event_WifiIcon( lv_event_t * e);
 extern lv_obj_t *ui_WifiIcon;
 extern lv_obj_t *ui_Image22;
 extern lv_obj_t *ui_DimmerIconPanel;
-extern lv_obj_t *ui_DimmerArc;
 extern lv_obj_t *ui_Image23;
+extern lv_obj_t *ui_DimmerArc;
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
 void ui_event_LightDurationScreen( lv_event_t * e);
@@ -83,8 +85,6 @@ void ui_event_NowSlider( lv_event_t * e);
 extern lv_obj_t *ui_NowSlider;
 extern lv_obj_t *ui_Image8;
 extern lv_obj_t *ui_Image9;
-extern lv_obj_t *ui_ArrowDown;
-extern lv_obj_t *ui_ArrowUp;
 extern lv_obj_t *ui_LightDurationLightLabel;
 extern lv_obj_t *ui_LightDurationDarkLabel;
 // SCREEN: ui_LEDBrightnessScreen
@@ -92,13 +92,11 @@ void ui_LEDBrightnessScreen_screen_init(void);
 void ui_event_LEDBrightnessScreen( lv_event_t * e);
 extern lv_obj_t *ui_LEDBrightnessScreen;
 extern lv_obj_t *ui_LEDBrightnessLabel;
-extern lv_obj_t *ui_arrowdown1;
 extern lv_obj_t *ui_Label12;
 extern lv_obj_t *ui_Image4;
 extern lv_obj_t *ui_Panel6;
 void ui_event_LEDBrightnessSlider( lv_event_t * e);
 extern lv_obj_t *ui_LEDBrightnessSlider;
-extern lv_obj_t *ui_arrowdown2;
 // SCREEN: ui_DayCounterScreen
 void ui_DayCounterScreen_screen_init(void);
 void ui_event_DayCounterScreen( lv_event_t * e);
@@ -155,6 +153,9 @@ extern lv_obj_t *ui_Label29;
 extern lv_obj_t *ui_Label30;
 extern lv_obj_t *ui_Label31;
 extern lv_obj_t *ui_Label32;
+extern lv_obj_t *ui_DimmerIconPanel2;
+extern lv_obj_t *ui_Image18;
+extern lv_obj_t *ui_DimmerBar2;
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
 void ui_event_FanSettingsScreen( lv_event_t * e);
@@ -223,10 +224,10 @@ extern lv_obj_t *ui_Label24;
 void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 extern lv_obj_t *ui_ScreenBrightnessSlider;
 extern lv_obj_t *ui_ScreenBrightnessLabel;
-extern lv_obj_t *ui_Image17;
 extern lv_obj_t *ui_Panel18;
 extern lv_obj_t *ui_Switch4;
 extern lv_obj_t *ui_Image20;
+extern lv_obj_t *ui_Dropdown2;
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
 extern lv_obj_t *ui_SoftwareUpdateScreen;
@@ -253,7 +254,7 @@ LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_upload_png);   // assets/upload.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
-LV_IMG_DECLARE( ui_img_dimmer_png);   // assets/dimmer.png
+LV_IMG_DECLARE( ui_img_640654572);   // assets/sunglasses-2.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png

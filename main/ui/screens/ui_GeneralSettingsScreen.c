@@ -15,10 +15,10 @@ lv_obj_set_style_bg_opa(ui_GeneralSettingsScreen, 255, LV_PART_MAIN| LV_STATE_DE
 ui_Label23 = lv_label_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Label23, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label23, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label23, 6 );
-lv_obj_set_y( ui_Label23, -106 );
+lv_obj_set_x( ui_Label23, -80 );
+lv_obj_set_y( ui_Label23, -105 );
 lv_obj_set_align( ui_Label23, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label23,"General Settings");
+lv_label_set_text(ui_Label23,"Settings");
 lv_obj_set_style_text_font(ui_Label23, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel12 = lv_obj_create(ui_GeneralSettingsScreen);
@@ -62,18 +62,6 @@ lv_obj_set_y( ui_ScreenBrightnessLabel, -28 );
 lv_obj_set_align( ui_ScreenBrightnessLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_ScreenBrightnessLabel,"80%");
 
-ui_Image17 = lv_img_create(ui_GeneralSettingsScreen);
-lv_img_set_src(ui_Image17, &ui_img_upload_png);
-lv_obj_set_width( ui_Image17, LV_SIZE_CONTENT);  /// 32
-lv_obj_set_height( ui_Image17, LV_SIZE_CONTENT);   /// 32
-lv_obj_set_x( ui_Image17, 1 );
-lv_obj_set_y( ui_Image17, -145 );
-lv_obj_set_align( ui_Image17, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Image17, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
-lv_obj_clear_flag( ui_Image17, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_img_recolor(ui_Image17, lv_color_hex(0x145B0A), LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_img_recolor_opa(ui_Image17, 200, LV_PART_MAIN| LV_STATE_DEFAULT);
-
 ui_Panel18 = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Panel18, 188);
 lv_obj_set_height( ui_Panel18, 54);
@@ -101,6 +89,14 @@ lv_obj_set_y( ui_Image20, -108 );
 lv_obj_set_align( ui_Image20, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image20, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image20, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+ui_Dropdown2 = lv_dropdown_create(ui_GeneralSettingsScreen);
+lv_obj_set_width( ui_Dropdown2, 150);
+lv_obj_set_height( ui_Dropdown2, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_Dropdown2, 113 );
+lv_obj_set_y( ui_Dropdown2, -1 );
+lv_obj_set_align( ui_Dropdown2, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Dropdown2, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 
 lv_obj_add_event_cb(ui_ScreenBrightnessSlider, ui_event_ScreenBrightnessSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GeneralSettingsScreen, ui_event_GeneralSettingsScreen, LV_EVENT_ALL, NULL);

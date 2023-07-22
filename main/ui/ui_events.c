@@ -344,26 +344,34 @@ void save_led_brightness_screen(lv_event_t * e)
 	
 }
 
-void grow_lamp_dim_toggle(lv_event_t * e)
+void grow_lamp_dim(lv_event_t * e)
 {
 	if(!my_tent.is_day)
 		return;
 		
 	if(my_tent.grow_lamp_dimmed != 1) {
 		my_tent.grow_lamp_dimmed = true;
-		//lv_obj_clear_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
 		ShowDimmerIndication_Animation(ui_DimmerIconPanel, 0);
+		ShowDimmerIndication2_Animation(ui_DimmerIconPanel2, 0);
 		ESP_ERROR_CHECK(gptimer_set_raw_count(grow_lamp_dimmer_timer_handle,0));
 		ESP_ERROR_CHECK(gptimer_start(grow_lamp_dimmer_timer_handle));
 		ESP_LOGI(TAG, "Dimmed");
-	} else {
-		my_tent.grow_lamp_dimmed = false;
-		HideDimmerIndication_Animation(ui_DimmerIconPanel, 0);
-		//lv_obj_add_flag(ui_DimmerIconPanel, LV_OBJ_FLAG_HIDDEN);
-		lv_arc_set_value(ui_DimmerArc, 900);
-		ESP_ERROR_CHECK(gptimer_stop(grow_lamp_dimmer_timer_handle));
-		ESP_LOGI(TAG, "Un-Dimmed");		
 	}
+
+}
+
+void grow_lamp_un_dim(lv_event_t * e)
+{
+	if(!my_tent.grow_lamp_dimmed)
+		return;
+		
+	my_tent.grow_lamp_dimmed = false;
+	HideDimmerIndication_Animation(ui_DimmerIconPanel, 0);
+	HideDimmerIndication2_Animation(ui_DimmerIconPanel2, 0);
+	lv_arc_set_value(ui_DimmerArc, 900);
+	lv_bar_set_value(ui_DimmerBar2, 900, LV_ANIM_OFF);
+	ESP_ERROR_CHECK(gptimer_stop(grow_lamp_dimmer_timer_handle));
+	ESP_LOGI(TAG, "Un-Dimmed");		
 	setGrowLampBrightness();
 }
 
@@ -690,3 +698,19 @@ void show_fanspeed_series(lv_event_t * e)
 }
 
 
+
+void ui_event_homeScreen_custom(lv_event_t * e)
+{
+	lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+
+	if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP  ) {
+	lv_indev_wait_release(lv_indev_get_act());
+		if(my_tent.grow_lamp_dimmed) {
+			grow_lamp_un_dim(e);
+		} else {
+			_ui_screen_change( ui_GeneralSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 300, 0);
+		}
+		  
+	}
+
+}

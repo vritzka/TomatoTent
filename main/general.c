@@ -78,7 +78,16 @@ void update_time_left(bool count_day) {
 		
 		uint16_t dimmed_seconds = dimmer_timer_raw_count/1000000;
 		lv_arc_set_value(ui_DimmerArc, 900-dimmed_seconds);
-		ESP_LOGI(TAG, "ARC: %d", 900-dimmed_seconds); 
+		lv_bar_set_value(ui_DimmerBar2, 900-dimmed_seconds, LV_ANIM_OFF);
+		
+		if(dimmed_seconds == 899) {
+			HideDimmerIndication_Animation(ui_DimmerIconPanel, 0);
+			HideDimmerIndication2_Animation(ui_DimmerIconPanel2, 0);
+			lv_arc_set_value(ui_DimmerArc, 900);
+			lv_bar_set_value(ui_DimmerBar2, 900, LV_ANIM_OFF);
+			ESP_LOGI(TAG, "Un-Dimmed");		
+			setGrowLampBrightness();			
+		}
 	}
 	
 }

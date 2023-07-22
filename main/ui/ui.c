@@ -14,6 +14,8 @@ void dryHarvestButtonAppear_Animation( lv_obj_t *TargetObject, int delay);
 void moveTomato_Animation( lv_obj_t *TargetObject, int delay);
 void ShowDimmerIndication_Animation( lv_obj_t *TargetObject, int delay);
 void HideDimmerIndication_Animation( lv_obj_t *TargetObject, int delay);
+void ShowDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
+void HideDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
@@ -65,8 +67,8 @@ void ui_event_WifiIcon( lv_event_t * e);
 lv_obj_t *ui_WifiIcon;
 lv_obj_t *ui_Image22;
 lv_obj_t *ui_DimmerIconPanel;
-lv_obj_t *ui_DimmerArc;
 lv_obj_t *ui_Image23;
+lv_obj_t *ui_DimmerArc;
 
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
@@ -79,8 +81,6 @@ void ui_event_NowSlider( lv_event_t * e);
 lv_obj_t *ui_NowSlider;
 lv_obj_t *ui_Image8;
 lv_obj_t *ui_Image9;
-lv_obj_t *ui_ArrowDown;
-lv_obj_t *ui_ArrowUp;
 lv_obj_t *ui_LightDurationLightLabel;
 lv_obj_t *ui_LightDurationDarkLabel;
 
@@ -89,13 +89,11 @@ void ui_LEDBrightnessScreen_screen_init(void);
 void ui_event_LEDBrightnessScreen( lv_event_t * e);
 lv_obj_t *ui_LEDBrightnessScreen;
 lv_obj_t *ui_LEDBrightnessLabel;
-lv_obj_t *ui_arrowdown1;
 lv_obj_t *ui_Label12;
 lv_obj_t *ui_Image4;
 lv_obj_t *ui_Panel6;
 void ui_event_LEDBrightnessSlider( lv_event_t * e);
 lv_obj_t *ui_LEDBrightnessSlider;
-lv_obj_t *ui_arrowdown2;
 
 // SCREEN: ui_DayCounterScreen
 void ui_DayCounterScreen_screen_init(void);
@@ -154,6 +152,9 @@ lv_obj_t *ui_Label29;
 lv_obj_t *ui_Label30;
 lv_obj_t *ui_Label31;
 lv_obj_t *ui_Label32;
+lv_obj_t *ui_DimmerIconPanel2;
+lv_obj_t *ui_Image18;
+lv_obj_t *ui_DimmerBar2;
 
 // SCREEN: ui_FanSettingsScreen
 void ui_FanSettingsScreen_screen_init(void);
@@ -226,10 +227,10 @@ lv_obj_t *ui_Label24;
 void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 lv_obj_t *ui_ScreenBrightnessSlider;
 lv_obj_t *ui_ScreenBrightnessLabel;
-lv_obj_t *ui_Image17;
 lv_obj_t *ui_Panel18;
 lv_obj_t *ui_Switch4;
 lv_obj_t *ui_Image20;
+lv_obj_t *ui_Dropdown2;
 
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
@@ -260,6 +261,7 @@ const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_7917115
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
 const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
+const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -411,10 +413,10 @@ PropertyAnimation_0_user_data->target = TargetObject;
 PropertyAnimation_0_user_data->val = -1;
 lv_anim_t PropertyAnimation_0;
 lv_anim_init(&PropertyAnimation_0);
-lv_anim_set_time(&PropertyAnimation_0, 500);
+lv_anim_set_time(&PropertyAnimation_0, 400);
 lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
 lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_y );
-lv_anim_set_values(&PropertyAnimation_0, 0, 50 );
+lv_anim_set_values(&PropertyAnimation_0, 0, 76 );
 lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_overshoot);
 lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
 lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
@@ -434,10 +436,10 @@ PropertyAnimation_0_user_data->target = TargetObject;
 PropertyAnimation_0_user_data->val = -1;
 lv_anim_t PropertyAnimation_0;
 lv_anim_init(&PropertyAnimation_0);
-lv_anim_set_time(&PropertyAnimation_0, 500);
+lv_anim_set_time(&PropertyAnimation_0, 400);
 lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
 lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_y );
-lv_anim_set_values(&PropertyAnimation_0, 0, -50 );
+lv_anim_set_values(&PropertyAnimation_0, 0, -76 );
 lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_ease_in);
 lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
 lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
@@ -446,6 +448,52 @@ lv_anim_set_playback_delay(&PropertyAnimation_0, 0);
 lv_anim_set_repeat_count(&PropertyAnimation_0, 0);
 lv_anim_set_repeat_delay(&PropertyAnimation_0, 0);
 lv_anim_set_early_apply( &PropertyAnimation_0, false );
+lv_anim_set_get_value_cb(&PropertyAnimation_0, &_ui_anim_callback_get_y );
+lv_anim_start(&PropertyAnimation_0);
+
+}
+void ShowDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay)
+{
+ui_anim_user_data_t *PropertyAnimation_0_user_data = lv_mem_alloc(sizeof(ui_anim_user_data_t));
+PropertyAnimation_0_user_data->target = TargetObject;
+PropertyAnimation_0_user_data->val = -1;
+lv_anim_t PropertyAnimation_0;
+lv_anim_init(&PropertyAnimation_0);
+lv_anim_set_time(&PropertyAnimation_0, 500);
+lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
+lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_y );
+lv_anim_set_values(&PropertyAnimation_0, 0, 180 );
+lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_overshoot);
+lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
+lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
+lv_anim_set_playback_time(&PropertyAnimation_0, 0);
+lv_anim_set_playback_delay(&PropertyAnimation_0, 0);
+lv_anim_set_repeat_count(&PropertyAnimation_0, 0);
+lv_anim_set_repeat_delay(&PropertyAnimation_0, 0);
+lv_anim_set_early_apply( &PropertyAnimation_0, false );
+lv_anim_set_get_value_cb(&PropertyAnimation_0, &_ui_anim_callback_get_y );
+lv_anim_start(&PropertyAnimation_0);
+
+}
+void HideDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay)
+{
+ui_anim_user_data_t *PropertyAnimation_0_user_data = lv_mem_alloc(sizeof(ui_anim_user_data_t));
+PropertyAnimation_0_user_data->target = TargetObject;
+PropertyAnimation_0_user_data->val = -1;
+lv_anim_t PropertyAnimation_0;
+lv_anim_init(&PropertyAnimation_0);
+lv_anim_set_time(&PropertyAnimation_0, 500);
+lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
+lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_y );
+lv_anim_set_values(&PropertyAnimation_0, 0, -180 );
+lv_anim_set_path_cb( &PropertyAnimation_0, lv_anim_path_ease_in);
+lv_anim_set_delay( &PropertyAnimation_0, delay + 0 );
+lv_anim_set_deleted_cb( &PropertyAnimation_0, _ui_anim_callback_free_user_data );
+lv_anim_set_playback_time(&PropertyAnimation_0, 0);
+lv_anim_set_playback_delay(&PropertyAnimation_0, 0);
+lv_anim_set_repeat_count(&PropertyAnimation_0, 0);
+lv_anim_set_repeat_delay(&PropertyAnimation_0, 0);
+lv_anim_set_early_apply( &PropertyAnimation_0, true );
 lv_anim_set_get_value_cb(&PropertyAnimation_0, &_ui_anim_callback_get_y );
 lv_anim_start(&PropertyAnimation_0);
 
@@ -478,15 +526,15 @@ lv_indev_wait_release(lv_indev_get_act());
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_GeneralSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0);
+      ui_event_homeScreen_custom( e );
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_GraphScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0);
+      _ui_screen_change( ui_GraphScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 300, 0);
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      grow_lamp_dim_toggle( e );
+      grow_lamp_dim( e );
 }
 }
 void ui_event_TemperaturePanel( lv_event_t * e) {
@@ -529,7 +577,7 @@ void ui_event_LightDurationScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_LEDBrightnessScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
+      _ui_screen_change( ui_LEDBrightnessScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 300, 0);
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
@@ -559,7 +607,7 @@ lv_indev_wait_release(lv_indev_get_act());
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
+      _ui_screen_change( ui_DayCounterScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 300, 0);
 }
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
       save_led_brightness_screen( e );
@@ -575,7 +623,7 @@ void ui_event_DayCounterScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_LEDBrightnessScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0);
+      _ui_screen_change( ui_LEDBrightnessScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 300, 0);
 }
 }
 void ui_event_DayDownButton( lv_event_t * e) {
@@ -606,7 +654,15 @@ void ui_event_GraphScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0);
+      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 300, 0);
+}
+if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
+lv_indev_wait_release(lv_indev_get_act());
+      grow_lamp_dim( e );
+}
+if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP  ) {
+lv_indev_wait_release(lv_indev_get_act());
+      grow_lamp_un_dim( e );
 }
 }
 void ui_event_TempSeriesPanel( lv_event_t * e) {
@@ -733,7 +789,7 @@ void ui_event_GeneralSettingsScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0);
+      _ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 300, 0);
 }
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
       save_general_settings_screen( e );

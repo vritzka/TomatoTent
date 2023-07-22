@@ -338,6 +338,44 @@ lv_obj_set_y( ui_Label32, 0 );
 lv_obj_set_align( ui_Label32, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label32,"-7");
 
+ui_DimmerIconPanel2 = lv_obj_create(ui_GraphScreen);
+lv_obj_set_width( ui_DimmerIconPanel2, 111);
+lv_obj_set_height( ui_DimmerIconPanel2, 78);
+lv_obj_set_x( ui_DimmerIconPanel2, 0 );
+lv_obj_set_y( ui_DimmerIconPanel2, -203 );
+lv_obj_set_align( ui_DimmerIconPanel2, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM | LV_OBJ_FLAG_SCROLL_CHAIN );    /// Flags
+lv_obj_set_style_bg_color(ui_DimmerIconPanel2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_DimmerIconPanel2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_width(ui_DimmerIconPanel2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_Image18 = lv_img_create(ui_DimmerIconPanel2);
+lv_img_set_src(ui_Image18, &ui_img_640654572);
+lv_obj_set_width( ui_Image18, LV_SIZE_CONTENT);  /// 32
+lv_obj_set_height( ui_Image18, LV_SIZE_CONTENT);   /// 32
+lv_obj_set_x( ui_Image18, 0 );
+lv_obj_set_y( ui_Image18, -8 );
+lv_obj_set_align( ui_Image18, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Image18, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_Image18, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+ui_DimmerBar2 = lv_bar_create(ui_DimmerIconPanel2);
+lv_bar_set_range(ui_DimmerBar2, 0,900);
+lv_bar_set_value(ui_DimmerBar2,900,LV_ANIM_OFF);
+lv_obj_set_width( ui_DimmerBar2, 36);
+lv_obj_set_height( ui_DimmerBar2, 5);
+lv_obj_set_x( ui_DimmerBar2, 0 );
+lv_obj_set_y( ui_DimmerBar2, 23 );
+lv_obj_set_align( ui_DimmerBar2, LV_ALIGN_CENTER );
+lv_obj_set_style_radius(ui_DimmerBar2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_DimmerBar2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_DimmerBar2, 50, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+lv_obj_set_style_radius(ui_DimmerBar2, 0, LV_PART_INDICATOR| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_DimmerBar2, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_DimmerBar2, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT);
+
 lv_obj_add_event_cb(ui_TempSeriesPanel, ui_event_TempSeriesPanel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_HumiditySeriesPanel, ui_event_HumiditySeriesPanel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_CO2SeriesPanel, ui_event_CO2SeriesPanel, LV_EVENT_ALL, NULL);

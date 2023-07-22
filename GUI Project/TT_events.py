@@ -170,3 +170,15 @@ def grow_lamp_dim(event_struct):
 def grow_lamp_dim_toggle(event_struct):
     return
 
+
+def grow_lamp_un_dim(event_struct):
+    return
+
+
+def ui_event_homeScreen_custom(event_struct):
+    return
+
+
+def ui_event_graphScreen_custom(event_struct):
+    return
+

@@ -188,7 +188,6 @@ void vGuiTask( void * pvParameters )
     // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
     esp_lcd_panel_invert_color(panel_handle, true);
     esp_lcd_panel_set_gap(panel_handle, 0, 0);
-    //esp_lcd_panel_mirror(panel_handle, false, true);
     esp_lcd_panel_swap_xy(panel_handle, true);
 
 #elif CONFIG_EXAMPLE_LCD_I80_CONTROLLER_ILI9341
@@ -223,8 +222,6 @@ void vGuiTask( void * pvParameters )
     // user can flush pre-defined pattern to the screen before we turn on the screen or backlight
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 
-    //ESP_LOGI(TAG, "Turn on LCD backlight");
-   // gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_ON_LEVEL);
 
 #if CONFIG_EXAMPLE_LCD_TOUCH_ENABLED
     esp_lcd_touch_handle_t tp = NULL;
@@ -244,13 +241,8 @@ void vGuiTask( void * pvParameters )
     ESP_ERROR_CHECK(i2c_param_config(EXAMPLE_I2C_NUM, &i2c_conf));
     ESP_ERROR_CHECK(i2c_driver_install(EXAMPLE_I2C_NUM, i2c_conf.mode, 0, 0, 0));
 
-#if CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_GT911
-    esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_GT911_CONFIG();
-#elif CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_TT21100
-    esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_TT21100_CONFIG();
-#elif CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_FT5X06
+
     esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_FT5x06_CONFIG();
-#endif
 
     ESP_LOGI(TAG, "Initialize touch IO (I2C)");
 
@@ -271,16 +263,8 @@ void vGuiTask( void * pvParameters )
 
 
     /* Initialize touch */
-#if CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_GT911
-    ESP_LOGI(TAG, "Initialize touch controller GT911");
-    ESP_ERROR_CHECK(esp_lcd_touch_new_i2c_gt911(tp_io_handle, &tp_cfg, &tp));
-#elif CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_TT21100
-    ESP_LOGI(TAG, "Initialize touch controller TT21100");
-    ESP_ERROR_CHECK(esp_lcd_touch_new_i2c_tt21100(tp_io_handle, &tp_cfg, &tp));
-#elif CONFIG_EXAMPLE_LCD_TOUCH_CONTROLLER_FT5X06
     ESP_LOGI(TAG, "Initialize touch controller FT5X06");
     ESP_ERROR_CHECK(esp_lcd_touch_new_i2c_ft5x06(tp_io_handle, &tp_cfg, &tp));
-#endif
 
 #endif
 

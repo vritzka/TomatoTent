@@ -12,7 +12,8 @@ extern "C" {
 
 void init_tomatotent(lv_event_t * e);
 void start_grow(lv_event_t * e);
-void grow_lamp_dim_toggle(lv_event_t * e);
+void ui_event_homeScreen_custom(lv_event_t * e);
+void grow_lamp_dim(lv_event_t * e);
 void save_light_duration_screen(lv_event_t * e);
 void light_duration_slider(lv_event_t * e);
 void now_slider(lv_event_t * e);
@@ -21,6 +22,8 @@ void LEDBrightnessSlider(lv_event_t * e);
 void decrease_day_counter(lv_event_t * e);
 void stop_grow(lv_event_t * e);
 void increase_day_counter(lv_event_t * e);
+void grow_lamp_dim(lv_event_t * e);
+void grow_lamp_un_dim(lv_event_t * e);
 void show_temperature_series(lv_event_t * e);
 void hide_temperature_series(lv_event_t * e);
 void show_humidity_series(lv_event_t * e);

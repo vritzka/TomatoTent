@@ -22,7 +22,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_upload_png.c
     images/ui_img_wifi_png.c
     images/ui_img_co2_png.c
-    images/ui_img_dimmer_png.c
+    images/ui_img_640654572.c
     images/ui_img_303216376.c
     images/ui_img_now_arrow_2_png.c
     images/ui_img_432815713.c
