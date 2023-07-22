@@ -23,13 +23,13 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_wifi_png.c
     images/ui_img_co2_png.c
     images/ui_img_640654572.c
+    images/ui_img_appointment_png.c
     images/ui_img_303216376.c
     images/ui_img_now_arrow_2_png.c
     images/ui_img_432815713.c
     images/ui_img_1756057095.c
     images/ui_img_320680866.c
     images/ui_img_1749885216.c
-    images/ui_img_appointment_png.c
     images/ui_img_harvest_png.c
     images/ui_img_1668913270.c
     images/ui_img_2060199463.c

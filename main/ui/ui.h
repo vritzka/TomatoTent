@@ -255,13 +255,13 @@ LV_IMG_DECLARE( ui_img_upload_png);   // assets/upload.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
 LV_IMG_DECLARE( ui_img_640654572);   // assets/sunglasses-2.png
+LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
 LV_IMG_DECLARE( ui_img_1756057095);   // assets/led-light-3.png
 LV_IMG_DECLARE( ui_img_320680866);   // assets/led-light-2.png
 LV_IMG_DECLARE( ui_img_1749885216);   // assets/chevron-downwards-arrow.png
-LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_harvest_png);   // assets/harvest.png
 LV_IMG_DECLARE( ui_img_1668913270);   // assets/back-up.png
 LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
