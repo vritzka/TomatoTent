@@ -10,6 +10,7 @@
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include <string.h>
+#include <math.h>  
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "esp_wifi.h"
@@ -78,15 +79,13 @@ extern lv_chart_series_t * chart_series_co2;
 #define I2C_MASTER_SCL              (13)
 #define I2C_MASTER_RX_BUF_DISABLE   (0)
 #define I2C_MASTER_TX_BUF_DISABLE   (0)
-#define I2C_MASTER_FREQ_HZ          (100000)
-#define I2C_MASTER_TIMEOUT_MS       (1000)
+#define I2C_MASTER_FREQ_HZ          (60000)
+#define I2C_MASTER_TIMEOUT_MS       (2000)
 #define I2C_MASTER_NUM              (1)
 #define I2C_ACK_CHECK_DIS           (0x00)
 #define I2C_ACK_CHECK_EN            (0x01)
 #define I2C_ACK_VAL                 (0x00)
 #define I2C_NACK_VAL                (0x01)	
-
-#define CAP_TOUCH_PIN (14)
 
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
 //backlight

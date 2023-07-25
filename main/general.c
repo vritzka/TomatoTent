@@ -833,9 +833,7 @@ void chart_add_climate_point() {
 	lv_chart_set_next_value(ui_Chart, chart_series_humidity, my_tent.humidity);
 	lv_chart_set_next_value(ui_Chart, chart_series_fanspeed, my_tent.fanspeed);
 	lv_chart_set_next_value(ui_Chart, chart_series_co2, my_tent.co2);
-	
-	ESP_LOGI(TAG,"Y Points: %d", sizeof(chart_series_humidity->x_points));
-}
+	}
 
 
 
@@ -870,4 +868,15 @@ long map(long x, long in_min, long in_max, long out_min, long out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-
+/*
+void elevation_spinbox
+ui_Spinbox1 = lv_spinbox_create(ui_Panel7);
+lv_obj_set_width( ui_Spinbox1, 70);
+lv_obj_set_height( ui_Spinbox1, 42);
+lv_obj_set_x( ui_Spinbox1, 0 );
+lv_obj_set_y( ui_Spinbox1, 8 );
+lv_obj_set_align( ui_Spinbox1, LV_ALIGN_CENTER );
+lv_spinbox_set_digit_format( ui_Spinbox1, 4, 0);
+lv_spinbox_set_range( ui_Spinbox1, -5000,8000 );
+lv_spinbox_set_step( ui_Spinbox1, round(pow(10, 10 - 1)) );
+*/

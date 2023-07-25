@@ -123,7 +123,7 @@ esp_err_t scd4x_read(uint8_t *hex_code, uint8_t *measurements, uint8_t size) {
     ESP_ERROR_CHECK_WITHOUT_ABORT(i2c_master_write(cmd, hex_code, SCD41_HEX_CODE_SIZE, I2C_ACK_CHECK_EN));
 
     ESP_ERROR_CHECK_WITHOUT_ABORT(i2c_master_start(cmd));
-    ESP_ERROR_CHECK_WITHOUT_ABORT(i2c_master_write_byte(cmd, (SCD41_SENSOR_ADDR << 1) | I2C_MASTER_READ, I2C_ACK_CHECK_EN));
+    ESP_ERROR_CHECK_WITHOUT_ABORT(i2c_master_write_byte(cmd, (SCD41_SENSOR_ADDR << 1) | I2C_MASTER_READ, I2C_ACK_CHECK_EN));  
     ESP_ERROR_CHECK_WITHOUT_ABORT(i2c_master_read(cmd, measurements, size, I2C_MASTER_LAST_NACK));
 
     ESP_ERROR_CHECK_WITHOUT_ABORT(i2c_master_stop(cmd));

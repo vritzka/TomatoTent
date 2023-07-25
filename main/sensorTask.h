@@ -9,6 +9,10 @@
 #include "general.h"
 #include "includes/scd4x/scd4x.h"
 
+#define UART_STACK_SIZE             (4096)
+#define TEMPERATURE_OFFSET          (4.0)
+#define SENSOR_ALTITUDE             (25.0)
+
 extern gptimer_handle_t sensorTimerHandle;
 void vSensorTask( void * pvParameters );
 void vCreateSensorTask( void );

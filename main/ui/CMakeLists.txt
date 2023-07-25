@@ -10,6 +10,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     screens/ui_GeneralSettingsScreen.c
     screens/ui_SoftwareUpdateScreen.c
     ui.c
+    components/ui_comp_hook.c
     ui_helpers.c
     images/ui_img_plant_png.c
     images/ui_img_dry_png.c
@@ -23,13 +24,13 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_wifi_png.c
     images/ui_img_co2_png.c
     images/ui_img_640654572.c
-    images/ui_img_appointment_png.c
     images/ui_img_303216376.c
     images/ui_img_now_arrow_2_png.c
     images/ui_img_432815713.c
     images/ui_img_1756057095.c
     images/ui_img_320680866.c
     images/ui_img_1749885216.c
+    images/ui_img_appointment_png.c
     images/ui_img_harvest_png.c
     images/ui_img_1668913270.c
     images/ui_img_2060199463.c
@@ -43,8 +44,8 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_bg2_png.c
     images/ui_img_1669444289.c
     images/ui_img_182264864.c
+    images/ui_img_1324581693.c
     images/ui_img_1180469587.c
-    images/ui_img_290017612.c
-    images/ui_img_1324581693.c)
+    images/ui_img_290017612.c)
 
 add_library(ui ${SOURCES})

@@ -182,3 +182,7 @@ def ui_event_homeScreen_custom(event_struct):
 def ui_event_graphScreen_custom(event_struct):
     return
 
+
+def elevation_spinbox_increment(event_struct):
+    return
+

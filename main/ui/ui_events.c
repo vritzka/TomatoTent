@@ -604,7 +604,7 @@ void temperature_dropdown(lv_event_t * e)
 void start_grow(lv_event_t * e)
 {
 
-	_ui_screen_change( ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
 	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
@@ -708,9 +708,25 @@ void ui_event_homeScreen_custom(lv_event_t * e)
 		if(my_tent.grow_lamp_dimmed) {
 			grow_lamp_un_dim(e);
 		} else {
-			_ui_screen_change( ui_GeneralSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 300, 0);
+			_ui_screen_change( &ui_GeneralSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 300, 0, &ui_GeneralSettingsScreen_screen_init);
 		}
 		  
 	}
 
+}
+
+void elevation_spinbox_increment(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    if(code == LV_EVENT_SHORT_CLICKED || code  == LV_EVENT_LONG_PRESSED_REPEAT) {
+       // lv_spinbox_increment(ui_ElevationSpinbox);
+    }
+}
+
+void elevation_spinbox_decrement(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    if(code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT) {
+        //lv_spinbox_decrement(ui_ElevationSpinbox);
+    }
 }
