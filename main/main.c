@@ -22,9 +22,15 @@
 
 static const char *TAG = "main.c";
 
+void heap_caps_alloc_failed_hook(size_t requested_size, uint32_t caps, const char *function_name)
+{
+  printf("%s was called but failed to allocate %d bytes with 0x%lX capabilities. \n",function_name, requested_size, caps);
+}
+
 
 void app_main(void)
 {
+	heap_caps_register_failed_alloc_callback(heap_caps_alloc_failed_hook);
 	
 	 // Initialize NVS
     esp_err_t err = nvs_flash_init();

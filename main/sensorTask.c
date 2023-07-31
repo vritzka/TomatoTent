@@ -110,25 +110,21 @@ void vSensorTask( void * pvParameters )
 			
 			if(scd4x_read_measurement(&sensors_values) != ESP_OK) {
 				ESP_LOGE(TAG, "Sensors read measurement error!");
-				//continue;
+				my_tent.temperature_c = 0;
+				my_tent.temperature_f = 0;
+				my_tent.humidity = 0;
+				my_tent.co2 = 0;
+			} else {
+				my_tent.temperature_c = sensors_values.temperature;
+				my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
+				my_tent.humidity = sensors_values.humidity;
+				my_tent.co2 = sensors_values.co2;				
 			}
 			
-			my_tent.temperature_c = sensors_values.temperature;
-			my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
-			my_tent.humidity = sensors_values.humidity;
-			my_tent.co2 = sensors_values.co2;
-
-			/*
-			my_tent.temperature_c = lv_rand(12,38);
-			my_tent.temperature_f = FAHRENHEIT(my_tent.temperature_c);
-			my_tent.humidity = lv_rand(40,70);
-			my_tent.co2 = lv_rand(400,600);	
-			*/
 			es = 0.61078 * exp(17.2694 * my_tent.temperature_c / (my_tent.temperature_c + 238.3));
 			ae = my_tent.humidity / 100 * es;
 			my_tent.vpd = es - ae;  //kPa
         		
-			
 			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
 			update_displayed_values();
 			setFanSpeed();
@@ -141,6 +137,7 @@ void vSensorTask( void * pvParameters )
 }
 
 // Function that creates a task.
+//How to allocate task memory from SPI https://esp32.com/viewtopic.php?t=20660
 void vCreateSensorTask( void )
 {
   static uint8_t ucParameterToPass;

@@ -132,6 +132,12 @@ void start_animation(lv_obj_t *scr)
 void init_tomatotent(lv_event_t * e)
 {	
    
+   //init values
+   my_tent.screen_brightness_slider_value = 80;
+   my_tent.light_duration_slider_value = 36;
+   my_tent.led_brightness_slider_value = 80;
+   
+   
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!!!\n", esp_err_to_name(err));
@@ -651,6 +657,7 @@ void stop_grow(lv_event_t * e)
 
 void software_upgrade_button(lv_event_t * e)
 {
+	   ESP_LOGI(TAG, "Here");
 	   vStartOtaTask();
 }
 

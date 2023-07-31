@@ -139,6 +139,15 @@ ota_end:
     vTaskDelete(NULL);
 }
 
+
+
 void vStartOtaTask() {
-	   xTaskCreate(&advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 5, NULL);
+	   //xTaskCreate(&advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 5, NULL);
+	   	  
+	   heap_caps_check_integrity_all(1);
+	   
+	   //ESP_ERROR_CHECK(xTaskCreatePinnedToCore( advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 1, NULL, 1 ));
+
+	   
+
 }
