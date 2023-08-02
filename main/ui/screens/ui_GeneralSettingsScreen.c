@@ -15,8 +15,8 @@ lv_obj_set_style_bg_opa(ui_GeneralSettingsScreen, 255, LV_PART_MAIN| LV_STATE_DE
 ui_Label23 = lv_label_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Label23, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label23, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label23, -80 );
-lv_obj_set_y( ui_Label23, -105 );
+lv_obj_set_x( ui_Label23, -79 );
+lv_obj_set_y( ui_Label23, -119 );
 lv_obj_set_align( ui_Label23, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label23,"Settings");
 lv_obj_set_style_text_font(ui_Label23, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -25,7 +25,7 @@ ui_Panel12 = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Panel12, 456);
 lv_obj_set_height( ui_Panel12, 80);
 lv_obj_set_x( ui_Panel12, -1 );
-lv_obj_set_y( ui_Panel12, 5 );
+lv_obj_set_y( ui_Panel12, -25 );
 lv_obj_set_align( ui_Panel12, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel12, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel12, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -62,85 +62,55 @@ lv_obj_set_y( ui_ScreenBrightnessLabel, -25 );
 lv_obj_set_align( ui_ScreenBrightnessLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_ScreenBrightnessLabel,"80%");
 
-ui_Panel18 = lv_obj_create(ui_GeneralSettingsScreen);
-lv_obj_set_width( ui_Panel18, 188);
-lv_obj_set_height( ui_Panel18, 54);
-lv_obj_set_x( ui_Panel18, 113 );
-lv_obj_set_y( ui_Panel18, -106 );
-lv_obj_set_align( ui_Panel18, LV_ALIGN_CENTER );
-lv_obj_clear_flag( ui_Panel18, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_Panel18, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Panel18, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_border_width(ui_Panel18, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-ui_Switch4 = lv_switch_create(ui_Panel18);
-lv_obj_set_width( ui_Switch4, 50);
-lv_obj_set_height( ui_Switch4, 25);
-lv_obj_set_x( ui_Switch4, -58 );
-lv_obj_set_y( ui_Switch4, 1 );
-lv_obj_set_align( ui_Switch4, LV_ALIGN_CENTER );
-
 ui_Image20 = lv_img_create(ui_GeneralSettingsScreen);
 lv_img_set_src(ui_Image20, &ui_img_tomato_png);
 lv_obj_set_width( ui_Image20, LV_SIZE_CONTENT);  /// 64
 lv_obj_set_height( ui_Image20, LV_SIZE_CONTENT);   /// 64
-lv_obj_set_x( ui_Image20, -185 );
-lv_obj_set_y( ui_Image20, -108 );
+lv_obj_set_x( ui_Image20, -191 );
+lv_obj_set_y( ui_Image20, -117 );
 lv_obj_set_align( ui_Image20, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image20, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image20, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_Panel7 = lv_obj_create(ui_GeneralSettingsScreen);
-lv_obj_set_width( ui_Panel7, 456);
-lv_obj_set_height( ui_Panel7, 90);
-lv_obj_set_x( ui_Panel7, 0 );
-lv_obj_set_y( ui_Panel7, 107 );
+lv_obj_set_width( ui_Panel7, 215);
+lv_obj_set_height( ui_Panel7, 96);
+lv_obj_set_x( ui_Panel7, -119 );
+lv_obj_set_y( ui_Panel7, 91 );
 lv_obj_set_align( ui_Panel7, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel7, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Panel7, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_Panel7, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Button2 = lv_btn_create(ui_Panel7);
-lv_obj_set_width( ui_Button2, 50);
-lv_obj_set_height( ui_Button2, 50);
-lv_obj_set_x( ui_Button2, -75 );
-lv_obj_set_y( ui_Button2, 8 );
-lv_obj_set_align( ui_Button2, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Button2, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-lv_obj_clear_flag( ui_Button2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-
-ui_Label15 = lv_label_create(ui_Button2);
-lv_obj_set_width( ui_Label15, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label15, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_align( ui_Label15, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label15,"-");
-lv_obj_set_style_text_font(ui_Label15, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-ui_Button3 = lv_btn_create(ui_Panel7);
-lv_obj_set_width( ui_Button3, 50);
-lv_obj_set_height( ui_Button3, 50);
-lv_obj_set_x( ui_Button3, 79 );
-lv_obj_set_y( ui_Button3, 11 );
-lv_obj_set_align( ui_Button3, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Button3, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-lv_obj_clear_flag( ui_Button3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-
-ui_Label33 = lv_label_create(ui_Button3);
-lv_obj_set_width( ui_Label33, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label33, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_align( ui_Label33, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label33,"+");
-lv_obj_set_style_text_font(ui_Label33, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
-
 ui_Label34 = lv_label_create(ui_Panel7);
 lv_obj_set_width( ui_Label34, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label34, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label34, -1 );
-lv_obj_set_y( ui_Label34, -31 );
+lv_obj_set_x( ui_Label34, 0 );
+lv_obj_set_y( ui_Label34, -33 );
 lv_obj_set_align( ui_Label34, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label34,"Elevation above Sea Level. For Sensor accuracy).");
+lv_label_set_text(ui_Label34,"Elevation above Sea");
 lv_obj_set_style_text_font(ui_Label34, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_Panel9 = lv_obj_create(ui_GeneralSettingsScreen);
+lv_obj_set_width( ui_Panel9, 215);
+lv_obj_set_height( ui_Panel9, 96);
+lv_obj_set_x( ui_Panel9, 116 );
+lv_obj_set_y( ui_Panel9, 91 );
+lv_obj_set_align( ui_Panel9, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_Panel9, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_bg_color(ui_Panel9, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_Panel9, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_width(ui_Panel9, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_Label37 = lv_label_create(ui_Panel9);
+lv_obj_set_width( ui_Label37, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label37, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_Label37, 0 );
+lv_obj_set_y( ui_Label37, -33 );
+lv_obj_set_align( ui_Label37, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label37,"Temperature Offset");
+lv_obj_set_style_text_font(ui_Label37, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_ScreenBrightnessSlider, ui_event_ScreenBrightnessSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GeneralSettingsScreen, ui_event_GeneralSettingsScreen, LV_EVENT_ALL, NULL);

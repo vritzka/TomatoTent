@@ -44,8 +44,8 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_bg2_png.c
     images/ui_img_1669444289.c
     images/ui_img_182264864.c
-    images/ui_img_1324581693.c
     images/ui_img_1180469587.c
-    images/ui_img_290017612.c)
+    images/ui_img_290017612.c
+    images/ui_img_1324581693.c)
 
 add_library(ui ${SOURCES})

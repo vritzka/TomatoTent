@@ -136,12 +136,17 @@ void init_tomatotent(lv_event_t * e)
    my_tent.screen_brightness_slider_value = 80;
    my_tent.light_duration_slider_value = 36;
    my_tent.led_brightness_slider_value = 80;
-   
+   my_tent.elevation = 0;
+   my_tent.temperature_offset = 4;
    
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!!!\n", esp_err_to_name(err));
     } else { 
+		
+		spinboxes_init();
+		draw_qr_codes();
+		chart_init();
 		
 		// light duration screen
         err = nvs_get_u16(storage_handle, "light_slider", &my_tent.light_duration_slider_value);
@@ -183,8 +188,13 @@ void init_tomatotent(lv_event_t * e)
 		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 		
-		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
-		update_temp_units(my_tent.temp_unit);
+		err = nvs_get_u16(storage_handle, "elevation", &my_tent.elevation);
+		//printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+		lv_spinbox_set_value(ui_ElevationSpinbox, my_tent.elevation);
+        
+        err = nvs_get_u8(storage_handle, "temp_offset", &my_tent.temperature_offset);
+        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+		lv_spinbox_set_value(ui_TemperatureOffsetSpinbox, my_tent.temperature_offset);
 		
 		//wifi screen
 		size_t required_size;
@@ -217,6 +227,8 @@ void init_tomatotent(lv_event_t * e)
 		
 		
 		// Climate Screen
+		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
+		update_temp_units(my_tent.temp_unit);
 		err = nvs_get_u8(storage_handle, "climate_mode", &my_tent.climate_mode);
 		err = nvs_get_u16(storage_handle, "sel_hum_index", &my_tent.target_humidity_sel_index);
 		err = nvs_get_u16(storage_handle, "sel_temp_index", &my_tent.target_temperature_sel_index);
@@ -255,9 +267,6 @@ void init_tomatotent(lv_event_t * e)
 			  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
 			  moveTomato_Animation(ui_tomato, 2000);			 
 		 }
-		 
-		 draw_qr_codes();
-		 chart_init();
 		 		
         nvs_close(storage_handle);
         
@@ -460,8 +469,9 @@ void save_general_settings_screen(lv_event_t * e)
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else {
 		
-		err = nvs_set_u16(storage_handle, "screen_brightns", my_tent.screen_brightness_slider_value);
-        //code to set everything to F or C
+		err = nvs_set_u16(storage_handle, "screen_brightns", my_tent.screen_brightness_slider_value);     
+        err = nvs_set_u16(storage_handle, "elevation", my_tent.elevation);
+        err = nvs_set_u8(storage_handle, "temp_offset", my_tent.temperature_offset);
 
         // Close
         err = nvs_commit(storage_handle);
@@ -720,20 +730,4 @@ void ui_event_homeScreen_custom(lv_event_t * e)
 		  
 	}
 
-}
-
-void elevation_spinbox_increment(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    if(code == LV_EVENT_SHORT_CLICKED || code  == LV_EVENT_LONG_PRESSED_REPEAT) {
-       // lv_spinbox_increment(ui_ElevationSpinbox);
-    }
-}
-
-void elevation_spinbox_decrement(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    if(code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT) {
-        //lv_spinbox_decrement(ui_ElevationSpinbox);
-    }
 }

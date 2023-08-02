@@ -227,15 +227,11 @@ lv_obj_t *ui_Label24;
 void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 lv_obj_t *ui_ScreenBrightnessSlider;
 lv_obj_t *ui_ScreenBrightnessLabel;
-lv_obj_t *ui_Panel18;
-lv_obj_t *ui_Switch4;
 lv_obj_t *ui_Image20;
 lv_obj_t *ui_Panel7;
-lv_obj_t *ui_Button2;
-lv_obj_t *ui_Label15;
-lv_obj_t *ui_Button3;
-lv_obj_t *ui_Label33;
 lv_obj_t *ui_Label34;
+lv_obj_t *ui_Panel9;
+lv_obj_t *ui_Label37;
 
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
@@ -252,21 +248,21 @@ lv_obj_t *ui_SoftwareVersionsPanel;
 lv_obj_t *ui_CurrentVersionLabel;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
-const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
 const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
-const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
-const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
 const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
 const lv_img_dsc_t *ui_imgset_1334665161[2] = {&ui_img_320680866, &ui_img_1756057095};
 const lv_img_dsc_t *ui_imgset_1554743838[1] = {&ui_img_1180469587};
 const lv_img_dsc_t *ui_imgset_now_arrow_[1] = {&ui_img_now_arrow_2_png};
 const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
-const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
+const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
+const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
+const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
+const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16

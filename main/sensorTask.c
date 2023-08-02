@@ -61,11 +61,11 @@ void vSensorTask( void * pvParameters )
     
     if(temperature_offset != SCD41_READ_ERROR && sensor_altitude != SCD41_READ_ERROR) {
 
-        if(temperature_offset != TEMPERATURE_OFFSET) {
-            ESP_LOGW(TAG, "Temperature offset calibration from %.1f °%c to %.1f °%c", temperature_offset, scale, TEMPERATURE_OFFSET, scale);
+        if(temperature_offset != my_tent.temperature_offset) {
+            ESP_LOGW(TAG, "Temperature offset calibration from %.1f °%c to %d °%c", temperature_offset, scale, my_tent.temperature_offset, scale);
 
             vTaskDelay(500 / portTICK_PERIOD_MS);
-            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset(TEMPERATURE_OFFSET));
+            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset((float)my_tent.temperature_offset));
 
             vTaskDelay(500 / portTICK_PERIOD_MS);
             ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
@@ -74,11 +74,11 @@ void vSensorTask( void * pvParameters )
             temperature_offset = scd4x_get_temperature_offset();
         }
 
-        if(sensor_altitude != SENSOR_ALTITUDE) {
-            ESP_LOGW(TAG, "Sensor altitude calibration from %d m to %.1f m", sensor_altitude, SENSOR_ALTITUDE);
+        if(sensor_altitude != my_tent.elevation) {
+            ESP_LOGW(TAG, "Sensor altitude calibration from %d m to %d m", sensor_altitude, my_tent.elevation);
 
             vTaskDelay(500 / portTICK_PERIOD_MS);
-            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_sensor_altitude(SENSOR_ALTITUDE));
+            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_sensor_altitude((float)my_tent.elevation));
 
             vTaskDelay(500 / portTICK_PERIOD_MS);
             ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());

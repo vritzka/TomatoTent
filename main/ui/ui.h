@@ -224,15 +224,11 @@ extern lv_obj_t *ui_Label24;
 void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 extern lv_obj_t *ui_ScreenBrightnessSlider;
 extern lv_obj_t *ui_ScreenBrightnessLabel;
-extern lv_obj_t *ui_Panel18;
-extern lv_obj_t *ui_Switch4;
 extern lv_obj_t *ui_Image20;
 extern lv_obj_t *ui_Panel7;
-extern lv_obj_t *ui_Button2;
-extern lv_obj_t *ui_Label15;
-extern lv_obj_t *ui_Button3;
-extern lv_obj_t *ui_Label33;
 extern lv_obj_t *ui_Label34;
+extern lv_obj_t *ui_Panel9;
+extern lv_obj_t *ui_Label37;
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
 extern lv_obj_t *ui_SoftwareUpdateScreen;
@@ -280,9 +276,9 @@ LV_IMG_DECLARE( ui_img_713338696);   // assets/cloud-computing-2.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
-LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
+LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 
 void ui_init(void);
 

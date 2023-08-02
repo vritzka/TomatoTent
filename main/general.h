@@ -66,6 +66,8 @@ typedef struct {
     float_t vpd;
     uint8_t humidity;
     uint16_t co2;
+    uint16_t elevation;
+    uint8_t temperature_offset;
 } tent_data_t;
 
 extern tent_data_t my_tent;
@@ -74,6 +76,11 @@ extern lv_chart_series_t * chart_series_temperature;
 extern lv_chart_series_t * chart_series_humidity;
 extern lv_chart_series_t * chart_series_fanspeed;
 extern lv_chart_series_t * chart_series_co2;
+
+extern lv_obj_t * ui_ElevationSpinbox;
+extern lv_obj_t * ui_TemperatureOffsetSpinbox;
+
+
 
 #define I2C_MASTER_SDA              (12)
 #define I2C_MASTER_SCL              (13)
@@ -130,6 +137,7 @@ void set_target_climate();
 void update_displayed_values();
 void chart_add_climate_point();
 void chart_init();
+void spinboxes_init();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 #endif
