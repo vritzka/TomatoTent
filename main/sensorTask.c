@@ -49,7 +49,7 @@ void vSensorTask( void * pvParameters )
     };
     ESP_ERROR_CHECK(gptimer_set_alarm_action(sensorTimerHandle, &alarm_config1));
 	
-	vTaskDelay(1000 / portTICK_PERIOD_MS);
+	vTaskDelay(500 / portTICK_PERIOD_MS);
 	
 	ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number());
 
@@ -100,8 +100,6 @@ void vSensorTask( void * pvParameters )
 		.temperature = 0x00,
 		.humidity = 0x00
     };
-    
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
 	
 	for( ;; )
 	{

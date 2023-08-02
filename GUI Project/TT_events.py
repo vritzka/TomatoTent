@@ -186,3 +186,7 @@ def ui_event_graphScreen_custom(event_struct):
 def elevation_spinbox_increment(event_struct):
     return
 
+
+def update_sensor_calibration(event_struct):
+    return
+

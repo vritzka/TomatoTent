@@ -250,7 +250,8 @@ void init_tomatotent(lv_event_t * e)
 		esp_app_desc_t running_app_info;
 		esp_ota_get_partition_description(running, &running_app_info);
 		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
-			
+		
+		//SensorSettingsScreen
 			
         //is there an active grow?
 		if(my_tent.seconds > 0 || my_tent.days > 0) {
@@ -472,12 +473,32 @@ void save_general_settings_screen(lv_event_t * e)
 		err = nvs_set_u16(storage_handle, "screen_brightns", my_tent.screen_brightness_slider_value);     
         err = nvs_set_u16(storage_handle, "elevation", my_tent.elevation);
         err = nvs_set_u8(storage_handle, "temp_offset", my_tent.temperature_offset);
-
+		
         // Close
         err = nvs_commit(storage_handle);
         nvs_close(storage_handle);	
 	}	
 	
+}
+
+void update_sensor_calibration(lv_event_t * e) {
+		lv_label_set_text(ui_SensorSettingsInfoLabel, "");	
+		gptimer_stop(sensorTimerHandle);
+	    scd4x_stop_periodic_measurement();
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset((float)my_tent.temperature_offset));
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+		ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_sensor_altitude((float)my_tent.elevation));
+		vTaskDelay(500 / portTICK_PERIOD_MS);
+		ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
+		vTaskDelay(500 / portTICK_PERIOD_MS);
+		ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_reinit());
+		vTaskDelay(500 / portTICK_PERIOD_MS);
+		scd4x_start_periodic_measurement();
+		lv_label_set_text(ui_SensorSettingsInfoLabel, "Success\nSensor will take 2-3 minutes to gradually reflect new settings.");
+		gptimer_set_raw_count(sensorTimerHandle, 0);
+		gptimer_start(sensorTimerHandle);
+		
 }
 
 //////////////////////////////////////

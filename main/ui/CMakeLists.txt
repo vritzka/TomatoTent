@@ -9,6 +9,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     screens/ui_WifiSettingsScreen.c
     screens/ui_GeneralSettingsScreen.c
     screens/ui_SoftwareUpdateScreen.c
+    screens/ui_SensorSettingsScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c

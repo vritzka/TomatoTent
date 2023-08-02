@@ -882,13 +882,13 @@ void spinboxes_init() {
 
     lv_coord_t h = lv_obj_get_height(ui_ElevationSpinbox);
 
-    lv_obj_t * btn = lv_btn_create(ui_GeneralSettingsScreen);
+    lv_obj_t * btn = lv_btn_create(ui_Panel7);
     lv_obj_set_size(btn, h, h);
     lv_obj_align_to(btn, ui_ElevationSpinbox, LV_ALIGN_OUT_RIGHT_MID, 5, 0);
     lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_PLUS, 0);
     lv_obj_add_event_cb(btn, lv_spinbox_increment_event_cb, LV_EVENT_ALL, ui_ElevationSpinbox);
 
-    btn = lv_btn_create(ui_GeneralSettingsScreen);
+    btn = lv_btn_create(ui_Panel7);
     lv_obj_set_size(btn, h, h);
     lv_obj_align_to(btn, ui_ElevationSpinbox, LV_ALIGN_OUT_LEFT_MID, -5, 0);
     lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_MINUS, 0);

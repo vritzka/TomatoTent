@@ -228,10 +228,7 @@ void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 lv_obj_t *ui_ScreenBrightnessSlider;
 lv_obj_t *ui_ScreenBrightnessLabel;
 lv_obj_t *ui_Image20;
-lv_obj_t *ui_Panel7;
-lv_obj_t *ui_Label34;
-lv_obj_t *ui_Panel9;
-lv_obj_t *ui_Label37;
+lv_obj_t *ui_Image17;
 
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
@@ -246,6 +243,20 @@ lv_obj_t *ui_ImgButton1;
 lv_obj_t *ui_UpgradeStatusBar;
 lv_obj_t *ui_SoftwareVersionsPanel;
 lv_obj_t *ui_CurrentVersionLabel;
+
+// SCREEN: ui_SensorSettingsScreen
+void ui_SensorSettingsScreen_screen_init(void);
+void ui_event_SensorSettingsScreen( lv_event_t * e);
+lv_obj_t *ui_SensorSettingsScreen;
+lv_obj_t *ui_Panel7;
+lv_obj_t *ui_Label34;
+lv_obj_t *ui_Panel9;
+lv_obj_t *ui_Label37;
+lv_obj_t *ui_Label15;
+void ui_event_SensorSettingsSaveButton( lv_event_t * e);
+lv_obj_t *ui_SensorSettingsSaveButton;
+lv_obj_t *ui_Label33;
+lv_obj_t *ui_SensorSettingsInfoLabel;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
@@ -795,6 +806,10 @@ lv_indev_wait_release(lv_indev_get_act());
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
       save_general_settings_screen( e );
 }
+if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP  ) {
+lv_indev_wait_release(lv_indev_get_act());
+      _ui_screen_change( &ui_SensorSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 300, 0, &ui_SensorSettingsScreen_screen_init);
+}
 }
 void ui_event_ScreenBrightnessSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
@@ -812,6 +827,19 @@ void ui_event_ImgButton1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_WifiSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_WifiSettingsScreen_screen_init);
+}
+}
+void ui_event_SensorSettingsScreen( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
+lv_indev_wait_release(lv_indev_get_act());
+      _ui_screen_change( &ui_GeneralSettingsScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 300, 0, &ui_GeneralSettingsScreen_screen_init);
+}
+}
+void ui_event_SensorSettingsSaveButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      update_sensor_calibration( e );
 }
 }
 
@@ -833,6 +861,7 @@ ui_ClimateControlScreen_screen_init();
 ui_WifiSettingsScreen_screen_init();
 ui_GeneralSettingsScreen_screen_init();
 ui_SoftwareUpdateScreen_screen_init();
+ui_SensorSettingsScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_SplashScreen);
 }

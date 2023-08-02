@@ -225,10 +225,7 @@ void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 extern lv_obj_t *ui_ScreenBrightnessSlider;
 extern lv_obj_t *ui_ScreenBrightnessLabel;
 extern lv_obj_t *ui_Image20;
-extern lv_obj_t *ui_Panel7;
-extern lv_obj_t *ui_Label34;
-extern lv_obj_t *ui_Panel9;
-extern lv_obj_t *ui_Label37;
+extern lv_obj_t *ui_Image17;
 // SCREEN: ui_SoftwareUpdateScreen
 void ui_SoftwareUpdateScreen_screen_init(void);
 extern lv_obj_t *ui_SoftwareUpdateScreen;
@@ -242,6 +239,19 @@ extern lv_obj_t *ui_ImgButton1;
 extern lv_obj_t *ui_UpgradeStatusBar;
 extern lv_obj_t *ui_SoftwareVersionsPanel;
 extern lv_obj_t *ui_CurrentVersionLabel;
+// SCREEN: ui_SensorSettingsScreen
+void ui_SensorSettingsScreen_screen_init(void);
+void ui_event_SensorSettingsScreen( lv_event_t * e);
+extern lv_obj_t *ui_SensorSettingsScreen;
+extern lv_obj_t *ui_Panel7;
+extern lv_obj_t *ui_Label34;
+extern lv_obj_t *ui_Panel9;
+extern lv_obj_t *ui_Label37;
+extern lv_obj_t *ui_Label15;
+void ui_event_SensorSettingsSaveButton( lv_event_t * e);
+extern lv_obj_t *ui_SensorSettingsSaveButton;
+extern lv_obj_t *ui_Label33;
+extern lv_obj_t *ui_SensorSettingsInfoLabel;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png

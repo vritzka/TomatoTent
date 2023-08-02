@@ -24,8 +24,8 @@ lv_obj_set_style_text_font(ui_Label23, &lv_font_montserrat_30, LV_PART_MAIN| LV_
 ui_Panel12 = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Panel12, 456);
 lv_obj_set_height( ui_Panel12, 80);
-lv_obj_set_x( ui_Panel12, -1 );
-lv_obj_set_y( ui_Panel12, -25 );
+lv_obj_set_x( ui_Panel12, 0 );
+lv_obj_set_y( ui_Panel12, -24 );
 lv_obj_set_align( ui_Panel12, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel12, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel12, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -72,45 +72,17 @@ lv_obj_set_align( ui_Image20, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image20, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image20, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
-ui_Panel7 = lv_obj_create(ui_GeneralSettingsScreen);
-lv_obj_set_width( ui_Panel7, 215);
-lv_obj_set_height( ui_Panel7, 96);
-lv_obj_set_x( ui_Panel7, -119 );
-lv_obj_set_y( ui_Panel7, 91 );
-lv_obj_set_align( ui_Panel7, LV_ALIGN_CENTER );
-lv_obj_clear_flag( ui_Panel7, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_Panel7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Panel7, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_border_width(ui_Panel7, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-ui_Label34 = lv_label_create(ui_Panel7);
-lv_obj_set_width( ui_Label34, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label34, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label34, 0 );
-lv_obj_set_y( ui_Label34, -33 );
-lv_obj_set_align( ui_Label34, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label34,"Elevation above Sea");
-lv_obj_set_style_text_font(ui_Label34, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-ui_Panel9 = lv_obj_create(ui_GeneralSettingsScreen);
-lv_obj_set_width( ui_Panel9, 215);
-lv_obj_set_height( ui_Panel9, 96);
-lv_obj_set_x( ui_Panel9, 116 );
-lv_obj_set_y( ui_Panel9, 91 );
-lv_obj_set_align( ui_Panel9, LV_ALIGN_CENTER );
-lv_obj_clear_flag( ui_Panel9, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_Panel9, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Panel9, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_border_width(ui_Panel9, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-ui_Label37 = lv_label_create(ui_Panel9);
-lv_obj_set_width( ui_Label37, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label37, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label37, 0 );
-lv_obj_set_y( ui_Label37, -33 );
-lv_obj_set_align( ui_Label37, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label37,"Temperature Offset");
-lv_obj_set_style_text_font(ui_Label37, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_Image17 = lv_img_create(ui_GeneralSettingsScreen);
+lv_img_set_src(ui_Image17, &ui_img_1749885216);
+lv_obj_set_width( ui_Image17, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Image17, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_Image17, 7 );
+lv_obj_set_y( ui_Image17, 121 );
+lv_obj_set_align( ui_Image17, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Image17, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_Image17, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_img_recolor(ui_Image17, lv_color_hex(0x135D13), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_Image17, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_ScreenBrightnessSlider, ui_event_ScreenBrightnessSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GeneralSettingsScreen, ui_event_GeneralSettingsScreen, LV_EVENT_ALL, NULL);
