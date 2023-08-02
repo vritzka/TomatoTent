@@ -25,7 +25,6 @@ void ShowDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 void HideDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
-void ui_event_SplashScreen( lv_event_t * e);
 extern lv_obj_t *ui_SplashScreen;
 void ui_event_StartNewGrowButton( lv_event_t * e);
 extern lv_obj_t *ui_StartNewGrowButton;
@@ -252,6 +251,7 @@ void ui_event_SensorSettingsSaveButton( lv_event_t * e);
 extern lv_obj_t *ui_SensorSettingsSaveButton;
 extern lv_obj_t *ui_Label33;
 extern lv_obj_t *ui_SensorSettingsInfoLabel;
+void ui_event____initial_actions0( lv_event_t * e);
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png

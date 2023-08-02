@@ -672,7 +672,14 @@ static void stop_grow_cb(lv_event_t * e)
     lv_obj_set_pos(ui_tomato, 0,0);
     lv_obj_set_pos(ui_StartNewGrowButton, -430,-9);
     lv_obj_set_pos(ui_DryAHarvestButton, 435,96);
-    lv_scr_load(ui_SplashScreen);    
+    lv_scr_load(ui_SplashScreen);  
+    
+    
+    
+    		start_animation(ui_SplashScreen);
+			  startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
+			  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
+			  moveTomato_Animation(ui_tomato, 2000);  
     
 }
 

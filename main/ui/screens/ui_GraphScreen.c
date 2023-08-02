@@ -163,10 +163,10 @@ lv_img_set_zoom(ui_Image11,125);
 ui_Co2Label2 = lv_label_create(ui_CO2SeriesPanel);
 lv_obj_set_width( ui_Co2Label2, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Co2Label2, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Co2Label2, 18 );
+lv_obj_set_x( ui_Co2Label2, 13 );
 lv_obj_set_y( ui_Co2Label2, 2 );
 lv_obj_set_align( ui_Co2Label2, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Co2Label2,"999");
+lv_label_set_text(ui_Co2Label2,"1222");
 lv_obj_set_style_text_font(ui_Co2Label2, &lv_font_montserrat_22, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Label8 = lv_label_create(ui_CO2SeriesPanel);

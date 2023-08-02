@@ -808,9 +808,9 @@ chart_series_co2 = lv_chart_add_series(ui_Chart, lv_color_hex(0xAFBDC4), LV_CHAR
 
 lv_obj_add_state(ui_TempSeriesPanel, LV_STATE_CHECKED);
 lv_obj_add_state(ui_HumiditySeriesPanel, LV_STATE_CHECKED);
+lv_obj_add_state(ui_CO2SeriesPanel, LV_STATE_CHECKED);
 
-lv_chart_hide_series(ui_Chart, chart_series_co2, true);
-lv_chart_hide_series(ui_Chart, chart_series_fanspeed, true);
+lv_chart_hide_series(ui_Chart, chart_series_fanspeed, true);	
 
 	int i = 0;
 	while(i < 0) {
