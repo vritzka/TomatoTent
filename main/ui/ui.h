@@ -118,6 +118,7 @@ extern lv_obj_t *ui_DayUpButton;
 void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen( lv_event_t * e);
 extern lv_obj_t *ui_GraphScreen;
+extern lv_obj_t *ui_bud;
 extern lv_obj_t *ui_Chart;
 void ui_event_TempSeriesPanel( lv_event_t * e);
 extern lv_obj_t *ui_TempSeriesPanel;
@@ -276,6 +277,7 @@ LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_harvest_png);   // assets/harvest.png
 LV_IMG_DECLARE( ui_img_1668913270);   // assets/back-up.png
 LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
+LV_IMG_DECLARE( ui_img_bud_png);   // assets/bud.png
 LV_IMG_DECLARE( ui_img_17176521);   // assets/dew-3.png
 LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
@@ -286,9 +288,9 @@ LV_IMG_DECLARE( ui_img_713338696);   // assets/cloud-computing-2.png
 LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
 LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
 LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
+LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
-LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 
 void ui_init(void);
 

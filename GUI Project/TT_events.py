@@ -190,3 +190,7 @@ def elevation_spinbox_increment(event_struct):
 def update_sensor_calibration(event_struct):
     return
 
+
+def start_dry(event_struct):
+    return
+

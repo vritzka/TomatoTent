@@ -28,15 +28,18 @@ void update_time_left(bool count_day) {
 		setGrowLampBrightness();
 	}
 	
-	if(my_tent.seconds < my_tent.day_period_seconds) { //day
-		if(!my_tent.is_day)
-			make_it_day(count_day);
-		seconds_left_in_period = my_tent.day_period_seconds - my_tent.seconds;
-	} else { 
-		if(my_tent.is_day)                              //night
-			make_it_night();         
-		seconds_left_in_period = 86400 - my_tent.seconds;
-	}
+		if(my_tent.seconds < my_tent.day_period_seconds) { //day
+			if(!my_tent.is_day && !my_tent.is_drying)
+				make_it_day(count_day);
+				
+			//if(my_tent.is_drying)
+				//make_it_drying(count_day);
+			seconds_left_in_period = my_tent.day_period_seconds - my_tent.seconds;
+		} else { 
+			if(my_tent.is_day)                              //night
+				make_it_night();         
+			seconds_left_in_period = 86400 - my_tent.seconds;
+		}
 	
 	minutes_left_in_period = seconds_left_in_period / 60;
 	hours_left_in_period = minutes_left_in_period / 60;
@@ -113,6 +116,20 @@ void make_it_night() {
 	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
 	lv_label_set_text(ui_DayNightLabel, "night");
+}
+
+void make_it_drying(bool count_day) {
+	ESP_LOGI(TAG, "Making it Drying");
+	my_tent.is_day = false;
+	my_tent.is_drying = true;
+	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x6f623c), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x6f623c), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_img_set_src(ui_HomeSky, &ui_img_bud_png);
+	lv_label_set_text(ui_DayNightLabel, "dry day");
+	if(count_day) {
+		ESP_LOGI(TAG, "Counting the Day");
+		increase_day_counter(NULL);
+	}
 }
 
 /////////////////////////////////////////////////////////

@@ -651,11 +651,22 @@ void start_grow(lv_event_t * e)
 	
 }
 
+void start_dry(lv_event_t * e)
+{
+	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
+	
+	ESP_ERROR_CHECK(gptimer_start(gptimer));
+	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	make_it_drying(true);
+	fanspin_Animation(ui_Fan, 1000);
+	fanspin_Animation(ui_Fan2, 1000);
+}
+
 static void stop_grow_cb(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_current_target(e);
     int id = lv_msgbox_get_active_btn(obj);
-    ESP_LOGI(TAG, "Button %d clicked", id);
+    //ESP_LOGI(TAG, "Button %d clicked", id);
     if(id != 0)
 		return;
 	
@@ -669,17 +680,19 @@ static void stop_grow_cb(lv_event_t * e)
     err = nvs_set_u16(storage_handle, "days", 0);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
+    
+    my_tent.days = 0;
+    my_tent.seconds = 0;
+    
     lv_obj_set_pos(ui_tomato, 0,0);
     lv_obj_set_pos(ui_StartNewGrowButton, -430,-9);
     lv_obj_set_pos(ui_DryAHarvestButton, 435,96);
     lv_scr_load(ui_SplashScreen);  
     
-    
-    
-    		start_animation(ui_SplashScreen);
-			  startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
-			  dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
-			  moveTomato_Animation(ui_tomato, 2000);  
+    start_animation(ui_SplashScreen);
+	startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
+	dryHarvestButtonAppear_Animation(ui_DryAHarvestButton, 2400);
+	moveTomato_Animation(ui_tomato, 2000);  
     
 }
 

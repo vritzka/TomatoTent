@@ -12,6 +12,16 @@ lv_obj_clear_flag( ui_GraphScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_GraphScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+ui_bud = lv_img_create(ui_GraphScreen);
+lv_img_set_src(ui_bud, &ui_img_bud_png);
+lv_obj_set_width( ui_bud, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_bud, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_align( ui_bud, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_bud, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_bud, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_blend_mode(ui_bud, LV_BLEND_MODE_NORMAL, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_opa(ui_bud, 60, LV_PART_MAIN| LV_STATE_DEFAULT);
+
 ui_Chart = lv_chart_create(ui_GraphScreen);
 lv_obj_set_width( ui_Chart, 424);
 lv_obj_set_height( ui_Chart, 220);

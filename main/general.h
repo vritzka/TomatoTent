@@ -40,6 +40,7 @@ typedef struct {
     uint32_t seconds;
     uint16_t days;
     bool is_day;
+    bool is_drying;
     uint32_t day_period_seconds;
     uint16_t light_duration_slider_value;
 	float_t light_duration; // in hrs
@@ -128,6 +129,7 @@ void wifi_off(void);
 void update_time_left(bool count_day);
 void make_it_day(bool count_day);
 void make_it_night();
+void make_it_drying(bool count_day);
 void draw_qr_codes();
 void readSensors();
 void setFanSpeed();

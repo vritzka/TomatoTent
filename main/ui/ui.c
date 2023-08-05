@@ -117,6 +117,7 @@ lv_obj_t *ui_DayUpButton;
 void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen( lv_event_t * e);
 lv_obj_t *ui_GraphScreen;
+lv_obj_t *ui_bud;
 lv_obj_t *ui_Chart;
 void ui_event_TempSeriesPanel( lv_event_t * e);
 lv_obj_t *ui_TempSeriesPanel;
@@ -259,21 +260,21 @@ lv_obj_t *ui_SensorSettingsInfoLabel;
 void ui_event____initial_actions0( lv_event_t * e);
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
+const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
 const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
+const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
+const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
 const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
 const lv_img_dsc_t *ui_imgset_1334665161[2] = {&ui_img_320680866, &ui_img_1756057095};
 const lv_img_dsc_t *ui_imgset_1554743838[1] = {&ui_img_1180469587};
 const lv_img_dsc_t *ui_imgset_now_arrow_[1] = {&ui_img_now_arrow_2_png};
 const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
+const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
-const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
-const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
-const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
-const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -521,7 +522,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 void ui_event_DryAHarvestButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
+      start_dry( e );
 }
 }
 void ui_event_HomeScreen( lv_event_t * e) {
