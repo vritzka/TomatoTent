@@ -18,8 +18,11 @@ uint16_t hours_left_in_period;
 
 void update_time_left(bool count_day) {
 	
-	if (my_tent.seconds == 86400)
+	if (my_tent.seconds == 86400) {
 		my_tent.seconds = 0;
+		if(my_tent.is_drying)
+			make_it_drying(count_day);
+	}
 	
 	if(my_tent.seconds % 1800 == 0)
 		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
@@ -31,9 +34,7 @@ void update_time_left(bool count_day) {
 		if(my_tent.seconds < my_tent.day_period_seconds) { //day
 			if(!my_tent.is_day && !my_tent.is_drying)
 				make_it_day(count_day);
-				
-			//if(my_tent.is_drying)
-				//make_it_drying(count_day);
+			
 			seconds_left_in_period = my_tent.day_period_seconds - my_tent.seconds;
 		} else { 
 			if(my_tent.is_day)                              //night

@@ -20,7 +20,7 @@ lv_obj_set_align( ui_bud, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_bud, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_bud, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_blend_mode(ui_bud, LV_BLEND_MODE_NORMAL, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_opa(ui_bud, 60, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_opa(ui_bud, 120, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Chart = lv_chart_create(ui_GraphScreen);
 lv_obj_set_width( ui_Chart, 424);

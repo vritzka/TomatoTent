@@ -138,6 +138,7 @@ void init_tomatotent(lv_event_t * e)
    my_tent.led_brightness_slider_value = 80;
    my_tent.elevation = 0;
    my_tent.temperature_offset = 4;
+   my_tent.is_drying = 0;
    
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
@@ -252,8 +253,14 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
 		
 		//SensorSettingsScreen
+		
+		
+		//where we drying?
+		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
+		if(my_tent.is_drying)
+			make_it_drying(false);
 			
-        //is there an active grow?
+        //is there an active grow/dry?
 		if(my_tent.seconds > 0 || my_tent.days > 0) {
 			ESP_LOGI(TAG, "Continuing existing Grow");
 			update_time_left(false);
@@ -653,6 +660,12 @@ void start_grow(lv_event_t * e)
 
 void start_dry(lv_event_t * e)
 {
+	
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    err = nvs_set_u8(storage_handle, "is_drying", 1);
+    err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+    
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
@@ -683,6 +696,7 @@ static void stop_grow_cb(lv_event_t * e)
     
     my_tent.days = 0;
     my_tent.seconds = 0;
+    my_tent.is_drying = 0;
     
     lv_obj_set_pos(ui_tomato, 0,0);
     lv_obj_set_pos(ui_StartNewGrowButton, -430,-9);
