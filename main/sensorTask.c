@@ -41,7 +41,6 @@ void vSensorTask( void * pvParameters )
     ESP_LOGI(TAG, "Enable Sensor timer");
     ESP_ERROR_CHECK(gptimer_enable(sensorTimerHandle));
     
-
     gptimer_alarm_config_t alarm_config1 = {
         .reload_count = 0,
         .alarm_count = 6000000, // period = 6s
@@ -56,8 +55,6 @@ void vSensorTask( void * pvParameters )
     float temperature_offset = scd4x_get_temperature_offset();
     vTaskDelay(500 / portTICK_PERIOD_MS);
     uint16_t sensor_altitude = scd4x_get_sensor_altitude();
-    
-    ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
     
     if(temperature_offset != SCD41_READ_ERROR && sensor_altitude != SCD41_READ_ERROR) {
 
@@ -139,10 +136,8 @@ void vSensorTask( void * pvParameters )
 void vCreateSensorTask( void )
 {
   static uint8_t ucParameterToPass;
-
   xTaskCreatePinnedToCore( vSensorTask, "SENSORTASK", 4096, &ucParameterToPass, 10, &xSensorTaskHandle, 1 );
   configASSERT( xSensorTaskHandle );
-
 }
 
 

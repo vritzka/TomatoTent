@@ -36,11 +36,12 @@
 #include "timerTask.h"
 
 typedef struct {
+	bool initiated;
     uint8_t event_count;
     uint32_t seconds;
     uint16_t days;
     bool is_day;
-    bool is_drying;
+    uint8_t is_drying;
     uint32_t day_period_seconds;
     uint16_t light_duration_slider_value;
 	float_t light_duration; // in hrs

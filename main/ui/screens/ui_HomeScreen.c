@@ -9,7 +9,7 @@ void ui_HomeScreen_screen_init(void)
 {
 ui_HomeScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_HomeScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x6F623C), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_HomeScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_HomeSky = lv_img_create(ui_HomeScreen);

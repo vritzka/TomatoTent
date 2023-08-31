@@ -19,6 +19,7 @@ void HideDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
+void ui_event_SplashScreen( lv_event_t * e);
 lv_obj_t *ui_SplashScreen;
 void ui_event_StartNewGrowButton( lv_event_t * e);
 lv_obj_t *ui_StartNewGrowButton;
@@ -257,13 +258,9 @@ void ui_event_SensorSettingsSaveButton( lv_event_t * e);
 lv_obj_t *ui_SensorSettingsSaveButton;
 lv_obj_t *ui_Label33;
 lv_obj_t *ui_SensorSettingsInfoLabel;
-void ui_event____initial_actions0( lv_event_t * e);
 lv_obj_t *ui____initial_actions0;
-const lv_img_dsc_t *ui_imgset_bg[1] = {&ui_img_bg2_png};
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
-const lv_img_dsc_t *ui_imgset_1030300351[1] = {&ui_img_1669444289};
-const lv_img_dsc_t *ui_imgset_421117529[1] = {&ui_img_182264864};
 const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
 const lv_img_dsc_t *ui_imgset_1551658813[1] = {&ui_img_1324581693};
 const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_1142205948};
@@ -513,6 +510,12 @@ lv_anim_start(&PropertyAnimation_0);
 }
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_SplashScreen( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_SCREEN_LOADED) {
+      init_tomatotent( e );
+}
+}
 void ui_event_StartNewGrowButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
@@ -837,12 +840,6 @@ if ( event_code == LV_EVENT_CLICKED) {
       update_sensor_calibration( e );
 }
 }
-void ui_event____initial_actions0( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
-      init_tomatotent( e );
-}
-}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -864,8 +861,5 @@ ui_GeneralSettingsScreen_screen_init();
 ui_SoftwareUpdateScreen_screen_init();
 ui_SensorSettingsScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
-lv_obj_add_event_cb(ui____initial_actions0, ui_event____initial_actions0, LV_EVENT_ALL, NULL);
-
-lv_disp_load_scr(ui____initial_actions0);
 lv_disp_load_scr( ui_SplashScreen);
 }

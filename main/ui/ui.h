@@ -25,6 +25,7 @@ void ShowDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 void HideDimmerIndication2_Animation( lv_obj_t *TargetObject, int delay);
 // SCREEN: ui_SplashScreen
 void ui_SplashScreen_screen_init(void);
+void ui_event_SplashScreen( lv_event_t * e);
 extern lv_obj_t *ui_SplashScreen;
 void ui_event_StartNewGrowButton( lv_event_t * e);
 extern lv_obj_t *ui_StartNewGrowButton;
@@ -252,7 +253,6 @@ void ui_event_SensorSettingsSaveButton( lv_event_t * e);
 extern lv_obj_t *ui_SensorSettingsSaveButton;
 extern lv_obj_t *ui_Label33;
 extern lv_obj_t *ui_SensorSettingsInfoLabel;
-void ui_event____initial_actions0( lv_event_t * e);
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png
@@ -285,9 +285,6 @@ LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
 LV_IMG_DECLARE( ui_img_1126512945);   // assets/cloud-computing.png
 LV_IMG_DECLARE( ui_img_refresh_png);   // assets/refresh.png
 LV_IMG_DECLARE( ui_img_713338696);   // assets/cloud-computing-2.png
-LV_IMG_DECLARE( ui_img_bg2_png);   // assets/bg2.png
-LV_IMG_DECLARE( ui_img_1669444289);   // assets/corners-bgs1.png
-LV_IMG_DECLARE( ui_img_182264864);   // assets/corners-details2.png
 LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png

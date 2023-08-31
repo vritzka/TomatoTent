@@ -984,7 +984,8 @@
                 "InheritedType": 4
               }
             ],
-            "saved_objtypeKey": "BUTTON"
+            "saved_objtypeKey": "BUTTON",
+            "tree_closed": true
           },
           {
             "guid": "GUID17062526-492914S632140",
@@ -1923,7 +1924,7 @@
                   },
                   {
                     "nid": 33436709,
-                    "strtype": "_custom/action",
+                    "strtype": "_event/action",
                     "strval": "CALL FUNCTION",
                     "childs": [
                       {
@@ -1963,7 +1964,8 @@
                 "InheritedType": 4
               }
             ],
-            "saved_objtypeKey": "BUTTON"
+            "saved_objtypeKey": "BUTTON",
+            "tree_closed": true
           },
           {
             "guid": "GUID20410833-491288S1542140",
@@ -2485,26 +2487,64 @@
           },
           {
             "disabled": false,
-            "nid": 1531737346,
-            "strtype": "_event/EventHandler",
+            "nid": -1867985403,
+            "strtype": "SCREEN/EventHandler",
             "strval": "SCREEN_LOADED",
             "childs": [
               {
-                "nid": -408892318,
+                "nid": 1205754862,
                 "strtype": "_custom/name",
                 "strval": "Event21",
                 "InheritedType": 10
               },
               {
-                "nid": 1120855227,
+                "nid": 827586054,
                 "strtype": "_custom/condition_C",
                 "strval": "",
                 "InheritedType": 10
               },
               {
-                "nid": 1998330697,
+                "nid": -145518393,
                 "strtype": "_custom/condition_P",
                 "strval": "",
+                "InheritedType": 10
+              },
+              {
+                "nid": 301942226,
+                "strtype": "_custom/action",
+                "strval": "CALL FUNCTION",
+                "childs": [
+                  {
+                    "nid": 1288925744,
+                    "strtype": "CALL FUNCTION/Name",
+                    "strval": "CALL FUNCTION",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1916445236,
+                    "strtype": "CALL FUNCTION/Call",
+                    "strval": "<{Function_name}>( event_struct )",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -1005980092,
+                    "strtype": "CALL FUNCTION/CallC",
+                    "strval": "<{Function_name}>( e );",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -740646682,
+                    "strtype": "CALL FUNCTION/Function_name",
+                    "strval": "init_tomatotent",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -490605782,
+                    "strtype": "CALL FUNCTION/Dont_export_function",
+                    "strval": "False",
+                    "InheritedType": 2
+                  }
+                ],
                 "InheritedType": 10
               }
             ],
@@ -11803,9 +11843,9 @@
                     "nid": 262624265,
                     "strtype": "_style/Bg_Color",
                     "intarray": [
-                      111,
-                      98,
-                      60,
+                      40,
+                      101,
+                      42,
                       255
                     ],
                     "InheritedType": 7
@@ -18946,7 +18986,6 @@
                   },
                   {
                     "nid": -94999486,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -20622,8 +20661,7 @@
             "InheritedType": 4
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID97804620-1027754S1172148",
@@ -52354,71 +52392,6 @@
         "strtype": "STARTEVENTS/Name",
         "strval": "___initial_actions0",
         "InheritedType": 10
-      },
-      {
-        "disabled": false,
-        "nid": -1536521656,
-        "strtype": "_event/EventHandler",
-        "strval": "SCREEN_LOAD_START",
-        "childs": [
-          {
-            "nid": -1197033848,
-            "strtype": "_custom/name",
-            "strval": "Event58",
-            "InheritedType": 10
-          },
-          {
-            "nid": 1246552315,
-            "strtype": "_custom/condition_C",
-            "strval": "",
-            "InheritedType": 10
-          },
-          {
-            "nid": -9330070,
-            "strtype": "_custom/condition_P",
-            "strval": "",
-            "InheritedType": 10
-          },
-          {
-            "nid": -484259686,
-            "strtype": "_event/action",
-            "strval": "CALL FUNCTION",
-            "childs": [
-              {
-                "nid": -739037530,
-                "strtype": "CALL FUNCTION/Name",
-                "strval": "CALL FUNCTION",
-                "InheritedType": 10
-              },
-              {
-                "nid": -549682813,
-                "strtype": "CALL FUNCTION/Call",
-                "strval": "<{Function_name}>( event_struct )",
-                "InheritedType": 10
-              },
-              {
-                "nid": -352405123,
-                "strtype": "CALL FUNCTION/CallC",
-                "strval": "<{Function_name}>( e );",
-                "InheritedType": 10
-              },
-              {
-                "nid": -696527269,
-                "strtype": "CALL FUNCTION/Function_name",
-                "strval": "init_tomatotent",
-                "InheritedType": 10
-              },
-              {
-                "nid": 1845215700,
-                "strtype": "CALL FUNCTION/Dont_export_function",
-                "strval": "True",
-                "InheritedType": 2
-              }
-            ],
-            "InheritedType": 10
-          }
-        ],
-        "InheritedType": 4
       }
     ],
     "saved_objtypeKey": "STARTEVENTS"

@@ -131,8 +131,11 @@ void start_animation(lv_obj_t *scr)
 
 void init_tomatotent(lv_event_t * e)
 {	
-   
+   ESP_LOGI(TAG, "Here");
    //init values
+   if(my_tent.initiated == 1)
+	return;
+   my_tent.initiated = 1;
    my_tent.screen_brightness_slider_value = 80;
    my_tent.light_duration_slider_value = 36;
    my_tent.led_brightness_slider_value = 80;
@@ -226,7 +229,6 @@ void init_tomatotent(lv_event_t * e)
 		lv_slider_set_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_value, LV_ANIM_OFF);
 		lv_slider_set_left_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_left_value, LV_ANIM_OFF);
 		
-		
 		// Climate Screen
 		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
 		update_temp_units(my_tent.temp_unit);
@@ -253,11 +255,10 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
 		
 		//SensorSettingsScreen
-		
-		
+
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
-		if(my_tent.is_drying)
+		if(my_tent.is_drying == 1)
 			make_it_drying(false);
 			
         //is there an active grow/dry?
@@ -266,6 +267,7 @@ void init_tomatotent(lv_event_t * e)
 			update_time_left(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
 			ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+			ESP_LOGI(TAG, "Continuing existing Grow2");
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
@@ -279,7 +281,6 @@ void init_tomatotent(lv_event_t * e)
         nvs_close(storage_handle);
         
 	}
-	
 }
 
 
@@ -648,6 +649,11 @@ void temperature_dropdown(lv_event_t * e)
 void start_grow(lv_event_t * e)
 {
 
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    err = nvs_set_u8(storage_handle, "is_drying", 0);
+    err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+    
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));

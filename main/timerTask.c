@@ -27,6 +27,7 @@ static bool IRAM_ATTR dimmer_timer_cb(gptimer_handle_t timer, const gptimer_alar
     my_tent.grow_lamp_dimmed = false;
     return (high_task_awoken == pdTRUE);
 }
+
 // Task to be created.
 void vTimerTask( void * pvParameters )
 {
@@ -61,8 +62,6 @@ void vTimerTask( void * pvParameters )
     ESP_ERROR_CHECK(gptimer_set_alarm_action(gptimer, &alarm_config1));
     
     
-    
-    
     //grow lamp dimmer timer	
 	gptimer_config_t dimmer_timer_config = {
         .clk_src = GPTIMER_CLK_SRC_DEFAULT,
@@ -76,7 +75,7 @@ void vTimerTask( void * pvParameters )
     };
     ESP_ERROR_CHECK(gptimer_register_event_callbacks(grow_lamp_dimmer_timer_handle, &dimmer_cbs, queue));
     
-    ESP_LOGI(TAG, "Enable timer");
+    ESP_LOGI(TAG, "Enable Grow Lamp Dimmer  timer");
     ESP_ERROR_CHECK(gptimer_enable(grow_lamp_dimmer_timer_handle));
     
 

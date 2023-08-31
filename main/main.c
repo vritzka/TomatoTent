@@ -50,6 +50,7 @@ void app_main(void)
    vStartTimerTask();
    vCreateSensorTask();
    
+
  #if defined(CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE)
     /**
      * We are treating successful WiFi connection as a checkpoint to cancel rollback
