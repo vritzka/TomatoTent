@@ -19,6 +19,7 @@
 #include "otaTask.h"
 #include "sensorTask.h"
 #include "general.h"
+#include "esp_zigbee_gateway.h"
 
 static const char *TAG = "main.c";
 
@@ -70,4 +71,32 @@ void app_main(void)
     }
 #endif
 
+   esp_zb_platform_config_t config = {
+        .radio_config = ESP_ZB_DEFAULT_RADIO_CONFIG(),
+        .host_config = ESP_ZB_DEFAULT_HOST_CONFIG(),
+    };
+
+    ESP_ERROR_CHECK(esp_zb_platform_config(&config));
+	ESP_ERROR_CHECK(nvs_flash_init());
+
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    ESP_ERROR_CHECK(esp_zb_gateway_console_init());
+#endif
+
+#if CONFIG_EXAMPLE_CONNECT_WIFI
+    //ESP_ERROR_CHECK(example_connect());
+#if CONFIG_ESP_COEX_SW_COEXIST_ENABLE
+    ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_MIN_MODEM));
+    coex_enable();
+    coex_schm_status_bit_set(1, 1);
+#else
+
+#endif
+#endif
+#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
+    esp_rcp_update_config_t rcp_update_config = ESP_ZB_RCP_UPDATE_CONFIG();
+    ESP_ERROR_CHECK(init_spiffs());
+    ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
+#endif
+vCreateZigbeeTask();
 }

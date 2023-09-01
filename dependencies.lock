@@ -1,10 +1,28 @@
 dependencies:
-  espressif/esp_lcd_touch:
-    component_hash: 847284c65f8d5aaa9a801f5b3d3dac0ba0a5a2dc1bb68890989e84dd9c4a9d53
+  espressif/esp-serial-flasher:
+    component_hash: dcc42a16712a1a636509cf0bf90e14032d7f2141784b533613b267b6aa318d52
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.4
+    version: 0.0.11
+  espressif/esp-zboss-lib:
+    component_hash: 92d1791fe86c98f4bd4a89447f59962144b6d8fed4b2bf0935defaebecabb6d8
+    source:
+      service_url: https://api.components.espressif.com/
+      type: service
+    version: 0.6.2
+  espressif/esp-zigbee-lib:
+    component_hash: 411dc2d1e37438500dc178896d62521ec1816eee225751b1bfddd5b3b1b3ca34
+    source:
+      service_url: https://api.components.espressif.com/
+      type: service
+    version: 0.9.3
+  espressif/esp_lcd_touch:
+    component_hash: 6cc76832cda51d73353a7e8d7aa07073d6cdb75b1ad66e2d98badd768f6c830a
+    source:
+      service_url: https://api.components.espressif.com/
+      type: service
+    version: 1.1.0
   espressif/esp_lcd_touch_ft5x06:
     component_hash: bb5cee419a017dfe2bd6c591fc9f8294ec0552fe28cddb48566e5b54336944f7
     source:
@@ -18,16 +36,22 @@ dependencies:
       type: service
     version: 1.0.7~1
   espressif/esp_lcd_touch_tt21100:
-    component_hash: 27d0ec1226e2ce81ad6a170b27530dbcf959cd1fb9abe1ba207509a8a2f2ed22
+    component_hash: 3670f6f3d68c120d680d70ffdf2dc10f6c2a5bea8c0e87521fb92ac2af1f94c5
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.7~1
+    version: 1.1.0
+  espressif/esp_rcp_update:
+    component_hash: 5bd5e45c7bddcbef55b7180819b056ba69a92e16ae705548f61dc0402b6d7ec7
+    source:
+      service_url: https://api.components.espressif.com/
+      type: service
+    version: 0.3.1
   idf:
     component_hash: null
     source:
       type: idf
-    version: 5.1.0
-manifest_hash: 75c1c15db043c8f031f5b303965f1ff7cfaaac1303b36ccb8098da06568a7c6b
+    version: 5.1.1
+manifest_hash: c0d3e308a99a51bc52d2c2c3f17e8fb329428f641771ea7331e27fb9dc1d07f3
 target: esp32s3
 version: 1.0.0
