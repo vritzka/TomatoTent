@@ -249,15 +249,14 @@ lv_obj_t *ui_CurrentVersionLabel;
 void ui_SensorSettingsScreen_screen_init(void);
 void ui_event_SensorSettingsScreen( lv_event_t * e);
 lv_obj_t *ui_SensorSettingsScreen;
-lv_obj_t *ui_Panel7;
-lv_obj_t *ui_Label34;
-lv_obj_t *ui_Panel9;
-lv_obj_t *ui_Label37;
 lv_obj_t *ui_Label15;
 void ui_event_SensorSettingsSaveButton( lv_event_t * e);
 lv_obj_t *ui_SensorSettingsSaveButton;
 lv_obj_t *ui_Label33;
 lv_obj_t *ui_SensorSettingsInfoLabel;
+void ui_event_SensorSettingsSaveButton1( lv_event_t * e);
+lv_obj_t *ui_SensorSettingsSaveButton1;
+lv_obj_t *ui_Label34;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
@@ -837,7 +836,13 @@ lv_indev_wait_release(lv_indev_get_act());
 void ui_event_SensorSettingsSaveButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      update_sensor_calibration( e );
+      switch_lamp( e );
+}
+}
+void ui_event_SensorSettingsSaveButton1( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      leave_lamp( e );
 }
 }
 

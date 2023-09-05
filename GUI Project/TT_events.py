@@ -194,3 +194,11 @@ def update_sensor_calibration(event_struct):
 def start_dry(event_struct):
     return
 
+
+def switch_lamp(event_struct):
+    return
+
+
+def leave_lamp(event_struct):
+    return
+

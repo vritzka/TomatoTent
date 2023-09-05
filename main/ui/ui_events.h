@@ -45,7 +45,8 @@ void wifi_scan_button(lv_event_t * e);
 void save_general_settings_screen(lv_event_t * e);
 void screen_brightness_slider(lv_event_t * e);
 void software_upgrade_button(lv_event_t * e);
-void update_sensor_calibration(lv_event_t * e);
+void switch_lamp(lv_event_t * e);
+void leave_lamp(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

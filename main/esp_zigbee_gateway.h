@@ -14,10 +14,12 @@
 
 #include "esp_err.h"
 #include "esp_zigbee_core.h"
+#include "ha/esp_zigbee_ha_standard.h"
 
 /* Zigbee Configuration */
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
+#define HA_ONOFF_SWITCH_ENDPOINT        1  
 #define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
 
 #define RCP_VERSION_MAX_SIZE            80

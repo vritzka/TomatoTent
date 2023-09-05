@@ -27,12 +27,12 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=506;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
-FILE_NAME_1=7205;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.c;0;4
-FILE_NAME_2=4066;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.h;0;4
-FILE_NAME_3=373;None;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fpartitions.csv;0;4
-FILE_NAME_4=11412;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FguiTask.c;0;4
+current_page=3
+FILE_NAME_0=2396;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
+FILE_NAME_1=3873;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.c;0;4
+FILE_NAME_2=739;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.h;0;4
+FILE_NAME_3=23724;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fui%2Fui_events.c;0;4
+FILE_NAME_4=9265;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.c;0;4
 
 [VTE]
 last_dir=/Users/volkerritzka

@@ -244,15 +244,14 @@ extern lv_obj_t *ui_CurrentVersionLabel;
 void ui_SensorSettingsScreen_screen_init(void);
 void ui_event_SensorSettingsScreen( lv_event_t * e);
 extern lv_obj_t *ui_SensorSettingsScreen;
-extern lv_obj_t *ui_Panel7;
-extern lv_obj_t *ui_Label34;
-extern lv_obj_t *ui_Panel9;
-extern lv_obj_t *ui_Label37;
 extern lv_obj_t *ui_Label15;
 void ui_event_SensorSettingsSaveButton( lv_event_t * e);
 extern lv_obj_t *ui_SensorSettingsSaveButton;
 extern lv_obj_t *ui_Label33;
 extern lv_obj_t *ui_SensorSettingsInfoLabel;
+void ui_event_SensorSettingsSaveButton1( lv_event_t * e);
+extern lv_obj_t *ui_SensorSettingsSaveButton1;
+extern lv_obj_t *ui_Label34;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png

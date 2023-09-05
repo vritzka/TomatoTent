@@ -79,10 +79,6 @@ extern lv_chart_series_t * chart_series_humidity;
 extern lv_chart_series_t * chart_series_fanspeed;
 extern lv_chart_series_t * chart_series_co2;
 
-extern lv_obj_t * ui_ElevationSpinbox;
-extern lv_obj_t * ui_TemperatureOffsetSpinbox;
-
-
 
 #define I2C_MASTER_SDA              (12)
 #define I2C_MASTER_SCL              (13)

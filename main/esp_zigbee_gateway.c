@@ -36,30 +36,6 @@
 
 static const char *TAG = "ESP_ZB_GATEWAY";
 
-/* Note: Please select the correct console output port based on the development board in menuconfig */
-#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
-esp_err_t esp_zb_gateway_console_init(void)
-{
-    esp_err_t ret = ESP_OK;
-    /* Disable buffering on stdin */
-    setvbuf(stdin, NULL, _IONBF, 0);
-
-    /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
-    esp_vfs_dev_usb_serial_jtag_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
-    /* Move the caret to the beginning of the next line on '\n' */
-    esp_vfs_dev_usb_serial_jtag_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
-
-    /* Enable non-blocking mode on stdin and stdout */
-    fcntl(fileno(stdout), F_SETFL, O_NONBLOCK);
-    fcntl(fileno(stdin), F_SETFL, O_NONBLOCK);
-
-    usb_serial_jtag_driver_config_t usb_serial_jtag_config = USB_SERIAL_JTAG_DRIVER_CONFIG_DEFAULT();
-    ret = usb_serial_jtag_driver_install(&usb_serial_jtag_config);
-    esp_vfs_usb_serial_jtag_use_driver();
-    esp_vfs_dev_uart_register();
-    return ret;
-}
-#endif
 
 #if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
 static void esp_zb_gateway_update_rcp(void)
@@ -105,6 +81,65 @@ static void bdb_start_top_level_commissioning_cb(uint8_t mode_mask)
 {
     ESP_ERROR_CHECK(esp_zb_bdb_start_top_level_commissioning(mode_mask));
 }
+
+void rcp_error_handler(uint8_t connect_timeout)
+{
+    ESP_LOGI(TAG, "RCP connection failed timeout:%d seconds", connect_timeout);
+#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
+    ESP_LOGI(TAG, "Timeout! Re-flashing RCP");
+    esp_zb_gateway_update_rcp();
+#endif
+}
+
+
+
+
+/////////////////////////////////////
+/////////// SWITCH //////////////////
+/////////////////////////////////////
+
+typedef struct light_bulb_device_params_s {
+    esp_zb_ieee_addr_t ieee_addr;
+    uint8_t  endpoint;
+    uint16_t short_addr;
+} light_bulb_device_params_t;
+
+static void bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Bound successfully!");
+        if (user_ctx) {
+            light_bulb_device_params_t *light = (light_bulb_device_params_t *)user_ctx;
+            ESP_LOGI(TAG, "The light originating from address(0x%x) on endpoint(%d)", light->short_addr, light->endpoint);
+            free(light);
+        }
+    }
+}
+
+static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t endpoint, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Found light");
+        esp_zb_zdo_bind_req_param_t bind_req;
+        light_bulb_device_params_t *light = (light_bulb_device_params_t *)malloc(sizeof(light_bulb_device_params_t));
+        light->endpoint = endpoint;
+        light->short_addr = addr;
+        esp_zb_ieee_address_by_short(light->short_addr, light->ieee_addr);
+        esp_zb_get_long_address(bind_req.src_address);
+        bind_req.src_endp = HA_ONOFF_SWITCH_ENDPOINT;
+        bind_req.cluster_id = ESP_ZB_ZCL_CLUSTER_ID_ON_OFF;
+        bind_req.dst_addr_mode = ESP_ZB_ZDO_BIND_DST_ADDR_MODE_64_BIT_EXTENDED;
+        memcpy(bind_req.dst_address_u.addr_long, light->ieee_addr, sizeof(esp_zb_ieee_addr_t));
+        bind_req.dst_endp = endpoint;
+        bind_req.req_dst_addr = esp_zb_get_short_address(); /* TODO: Send bind request to self */
+        ESP_LOGI(TAG, "Try to bind On/Off");
+        esp_zb_zdo_device_bind_req(&bind_req, bind_cb, (void *)light);
+    }
+}
+
+/////////////////////////////////////
+/////////// END SWITCH //////////////////
+/////////////////////////////////////
 
 void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 {
@@ -157,7 +192,12 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
         break;
     case ESP_ZB_ZDO_SIGNAL_DEVICE_ANNCE:
         dev_annce_params = (esp_zb_zdo_signal_device_annce_params_t *)esp_zb_app_signal_get_params(p_sg_p);
-        ESP_LOGI(TAG, "New device commissioned or rejoined (short: 0x%04hx)", dev_annce_params->device_short_addr);
+        ESP_LOGI(TAG, "New device commissioned or rejoined (short: 0x%04hx), Capabilities: %d", dev_annce_params->device_short_addr, dev_annce_params->capability);
+        
+        esp_zb_zdo_match_desc_req_param_t  cmd_req;
+        cmd_req.dst_nwk_addr = dev_annce_params->device_short_addr;
+        cmd_req.addr_of_interest = dev_annce_params->device_short_addr;
+        esp_zb_zdo_find_on_off_light(&cmd_req, user_find_cb, NULL);
         break;
     default:
         ESP_LOGI(TAG, "ZDO signal: %s (0x%x), status: %s", esp_zb_zdo_signal_to_string(sig_type), sig_type,
@@ -166,20 +206,16 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
     }
 }
 
-void rcp_error_handler(uint8_t connect_timeout)
-{
-    ESP_LOGI(TAG, "RCP connection failed timeout:%d seconds", connect_timeout);
-#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
-    ESP_LOGI(TAG, "Timeout! Re-flashing RCP");
-    esp_zb_gateway_update_rcp();
-#endif
-}
+
 
 static void esp_zb_task(void *pvParameters)
 {
     /* initialize Zigbee stack */
     esp_zb_cfg_t zb_nwk_cfg = ESP_ZB_ZC_CONFIG();
     esp_zb_init(&zb_nwk_cfg);
+    esp_zb_on_off_switch_cfg_t switch_cfg = ESP_ZB_DEFAULT_ON_OFF_SWITCH_CONFIG();
+    esp_zb_ep_list_t *esp_zb_on_off_switch_ep = esp_zb_on_off_switch_ep_create(HA_ONOFF_SWITCH_ENDPOINT, &switch_cfg);
+    esp_zb_device_register(esp_zb_on_off_switch_ep);    
     esp_zb_set_primary_network_channel_set(ESP_ZB_PRIMARY_CHANNEL_MASK);
     ESP_ERROR_CHECK(esp_zb_start(false));
 #if(CONFIG_ZB_RADIO_MACSPLIT_UART)

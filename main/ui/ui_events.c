@@ -16,7 +16,10 @@
 #include "timerTask.h"
 #include "sensorTask.h"
 #include "otaTask.h"
+#include "ha/esp_zigbee_ha_standard.h"
+//#include "zdo/esp_zigbee_zdo_command.h"
 
+#define HA_ONOFF_SWITCH_ENDPOINT        1  
 
 static const char *TAG = "ui_events.c";
 nvs_handle_t storage_handle;
@@ -147,8 +150,7 @@ void init_tomatotent(lv_event_t * e)
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!!!\n", esp_err_to_name(err));
     } else { 
-		
-		spinboxes_init();
+	
 		draw_qr_codes();
 		chart_init();
 		
@@ -191,14 +193,6 @@ void init_tomatotent(lv_event_t * e)
 		my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
 		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
-		
-		err = nvs_get_u16(storage_handle, "elevation", &my_tent.elevation);
-		//printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		lv_spinbox_set_value(ui_ElevationSpinbox, my_tent.elevation);
-        
-        err = nvs_get_u8(storage_handle, "temp_offset", &my_tent.temperature_offset);
-        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		lv_spinbox_set_value(ui_TemperatureOffsetSpinbox, my_tent.temperature_offset);
 		
 		//wifi screen
 		size_t required_size;
@@ -266,8 +260,7 @@ void init_tomatotent(lv_event_t * e)
 			ESP_LOGI(TAG, "Continuing existing Grow");
 			update_time_left(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
-			ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
-			ESP_LOGI(TAG, "Continuing existing Grow2");
+			//ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
@@ -479,8 +472,6 @@ void save_general_settings_screen(lv_event_t * e)
     } else {
 		
 		err = nvs_set_u16(storage_handle, "screen_brightns", my_tent.screen_brightness_slider_value);     
-        err = nvs_set_u16(storage_handle, "elevation", my_tent.elevation);
-        err = nvs_set_u8(storage_handle, "temp_offset", my_tent.temperature_offset);
 		
         // Close
         err = nvs_commit(storage_handle);
@@ -489,25 +480,6 @@ void save_general_settings_screen(lv_event_t * e)
 	
 }
 
-void update_sensor_calibration(lv_event_t * e) {
-		lv_label_set_text(ui_SensorSettingsInfoLabel, "");	
-		gptimer_stop(sensorTimerHandle);
-	    scd4x_stop_periodic_measurement();
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-        ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset((float)my_tent.temperature_offset));
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-		ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_sensor_altitude((float)my_tent.elevation));
-		vTaskDelay(500 / portTICK_PERIOD_MS);
-		ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
-		vTaskDelay(500 / portTICK_PERIOD_MS);
-		ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_reinit());
-		vTaskDelay(500 / portTICK_PERIOD_MS);
-		scd4x_start_periodic_measurement();
-		lv_label_set_text(ui_SensorSettingsInfoLabel, "Success\nSensor will take 2-3 minutes to gradually reflect new settings.");
-		gptimer_set_raw_count(sensorTimerHandle, 0);
-		gptimer_start(sensorTimerHandle);
-		
-}
 
 //////////////////////////////////////
 ////////// WIFI Screen ///////////////
@@ -657,7 +629,7 @@ void start_grow(lv_event_t * e)
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
-	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	//ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 	make_it_day(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
@@ -675,7 +647,7 @@ void start_dry(lv_event_t * e)
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
-	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	//ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 	make_it_drying(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
@@ -791,4 +763,22 @@ void ui_event_homeScreen_custom(lv_event_t * e)
 		  
 	}
 
+}
+
+void switch_lamp(lv_event_t * e)
+{
+        esp_zb_zcl_on_off_cmd_t cmd_req;
+        cmd_req.zcl_basic_cmd.src_endpoint = HA_ONOFF_SWITCH_ENDPOINT;
+        cmd_req.address_mode = ESP_ZB_APS_ADDR_MODE_DST_ADDR_ENDP_NOT_PRESENT;
+        cmd_req.on_off_cmd_id = ESP_ZB_ZCL_CMD_ON_OFF_TOGGLE_ID;
+		esp_zb_zcl_on_off_cmd_req(&cmd_req);
+
+}
+
+void leave_lamp(lv_event_t * e)
+{
+	esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
+	cmd_req.device_address = 0xda4c; 
+	//esp_zb_zdo_device_leave_req(cmd_req, esp_zb_zdo_leave_callback_t user_cb, void *user_ctx);
+	esp_zb_zdo_device_leave_req(cmd_req, NULL, NULL);
 }
