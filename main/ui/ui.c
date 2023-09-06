@@ -254,9 +254,13 @@ void ui_event_SensorSettingsSaveButton( lv_event_t * e);
 lv_obj_t *ui_SensorSettingsSaveButton;
 lv_obj_t *ui_Label33;
 lv_obj_t *ui_SensorSettingsInfoLabel;
-void ui_event_SensorSettingsSaveButton1( lv_event_t * e);
-lv_obj_t *ui_SensorSettingsSaveButton1;
+lv_obj_t *ui_Panel7;
+lv_obj_t *ui_Image24;
 lv_obj_t *ui_Label34;
+lv_obj_t *ui_Button2;
+lv_obj_t *ui_Label35;
+lv_obj_t *ui_Button3;
+lv_obj_t *ui_Label36;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
@@ -271,6 +275,7 @@ const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_7917115
 const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[1] = {&ui_img_1484485426};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
+const lv_img_dsc_t *ui_imgset_586263085[1] = {&ui_img_1319116584};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -837,12 +842,6 @@ void ui_event_SensorSettingsSaveButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       switch_lamp( e );
-}
-}
-void ui_event_SensorSettingsSaveButton1( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      leave_lamp( e );
 }
 }
 

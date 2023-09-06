@@ -771,14 +771,17 @@ void switch_lamp(lv_event_t * e)
         cmd_req.zcl_basic_cmd.src_endpoint = HA_ONOFF_SWITCH_ENDPOINT;
         cmd_req.address_mode = ESP_ZB_APS_ADDR_MODE_DST_ADDR_ENDP_NOT_PRESENT;
         cmd_req.on_off_cmd_id = ESP_ZB_ZCL_CMD_ON_OFF_TOGGLE_ID;
+
 		esp_zb_zcl_on_off_cmd_req(&cmd_req);
 
 }
 
 void leave_lamp(lv_event_t * e)
 {
-	esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
-	cmd_req.device_address = 0xda4c; 
+	//esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
+	//cmd_req.device_address = 0xda4c; 
 	//esp_zb_zdo_device_leave_req(cmd_req, esp_zb_zdo_leave_callback_t user_cb, void *user_ctx);
-	esp_zb_zdo_device_leave_req(cmd_req, NULL, NULL);
+	//esp_zb_zdo_device_leave_req(cmd_req, NULL, NULL);
 }
+
+

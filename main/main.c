@@ -46,11 +46,14 @@ void app_main(void)
    
    event_loop_init();
    init_ledc();
-   init_i2c();
+  // init_i2c();
    vStartGuiTask();
    vStartTimerTask();
    //vCreateSensorTask();
    
+
+ 
+ 
 
  #if defined(CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE)
     /**

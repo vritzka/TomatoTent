@@ -11,24 +11,9 @@
  * software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied.
  */
-#include <fcntl.h>
-#include <string.h>
-#include "esp_log.h"
-#include "esp_netif.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "esp_vfs_eventfd.h"
-#include "esp_spiffs.h"
-#include "esp_wifi.h"
-#include "nvs_flash.h"
-#include "protocol_examples_common.h"
-#include "esp_rcp_update.h"
-#include "esp_coexist_internal.h"
+
 #include "esp_zigbee_gateway.h"
 
-#include "esp_vfs_dev.h"
-#include "esp_vfs_usb_serial_jtag.h"
-#include "driver/usb_serial_jtag.h"
 
 #if (!defined ZB_MACSPLIT_HOST && defined ZB_MACSPLIT_DEVICE)
 #error Only Zigbee gateway host device should be defined
@@ -137,10 +122,41 @@ static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t 
     }
 }
 
+static void user_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
+{
+		ESP_LOGI(TAG, "Leave CB");
+}
+
+void pair_socket(lv_event_t * e)
+{
+	
+	uint16_t * device_short_address = lv_event_get_user_data(e); 
+	ESP_LOGI(TAG, "THIS 0x%04hx", *device_short_address);
+	
+	esp_zb_zdo_match_desc_req_param_t cmd_req;
+	cmd_req.dst_nwk_addr = *device_short_address;
+	cmd_req.addr_of_interest = *device_short_address;
+	
+	esp_zb_zdo_find_on_off_light(&cmd_req, user_find_cb, NULL);	
+     
+}
+
+void leave_device(lv_event_t * e)
+{
+	
+	uint16_t * device_short_address = lv_event_get_user_data(e);
+	esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
+	
+	esp_zb_ieee_address_by_short(*device_short_address, cmd_req.device_address);
+	cmd_req.dst_nwk_addr = *device_short_address;
+	cmd_req.rejoin = 0;
+	esp_zb_zdo_device_leave_req(&cmd_req, user_leave_cb, NULL);
+}
+
 /////////////////////////////////////
 /////////// END SWITCH //////////////////
 /////////////////////////////////////
-
+uint16_t power_outlet_short_addr;
 void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 {
     uint32_t *p_sg_p       = signal_struct->p_app_signal;
@@ -192,16 +208,22 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
         break;
     case ESP_ZB_ZDO_SIGNAL_DEVICE_ANNCE:
         dev_annce_params = (esp_zb_zdo_signal_device_annce_params_t *)esp_zb_app_signal_get_params(p_sg_p);
-        ESP_LOGI(TAG, "New device commissioned or rejoined (short: 0x%04hx), Capabilities: %d", dev_annce_params->device_short_addr, dev_annce_params->capability);
+        ESP_LOGI(TAG, "New device found (short: 0x%04hx), Capabilities: %d", dev_annce_params->device_short_addr, dev_annce_params->capability);
+
+        ESP_LOGI(TAG, "IEEE address: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x",
+                 dev_annce_params->ieee_addr[7], dev_annce_params->ieee_addr[6], dev_annce_params->ieee_addr[5], dev_annce_params->ieee_addr[4],
+                 dev_annce_params->ieee_addr[3], dev_annce_params->ieee_addr[2], dev_annce_params->ieee_addr[1], dev_annce_params->ieee_addr[0]);
         
-        esp_zb_zdo_match_desc_req_param_t  cmd_req;
-        cmd_req.dst_nwk_addr = dev_annce_params->device_short_addr;
-        cmd_req.addr_of_interest = dev_annce_params->device_short_addr;
-        esp_zb_zdo_find_on_off_light(&cmd_req, user_find_cb, NULL);
+        if(dev_annce_params->capability == 142) {
+			ESP_LOGI(TAG, "Here: 0x%04hx", dev_annce_params->device_short_addr);
+			power_outlet_short_addr = dev_annce_params->device_short_addr;
+			lv_obj_add_event_cb(ui_Button2, pair_socket, LV_EVENT_CLICKED, &power_outlet_short_addr);
+			
+			lv_obj_add_event_cb(ui_Button3, leave_device, LV_EVENT_CLICKED, &power_outlet_short_addr);
+        }
         break;
     default:
-        ESP_LOGI(TAG, "ZDO signal: %s (0x%x), status: %s", esp_zb_zdo_signal_to_string(sig_type), sig_type,
-                 esp_err_to_name(err_status));
+        ESP_LOGI(TAG, "ZDO signal: %s (0x%x), status: %s", esp_zb_zdo_signal_to_string(sig_type), sig_type, esp_err_to_name(err_status));
         break;
     }
 }
@@ -213,11 +235,15 @@ static void esp_zb_task(void *pvParameters)
     /* initialize Zigbee stack */
     esp_zb_cfg_t zb_nwk_cfg = ESP_ZB_ZC_CONFIG();
     esp_zb_init(&zb_nwk_cfg);
-    esp_zb_on_off_switch_cfg_t switch_cfg = ESP_ZB_DEFAULT_ON_OFF_SWITCH_CONFIG();
-    esp_zb_ep_list_t *esp_zb_on_off_switch_ep = esp_zb_on_off_switch_ep_create(HA_ONOFF_SWITCH_ENDPOINT, &switch_cfg);
-    esp_zb_device_register(esp_zb_on_off_switch_ep);    
+    
+    //esp_zb_on_off_switch_cfg_t switch_cfg = ESP_ZB_DEFAULT_ON_OFF_SWITCH_CONFIG();
+    //esp_zb_ep_list_t *esp_zb_on_off_switch_ep = esp_zb_on_off_switch_ep_create(HA_ONOFF_SWITCH_ENDPOINT, &switch_cfg);
+    //esp_zb_device_register(esp_zb_on_off_switch_ep); 
+       
     esp_zb_set_primary_network_channel_set(ESP_ZB_PRIMARY_CHANNEL_MASK);
     ESP_ERROR_CHECK(esp_zb_start(false));
+
+    
 #if(CONFIG_ZB_RADIO_MACSPLIT_UART)
     esp_zb_add_rcp_failure_cb(rcp_error_handler);
 #endif

@@ -11,10 +11,28 @@
  * software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied.
  */
-
+#include "lvgl.h"
+#include "ui_events.h"
+#include "ui.h"
+#include <fcntl.h>
+#include <string.h>
+#include "esp_log.h"
+#include "esp_netif.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_vfs_eventfd.h"
+#include "esp_spiffs.h"
+#include "esp_wifi.h"
+#include "nvs_flash.h"
+#include "protocol_examples_common.h"
+#include "esp_rcp_update.h"
+#include "esp_coexist_internal.h"
 #include "esp_err.h"
 #include "esp_zigbee_core.h"
 #include "ha/esp_zigbee_ha_standard.h"
+#include "esp_vfs_dev.h"
+#include "esp_vfs_usb_serial_jtag.h"
+#include "driver/usb_serial_jtag.h"
 
 /* Zigbee Configuration */
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
