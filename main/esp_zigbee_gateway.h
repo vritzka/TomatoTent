@@ -34,6 +34,14 @@
 #include "esp_vfs_usb_serial_jtag.h"
 #include "driver/usb_serial_jtag.h"
 
+extern lv_obj_t *ui_Panel7;
+extern lv_obj_t *ui_Image24;
+extern lv_obj_t *ui_Label34;
+extern lv_obj_t *ui_Button2;
+extern lv_obj_t *ui_Label35;
+extern lv_obj_t *ui_Button3;
+extern lv_obj_t *ui_Label36;
+
 /* Zigbee Configuration */
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
