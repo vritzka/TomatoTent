@@ -17,13 +17,12 @@
 #include "sensorTask.h"
 #include "otaTask.h"
 #include "ha/esp_zigbee_ha_standard.h"
-//#include "zdo/esp_zigbee_zdo_command.h"
 
 #define HA_ONOFF_SWITCH_ENDPOINT        1  
 
 static const char *TAG = "ui_events.c";
-nvs_handle_t storage_handle;
-esp_err_t err;
+static nvs_handle_t storage_handle;
+static esp_err_t err;
 
 
 //SplashScreen
@@ -249,7 +248,10 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
 		
 		//SensorSettingsScreen
-
+		err = nvs_get_u16(storage_handle, "power_outlet", &my_tent.power_outlet_short_addr);
+		ESP_LOGI(TAG, "PO address: 0x%04hx", my_tent.power_outlet_short_addr);
+		draw_socket_pair_panel(&my_tent.power_outlet_short_addr, true);
+		
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
 		if(my_tent.is_drying == 1)
@@ -767,21 +769,10 @@ void ui_event_homeScreen_custom(lv_event_t * e)
 
 void switch_lamp(lv_event_t * e)
 {
+        ESP_LOGI(TAG, "TOGGLE");
         esp_zb_zcl_on_off_cmd_t cmd_req;
         cmd_req.zcl_basic_cmd.src_endpoint = HA_ONOFF_SWITCH_ENDPOINT;
         cmd_req.address_mode = ESP_ZB_APS_ADDR_MODE_DST_ADDR_ENDP_NOT_PRESENT;
         cmd_req.on_off_cmd_id = ESP_ZB_ZCL_CMD_ON_OFF_TOGGLE_ID;
-
 		esp_zb_zcl_on_off_cmd_req(&cmd_req);
-
 }
-
-void leave_lamp(lv_event_t * e)
-{
-	//esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
-	//cmd_req.device_address = 0xda4c; 
-	//esp_zb_zdo_device_leave_req(cmd_req, esp_zb_zdo_leave_callback_t user_cb, void *user_ctx);
-	//esp_zb_zdo_device_leave_req(cmd_req, NULL, NULL);
-}
-
-

@@ -14,14 +14,8 @@
 
 #include "esp_zigbee_gateway.h"
 
-lv_obj_t *ui_Panel7;
-lv_obj_t *ui_Image24;
-lv_obj_t *ui_Label34;
-lv_obj_t *ui_Button2;
-lv_obj_t *ui_Label35;
-lv_obj_t *ui_Button3;
-lv_obj_t *ui_Label36;
-
+static esp_err_t err;
+static nvs_handle_t storage_handle;
 
 #if (!defined ZB_MACSPLIT_HOST && defined ZB_MACSPLIT_DEVICE)
 #error Only Zigbee gateway host device should be defined
@@ -104,9 +98,17 @@ static void bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
         if (user_ctx) {
             light_bulb_device_params_t *light = (light_bulb_device_params_t *)user_ctx;
             ESP_LOGI(TAG, "The light originating from address(0x%x) on endpoint(%d)", light->short_addr, light->endpoint);
-            free(light);
+            
             lv_obj_add_flag(ui_Button2, LV_OBJ_FLAG_HIDDEN);
             lv_obj_clear_flag(ui_Button3, LV_OBJ_FLAG_HIDDEN);
+            
+            my_tent.power_outlet_short_addr = light->short_addr;
+            
+            err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+            err = nvs_set_u16(storage_handle, "power_outlet", my_tent.power_outlet_short_addr);
+            printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+            nvs_close(storage_handle);
+            free(light);
         }
     }
 }
@@ -135,23 +137,28 @@ static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t 
 static void user_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
 {
 	if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {	
-		ESP_LOGI(TAG, "Leave CB");
-		lv_obj_del(ui_Panel7);
+		//ESP_LOGI(TAG, "Leave CB");
+		if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
+			lv_obj_del(ui_Panel7);
+			xSemaphoreGive(xGuiSemaphore);
+		}
+		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+		err = nvs_erase_key(storage_handle, "power_outlet");
+		printf((err != ESP_OK) ? "Not deleted!\n" : "Deleted\n");
+		nvs_close(storage_handle);
 	}
 }
 
 void pair_socket(lv_event_t * e)
 {
-	
 	uint16_t * device_short_address = lv_event_get_user_data(e); 
-	ESP_LOGI(TAG, "THIS 0x%04hx", *device_short_address);
+	ESP_LOGI(TAG, "'Pairing' 0x%04hx", *device_short_address);
 	
 	esp_zb_zdo_match_desc_req_param_t cmd_req;
 	cmd_req.dst_nwk_addr = *device_short_address;
 	cmd_req.addr_of_interest = *device_short_address;
 	
 	esp_zb_zdo_find_on_off_light(&cmd_req, user_find_cb, NULL);	
-     
 }
 
 void leave_device(lv_event_t * e)
@@ -170,6 +177,7 @@ void leave_device(lv_event_t * e)
 /////////// END SWITCH //////////////////
 /////////////////////////////////////
 uint16_t power_outlet_short_addr;
+
 void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 {
     uint32_t *p_sg_p       = signal_struct->p_app_signal;
@@ -228,89 +236,8 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
                  dev_annce_params->ieee_addr[3], dev_annce_params->ieee_addr[2], dev_annce_params->ieee_addr[1], dev_annce_params->ieee_addr[0]);
         
         if(dev_annce_params->capability == 142) {
-			
-			ui_Panel7 = lv_obj_create(ui_SensorSettingsScreen);
-			lv_obj_set_width( ui_Panel7, 437);
-			lv_obj_set_height( ui_Panel7, 50);
-			lv_obj_set_x( ui_Panel7, -1 );
-			lv_obj_set_y( ui_Panel7, -42 );
-			lv_obj_set_align( ui_Panel7, LV_ALIGN_CENTER );
-			lv_obj_clear_flag( ui_Panel7, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-			lv_obj_set_style_bg_color(ui_Panel7, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-			lv_obj_set_style_bg_opa(ui_Panel7, 50, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_border_color(ui_Panel7, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
-			lv_obj_set_style_border_opa(ui_Panel7, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-		
-			ui_Image24 = lv_img_create(ui_Panel7);
-			lv_img_set_src(ui_Image24, &ui_img_1319116584);
-			lv_obj_set_width( ui_Image24, LV_SIZE_CONTENT);  /// 16
-			lv_obj_set_height( ui_Image24, LV_SIZE_CONTENT);   /// 16
-			lv_obj_set_x( ui_Image24, -183 );
-			lv_obj_set_y( ui_Image24, 0 );
-			lv_obj_set_align( ui_Image24, LV_ALIGN_CENTER );
-			lv_obj_add_flag( ui_Image24, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
-			lv_obj_clear_flag( ui_Image24, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-			lv_obj_set_style_img_recolor(ui_Image24, lv_color_hex(0xFFFFFF), LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_img_recolor_opa(ui_Image24, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-			
-			ui_Label34 = lv_label_create(ui_Panel7);
-			lv_obj_set_width( ui_Label34, LV_SIZE_CONTENT);  /// 1
-			lv_obj_set_height( ui_Label34, LV_SIZE_CONTENT);   /// 1
-			lv_obj_set_x( ui_Label34, -112 );
-			lv_obj_set_y( ui_Label34, 1 );
-			lv_obj_set_align( ui_Label34, LV_ALIGN_CENTER );
-			lv_label_set_text(ui_Label34,"Socket");
-			lv_obj_set_style_text_font(ui_Label34, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);						
-			
-			ui_Button2 = lv_btn_create(ui_Panel7);
-			lv_obj_set_width( ui_Button2, 127);
-			lv_obj_set_height( ui_Button2, 30);
-			lv_obj_set_x( ui_Button2, 9 );
-			lv_obj_set_y( ui_Button2, 0 );
-			lv_obj_set_align( ui_Button2, LV_ALIGN_CENTER );
-			lv_obj_add_flag( ui_Button2, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-			lv_obj_clear_flag( ui_Button2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-			lv_obj_set_style_radius(ui_Button2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_bg_color(ui_Button2, lv_color_hex(0x70C92E), LV_PART_MAIN | LV_STATE_DEFAULT );
-			lv_obj_set_style_bg_opa(ui_Button2, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_left(ui_Button2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_right(ui_Button2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_top(ui_Button2, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_bottom(ui_Button2, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-			ui_Label35 = lv_label_create(ui_Button2);
-			lv_obj_set_width( ui_Label35, LV_SIZE_CONTENT);  /// 1
-			lv_obj_set_height( ui_Label35, LV_SIZE_CONTENT);   /// 1
-			lv_obj_set_align( ui_Label35, LV_ALIGN_CENTER );
-			lv_label_set_text(ui_Label35,"Pair");
-			lv_obj_set_style_text_font(ui_Label35, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-			ui_Button3 = lv_btn_create(ui_Panel7);
-			lv_obj_set_width( ui_Button3, 127);
-			lv_obj_set_height( ui_Button3, 30);
-			lv_obj_set_x( ui_Button3, 146 );
-			lv_obj_set_y( ui_Button3, 0 );
-			lv_obj_set_align( ui_Button3, LV_ALIGN_CENTER );
-			lv_obj_add_flag( ui_Button3, LV_OBJ_FLAG_HIDDEN | LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-			lv_obj_clear_flag( ui_Button3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-			lv_obj_set_style_radius(ui_Button3, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_bg_color(ui_Button3, lv_color_hex(0x9E2EC9), LV_PART_MAIN | LV_STATE_DEFAULT );
-			lv_obj_set_style_bg_opa(ui_Button3, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_left(ui_Button3, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_right(ui_Button3, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_top(ui_Button3, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-			lv_obj_set_style_pad_bottom(ui_Button3, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-			ui_Label36 = lv_label_create(ui_Button3);
-			lv_obj_set_width( ui_Label36, LV_SIZE_CONTENT);  /// 1
-			lv_obj_set_height( ui_Label36, LV_SIZE_CONTENT);   /// 1
-			lv_obj_set_align( ui_Label36, LV_ALIGN_CENTER );
-			lv_label_set_text(ui_Label36,"Remove");
-			lv_obj_set_style_text_font(ui_Label36, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);			
-
 			power_outlet_short_addr = dev_annce_params->device_short_addr;
-			lv_obj_add_event_cb(ui_Button2, pair_socket, LV_EVENT_CLICKED, &power_outlet_short_addr);
-			lv_obj_add_event_cb(ui_Button3, leave_device, LV_EVENT_CLICKED, &power_outlet_short_addr);
+			draw_socket_pair_panel(&power_outlet_short_addr, false);
         }
         break;
     default:

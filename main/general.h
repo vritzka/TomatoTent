@@ -32,8 +32,18 @@
 #include "esp_event.h"
 #include "esp_crt_bundle.h"
 #include "esp_https_ota.h"
-
 #include "timerTask.h"
+#include "esp_zigbee_gateway.h"
+
+extern lv_obj_t *ui_Panel7;
+extern lv_obj_t *ui_Image24;
+extern lv_obj_t *ui_Label34;
+extern lv_obj_t *ui_Button2;
+extern lv_obj_t *ui_Label35;
+extern lv_obj_t *ui_Button3;
+extern lv_obj_t *ui_Label36;
+
+extern SemaphoreHandle_t xGuiSemaphore;
 
 typedef struct {
 	bool initiated;
@@ -70,6 +80,7 @@ typedef struct {
     uint16_t co2;
     uint16_t elevation;
     uint8_t temperature_offset;
+    uint16_t power_outlet_short_addr;
 } tent_data_t;
 
 extern tent_data_t my_tent;
@@ -138,5 +149,6 @@ void chart_add_climate_point();
 void chart_init();
 void spinboxes_init();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
+void draw_socket_pair_panel(uint16_t * power_outlet_short_addr, bool bound);
 
 #endif

@@ -1,7 +1,6 @@
 #include "guiTask.h"
 
 static const char *TAG = "guiTask.c";
-
 bool screen_lit = 1;
 
 #if CONFIG_EXAMPLE_LCD_I80_COLOR_IN_PSRAM
@@ -115,8 +114,8 @@ static void example_increase_lvgl_tick(void *arg)
 // Task to be created.
 void vGuiTask( void * pvParameters )
 {
-	
- static lv_disp_draw_buf_t disp_buf; // contains internal graphic buffer(s) called draw buffer(s)
+	vSemaphoreCreateBinary( xGuiSemaphore );
+	static lv_disp_draw_buf_t disp_buf; // contains internal graphic buffer(s) called draw buffer(s)
     static lv_disp_drv_t disp_drv;      // contains callback functions
 
     ESP_LOGI(TAG, "Initialize Intel 8080 bus");
@@ -330,7 +329,12 @@ void vGuiTask( void * pvParameters )
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
         vTaskDelay(pdMS_TO_TICKS(10));
         // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
-        lv_timer_handler();
+        
+       if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
+            lv_timer_handler();
+            xSemaphoreGive(xGuiSemaphore);
+       }
+        
         if(lv_disp_get_inactive_time(NULL) < 240000) {
 			if(!screen_lit) {
 				screen_brightness_slider_value = lv_slider_get_value(ui_ScreenBrightnessSlider);

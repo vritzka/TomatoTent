@@ -14,6 +14,7 @@
 #include "lvgl.h"
 #include "ui_events.h"
 #include "ui.h"
+#include "general.h"
 #include <fcntl.h>
 #include <string.h>
 #include "esp_log.h"
@@ -33,14 +34,6 @@
 #include "esp_vfs_dev.h"
 #include "esp_vfs_usb_serial_jtag.h"
 #include "driver/usb_serial_jtag.h"
-
-extern lv_obj_t *ui_Panel7;
-extern lv_obj_t *ui_Image24;
-extern lv_obj_t *ui_Label34;
-extern lv_obj_t *ui_Button2;
-extern lv_obj_t *ui_Label35;
-extern lv_obj_t *ui_Button3;
-extern lv_obj_t *ui_Label36;
 
 /* Zigbee Configuration */
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
@@ -102,5 +95,7 @@ extern lv_obj_t *ui_Label36;
         .update_baudrate = 460800, .firmware_dir = "/rcp_fw/ot_rcp", .target_chip = ESP32H2_CHIP,                                   \
     }
     
-    
+  
+void leave_device(lv_event_t * e);
+void pair_socket(lv_event_t * e);    
 void vCreateZigbeeTask(void);
