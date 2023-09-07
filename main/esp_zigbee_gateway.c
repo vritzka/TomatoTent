@@ -163,10 +163,8 @@ void pair_socket(lv_event_t * e)
 
 void leave_device(lv_event_t * e)
 {
-	
-	uint16_t * device_short_address = lv_event_get_user_data(e);
+	uint16_t * device_short_address = lv_event_get_user_data(e);	
 	esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
-	
 	esp_zb_ieee_address_by_short(*device_short_address, cmd_req.device_address);
 	cmd_req.dst_nwk_addr = *device_short_address;
 	cmd_req.rejoin = 0;
@@ -241,7 +239,9 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
         }
         break;
     default:
-        ESP_LOGI(TAG, "ZDO signal: %s (0x%x), status: %s", esp_zb_zdo_signal_to_string(sig_type), sig_type, esp_err_to_name(err_status));
+		dev_annce_params = (esp_zb_zdo_signal_device_annce_params_t *)esp_zb_app_signal_get_params(p_sg_p);
+		
+        ESP_LOGI(TAG, "ZDO signal: %s (0x%x), status: %s, (short: 0x%04hx)", esp_zb_zdo_signal_to_string(sig_type), sig_type, esp_err_to_name(err_status), dev_annce_params->device_short_addr);
         break;
     }
 }

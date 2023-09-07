@@ -245,10 +245,20 @@ void ui_SensorSettingsScreen_screen_init(void);
 void ui_event_SensorSettingsScreen( lv_event_t * e);
 extern lv_obj_t *ui_SensorSettingsScreen;
 extern lv_obj_t *ui_Label15;
-void ui_event_SensorSettingsSaveButton( lv_event_t * e);
-extern lv_obj_t *ui_SensorSettingsSaveButton;
-extern lv_obj_t *ui_Label33;
 extern lv_obj_t *ui_SensorSettingsInfoLabel;
+extern lv_obj_t *ui_PowerOutletDevicePanel;
+extern lv_obj_t *ui_Image24;
+extern lv_obj_t *ui_Button2;
+extern lv_obj_t *ui_Label34;
+void ui_event_ToggleButton( lv_event_t * e);
+extern lv_obj_t *ui_ToggleButton;
+extern lv_obj_t *ui_Label33;
+extern lv_obj_t *ui_Button3;
+extern lv_obj_t *ui_Label35;
+extern lv_obj_t *ui_ThermometerDevicePanel;
+extern lv_obj_t *ui_Image25;
+extern lv_obj_t *ui_Co2SensorDevicePanel;
+extern lv_obj_t *ui_Image26;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png
@@ -281,10 +291,11 @@ LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
 LV_IMG_DECLARE( ui_img_1126512945);   // assets/cloud-computing.png
 LV_IMG_DECLARE( ui_img_refresh_png);   // assets/refresh.png
 LV_IMG_DECLARE( ui_img_713338696);   // assets/cloud-computing-2.png
+LV_IMG_DECLARE( ui_img_1319116584);   // assets/wall-socket-2.png
+LV_IMG_DECLARE( ui_img_1130838376);   // assets/thermometer-4.png
 LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
-LV_IMG_DECLARE( ui_img_1319116584);   // assets/wall-socket-2.png
 
 void ui_init(void);
 
