@@ -248,6 +248,7 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
 		
 		//SensorSettingsScreen
+		lv_obj_add_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
 		err = nvs_get_u16(storage_handle, "power_outlet", &my_tent.power_outlet_short_addr);
 		ESP_LOGI(TAG, "PO address: 0x%04hx", my_tent.power_outlet_short_addr);
 		if(my_tent.power_outlet_short_addr)

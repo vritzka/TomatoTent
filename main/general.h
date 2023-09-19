@@ -35,14 +35,6 @@
 #include "timerTask.h"
 #include "esp_zigbee_gateway.h"
 
-extern lv_obj_t *ui_Panel7;
-extern lv_obj_t *ui_Image24;
-extern lv_obj_t *ui_Label34;
-extern lv_obj_t *ui_Button2;
-extern lv_obj_t *ui_Label35;
-extern lv_obj_t *ui_Button3;
-extern lv_obj_t *ui_Label36;
-
 extern SemaphoreHandle_t xGuiSemaphore;
 
 typedef struct {
@@ -113,14 +105,14 @@ extern lv_chart_series_t * chart_series_co2;
 
 //fan pwm
 #define LEDC_FAN_TIMER              LEDC_TIMER_1
-#define LEDC_FAN_OUTPUT_IO          (10) // Define the output GPIO for Backlight
+#define LEDC_FAN_OUTPUT_IO          (14) // Define the output GPIO for FAN
 #define LEDC_FAN_CHANNEL            LEDC_CHANNEL_1
 #define LEDC_FAN_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
 #define LEDC_FAN_FREQUENCY          (5000) // Frequency in Hertz.
 
 //LED DIMMER pwm
 #define LEDC_DIMMER_TIMER              LEDC_TIMER_2
-#define LEDC_DIMMER_OUTPUT_IO          (11) // Define the output GPIO for Backlight
+#define LEDC_DIMMER_OUTPUT_IO          (21) // Define the output GPIO for LED Grow Lamp
 #define LEDC_DIMMER_CHANNEL            LEDC_CHANNEL_2
 #define LEDC_DIMMER_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
 #define LEDC_DIMMER_FREQUENCY          (5000) // Frequency in Hertz.

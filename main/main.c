@@ -21,6 +21,7 @@
 #include "general.h"
 #include "esp_zigbee_gateway.h"
 
+
 static const char *TAG = "main.c";
 
 void heap_caps_alloc_failed_hook(size_t requested_size, uint32_t caps, const char *function_name)

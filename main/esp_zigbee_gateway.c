@@ -54,7 +54,7 @@ static void esp_zb_gateway_board_try_update(const char *rcp_version_str)
     }
 }
 
-static esp_err_t init_spiffs(void)
+esp_err_t init_spiffs(void)
 {
     esp_vfs_spiffs_conf_t rcp_fw_conf = {
         .base_path = "/rcp_fw", .partition_label = "rcp_fw", .max_files = 10, .format_if_mount_failed = false
@@ -99,10 +99,9 @@ static void bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
             light_bulb_device_params_t *light = (light_bulb_device_params_t *)user_ctx;
             ESP_LOGI(TAG, "The light originating from address(0x%x) on endpoint(%d)", light->short_addr, light->endpoint);
             
-            lv_obj_add_flag(ui_Button2, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(ui_Button3, LV_OBJ_FLAG_HIDDEN);
-            
             my_tent.power_outlet_short_addr = light->short_addr;
+            
+            draw_socket_pair_panel(&my_tent.power_outlet_short_addr,1);
             
             err = nvs_open("storage", NVS_READWRITE, &storage_handle);
             err = nvs_set_u16(storage_handle, "power_outlet", my_tent.power_outlet_short_addr);
@@ -139,7 +138,7 @@ static void user_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
 	if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {	
 		//ESP_LOGI(TAG, "Leave CB");
 		if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
-			lv_obj_del(ui_Panel7);
+			lv_obj_add_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
 			xSemaphoreGive(xGuiSemaphore);
 		}
 		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
@@ -163,7 +162,8 @@ void pair_socket(lv_event_t * e)
 
 void leave_device(lv_event_t * e)
 {
-	uint16_t * device_short_address = lv_event_get_user_data(e);	
+	uint16_t * device_short_address = lv_event_get_user_data(e);
+	ESP_LOGI(TAG,"LEAVE ADDRESS:0x%04hx",*device_short_address);  
 	esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
 	esp_zb_ieee_address_by_short(*device_short_address, cmd_req.device_address);
 	cmd_req.dst_nwk_addr = *device_short_address;

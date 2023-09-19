@@ -95,7 +95,7 @@
         .update_baudrate = 460800, .firmware_dir = "/rcp_fw/ot_rcp", .target_chip = ESP32H2_CHIP,                                   \
     }
     
-  
+esp_err_t init_spiffs(void);  
 void leave_device(lv_event_t * e);
 void pair_socket(lv_event_t * e);    
 void vCreateZigbeeTask(void);
