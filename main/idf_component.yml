@@ -1,8 +1,8 @@
 dependencies:
   espressif/esp-zboss-lib: "~0.6.0"
   espressif/esp-zigbee-lib: "~0.9.0"
-  espressif/esp_rcp_update: "~0.3.0"
-  espressif/esp-serial-flasher: "~0.0.4"
+  espressif/esp_rcp_update: "~1.0.0"
+  espressif/esp-serial-flasher: "~0.3.1"
   idf: ">=5.0.0"
   esp_lcd_touch_gt911: "^1.0"
   esp_lcd_touch_tt21100: "^1.0"

@@ -1,10 +1,10 @@
 dependencies:
   espressif/esp-serial-flasher:
-    component_hash: dcc42a16712a1a636509cf0bf90e14032d7f2141784b533613b267b6aa318d52
+    component_hash: bc6eb4614dba8c0ccf48de0d9893205c99eb8611072f4d1f0f858145ecaa5155
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.0.11
+    version: 0.3.1
   espressif/esp-zboss-lib:
     component_hash: 92d1791fe86c98f4bd4a89447f59962144b6d8fed4b2bf0935defaebecabb6d8
     source:
@@ -12,11 +12,11 @@ dependencies:
       type: service
     version: 0.6.2
   espressif/esp-zigbee-lib:
-    component_hash: 411dc2d1e37438500dc178896d62521ec1816eee225751b1bfddd5b3b1b3ca34
+    component_hash: 334b27b6af02d5c275456b7608e74ed35d4a5036dfabc7828cf80cb070918418
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.9.3
+    version: 0.9.5
   espressif/esp_lcd_touch:
     component_hash: 6cc76832cda51d73353a7e8d7aa07073d6cdb75b1ad66e2d98badd768f6c830a
     source:
@@ -24,11 +24,11 @@ dependencies:
       type: service
     version: 1.1.0
   espressif/esp_lcd_touch_ft5x06:
-    component_hash: bb5cee419a017dfe2bd6c591fc9f8294ec0552fe28cddb48566e5b54336944f7
+    component_hash: 97759953d9436a365e9427078c5b04ecce4e6a50f50cf62c68cd6bfa229b812c
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.5~1
+    version: 1.0.6
   espressif/esp_lcd_touch_gt911:
     component_hash: e3d8f37a430c4d053346b27fb1eec2b0670d0e07d9eb8a8cd084ac06f4cc5b80
     source:
@@ -42,16 +42,16 @@ dependencies:
       type: service
     version: 1.1.0
   espressif/esp_rcp_update:
-    component_hash: 5bd5e45c7bddcbef55b7180819b056ba69a92e16ae705548f61dc0402b6d7ec7
+    component_hash: 2ed9ef76e292d05b376fb47c55c32cd1fd3ea9514d4996959009858566cf5646
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.3.1
+    version: 1.0.0
   idf:
     component_hash: null
     source:
       type: idf
     version: 5.1.1
-manifest_hash: c0d3e308a99a51bc52d2c2c3f17e8fb329428f641771ea7331e27fb9dc1d07f3
+manifest_hash: 08325788835728e9f9a2d60c5703f8f25e4ecd556b710650225e37d1c94932d3
 target: esp32s3
 version: 1.0.0
