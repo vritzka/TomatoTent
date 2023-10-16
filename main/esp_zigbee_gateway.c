@@ -79,6 +79,42 @@ void rcp_error_handler(uint8_t connect_timeout)
 }
 
 
+static esp_err_t zb_attribute_handler(const esp_zb_zcl_set_attr_value_message_t *message)
+{
+    esp_err_t ret = ESP_OK;
+    bool light_state = 0;
+    ESP_RETURN_ON_FALSE(message, ESP_FAIL, TAG, "Empty message");
+    ESP_RETURN_ON_FALSE(message->info.status == ESP_ZB_ZCL_STATUS_SUCCESS, ESP_ERR_INVALID_ARG, TAG, "Received message: error status(%d)",
+                        message->info.status);
+    ESP_LOGI(TAG, "Received message: endpoint(%d), cluster(0x%x), attribute(0x%x), data size(%d)", message->info.dst_endpoint, message->info.cluster,
+             message->attribute.id, message->attribute.data.size);
+    if (message->info.dst_endpoint == HA_ESP_LIGHT_ENDPOINT) {
+        if (message->info.cluster == ESP_ZB_ZCL_CLUSTER_ID_ON_OFF) {
+            if (message->attribute.id == ESP_ZB_ZCL_ATTR_ON_OFF_ON_OFF_ID && message->attribute.data.type == ESP_ZB_ZCL_ATTR_TYPE_BOOL) {
+                light_state = message->attribute.data.value ? *(bool *)message->attribute.data.value : light_state;
+                ESP_LOGI(TAG, "Light sets to %s", light_state ? "On" : "Off");
+                //light_driver_set_power(light_state);
+            }
+        }
+    }
+    return ret;
+}
+
+
+static esp_err_t zb_action_handler(esp_zb_core_action_callback_id_t callback_id, const void *message)
+{
+    esp_err_t ret = ESP_OK;
+    switch (callback_id) {
+    case ESP_ZB_CORE_SET_ATTR_VALUE_CB_ID:
+        ret = zb_attribute_handler((esp_zb_zcl_set_attr_value_message_t *)message);
+        break;
+    default:
+        ESP_LOGW(TAG, "Receive Zigbee action(0x%x) callback", callback_id);
+        break;
+    }
+    return ret;
+}
+
 
 
 /////////////////////////////////////
@@ -192,7 +228,7 @@ static void thermometer_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
         ESP_LOGI(TAG, "Thermometer Bound successfully!");
         if (user_ctx) {
             thermometer_device_params_t *thermometer = (thermometer_device_params_t *)user_ctx;
-            ESP_LOGI(TAG, "The thermometer originating from address(0x%x) on endpoint(%d)", light->short_addr, light->endpoint);
+            ESP_LOGI(TAG, "The thermometer originating from address(0x%x) on endpoint(%d)", thermometer->short_addr, thermometer->endpoint);
             
             my_tent.thermometer_short_addr = thermometer->short_addr;
             
@@ -207,7 +243,7 @@ static void thermometer_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
     }
 }
 
-static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t endpoint, void *user_ctx)
+static void thermometer_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t endpoint, void *user_ctx)
 {
     if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
         ESP_LOGI(TAG, "Found thermometer");
@@ -220,7 +256,7 @@ static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t 
         bind_req.src_endp = THERMOMETER_ENDPOINT;
         bind_req.cluster_id = ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT;
         bind_req.dst_addr_mode = ESP_ZB_ZDO_BIND_DST_ADDR_MODE_64_BIT_EXTENDED;
-        memcpy(bind_req.dst_address_u.addr_long, light->ieee_addr, sizeof(esp_zb_ieee_addr_t));
+        memcpy(bind_req.dst_address_u.addr_long, thermometer->ieee_addr, sizeof(esp_zb_ieee_addr_t));
         bind_req.dst_endp = endpoint;
         bind_req.req_dst_addr = esp_zb_get_short_address(); /* TODO: Send bind request to self */
         ESP_LOGI(TAG, "Try to bind Thermometer");
@@ -228,7 +264,7 @@ static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t 
     }
 }
 
-static void thermometer_user_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
+static void thermometer_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
 {
 	if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {	
 		//ESP_LOGI(TAG, "Leave CB");
@@ -242,6 +278,8 @@ static void thermometer_user_leave_cb(esp_zb_zdp_status_t zdo_status, void *user
 		nvs_close(storage_handle);
 	}
 }
+
+
 /*
 void pair_thermometer(lv_event_t * e)
 {
@@ -360,6 +398,7 @@ uint8_t test_attr, test_attr2;
     esp_zb_basic_cluster_add_attr(esp_zb_basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_ZCL_VERSION_ID, &test_attr);
     esp_zb_basic_cluster_add_attr(esp_zb_basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_POWER_SOURCE_ID, &test_attr);
     esp_zb_cluster_update_attr(esp_zb_basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_ZCL_VERSION_ID, &test_attr2);
+    
     /* identify cluster create with fully customized */
     esp_zb_attribute_list_t *esp_zb_identify_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_IDENTIFY);
     esp_zb_identify_cluster_add_attr(esp_zb_identify_cluster, ESP_ZB_ZCL_ATTR_IDENTIFY_IDENTIFY_TIME_ID, &test_attr);
@@ -367,26 +406,26 @@ uint8_t test_attr, test_attr2;
     esp_zb_attribute_list_t *esp_zb_groups_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_GROUPS);
     esp_zb_groups_cluster_add_attr(esp_zb_groups_cluster, ESP_ZB_ZCL_ATTR_GROUPS_NAME_SUPPORT_ID, &test_attr);
     /* scenes cluster create with standard cluster + customized */
-    esp_zb_attribute_list_t *esp_zb_scenes_cluster = esp_zb_scenes_cluster_create(NULL);
-    esp_zb_cluster_update_attr(esp_zb_scenes_cluster, ESP_ZB_ZCL_ATTR_SCENES_NAME_SUPPORT_ID, &test_attr);
+    //esp_zb_attribute_list_t *esp_zb_scenes_cluster = esp_zb_scenes_cluster_create(NULL);
+    //esp_zb_cluster_update_attr(esp_zb_scenes_cluster, ESP_ZB_ZCL_ATTR_SCENES_NAME_SUPPORT_ID, &test_attr);
     /* on-off cluster create with standard cluster config*/
-    esp_zb_on_off_cluster_cfg_t on_off_cfg;
-    on_off_cfg.on_off = ESP_ZB_ZCL_ON_OFF_ON_OFF_DEFAULT_VALUE;
+    //esp_zb_on_off_cluster_cfg_t on_off_cfg;
+    //on_off_cfg.on_off = ESP_ZB_ZCL_ON_OFF_ON_OFF_DEFAULT_VALUE;
     
-	esp_zb_attribute_list_t *esp_zb_on_off_cluster = esp_zb_on_off_cluster_create(&on_off_cfg);
+	//esp_zb_attribute_list_t *esp_zb_on_off_cluster = esp_zb_on_off_cluster_create(&on_off_cfg);
     /* create cluster lists for this endpoint */
     esp_zb_cluster_list_t *esp_zb_cluster_list = esp_zb_zcl_cluster_list_create();
     esp_zb_cluster_list_add_basic_cluster(esp_zb_cluster_list, esp_zb_basic_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     /* update basic cluster in the existed cluster list */
     esp_zb_cluster_list_update_basic_cluster(esp_zb_cluster_list, esp_zb_basic_cluster_create(NULL), ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     esp_zb_cluster_list_add_identify_cluster(esp_zb_cluster_list, esp_zb_identify_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
-    esp_zb_cluster_list_add_groups_cluster(esp_zb_cluster_list, esp_zb_groups_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
-    esp_zb_cluster_list_add_scenes_cluster(esp_zb_cluster_list, esp_zb_scenes_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
-    esp_zb_cluster_list_add_on_off_cluster(esp_zb_cluster_list, esp_zb_on_off_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
+    //esp_zb_cluster_list_add_groups_cluster(esp_zb_cluster_list, esp_zb_groups_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
+    //esp_zb_cluster_list_add_scenes_cluster(esp_zb_cluster_list, esp_zb_scenes_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
+    //esp_zb_cluster_list_add_on_off_cluster(esp_zb_cluster_list, esp_zb_on_off_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
 
     esp_zb_ep_list_t *esp_zb_ep_list = esp_zb_ep_list_create();
     /* add created endpoint (cluster_list) to endpoint list */
-    esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_ESP_LIGHT_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_ON_OFF_LIGHT_DEVICE_ID);
+    //esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_ESP_LIGHT_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_ON_OFF_LIGHT_DEVICE_ID);
     esp_zb_device_register(esp_zb_ep_list);
     esp_zb_core_action_handler_register(zb_action_handler);
      

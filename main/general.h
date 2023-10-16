@@ -73,6 +73,7 @@ typedef struct {
     uint16_t elevation;
     uint8_t temperature_offset;
     uint16_t power_outlet_short_addr;
+    uint16_t thermometer_short_addr;
 } tent_data_t;
 
 extern tent_data_t my_tent;
