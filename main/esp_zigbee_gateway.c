@@ -399,6 +399,14 @@ uint8_t test_attr, test_attr2;
     esp_zb_basic_cluster_add_attr(esp_zb_basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_POWER_SOURCE_ID, &test_attr);
     esp_zb_cluster_update_attr(esp_zb_basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_ZCL_VERSION_ID, &test_attr2);
     
+    /* temp cluster */
+    esp_zb_attribute_list_t *esp_zb_temperature_humidity_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT);
+    
+    //esp_zb_temperature_meas_cluster_cfg_s
+    esp_zb_temperature_meas_cluster_cfg_t temperature_cfg = ESP_ZB_DEFAULT_TEMPERATURE_SENSOR_CONFIG();
+    esp_zb_attribute_list_t *esp_zb_temperature_meas_cluster_create(&temperature_cfg);
+
+    
     /* identify cluster create with fully customized */
     esp_zb_attribute_list_t *esp_zb_identify_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_IDENTIFY);
     esp_zb_identify_cluster_add_attr(esp_zb_identify_cluster, ESP_ZB_ZCL_ATTR_IDENTIFY_IDENTIFY_TIME_ID, &test_attr);
@@ -430,8 +438,6 @@ uint8_t test_attr, test_attr2;
     esp_zb_core_action_handler_register(zb_action_handler);
      
     
-    //esp_zb_temperature_sensor_ep_create
-    //ESP_ZB_DEFAULT_TEMPERATURE_SENSOR_CONFIG
     
     //esp_zb_on_off_switch_cfg_t switch_cfg = ESP_ZB_DEFAULT_ON_OFF_SWITCH_CONFIG();
     //esp_zb_ep_list_t *esp_zb_on_off_switch_ep = esp_zb_on_off_switch_ep_create(HA_ONOFF_SWITCH_ENDPOINT, &switch_cfg);
