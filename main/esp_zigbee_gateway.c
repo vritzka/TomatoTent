@@ -174,7 +174,105 @@ void leave_device(lv_event_t * e)
 /////////////////////////////////////
 /////////// END SWITCH //////////////////
 /////////////////////////////////////
+
+
+/////////////////////////////////////
+/////////// THERMOMETER //////////////////
+/////////////////////////////////////
+
+typedef struct thermometer_device_params_s {
+    esp_zb_ieee_addr_t ieee_addr;
+    uint8_t  endpoint;
+    uint16_t short_addr;
+} thermometer_device_params_t;
+
+static void thermometer_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Thermometer Bound successfully!");
+        if (user_ctx) {
+            thermometer_device_params_t *thermometer = (thermometer_device_params_t *)user_ctx;
+            ESP_LOGI(TAG, "The thermometer originating from address(0x%x) on endpoint(%d)", light->short_addr, light->endpoint);
+            
+            my_tent.thermometer_short_addr = thermometer->short_addr;
+            
+            //draw_socket_pair_panel(&my_tent.power_outlet_short_addr,1);
+            
+            err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+            err = nvs_set_u16(storage_handle, "thermometer_outlet", my_tent.thermometer_short_addr);
+            printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
+            nvs_close(storage_handle);
+            free(thermometer);
+        }
+    }
+}
+
+static void user_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t endpoint, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Found thermometer");
+        esp_zb_zdo_bind_req_param_t bind_req;
+        thermometer_device_params_t *thermometer = (thermometer_device_params_t *)malloc(sizeof(thermometer_device_params_t));
+        thermometer->endpoint = endpoint;
+        thermometer->short_addr = addr;
+        esp_zb_ieee_address_by_short(thermometer->short_addr, thermometer->ieee_addr);
+        esp_zb_get_long_address(bind_req.src_address);
+        bind_req.src_endp = THERMOMETER_ENDPOINT;
+        bind_req.cluster_id = ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT;
+        bind_req.dst_addr_mode = ESP_ZB_ZDO_BIND_DST_ADDR_MODE_64_BIT_EXTENDED;
+        memcpy(bind_req.dst_address_u.addr_long, light->ieee_addr, sizeof(esp_zb_ieee_addr_t));
+        bind_req.dst_endp = endpoint;
+        bind_req.req_dst_addr = esp_zb_get_short_address(); /* TODO: Send bind request to self */
+        ESP_LOGI(TAG, "Try to bind Thermometer");
+        esp_zb_zdo_device_bind_req(&bind_req, bind_cb, (void *)thermometer);
+    }
+}
+
+static void thermometer_user_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
+{
+	if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {	
+		//ESP_LOGI(TAG, "Leave CB");
+		if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
+			//lv_obj_add_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
+			//xSemaphoreGive(xGuiSemaphore);
+		}
+		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+		err = nvs_erase_key(storage_handle, "thermometer_outlet");
+		printf((err != ESP_OK) ? "Not deleted!\n" : "Deleted\n");
+		nvs_close(storage_handle);
+	}
+}
+/*
+void pair_thermometer(lv_event_t * e)
+{
+	uint16_t * device_short_address = lv_event_get_user_data(e); 
+	ESP_LOGI(TAG, "'Pairing' 0x%04hx", *device_short_address);
+	
+	esp_zb_zdo_match_desc_req_param_t cmd_req;
+	cmd_req.dst_nwk_addr = *device_short_address;
+	cmd_req.addr_of_interest = *device_short_address;
+	
+	esp_zb_zdo_find_on_off_light(&cmd_req, user_find_cb, NULL);	
+}
+
+void leave_thermometer_device(lv_event_t * e)
+{
+	uint16_t * device_short_address = lv_event_get_user_data(e);
+	ESP_LOGI(TAG,"LEAVE ADDRESS:0x%04hx",*device_short_address);  
+	esp_zb_zdo_mgmt_leave_req_param_t cmd_req;
+	esp_zb_ieee_address_by_short(*device_short_address, cmd_req.device_address);
+	cmd_req.dst_nwk_addr = *device_short_address;
+	cmd_req.rejoin = 0;
+	esp_zb_zdo_device_leave_req(&cmd_req, user_leave_cb, NULL);
+}
+*/
+/////////////////////////////////////
+/////////// END THERMOMETER //////////////////
+/////////////////////////////////////
+
+
 uint16_t power_outlet_short_addr;
+uint16_t thermometer_short_addr;
 
 void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 {
@@ -233,7 +331,7 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
                  dev_annce_params->ieee_addr[7], dev_annce_params->ieee_addr[6], dev_annce_params->ieee_addr[5], dev_annce_params->ieee_addr[4],
                  dev_annce_params->ieee_addr[3], dev_annce_params->ieee_addr[2], dev_annce_params->ieee_addr[1], dev_annce_params->ieee_addr[0]);
         
-        if(dev_annce_params->capability == 142) {
+        if(dev_annce_params->capability == 142) { //switch
 			power_outlet_short_addr = dev_annce_params->device_short_addr;
 			draw_socket_pair_panel(&power_outlet_short_addr, false);
         }
@@ -253,6 +351,8 @@ static void esp_zb_task(void *pvParameters)
     /* initialize Zigbee stack */
     esp_zb_cfg_t zb_nwk_cfg = ESP_ZB_ZC_CONFIG();
     esp_zb_init(&zb_nwk_cfg);
+    
+    //esp_zb_temperature_sensor_ep_create
     
     //esp_zb_on_off_switch_cfg_t switch_cfg = ESP_ZB_DEFAULT_ON_OFF_SWITCH_CONFIG();
     //esp_zb_ep_list_t *esp_zb_on_off_switch_ep = esp_zb_on_off_switch_ep_create(HA_ONOFF_SWITCH_ENDPOINT, &switch_cfg);

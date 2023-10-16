@@ -95,27 +95,32 @@ extern lv_chart_series_t * chart_series_co2;
 #define I2C_ACK_VAL                 (0x00)
 #define I2C_NACK_VAL                (0x01)	
 
+
+/*Frequency : 20KHZ
+Voltage: 0-3.3V , 3.3v is full speed. 
+PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the lowest PWM signal should be 22%*/
+
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
 //backlight
 #define LEDC_BACKLIGHT_TIMER              LEDC_TIMER_0
 #define LEDC_BACKLIGHT_OUTPUT_IO          (45) // Define the output GPIO for Backlight
 #define LEDC_BACKLIGHT_CHANNEL            LEDC_CHANNEL_0
 #define LEDC_BACKLIGHT_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 13 bits
-#define LEDC_BACKLIGHT_FREQUENCY          (10000) // Frequency in Hertz. Set frequency at 5 kHz
+#define LEDC_BACKLIGHT_FREQUENCY          (10000) // Frequency in Hertz. 
 
 //fan pwm
 #define LEDC_FAN_TIMER              LEDC_TIMER_1
 #define LEDC_FAN_OUTPUT_IO          (14) // Define the output GPIO for FAN
 #define LEDC_FAN_CHANNEL            LEDC_CHANNEL_1
 #define LEDC_FAN_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
-#define LEDC_FAN_FREQUENCY          (5000) // Frequency in Hertz.
+#define LEDC_FAN_FREQUENCY          (20000) // Frequency in Hertz.
 
 //LED DIMMER pwm
 #define LEDC_DIMMER_TIMER              LEDC_TIMER_2
 #define LEDC_DIMMER_OUTPUT_IO          (21) // Define the output GPIO for LED Grow Lamp
 #define LEDC_DIMMER_CHANNEL            LEDC_CHANNEL_2
 #define LEDC_DIMMER_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
-#define LEDC_DIMMER_FREQUENCY          (5000) // Frequency in Hertz.
+#define LEDC_DIMMER_FREQUENCY          (20000) // Frequency in Hertz.
 
 
 
