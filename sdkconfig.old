@@ -499,7 +499,7 @@ CONFIG_PIN_TO_RCP_TX=10
 CONFIG_PIN_TO_RCP_RX=11
 # end of Board Configuration
 
-CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP=y
+# CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP is not set
 # end of ESP Zigbee gateway rcp update
 
 #
@@ -2143,6 +2143,12 @@ CONFIG_ZB_ZCZR=y
 # CONFIG_ZB_RCP is not set
 # CONFIG_ZB_RADIO_NATIVE is not set
 CONFIG_ZB_RADIO_MACSPLIT_UART=y
+
+#
+# Zigbee trace log option
+#
+CONFIG_ESP_ZB_TRACE_ENABLE=y
+# end of Zigbee trace log option
 # end of Zigbee
 
 #
@@ -2153,4 +2159,4 @@ CONFIG_ESP_LCD_TOUCH_MAX_BUTTONS=1
 # end of ESP LCD TOUCH
 # end of Component config
 
-# CONFIG_IDF_EXPERIMENTAL_FEATURES is not set
+CONFIG_IDF_EXPERIMENTAL_FEATURES=y

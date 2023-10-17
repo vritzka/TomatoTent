@@ -265,7 +265,7 @@ void init_tomatotent(lv_event_t * e)
 			ESP_LOGI(TAG, "Continuing existing Grow");
 			update_time_left(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
-			//ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+			ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);

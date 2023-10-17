@@ -1,3 +1,5 @@
+#ifndef ESP_ZIGBEE_GATEWAY_H
+#define ESP_ZIGBEE_GATEWAY_H
 /*
  * SPDX-FileCopyrightText: 2021-2022 Espressif Systems (Shanghai) CO LTD
  *
@@ -51,6 +53,8 @@
 #define HOST_RX_PIN_TO_RCP_TX           CONFIG_PIN_TO_RCP_TX
 #define HOST_TX_PIN_TO_RCP_RX           CONFIG_PIN_TO_RCP_RX
 
+extern esp_zb_attribute_list_t *esp_zb_temperature_cluster;
+
 #define ESP_ZB_ZC_CONFIG()                                                              \
     {                                                                                   \
         .esp_zb_role = ESP_ZB_DEVICE_TYPE_COORDINATOR,                                  \
@@ -103,3 +107,5 @@ esp_err_t init_spiffs(void);
 void leave_device(lv_event_t * e);
 void pair_socket(lv_event_t * e);    
 void vCreateZigbeeTask(void);
+
+#endif

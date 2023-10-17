@@ -16,9 +16,6 @@ static bool IRAM_ATTR sensor_cb(gptimer_handle_t timer, const gptimer_alarm_even
     return (high_task_awoken == pdTRUE);
 }
 
-char scale = SCALE_CELCIUS;
-static float es;
-static float ae;
 
 // Task to be created.
 void vSensorTask( void * pvParameters )
@@ -50,77 +47,18 @@ void vSensorTask( void * pvParameters )
 	
 	vTaskDelay(500 / portTICK_PERIOD_MS);
 	
-	ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number());
-
-    float temperature_offset = scd4x_get_temperature_offset();
-    vTaskDelay(500 / portTICK_PERIOD_MS);
-    uint16_t sensor_altitude = scd4x_get_sensor_altitude();
-    
-    if(temperature_offset != SCD41_READ_ERROR && sensor_altitude != SCD41_READ_ERROR) {
-
-        if(temperature_offset != my_tent.temperature_offset) {
-            ESP_LOGW(TAG, "Temperature offset calibration from %.1f °%c to %d °%c", temperature_offset, scale, my_tent.temperature_offset, scale);
-
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset((float)my_tent.temperature_offset));
-
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
-
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-            temperature_offset = scd4x_get_temperature_offset();
-        }
-
-        if(sensor_altitude != my_tent.elevation) {
-            ESP_LOGW(TAG, "Sensor altitude calibration from %d m to %d m", sensor_altitude, my_tent.elevation);
-
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_sensor_altitude((float)my_tent.elevation));
-
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
-
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-            sensor_altitude = scd4x_get_sensor_altitude();
-        }
-        ESP_LOGI(TAG, "Temperature offset %.1f °%c - Sensor altitude %d %s", temperature_offset, scale, sensor_altitude, scale == SCALE_CELCIUS ? "m" : "ft");
-    } else {
-        ESP_LOGE(TAG, "Sensor offset/altitude read error!");
-    }
-
-    vTaskDelay(500 / portTICK_PERIOD_MS);
-          
-	scd4x_start_periodic_measurement();
 	
-	scd4x_sensors_values_t sensors_values = {
-		.co2 = 0x00,
-		.temperature = 0x00,
-		.humidity = 0x00
-    };
 	
 	for( ;; )
 	{
 		if( xSemaphoreTake( xSemaphore, pdMS_TO_TICKS(6000) ) == pdTRUE ) {
 			ESP_LOGI(TAG, "Sensor");
+		
+			uint16_t temp_c = 0;
+			temp_c = *(uint16_t *)esp_zb_zcl_get_attribute(THERMOMETER_ENDPOINT , ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT,
+                                                                      ESP_ZB_ZCL_CLUSTER_SERVER_ROLE, ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID );
+            ESP_LOGW(TAG, "Temp %d", temp_c);    
 			
-			if(scd4x_read_measurement(&sensors_values) != ESP_OK) {
-				ESP_LOGE(TAG, "Sensors read measurement error!");
-				my_tent.temperature_c = 0;
-				my_tent.temperature_f = 0;
-				my_tent.humidity = 0;
-				my_tent.co2 = 0;
-			} else {
-				my_tent.temperature_c = sensors_values.temperature;
-				my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
-				my_tent.humidity = sensors_values.humidity;
-				my_tent.co2 = sensors_values.co2;				
-			}
-			
-			es = 0.61078 * exp(17.2694 * my_tent.temperature_c / (my_tent.temperature_c + 238.3));
-			ae = my_tent.humidity / 100 * es;
-			my_tent.vpd = es - ae;  //kPa
-        		
-			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
 			update_displayed_values();
 			setFanSpeed();
 			

@@ -499,7 +499,7 @@ CONFIG_PIN_TO_RCP_TX=10
 CONFIG_PIN_TO_RCP_RX=11
 # end of Board Configuration
 
-CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP=y
+# CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP is not set
 # end of ESP Zigbee gateway rcp update
 
 #

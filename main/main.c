@@ -50,7 +50,7 @@ void app_main(void)
   // init_i2c();
    vStartGuiTask();
    vStartTimerTask();
-   //vCreateSensorTask();
+   vCreateSensorTask();
    
 
  
