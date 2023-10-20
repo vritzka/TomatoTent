@@ -18,8 +18,7 @@
 #include "otaTask.h"
 #include "ha/esp_zigbee_ha_standard.h"
 
-#define HA_ONOFF_SWITCH_ENDPOINT        1  
-#define THERMOMETER_ENDPOINT        2 
+//#define HA_ONOFF_SWITCH_ENDPOINT        1  
 
 static const char *TAG = "ui_events.c";
 static nvs_handle_t storage_handle;
@@ -254,6 +253,9 @@ void init_tomatotent(lv_event_t * e)
 		ESP_LOGI(TAG, "PO address: 0x%04hx", my_tent.power_outlet_short_addr);
 		if(my_tent.power_outlet_short_addr)
 			draw_socket_pair_panel(&my_tent.power_outlet_short_addr, true);
+			
+		err = nvs_get_u16(storage_handle, "thermo_outlet", &my_tent.thermometer_short_addr);
+		ESP_LOGI(TAG, "Thermometer address: 0x%04hx", my_tent.thermometer_short_addr);	
 		
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);

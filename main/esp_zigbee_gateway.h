@@ -43,17 +43,16 @@
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
 #define HA_ONOFF_SWITCH_ENDPOINT        1  
-#define THERMOMETER_ENDPOINT 2
+#define THERMOMETER_ENDPOINT 1
 #define HA_ESP_LIGHT_ENDPOINT           10 
 #define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
+#define ESP_ZB_SECONDARY_CHANNEL_MASK   (1l << 13)  /* Zigbee primary channel mask use in the example */
 
 #define RCP_VERSION_MAX_SIZE            80
 #define HOST_RESET_PIN_TO_RCP_RESET     CONFIG_PIN_TO_RCP_RESET
 #define HOST_BOOT_PIN_TO_RCP_BOOT       CONFIG_PIN_TO_RCP_BOOT
 #define HOST_RX_PIN_TO_RCP_TX           CONFIG_PIN_TO_RCP_TX
 #define HOST_TX_PIN_TO_RCP_RX           CONFIG_PIN_TO_RCP_RX
-
-extern esp_zb_attribute_list_t *esp_zb_temperature_cluster;
 
 #define ESP_ZB_ZC_CONFIG()                                                              \
     {                                                                                   \
@@ -63,6 +62,19 @@ extern esp_zb_attribute_list_t *esp_zb_temperature_cluster;
             .max_children = MAX_CHILDREN,                                               \
         },                                                                              \
     }
+    
+  #define ED_AGING_TIMEOUT                ESP_ZB_ED_AGING_TIMEOUT_64MIN
+#define ED_KEEP_ALIVE                   3000    /* 3000 millisecond */  
+    #define ESP_ZB_ZED_CONFIG()                                         \
+    {                                                               \
+        .esp_zb_role = ESP_ZB_DEVICE_TYPE_ED,                       \
+        .install_code_policy = INSTALLCODE_POLICY_ENABLE,           \
+        .nwk_cfg.zed_cfg = {                                        \
+            .ed_timeout = ED_AGING_TIMEOUT,                         \
+            .keep_alive = ED_KEEP_ALIVE,                            \
+        },                                                          \
+    }
+    
 
 #if CONFIG_ZB_RADIO_NATIVE
 #define ESP_ZB_DEFAULT_RADIO_CONFIG()                           \

@@ -27,15 +27,16 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=5
-FILE_NAME_0=27753;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.c;0;4
-FILE_NAME_1=1690;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.h;0;4
+current_page=3
+FILE_NAME_0=6367;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.c;0;4
+FILE_NAME_1=1904;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.h;0;4
 FILE_NAME_2=1348;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
-FILE_NAME_3=17523;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.c;0;4
-FILE_NAME_4=1887;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.h;0;4
-FILE_NAME_5=1911;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.c;0;4
-FILE_NAME_6=240;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.h;0;4
-FILE_NAME_7=9241;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fui%2Fui_events.c;0;4
+FILE_NAME_3=21387;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.c;0;4
+FILE_NAME_4=2768;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.h;0;4
+FILE_NAME_5=1623;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.c;0;4
+FILE_NAME_6=261;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.h;0;4
+FILE_NAME_7=499;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fui%2Fui_events.c;0;4
+FILE_NAME_8=0;YAML;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fidf_component.yml;0;4
 
 [VTE]
 last_dir=/Users/volkerritzka

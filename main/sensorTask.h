@@ -8,6 +8,7 @@
 #include "esp_log.h"
 #include "general.h"
 #include "esp_zigbee_gateway.h"
+#include "esp_err.h"
 
 
 extern gptimer_handle_t sensorTimerHandle;
