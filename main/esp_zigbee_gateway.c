@@ -106,7 +106,7 @@ static esp_err_t zb_attribute_reporting_handler(const esp_zb_zcl_report_attr_mes
     ESP_RETURN_ON_FALSE(message, ESP_FAIL, TAG, "Empty message");
     ESP_RETURN_ON_FALSE(message->status == ESP_ZB_ZCL_STATUS_SUCCESS, ESP_ERR_INVALID_ARG, TAG, "Received message: error status(%d)",
                         message->status);
-    ESP_LOGI(TAG, "Reveived report from address(0x%x) src endpoint(%d) to dst endpoint(%d) cluster(0x%x)", message->src_address.u.short_addr,
+    ESP_LOGI(TAG, "Received report from address(0x%x) src endpoint(%d) to dst endpoint(%d) cluster(0x%x)", message->src_address.u.short_addr,
              message->src_endpoint, message->dst_endpoint, message->cluster);
     ESP_LOGI(TAG, "Received report information: attribute(0x%x), type(0x%x), value(%d)\n", message->attribute.id, message->attribute.data.type,
              message->attribute.data.value ? *(uint8_t *)message->attribute.data.value : 0);
@@ -119,8 +119,14 @@ static esp_err_t zb_read_attr_resp_handler(const esp_zb_zcl_cmd_read_attr_resp_m
     ESP_RETURN_ON_FALSE(message->info.status == ESP_ZB_ZCL_STATUS_SUCCESS, ESP_ERR_INVALID_ARG, TAG, "Received message: error status(%d)",
                         message->info.status);
     ESP_LOGI(TAG, "Read attribute response: status(%d), cluster(0x%x), attribute(0x%x), type(0x%x), value(%d)", message->info.status,
-             message->info.cluster, message->attribute.id, message->attribute.data.type,
-             message->attribute.data.value ? *(uint8_t *)message->attribute.data.value : 0);
+            message->info.cluster, message->attribute.id, message->attribute.data.type,
+            message->attribute.data.value ? *(uint8_t *)message->attribute.data.value : 0);
+             
+			if(message->attribute.id == 0)
+				my_tent.temperature_c = -10 + ((60/255) * (uint8_t)message->attribute.data.value);
+				
+				
+			update_displayed_values();	    
     return ESP_OK;
 }
 
@@ -137,7 +143,6 @@ static esp_err_t zb_configure_report_resp_handler(const esp_zb_zcl_cmd_config_re
 
 static esp_err_t zb_action_handler(esp_zb_core_action_callback_id_t callback_id, const void *message)
 {
-    ESP_LOGW(TAG, "Receive Zigbee action");
     esp_err_t ret = ESP_OK;
     switch (callback_id) {
     case ESP_ZB_CORE_SET_ATTR_VALUE_CB_ID:
@@ -428,7 +433,7 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 static void esp_zb_task(void *pvParameters)
 {
     /* initialize Zigbee stack */
-	esp_zb_cfg_t zb_nwk_cfg = ESP_ZB_ZED_CONFIG();
+	esp_zb_cfg_t zb_nwk_cfg = ESP_ZB_ZC_CONFIG();
     esp_zb_init(&zb_nwk_cfg);
     uint8_t test_attr;
     test_attr = 0;
@@ -447,13 +452,22 @@ static void esp_zb_task(void *pvParameters)
     temperature_cfg.measured_value = ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_UNKNOWN;                   
     temperature_cfg.min_value = ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_MIN_VALUE_INVALID;                   
     temperature_cfg.max_value = ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_MAX_VALUE_INVALID;                    
-    esp_zb_attribute_list_t *esp_zb_temperature_cluster = esp_zb_temperature_meas_cluster_create(&temperature_cfg);      
+    esp_zb_attribute_list_t *esp_zb_temperature_cluster = esp_zb_temperature_meas_cluster_create(&temperature_cfg);
+      
+    
+    esp_zb_humidity_meas_cluster_cfg_t humidity_cfg;
+    humidity_cfg.measured_value = 0;                   
+    humidity_cfg.min_value = 0;                   
+    humidity_cfg.max_value = 0;      
+    esp_zb_attribute_list_t *esp_zb_humidity_cluster = esp_zb_humidity_meas_cluster_create(&humidity_cfg); 
+        
     /* create cluster lists for this endpoint */
     esp_zb_cluster_list_t *esp_zb_cluster_list = esp_zb_zcl_cluster_list_create();
     esp_zb_cluster_list_add_basic_cluster(esp_zb_cluster_list, esp_zb_basic_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     esp_zb_cluster_list_add_identify_cluster(esp_zb_cluster_list, esp_zb_identify_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     esp_zb_cluster_list_add_identify_cluster(esp_zb_cluster_list, esp_zb_identify_client_cluster, ESP_ZB_ZCL_CLUSTER_CLIENT_ROLE);
     esp_zb_cluster_list_add_temperature_meas_cluster(esp_zb_cluster_list, esp_zb_temperature_cluster, ESP_ZB_ZCL_CLUSTER_CLIENT_ROLE);
+    esp_zb_cluster_list_add_humidity_meas_cluster(esp_zb_cluster_list, esp_zb_humidity_cluster, ESP_ZB_ZCL_CLUSTER_CLIENT_ROLE);
 
 
     esp_zb_ep_list_t *esp_zb_ep_list = esp_zb_ep_list_create();
@@ -466,8 +480,9 @@ static void esp_zb_task(void *pvParameters)
     esp_zb_set_primary_network_channel_set(ESP_ZB_PRIMARY_CHANNEL_MASK);
     esp_zb_set_secondary_network_channel_set(ESP_ZB_SECONDARY_CHANNEL_MASK);  
     
-    ESP_ERROR_CHECK(esp_zb_start(true));
+    ESP_ERROR_CHECK(esp_zb_start(false));
 	esp_zb_main_loop_iteration();
+
     
 #if(CONFIG_ZB_RADIO_MACSPLIT_UART)
     esp_zb_add_rcp_failure_cb(rcp_error_handler);

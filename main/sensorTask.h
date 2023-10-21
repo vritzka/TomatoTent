@@ -7,7 +7,9 @@
 #include "driver/gptimer.h"
 #include "esp_log.h"
 #include "general.h"
+#include "esp_zigbee_core.h"
 #include "esp_zigbee_gateway.h"
+#include "ha/esp_zigbee_ha_standard.h"
 #include "esp_err.h"
 
 
