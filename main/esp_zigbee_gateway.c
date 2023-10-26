@@ -123,7 +123,8 @@ static esp_err_t zb_read_attr_resp_handler(const esp_zb_zcl_cmd_read_attr_resp_m
             message->attribute.data.value ? *(uint8_t *)message->attribute.data.value : 0);
              
 			if(message->attribute.id == 0)
-				my_tent.temperature_c = -10 + ((60/255) * (uint8_t)message->attribute.data.value);
+				//my_tent.temperature_c = -10 + ((60/255) * (int)message->attribute.data.value);
+				my_tent.temperature_c = (int)message->attribute.data.value;
 				
 				
 			update_displayed_values();	    

@@ -76,7 +76,7 @@ lv_obj_set_style_text_font(ui_Label34, &lv_font_montserrat_20, LV_PART_MAIN| LV_
 ui_ToggleButton = lv_btn_create(ui_PowerOutletDevicePanel);
 lv_obj_set_width( ui_ToggleButton, 100);
 lv_obj_set_height( ui_ToggleButton, 40);
-lv_obj_set_x( ui_ToggleButton, 133 );
+lv_obj_set_x( ui_ToggleButton, 113 );
 lv_obj_set_y( ui_ToggleButton, 0 );
 lv_obj_set_align( ui_ToggleButton, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_ToggleButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
