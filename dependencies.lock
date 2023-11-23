@@ -1,57 +1,45 @@
 dependencies:
   espressif/esp-serial-flasher:
-    component_hash: bc6eb4614dba8c0ccf48de0d9893205c99eb8611072f4d1f0f858145ecaa5155
+    component_hash: 8c6024d8901be7aa32d0838f773d5afba88f1aca52254a6c66f6aa91eeb7925e
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.3.1
+    version: 0.4.2
   espressif/esp-zboss-lib:
-    component_hash: 92d1791fe86c98f4bd4a89447f59962144b6d8fed4b2bf0935defaebecabb6d8
+    component_hash: f432e403fad80e2fa9cbae5631da7406796e4a52b2ee6233937e90eabbb65182
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.6.2
+    version: 1.0.3
   espressif/esp-zigbee-lib:
-    component_hash: 334b27b6af02d5c275456b7608e74ed35d4a5036dfabc7828cf80cb070918418
+    component_hash: fd768b7d4aa5363d32d9afe1f5eabab23240a220fba5884e9041a4db0dfd9e44
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.9.5
+    version: 1.0.4
   espressif/esp_lcd_touch:
-    component_hash: 6cc76832cda51d73353a7e8d7aa07073d6cdb75b1ad66e2d98badd768f6c830a
+    component_hash: d4d8f2dc33205797169a97a02e0d89a8982f59fe0509129b54422052b8522f59
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.1.0
+    version: 1.1.1
   espressif/esp_lcd_touch_ft5x06:
     component_hash: 97759953d9436a365e9427078c5b04ecce4e6a50f50cf62c68cd6bfa229b812c
     source:
       service_url: https://api.components.espressif.com/
       type: service
     version: 1.0.6
-  espressif/esp_lcd_touch_gt911:
-    component_hash: e3d8f37a430c4d053346b27fb1eec2b0670d0e07d9eb8a8cd084ac06f4cc5b80
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.0.7~1
-  espressif/esp_lcd_touch_tt21100:
-    component_hash: 3670f6f3d68c120d680d70ffdf2dc10f6c2a5bea8c0e87521fb92ac2af1f94c5
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.1.0
   espressif/esp_rcp_update:
-    component_hash: 2ed9ef76e292d05b376fb47c55c32cd1fd3ea9514d4996959009858566cf5646
+    component_hash: ae148f1c4cd8466cd3b8bf84fce30030f28a0e76c79d08e756be84d820096fc1
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.0
+    version: 1.0.1
   idf:
     component_hash: null
     source:
       type: idf
-    version: 5.1.1
-manifest_hash: 08325788835728e9f9a2d60c5703f8f25e4ecd556b710650225e37d1c94932d3
+    version: 5.1.2
+manifest_hash: eb70a7860a976257625890c38cc408ce7e478e6914a9d2a031422e944eebac85
 target: esp32s3
 version: 1.0.0

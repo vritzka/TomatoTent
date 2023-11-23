@@ -27,14 +27,11 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=4
-FILE_NAME_0=7986;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.c;0;4
-FILE_NAME_1=3151;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.h;0;4
-FILE_NAME_2=466;CMake;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FCMakeLists.txt;0;4
-FILE_NAME_3=506;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
-FILE_NAME_4=4265;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.h;0;4
-FILE_NAME_5=1705;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.c;0;4
-FILE_NAME_6=80406;JSON;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2Ftomatotent%2Fbuild%2Fbootloader%2Fconfig%2Fkconfig_menus.json;0;4
+current_page=2
+FILE_NAME_0=57160;None;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fsdkconfig;0;4
+FILE_NAME_1=192;None;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fsdkconfig.defaults;0;4
+FILE_NAME_2=2902;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
+FILE_NAME_3=1677;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.c;0;4
 
 [VTE]
 last_dir=/Users/volkerritzka
