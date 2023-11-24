@@ -6,17 +6,17 @@ dependencies:
       type: service
     version: 0.4.2
   espressif/esp-zboss-lib:
-    component_hash: f432e403fad80e2fa9cbae5631da7406796e4a52b2ee6233937e90eabbb65182
+    component_hash: 381124d25357bb81a509334b8af142105543819ceb2722a304e6fa9b4a8da04d
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.3
+    version: 1.0.0
   espressif/esp-zigbee-lib:
-    component_hash: fd768b7d4aa5363d32d9afe1f5eabab23240a220fba5884e9041a4db0dfd9e44
+    component_hash: 938235857f22574c162e891fb1192f0d62d529a9201cfcd0429c28155ebe8918
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.4
+    version: 1.0.0
   espressif/esp_lcd_touch:
     component_hash: d4d8f2dc33205797169a97a02e0d89a8982f59fe0509129b54422052b8522f59
     source:
@@ -30,16 +30,16 @@ dependencies:
       type: service
     version: 1.0.6
   espressif/esp_rcp_update:
-    component_hash: ae148f1c4cd8466cd3b8bf84fce30030f28a0e76c79d08e756be84d820096fc1
+    component_hash: 61ea3dbd6d85a4e07d204fd8c7620a0c476d53f1bd94025126e24c632f87a51f
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.1
+    version: 0.3.0
   idf:
     component_hash: null
     source:
       type: idf
     version: 5.1.2
-manifest_hash: eb70a7860a976257625890c38cc408ce7e478e6914a9d2a031422e944eebac85
+manifest_hash: ddd747e791fee26c2c47d502ba3acf54b8564a5e18d827f8c2a6f2923a7f0cd4
 target: esp32s3
 version: 1.0.0

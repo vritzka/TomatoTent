@@ -217,7 +217,16 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
         break;
     case ESP_ZB_ZDO_SIGNAL_DEVICE_ANNCE:
         dev_annce_params = (esp_zb_zdo_signal_device_annce_params_t *)esp_zb_app_signal_get_params(p_sg_p);
-        ESP_LOGI(TAG, "New device commissioned or rejoined (short: 0x%04hx)", dev_annce_params->device_short_addr);
+        ESP_LOGI(TAG, "New device found (short: 0x%04hx), Capabilities: %d", dev_annce_params->device_short_addr, dev_annce_params->capability);
+
+        ESP_LOGI(TAG, "IEEE address: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x",
+                 dev_annce_params->ieee_addr[7], dev_annce_params->ieee_addr[6], dev_annce_params->ieee_addr[5], dev_annce_params->ieee_addr[4],
+                 dev_annce_params->ieee_addr[3], dev_annce_params->ieee_addr[2], dev_annce_params->ieee_addr[1], dev_annce_params->ieee_addr[0]);
+        
+        if(dev_annce_params->capability == 142) {
+			power_outlet_short_addr = dev_annce_params->device_short_addr;
+			draw_socket_pair_panel(&power_outlet_short_addr, false);
+        }
         break;
     case ESP_ZB_NWK_SIGNAL_PERMIT_JOIN_STATUS:
         if (err_status == ESP_OK) {

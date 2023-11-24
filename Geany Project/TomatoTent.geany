@@ -27,11 +27,14 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=2
-FILE_NAME_0=57160;None;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fsdkconfig;0;4
-FILE_NAME_1=192;None;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fsdkconfig.defaults;0;4
-FILE_NAME_2=2902;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
-FILE_NAME_3=1677;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.c;0;4
+current_page=4
+FILE_NAME_0=2929;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fmain.c;0;4
+FILE_NAME_1=1690;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FsensorTask.c;0;4
+FILE_NAME_2=150;YAML;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fidf_component.yml;0;4
+FILE_NAME_3=10873;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2FguiTask.c;0;4
+FILE_NAME_4=9256;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.c;0;4
+FILE_NAME_5=3481;C++;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fesp_zigbee_gateway.h;0;4
+FILE_NAME_6=30706;C;0;EUTF-8;1;1;0;%2FUsers%2Fvolkerritzka%2Fesp%2FTomatoTent%2Fmain%2Fgeneral.c;0;4
 
 [VTE]
 last_dir=/Users/volkerritzka

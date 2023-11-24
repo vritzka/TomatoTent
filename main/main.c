@@ -99,6 +99,6 @@ void app_main(void)
     ESP_ERROR_CHECK(init_spiffs());
     ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
 #endif
- vTaskDelay(2000 / portTICK_PERIOD_MS);
+ vTaskDelay(5000 / portTICK_PERIOD_MS);
 vCreateZigbeeTask();
 }
