@@ -1,22 +1,22 @@
 dependencies:
   espressif/esp-serial-flasher:
-    component_hash: 8c6024d8901be7aa32d0838f773d5afba88f1aca52254a6c66f6aa91eeb7925e
+    component_hash: a681bba7b6404e1ee1d81af100b32777fe3b197acc19470941c0242f3dd17092
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 0.4.2
+    version: 0.4.3
   espressif/esp-zboss-lib:
-    component_hash: 381124d25357bb81a509334b8af142105543819ceb2722a304e6fa9b4a8da04d
+    component_hash: 98b68ccd1540e3d0d1884eb134951de66752bde85eb826a885021fa3a54517bf
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.0
+    version: 1.0.5
   espressif/esp-zigbee-lib:
-    component_hash: 938235857f22574c162e891fb1192f0d62d529a9201cfcd0429c28155ebe8918
+    component_hash: 44ae761cec4adcfcc198db4785a9415703b66b78f0a0e96ebec5cbde2045cc6a
     source:
       service_url: https://api.components.espressif.com/
       type: service
-    version: 1.0.0
+    version: 1.0.5
   espressif/esp_lcd_touch:
     component_hash: d4d8f2dc33205797169a97a02e0d89a8982f59fe0509129b54422052b8522f59
     source:
@@ -40,6 +40,6 @@ dependencies:
     source:
       type: idf
     version: 5.1.2
-manifest_hash: ddd747e791fee26c2c47d502ba3acf54b8564a5e18d827f8c2a6f2923a7f0cd4
+manifest_hash: d6e0ed87f852da8fad2475b957232a12e724f88863d377cd95dc1536c25a0455
 target: esp32s3
 version: 1.0.0

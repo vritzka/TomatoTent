@@ -29,7 +29,9 @@
 #include "esp_rcp_update.h"
 #include "esp_coexist_internal.h"
 #include "esp_err.h"
+#include "esp_check.h"
 #include "esp_zigbee_core.h"
+#include "zcl/esp_zigbee_zcl_common.h"
 #include "ha/esp_zigbee_ha_standard.h"
 #include "esp_vfs_dev.h"
 #include "esp_vfs_usb_serial_jtag.h"
@@ -39,7 +41,9 @@
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
 #define HA_ONOFF_SWITCH_ENDPOINT        1  
+#define HA_THERMOMETER_ENDPOINT			2
 #define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
+#define ESP_ZB_SECONDARY_CHANNEL_MASK   (1l << 13) 
 
 #define RCP_VERSION_MAX_SIZE            80
 #define HOST_RESET_PIN_TO_RCP_RESET     CONFIG_PIN_TO_RCP_RESET
@@ -66,7 +70,7 @@
     {                                                           \
         .radio_mode = RADIO_MODE_UART_RCP,                      \
             .radio_uart_config = {                              \
-            .port = 1,                                          \
+            .port = 0,                                          \
             .uart_config =                                      \
                 {                                               \
                     .baud_rate = 115200,                        \
@@ -79,7 +83,7 @@
                 },                                              \
             .rx_pin = HOST_RX_PIN_TO_RCP_TX,                    \
             .tx_pin = HOST_TX_PIN_TO_RCP_RX,                    \
-        },                                                      \
+        },                                                       \
     }
 #endif
 
