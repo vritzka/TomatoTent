@@ -6,19 +6,6 @@ dependencies:
       type: service
     version: 0.4.3
   espressif/esp-zboss-lib:
-<<<<<<< HEAD
-    component_hash: 381124d25357bb81a509334b8af142105543819ceb2722a304e6fa9b4a8da04d
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.0.0
-  espressif/esp-zigbee-lib:
-    component_hash: 938235857f22574c162e891fb1192f0d62d529a9201cfcd0429c28155ebe8918
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.0.0
-=======
     component_hash: 98b68ccd1540e3d0d1884eb134951de66752bde85eb826a885021fa3a54517bf
     source:
       service_url: https://api.components.espressif.com/
@@ -30,7 +17,6 @@ dependencies:
       service_url: https://api.components.espressif.com/
       type: service
     version: 1.0.5
->>>>>>> 91c558c2139ba815e14cf4224b44952e422473e0
   espressif/esp_lcd_touch:
     component_hash: d4d8f2dc33205797169a97a02e0d89a8982f59fe0509129b54422052b8522f59
     source:
@@ -43,43 +29,17 @@ dependencies:
       service_url: https://api.components.espressif.com/
       type: service
     version: 1.0.6
-<<<<<<< HEAD
-  espressif/esp_lcd_touch_gt911:
-    component_hash: 20ac25d1439dbe177764dbed9cd868388fecb052380b5349f2e9e370013ca76a
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.1.0
-  espressif/esp_lcd_touch_tt21100:
-    component_hash: 3670f6f3d68c120d680d70ffdf2dc10f6c2a5bea8c0e87521fb92ac2af1f94c5
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.1.0
-  espressif/esp_rcp_update:
-    component_hash: ae148f1c4cd8466cd3b8bf84fce30030f28a0e76c79d08e756be84d820096fc1
-    source:
-      service_url: https://api.components.espressif.com/
-      type: service
-    version: 1.0.1
-=======
   espressif/esp_rcp_update:
     component_hash: 61ea3dbd6d85a4e07d204fd8c7620a0c476d53f1bd94025126e24c632f87a51f
     source:
       service_url: https://api.components.espressif.com/
       type: service
     version: 0.3.0
->>>>>>> 91c558c2139ba815e14cf4224b44952e422473e0
   idf:
     component_hash: null
     source:
       type: idf
-<<<<<<< HEAD
-    version: 5.1.1
-manifest_hash: 9436fe932756d1ec0a9df33e0ad622b8b864223354fae8c455497131d98bfbee
-=======
     version: 5.1.2
 manifest_hash: d6e0ed87f852da8fad2475b957232a12e724f88863d377cd95dc1536c25a0455
->>>>>>> 91c558c2139ba815e14cf4224b44952e422473e0
 target: esp32s3
 version: 1.0.0

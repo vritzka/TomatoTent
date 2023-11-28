@@ -47,7 +47,6 @@ void app_main(void)
    
    event_loop_init();
    init_ledc();
-  // init_i2c();
    vStartGuiTask();
    vStartTimerTask();
    vCreateSensorTask();

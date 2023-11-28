@@ -18,8 +18,6 @@
 #include "otaTask.h"
 #include "ha/esp_zigbee_ha_standard.h"
 
-//#define HA_ONOFF_SWITCH_ENDPOINT        1  
-
 static const char *TAG = "ui_events.c";
 static nvs_handle_t storage_handle;
 static esp_err_t err;

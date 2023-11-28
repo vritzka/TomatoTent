@@ -13,7 +13,6 @@
 #include <math.h>  
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
-#include "esp_wifi.h"
 #include "esp_log.h"
 #include "esp_event.h"
 #include "nvs_flash.h"
@@ -32,8 +31,12 @@
 #include "esp_event.h"
 #include "esp_crt_bundle.h"
 #include "esp_https_ota.h"
+#include "esp_zigbee_core.h"
+#include "zcl/esp_zigbee_zcl_common.h"
+#include "ha/esp_zigbee_ha_standard.h"
 #include "timerTask.h"
 #include "esp_zigbee_gateway.h"
+
 
 extern SemaphoreHandle_t xGuiSemaphore;
 
@@ -77,6 +80,15 @@ typedef struct {
 } tent_data_t;
 
 extern tent_data_t my_tent;
+
+typedef struct thermometer_device_params_s {
+    esp_zb_ieee_addr_t ieee_addr;
+    uint8_t  endpoint;
+    uint16_t short_addr;
+} thermometer_device_params_t;
+
+extern thermometer_device_params_t thermometer;
+
 
 extern lv_chart_series_t * chart_series_temperature;
 extern lv_chart_series_t * chart_series_humidity;

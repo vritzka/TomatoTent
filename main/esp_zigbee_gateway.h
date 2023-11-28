@@ -46,16 +46,9 @@
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
 #define HA_ONOFF_SWITCH_ENDPOINT        1  
-<<<<<<< HEAD
-#define THERMOMETER_ENDPOINT 3
-#define HA_ESP_LIGHT_ENDPOINT           10 
-#define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
-#define ESP_ZB_SECONDARY_CHANNEL_MASK   (1l << 13)  /* Zigbee primary channel mask use in the example */
-=======
 #define HA_THERMOMETER_ENDPOINT			2
 #define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
 #define ESP_ZB_SECONDARY_CHANNEL_MASK   (1l << 13) 
->>>>>>> 91c558c2139ba815e14cf4224b44952e422473e0
 
 #define RCP_VERSION_MAX_SIZE            80
 #define HOST_RESET_PIN_TO_RCP_RESET     CONFIG_PIN_TO_RCP_RESET
@@ -95,7 +88,7 @@
     {                                                           \
         .radio_mode = RADIO_MODE_UART_RCP,                      \
             .radio_uart_config = {                              \
-            .port = 0,                                          \
+            .port = 1,                                          \
             .uart_config =                                      \
                 {                                               \
                     .baud_rate = 115200,                        \
