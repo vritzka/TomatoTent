@@ -50,9 +50,6 @@ void app_main(void)
    vStartGuiTask();
    vStartTimerTask();
    vCreateSensorTask();
-   
-
- 
  
 
  #if defined(CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE)

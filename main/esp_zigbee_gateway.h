@@ -47,6 +47,7 @@
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
 #define HA_ONOFF_SWITCH_ENDPOINT        1  
 #define HA_THERMOMETER_ENDPOINT			2
+#define HA_HYGROMETER_ENDPOINT			3
 #define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
 #define ESP_ZB_SECONDARY_CHANNEL_MASK   (1l << 13) 
 
@@ -121,5 +122,5 @@ esp_err_t init_spiffs(void);
 void leave_device(lv_event_t * e);
 void pair_socket(lv_event_t * e);    
 void vCreateZigbeeTask(void);
-
+extern bool zigbee_requested;
 #endif

@@ -18,6 +18,7 @@
 
 static esp_err_t err;
 static nvs_handle_t storage_handle;
+bool zigbee_requested = 0;
 
 thermometer_device_params_t thermometer;
 
@@ -98,9 +99,16 @@ static void thermometer_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
         
     }
     
+		my_tent.thermometer_short_addr = ((zdo_info_user_ctx_t *)user_ctx)->short_addr;
+		
+		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+		err = nvs_set_u16(storage_handle, "thermometer", my_tent.thermometer_short_addr);
+		printf((err != ESP_OK) ? "Failed!\n" : "Thermometer address saved\n");
+		nvs_close(storage_handle);
+    
         /* configure report attribute command */
         esp_zb_zcl_config_report_cmd_t report_cmd;
-        bool report_change = 2;
+        uint8_t report_change = 0;
         report_cmd.zcl_basic_cmd.dst_addr_u.addr_short = ((zdo_info_user_ctx_t *)user_ctx)->short_addr;
         report_cmd.zcl_basic_cmd.dst_endpoint = ((zdo_info_user_ctx_t *)user_ctx)->endpoint;
         report_cmd.zcl_basic_cmd.src_endpoint = HA_THERMOMETER_ENDPOINT;
@@ -108,14 +116,25 @@ static void thermometer_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
         report_cmd.clusterID = ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT;
 
         esp_zb_zcl_config_report_record_t records[] = {
-            {ESP_ZB_ZCL_CMD_DIRECTION_TO_SRV, ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID, ESP_ZB_ZCL_ATTR_TYPE_S16, 0, 1, &report_change}};
+            {ESP_ZB_ZCL_CMD_DIRECTION_TO_CLI, ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID, ESP_ZB_ZCL_ATTR_TYPE_S16, 2000, 10000, &report_change}};
         report_cmd.record_number = sizeof(records) / sizeof(esp_zb_zcl_config_report_record_t);
         report_cmd.record_field = records;
 
-        esp_zb_zcl_config_report_cmd_req(&report_cmd);    
-    
-    
-    
+        esp_zb_zcl_config_report_cmd_req(&report_cmd); 
+        
+        /*
+        esp_zb_zcl_report_attr_cmd_t report_cmd2;
+        report_cmd2.zcl_basic_cmd.dst_addr_u.addr_short = my_tent.thermometer_short_addr;
+        report_cmd2.zcl_basic_cmd.dst_endpoint = ((zdo_info_user_ctx_t *)user_ctx)->endpoint;
+        report_cmd2.zcl_basic_cmd.src_endpoint = HA_THERMOMETER_ENDPOINT;
+        report_cmd2.address_mode = ESP_ZB_APS_ADDR_MODE_16_ENDP_PRESENT;
+        report_cmd2.clusterID = ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT;       
+        report_cmd2.attributeID = ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID;
+        report_cmd2.cluster_role = ESP_ZB_ZCL_CLUSTER_SERVER_ROLE;
+        
+        esp_zb_zcl_report_attr_cmd_req(&report_cmd2);        
+        */
+
 }
 
 static void bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
@@ -288,10 +307,10 @@ static void thermometer_leave_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
 {
 	if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {	
 		//ESP_LOGI(TAG, "Leave CB");
-		if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
+		//if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY)) {
 			//lv_obj_add_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
 			//xSemaphoreGive(xGuiSemaphore);
-		}
+		//}
 		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 		err = nvs_erase_key(storage_handle, "thermometer_outlet");
 		printf((err != ESP_OK) ? "Not deleted!\n" : "Deleted\n");
@@ -365,6 +384,7 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
                      extended_pan_id[7], extended_pan_id[6], extended_pan_id[5], extended_pan_id[4],
                      extended_pan_id[3], extended_pan_id[2], extended_pan_id[1], extended_pan_id[0],
                      esp_zb_get_pan_id(), esp_zb_get_current_channel(), esp_zb_get_short_address());
+                     
         }        
         
         
@@ -443,8 +463,11 @@ static esp_err_t zb_read_attr_resp_handler(const esp_zb_zcl_cmd_read_attr_resp_m
                  message->info.cluster, variable->attribute.id, variable->attribute.data.type,
                  variable->attribute.data.value ? *(int16_t *)variable->attribute.data.value : 0);
         variable = variable->next;
+        
+        //my_tent.temperature_c = (float_t)variable->attribute.data.value;
+        
     }
-
+	zigbee_requested = 0;
     return ESP_OK;
 }
 
@@ -507,24 +530,22 @@ static void esp_zb_task(void *pvParameters)
     esp_zb_identify_cluster_add_attr(esp_zb_identify_cluster, ESP_ZB_ZCL_ATTR_IDENTIFY_IDENTIFY_TIME_ID, &test_attr);
 
     esp_zb_attribute_list_t *esp_zb_thermometer_client_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT);
+    esp_zb_attribute_list_t *esp_zb_humidity_client_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_REL_HUMIDITY_MEASUREMENT);
+    
     esp_zb_attribute_list_t *esp_zb_identify_client_cluster = esp_zb_zcl_attr_list_create(ESP_ZB_ZCL_CLUSTER_ID_IDENTIFY);
     
     esp_zb_cluster_list_t *esp_zb_cluster_list = esp_zb_zcl_cluster_list_create();
     esp_zb_cluster_list_add_basic_cluster(esp_zb_cluster_list, esp_zb_basic_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     esp_zb_cluster_list_add_identify_cluster(esp_zb_cluster_list, esp_zb_identify_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     esp_zb_cluster_list_add_temperature_meas_cluster(esp_zb_cluster_list, esp_zb_thermometer_client_cluster, ESP_ZB_ZCL_CLUSTER_CLIENT_ROLE);
+    esp_zb_cluster_list_add_humidity_meas_cluster(esp_zb_cluster_list, esp_zb_humidity_client_cluster, ESP_ZB_ZCL_CLUSTER_CLIENT_ROLE);
+    
     esp_zb_cluster_list_add_identify_cluster(esp_zb_cluster_list, esp_zb_identify_client_cluster, ESP_ZB_ZCL_CLUSTER_CLIENT_ROLE);
     
     esp_zb_ep_list_t *esp_zb_ep_list = esp_zb_ep_list_create();
     esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_THERMOMETER_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_TEMPERATURE_SENSOR_DEVICE_ID);
+    esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_THERMOMETER_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_SIMPLE_SENSOR_DEVICE_ID);
     esp_zb_device_register(esp_zb_ep_list);     
-    
-    
-    
-    
-    
-    
-    
     
     esp_zb_core_action_handler_register(zb_action_handler); 
     esp_zb_set_primary_network_channel_set(ESP_ZB_PRIMARY_CHANNEL_MASK);
@@ -543,5 +564,5 @@ static void esp_zb_task(void *pvParameters)
 
 extern void vCreateZigbeeTask(void)
 {
-    xTaskCreate(esp_zb_task, "Zigbee_main", 4096, NULL, 5, NULL);
+    xTaskCreate(esp_zb_task, "Zigbee_main", 4096*2, NULL, 5, NULL);
 }

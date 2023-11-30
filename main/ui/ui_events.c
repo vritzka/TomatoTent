@@ -248,11 +248,11 @@ void init_tomatotent(lv_event_t * e)
 		//SensorSettingsScreen
 		lv_obj_add_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
 		err = nvs_get_u16(storage_handle, "power_outlet", &my_tent.power_outlet_short_addr);
-		ESP_LOGI(TAG, "PO address: 0x%04hx", my_tent.power_outlet_short_addr);
+		ESP_LOGI(TAG, "Poweroutlet address: 0x%04hx", my_tent.power_outlet_short_addr);
 		if(my_tent.power_outlet_short_addr)
 			draw_socket_pair_panel(&my_tent.power_outlet_short_addr, true);
 			
-		err = nvs_get_u16(storage_handle, "thermo_outlet", &my_tent.thermometer_short_addr);
+		err = nvs_get_u16(storage_handle, "thermometer", &my_tent.thermometer_short_addr);
 		ESP_LOGI(TAG, "Thermometer address: 0x%04hx", my_tent.thermometer_short_addr);	
 		
 		//where we drying?
