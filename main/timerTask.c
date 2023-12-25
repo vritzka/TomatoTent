@@ -88,10 +88,10 @@ void vTimerTask( void * pvParameters )
   for( ;; )
   {
         if (xQueueReceive(queue, &my_tent, pdMS_TO_TICKS(2000))) {
-            //ESP_LOGI(TAG, "Seconds, count=%lu", my_tent.seconds);
+            ESP_LOGI(TAG, "Seconds, count=%lu", my_tent.seconds);
             update_time_left(true);
         } else {
-            ESP_LOGW(TAG, "Missed one count event or Timer stopped");
+            //ESP_LOGW(TAG, "Missed one count event or Timer stopped");
         }
 			
   }

@@ -29,6 +29,12 @@ dependencies:
       service_url: https://api.components.espressif.com/
       type: service
     version: 1.0.6
+  espressif/esp_lcd_touch_gt911:
+    component_hash: 20ac25d1439dbe177764dbed9cd868388fecb052380b5349f2e9e370013ca76a
+    source:
+      service_url: https://api.components.espressif.com/
+      type: service
+    version: 1.1.0
   espressif/esp_rcp_update:
     component_hash: 61ea3dbd6d85a4e07d204fd8c7620a0c476d53f1bd94025126e24c632f87a51f
     source:
@@ -40,6 +46,6 @@ dependencies:
     source:
       type: idf
     version: 5.1.2
-manifest_hash: d6e0ed87f852da8fad2475b957232a12e724f88863d377cd95dc1536c25a0455
+manifest_hash: 327c48346912c764e7815bb174d6453fd41cee1f35a02a190e32908a70969b74
 target: esp32s3
 version: 1.0.0

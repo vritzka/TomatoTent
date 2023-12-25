@@ -96,5 +96,5 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
 #endif
  vTaskDelay(5000 / portTICK_PERIOD_MS);
-vCreateZigbeeTask();
+//vCreateZigbeeTask();
 }

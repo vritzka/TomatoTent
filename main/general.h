@@ -77,6 +77,7 @@ typedef struct {
     uint8_t temperature_offset;
     uint16_t power_outlet_short_addr;
     uint16_t thermometer_short_addr;
+    uint8_t thermometer_endpoint;
 } tent_data_t;
 
 extern tent_data_t my_tent;
@@ -123,14 +124,14 @@ PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the 
 
 //fan pwm
 #define LEDC_FAN_TIMER              LEDC_TIMER_1
-#define LEDC_FAN_OUTPUT_IO          (14) // Define the output GPIO for FAN
+#define LEDC_FAN_OUTPUT_IO          (20) // Define the output GPIO for FAN
 #define LEDC_FAN_CHANNEL            LEDC_CHANNEL_1
 #define LEDC_FAN_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
 #define LEDC_FAN_FREQUENCY          (20000) // Frequency in Hertz.
 
 //LED DIMMER pwm
 #define LEDC_DIMMER_TIMER              LEDC_TIMER_2
-#define LEDC_DIMMER_OUTPUT_IO          (21) // Define the output GPIO for LED Grow Lamp
+#define LEDC_DIMMER_OUTPUT_IO          (19) // Define the output GPIO for LED Grow Lamp
 #define LEDC_DIMMER_CHANNEL            LEDC_CHANNEL_2
 #define LEDC_DIMMER_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
 #define LEDC_DIMMER_FREQUENCY          (20000) // Frequency in Hertz.

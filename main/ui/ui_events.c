@@ -253,7 +253,8 @@ void init_tomatotent(lv_event_t * e)
 			draw_socket_pair_panel(&my_tent.power_outlet_short_addr, true);
 			
 		err = nvs_get_u16(storage_handle, "thermometer", &my_tent.thermometer_short_addr);
-		ESP_LOGI(TAG, "Thermometer address: 0x%04hx", my_tent.thermometer_short_addr);	
+		err = nvs_get_u8(storage_handle, "therm_endp", &my_tent.thermometer_endpoint);
+		ESP_LOGI(TAG, "Thermometer address: 0x%04hx, Endpoint: %d", my_tent.thermometer_short_addr, my_tent.thermometer_endpoint);	
 		
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
@@ -623,6 +624,7 @@ void temperature_dropdown(lv_event_t * e)
 /////////  Start Screen  /////////////
 //////////////////////////////////////
 
+
 void start_grow(lv_event_t * e)
 {
 
@@ -642,8 +644,7 @@ void start_grow(lv_event_t * e)
 }
 
 void start_dry(lv_event_t * e)
-{
-	
+{	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u8(storage_handle, "is_drying", 1);
     err = nvs_commit(storage_handle);
@@ -705,7 +706,7 @@ void stop_grow(lv_event_t * e)
 
 void software_upgrade_button(lv_event_t * e)
 {
-	   ESP_LOGI(TAG, "Here");
+	   ESP_LOGI(TAG, "Software Update Button pressed");
 	   vStartOtaTask();
 }
 

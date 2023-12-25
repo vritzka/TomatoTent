@@ -4,7 +4,7 @@ static const char *TAG = "sensorTask.c";
 
 gptimer_handle_t sensorTimerHandle = NULL;
 static TaskHandle_t xSensorTaskHandle = NULL;
-static esp_err_t err;
+//static esp_err_t err;
 SemaphoreHandle_t xSemaphore = NULL;
 
 
@@ -69,12 +69,12 @@ void vSensorTask( void * pvParameters )
 			
 			//err = esp_zb_zcl_report_attr_cmd_req();
 			
-
+ 
 			update_displayed_values();
 			setFanSpeed();
 			
 		} else {
-			ESP_LOGW(TAG, "Missed 1 count event or Timer stopped");
+			//ESP_LOGW(TAG, "Missed 1 count event or Timer stopped");
 		}
 			
 	}

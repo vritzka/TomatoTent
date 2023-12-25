@@ -100,40 +100,39 @@ static void thermometer_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
     }
     
 		my_tent.thermometer_short_addr = ((zdo_info_user_ctx_t *)user_ctx)->short_addr;
+		my_tent.thermometer_endpoint = ((zdo_info_user_ctx_t *)user_ctx)->endpoint;
 		
 		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 		err = nvs_set_u16(storage_handle, "thermometer", my_tent.thermometer_short_addr);
+		err = nvs_set_u8(storage_handle, "therm_endp", my_tent.thermometer_endpoint);
+		
 		printf((err != ESP_OK) ? "Failed!\n" : "Thermometer address saved\n");
 		nvs_close(storage_handle);
-    
-        /* configure report attribute command */
+		
+		//factory reset
+		/*
+		ESP_LOGI(TAG, "Factory Reset");
+		esp_zb_zcl_basic_fact_reset_cmd_t factory_reset_cmd;
+        factory_reset_cmd.zcl_basic_cmd.dst_addr_u.addr_short = ((zdo_info_user_ctx_t *)user_ctx)->short_addr;
+        factory_reset_cmd.zcl_basic_cmd.dst_endpoint = ((zdo_info_user_ctx_t *)user_ctx)->endpoint;
+        factory_reset_cmd.zcl_basic_cmd.src_endpoint = HA_THERMOMETER_ENDPOINT;
+        factory_reset_cmd.address_mode = ESP_ZB_APS_ADDR_MODE_16_ENDP_PRESENT;
+		esp_zb_zcl_basic_factory_reset_cmd_req(&factory_reset_cmd);
+    */
+
         esp_zb_zcl_config_report_cmd_t report_cmd;
-        uint8_t report_change = 0;
+        bool report_change = 1;
         report_cmd.zcl_basic_cmd.dst_addr_u.addr_short = ((zdo_info_user_ctx_t *)user_ctx)->short_addr;
         report_cmd.zcl_basic_cmd.dst_endpoint = ((zdo_info_user_ctx_t *)user_ctx)->endpoint;
         report_cmd.zcl_basic_cmd.src_endpoint = HA_THERMOMETER_ENDPOINT;
         report_cmd.address_mode = ESP_ZB_APS_ADDR_MODE_16_ENDP_PRESENT;
         report_cmd.clusterID = ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT;
-
         esp_zb_zcl_config_report_record_t records[] = {
-            {ESP_ZB_ZCL_CMD_DIRECTION_TO_CLI, ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID, ESP_ZB_ZCL_ATTR_TYPE_S16, 2000, 10000, &report_change}};
+            {ESP_ZB_ZCL_CMD_DIRECTION_TO_CLI, ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID, ESP_ZB_ZCL_ATTR_TYPE_S16, 20, 30, &report_change}};
         report_cmd.record_number = sizeof(records) / sizeof(esp_zb_zcl_config_report_record_t);
         report_cmd.record_field = records;
-
-        esp_zb_zcl_config_report_cmd_req(&report_cmd); 
+        esp_zb_zcl_config_report_cmd_req(&report_cmd);        
         
-        /*
-        esp_zb_zcl_report_attr_cmd_t report_cmd2;
-        report_cmd2.zcl_basic_cmd.dst_addr_u.addr_short = my_tent.thermometer_short_addr;
-        report_cmd2.zcl_basic_cmd.dst_endpoint = ((zdo_info_user_ctx_t *)user_ctx)->endpoint;
-        report_cmd2.zcl_basic_cmd.src_endpoint = HA_THERMOMETER_ENDPOINT;
-        report_cmd2.address_mode = ESP_ZB_APS_ADDR_MODE_16_ENDP_PRESENT;
-        report_cmd2.clusterID = ESP_ZB_ZCL_CLUSTER_ID_TEMP_MEASUREMENT;       
-        report_cmd2.attributeID = ESP_ZB_ZCL_ATTR_TEMP_MEASUREMENT_VALUE_ID;
-        report_cmd2.cluster_role = ESP_ZB_ZCL_CLUSTER_SERVER_ROLE;
-        
-        esp_zb_zcl_report_attr_cmd_req(&report_cmd2);        
-        */
 
 }
 
@@ -172,12 +171,20 @@ static void ep_cb(esp_zb_zdp_status_t zdo_status, uint8_t ep_count, uint8_t *ep_
 static void simple_desc_cb(esp_zb_zdp_status_t zdo_status, esp_zb_af_simple_desc_1_1_t *simple_desc, void *user_ctx)
 {
     if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
-        ESP_LOGI(TAG, "Simple desc resposne: status(%d), device_id(%d), app_version(%d), profile_id(0x%x), endpoint_ID(%d)", zdo_status,
+        ESP_LOGI(TAG, "Simple desc response: status(%d), device_id(%d), app_version(%d), profile_id(0x%x), endpoint_ID(%d)", zdo_status,
                  simple_desc->app_device_id, simple_desc->app_device_version, simple_desc->app_profile_id, simple_desc->endpoint);
 
         for (int i = 0; i < (simple_desc->app_input_cluster_count + simple_desc->app_output_cluster_count); i++) {
             ESP_LOGI(TAG, "Cluster ID list: 0x%x", *(simple_desc->app_cluster_list + i));
         }
+    }
+}
+
+static void desc_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, esp_zb_af_node_desc_t *node_desc, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Desc response: status(%d), description(%d), Manufacturer(%d)", zdo_status,
+                 node_desc->node_desc_flags, node_desc->manufacturer_code);
     }
 }
 
@@ -245,6 +252,10 @@ static void user_thermometer_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t ad
         simple_desc_req.addr_of_interest = addr;
         simple_desc_req.endpoint = endpoint;
         esp_zb_zdo_simple_desc_req(&simple_desc_req, simple_desc_cb, NULL);
+        /* get the node descriptor */
+        esp_zb_zdo_node_desc_req_param_t desc_req;
+        desc_req.dst_nwk_addr = thermometer.short_addr;
+        esp_zb_zdo_node_desc_req(&desc_req, desc_cb, NULL);        
         /* get the light ieee address */
         esp_zb_zdo_ieee_addr_req_param_t ieee_req;
         ieee_req.addr_of_interest = thermometer.short_addr;
@@ -252,7 +263,7 @@ static void user_thermometer_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t ad
         ieee_req.request_type = 0;
         ieee_req.start_index = 0;
         esp_zb_zdo_ieee_addr_req(&ieee_req, ieee_cb, NULL);
-
+    
     }
 }
 
@@ -407,8 +418,8 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 		find_req.dst_nwk_addr = dev_annce_params->device_short_addr;
 		find_req.addr_of_interest = dev_annce_params->device_short_addr;
 		find_req.profile_id = ESP_ZB_AF_HA_PROFILE_ID;
-		find_req.num_in_clusters = 2;
-		find_req.num_out_clusters = 0;
+		find_req.num_in_clusters = 6;
+		find_req.num_out_clusters = 6;
 		find_req.cluster_list = cluster_list;
 		esp_zb_zdo_match_cluster(&find_req, user_thermometer_find_cb, NULL);
         
@@ -444,7 +455,7 @@ static esp_err_t zb_attribute_reporting_handler(const esp_zb_zcl_report_attr_mes
     ESP_RETURN_ON_FALSE(message, ESP_FAIL, TAG, "Empty message");
     ESP_RETURN_ON_FALSE(message->status == ESP_ZB_ZCL_STATUS_SUCCESS, ESP_ERR_INVALID_ARG, TAG, "Received message: error status(%d)",
                         message->status);
-    ESP_LOGI(TAG, "Reveived report from address(0x%x) src endpoint(%d) to dst endpoint(%d) cluster(0x%x)", message->src_address.u.short_addr,
+    ESP_LOGI(TAG, "Received report from address(0x%x) src endpoint(%d) to dst endpoint(%d) cluster(0x%x)", message->src_address.u.short_addr,
              message->src_endpoint, message->dst_endpoint, message->cluster);
     ESP_LOGI(TAG, "Received report information: attribute(0x%x), type(0x%x), value(%d)\n", message->attribute.id, message->attribute.data.type,
              message->attribute.data.value ? *(int16_t *)message->attribute.data.value : 0);
@@ -467,7 +478,6 @@ static esp_err_t zb_read_attr_resp_handler(const esp_zb_zcl_cmd_read_attr_resp_m
         //my_tent.temperature_c = (float_t)variable->attribute.data.value;
         
     }
-	zigbee_requested = 0;
     return ESP_OK;
 }
 
@@ -512,6 +522,11 @@ static esp_err_t zb_action_handler(esp_zb_core_action_callback_id_t callback_id,
 
 static void esp_zb_task(void *pvParameters)
 {
+#if CONFIG_ESP_ZB_TRACE_ENABLE
+   esp_zb_set_trace_level_mask(ESP_ZB_TRACE_LEVEL_CRITICAL, ESP_ZB_TRACE_SUBSYSTEM_MAC | ESP_ZB_TRACE_SUBSYSTEM_APP);
+#endif    
+    
+    
     /* initialize Zigbee stack */ 
     esp_zb_cfg_t zb_nwk_cfg = ESP_ZB_ZC_CONFIG();
     esp_zb_init(&zb_nwk_cfg);  
@@ -544,7 +559,7 @@ static void esp_zb_task(void *pvParameters)
     
     esp_zb_ep_list_t *esp_zb_ep_list = esp_zb_ep_list_create();
     esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_THERMOMETER_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_TEMPERATURE_SENSOR_DEVICE_ID);
-    esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_THERMOMETER_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_SIMPLE_SENSOR_DEVICE_ID);
+    esp_zb_ep_list_add_ep(esp_zb_ep_list, esp_zb_cluster_list, HA_HYGROMETER_ENDPOINT, ESP_ZB_AF_HA_PROFILE_ID, ESP_ZB_HA_SIMPLE_SENSOR_DEVICE_ID);
     esp_zb_device_register(esp_zb_ep_list);     
     
     esp_zb_core_action_handler_register(zb_action_handler); 
