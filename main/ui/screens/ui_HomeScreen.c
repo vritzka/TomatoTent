@@ -16,8 +16,8 @@ ui_HomeSky = lv_img_create(ui_HomeScreen);
 lv_img_set_src(ui_HomeSky, &ui_img_791711567);
 lv_obj_set_width( ui_HomeSky, LV_SIZE_CONTENT);  /// 128
 lv_obj_set_height( ui_HomeSky, LV_SIZE_CONTENT);   /// 128
-lv_obj_set_x( ui_HomeSky, -193 );
-lv_obj_set_y( ui_HomeSky, -116 );
+lv_obj_set_x( ui_HomeSky, -285 );
+lv_obj_set_y( ui_HomeSky, -144 );
 lv_obj_set_align( ui_HomeSky, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_HomeSky, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_HomeSky, LV_OBJ_FLAG_SCROLLABLE );    /// Flags

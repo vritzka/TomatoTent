@@ -23,9 +23,9 @@ lv_obj_set_style_blend_mode(ui_bud, LV_BLEND_MODE_NORMAL, LV_PART_MAIN| LV_STATE
 lv_obj_set_style_opa(ui_bud, 120, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Chart = lv_chart_create(ui_GraphScreen);
-lv_obj_set_width( ui_Chart, 424);
-lv_obj_set_height( ui_Chart, 220);
-lv_obj_set_x( ui_Chart, 0 );
+lv_obj_set_width( ui_Chart, 745);
+lv_obj_set_height( ui_Chart, 350);
+lv_obj_set_x( ui_Chart, 2 );
 lv_obj_set_y( ui_Chart, 15 );
 lv_obj_set_align( ui_Chart, LV_ALIGN_CENTER );
 lv_chart_set_type( ui_Chart, LV_CHART_TYPE_LINE);
@@ -60,7 +60,7 @@ ui_TempSeriesPanel = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_TempSeriesPanel, 86);
 lv_obj_set_height( ui_TempSeriesPanel, 40);
 lv_obj_set_x( ui_TempSeriesPanel, -192 );
-lv_obj_set_y( ui_TempSeriesPanel, -133 );
+lv_obj_set_y( ui_TempSeriesPanel, -200 );
 lv_obj_set_align( ui_TempSeriesPanel, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_TempSeriesPanel, LV_OBJ_FLAG_CHECKABLE | LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
 lv_obj_clear_flag( ui_TempSeriesPanel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -104,7 +104,7 @@ ui_HumiditySeriesPanel = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_HumiditySeriesPanel, 86);
 lv_obj_set_height( ui_HumiditySeriesPanel, 40);
 lv_obj_set_x( ui_HumiditySeriesPanel, -96 );
-lv_obj_set_y( ui_HumiditySeriesPanel, -133 );
+lv_obj_set_y( ui_HumiditySeriesPanel, -200 );
 lv_obj_set_align( ui_HumiditySeriesPanel, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_HumiditySeriesPanel, LV_OBJ_FLAG_CHECKABLE );   /// Flags
 lv_obj_clear_flag( ui_HumiditySeriesPanel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -148,7 +148,7 @@ ui_CO2SeriesPanel = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_CO2SeriesPanel, 86);
 lv_obj_set_height( ui_CO2SeriesPanel, 40);
 lv_obj_set_x( ui_CO2SeriesPanel, 0 );
-lv_obj_set_y( ui_CO2SeriesPanel, -133 );
+lv_obj_set_y( ui_CO2SeriesPanel, -200 );
 lv_obj_set_align( ui_CO2SeriesPanel, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_CO2SeriesPanel, LV_OBJ_FLAG_CHECKABLE );   /// Flags
 lv_obj_clear_flag( ui_CO2SeriesPanel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -192,7 +192,7 @@ ui_FanspeedSeriesPanel = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_FanspeedSeriesPanel, 86);
 lv_obj_set_height( ui_FanspeedSeriesPanel, 40);
 lv_obj_set_x( ui_FanspeedSeriesPanel, 192 );
-lv_obj_set_y( ui_FanspeedSeriesPanel, -133 );
+lv_obj_set_y( ui_FanspeedSeriesPanel, -200 );
 lv_obj_set_align( ui_FanspeedSeriesPanel, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_FanspeedSeriesPanel, LV_OBJ_FLAG_CHECKABLE );   /// Flags
 lv_obj_clear_flag( ui_FanspeedSeriesPanel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
@@ -235,7 +235,7 @@ ui_VPDSeriesPanel = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_VPDSeriesPanel, 86);
 lv_obj_set_height( ui_VPDSeriesPanel, 40);
 lv_obj_set_x( ui_VPDSeriesPanel, 96 );
-lv_obj_set_y( ui_VPDSeriesPanel, -133 );
+lv_obj_set_y( ui_VPDSeriesPanel, -200 );
 lv_obj_set_align( ui_VPDSeriesPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_VPDSeriesPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_VPDSeriesPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -275,7 +275,7 @@ ui_TimeScalePanel = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_TimeScalePanel, 426);
 lv_obj_set_height( ui_TimeScalePanel, 20);
 lv_obj_set_x( ui_TimeScalePanel, -8 );
-lv_obj_set_y( ui_TimeScalePanel, 143 );
+lv_obj_set_y( ui_TimeScalePanel, 211 );
 lv_obj_set_align( ui_TimeScalePanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_TimeScalePanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_TimeScalePanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -352,7 +352,7 @@ ui_DimmerIconPanel2 = lv_obj_create(ui_GraphScreen);
 lv_obj_set_width( ui_DimmerIconPanel2, 111);
 lv_obj_set_height( ui_DimmerIconPanel2, 78);
 lv_obj_set_x( ui_DimmerIconPanel2, 0 );
-lv_obj_set_y( ui_DimmerIconPanel2, -203 );
+lv_obj_set_y( ui_DimmerIconPanel2, -283 );
 lv_obj_set_align( ui_DimmerIconPanel2, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM | LV_OBJ_FLAG_SCROLL_CHAIN );    /// Flags

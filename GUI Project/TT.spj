@@ -2486,6 +2486,12 @@
             "InheritedType": 11
           },
           {
+            "nid": 309988160,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
+          },
+          {
             "disabled": false,
             "nid": -1867985403,
             "strtype": "_event/EventHandler",
@@ -2596,8 +2602,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -193,
-                  -116
+                  -285,
+                  -144
                 ],
                 "InheritedType": 7
               },
@@ -11868,6 +11874,12 @@
             "InheritedType": 11
           },
           {
+            "nid": 642987242,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
+          },
+          {
             "disabled": false,
             "nid": -1025346818,
             "strtype": "_event/EventHandler",
@@ -14737,6 +14749,12 @@
             "InheritedType": 11
           },
           {
+            "nid": -49801143,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
+          },
+          {
             "disabled": false,
             "nid": 74777873,
             "strtype": "_event/EventHandler",
@@ -16779,6 +16797,12 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "nid": -34121130,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
           },
           {
             "disabled": false,
@@ -20585,6 +20609,12 @@
             "InheritedType": 11
           },
           {
+            "nid": -869573969,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
+          },
+          {
             "disabled": false,
             "nid": -417314032,
             "strtype": "_event/EventHandler",
@@ -21021,7 +21051,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  0,
+                  2,
                   15
                 ],
                 "InheritedType": 7
@@ -21031,8 +21061,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Size",
                 "intarray": [
-                  424,
-                  220
+                  745,
+                  350
                 ],
                 "InheritedType": 7
               },
@@ -21256,7 +21286,7 @@
                 "strtype": "CHART/Division_lines",
                 "intarray": [
                   11,
-                  9
+                  7
                 ],
                 "InheritedType": 7
               },
@@ -22499,7 +22529,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   -192,
-                  -133
+                  -200
                 ],
                 "InheritedType": 7
               },
@@ -23847,7 +23877,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   -96,
-                  -133
+                  -200
                 ],
                 "InheritedType": 7
               },
@@ -25195,7 +25225,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   0,
-                  -133
+                  -200
                 ],
                 "InheritedType": 7
               },
@@ -26543,7 +26573,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   192,
-                  -133
+                  -200
                 ],
                 "InheritedType": 7
               },
@@ -27891,7 +27921,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   96,
-                  -133
+                  -200
                 ],
                 "InheritedType": 7
               },
@@ -30477,7 +30507,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   -8,
-                  143
+                  211
                 ],
                 "InheritedType": 7
               },
@@ -30742,8 +30772,7 @@
                 "InheritedType": 11
               }
             ],
-            "saved_objtypeKey": "PANEL",
-            "tree_closed": true
+            "saved_objtypeKey": "PANEL"
           },
           {
             "guid": "GUID7885699-469443S7312203",
@@ -31393,7 +31422,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   0,
-                  -203
+                  -283
                 ],
                 "InheritedType": 7
               },
@@ -31871,6 +31900,12 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "nid": -893288285,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
           },
           {
             "disabled": false,
@@ -34841,6 +34876,12 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "nid": 900840504,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
           },
           {
             "disabled": false,
@@ -40628,6 +40669,12 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "nid": -1579670495,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
           }
         ],
         "saved_objtypeKey": "SCREEN",
@@ -44279,6 +44326,12 @@
             "InheritedType": 11
           },
           {
+            "nid": 1036221544,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
+          },
+          {
             "disabled": false,
             "nid": -583528045,
             "strtype": "_event/EventHandler",
@@ -46721,6 +46774,12 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "nid": 1766492450,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
           },
           {
             "disabled": false,
@@ -49634,6 +49693,12 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
+          },
+          {
+            "nid": -36119104,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
           }
         ],
         "saved_objtypeKey": "SCREEN",
@@ -54142,6 +54207,12 @@
             "InheritedType": 11
           },
           {
+            "nid": -2147345634,
+            "strtype": "SCREEN/Don’t export screen",
+            "strval": "False",
+            "InheritedType": 2
+          },
+          {
             "disabled": false,
             "nid": -221879718,
             "strtype": "_event/EventHandler",
@@ -56157,9 +56228,9 @@
   ],
   "info": {
     "name": "TT",
-    "depth": 2,
-    "width": 480,
-    "height": 320,
+    "depth": 1,
+    "width": 800,
+    "height": 480,
     "rotation": 0,
     "offset_x": 0,
     "offset_y": 0,
@@ -56168,9 +56239,10 @@
     "description": "",
     "board": "VS Code with SDL for development on PC",
     "board_version": "v1.0.1",
-    "editor_version": "1.3.1",
+    "editor_version": "1.3.2",
     "image": "",
     "force_export_images": false,
+    "flat_export": false,
     "pointfilter": false,
     "theme_simplified": false,
     "theme_dark": true,

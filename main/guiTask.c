@@ -122,17 +122,6 @@ void vGuiTask(void *pvParameter) {
     assert(sem_gui_ready);
 #endif
 
-/*
-#if EXAMPLE_PIN_NUM_BK_LIGHT >= 0
-    ESP_LOGI(TAG, "Turn off LCD backlight");
-    gpio_config_t bk_gpio_config = {
-        .mode = GPIO_MODE_OUTPUT,
-        .pin_bit_mask = 1ULL << EXAMPLE_PIN_NUM_BK_LIGHT
-    };
-    ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
-#endif
-*/
-
 
     ESP_LOGI(TAG, "Install RGB LCD panel driver");
     esp_lcd_panel_handle_t panel_handle = NULL;
@@ -194,12 +183,6 @@ void vGuiTask(void *pvParameter) {
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
 
-/*
-#if EXAMPLE_PIN_NUM_BK_LIGHT >= 0
-    ESP_LOGI(TAG, "Turn on LCD backlight");
-    gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_ON_LEVEL);
-#endif
-*/
     ESP_LOGI(TAG, "Initialize LVGL library");
     lv_init();
     void *buf1 = NULL;
@@ -242,12 +225,7 @@ void vGuiTask(void *pvParameter) {
     ESP_ERROR_CHECK(esp_timer_start_periodic(lvgl_tick_timer, EXAMPLE_LVGL_TICK_PERIOD_MS * 1000));
 
     
-    
-    
-
 #define EXAMPLE_I2C_NUM 0
-#define EXAMPLE_LCD_V_RES 480
-#define EXAMPLE_LCD_H_RES 800
 
 
 ESP_LOGI(TAG, "Initiate I2C");
