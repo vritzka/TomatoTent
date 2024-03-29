@@ -2263,6 +2263,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 1000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -2486,8 +2488,8 @@
             "InheritedType": 11
           },
           {
-            "nid": 309988160,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": 1043947699,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -9008,8 +9010,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -34,
-                      -9
+                      -32,
+                      -15
                     ],
                     "InheritedType": 7
                   },
@@ -9249,7 +9251,7 @@
                           {
                             "nid": -797143973,
                             "strtype": "_style/Text_Font",
-                            "strval": "montserrat_16",
+                            "strval": "montserrat_20",
                             "InheritedType": 3
                           }
                         ],
@@ -9307,8 +9309,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -59,
-                  -111
+                  -2,
+                  -161
                 ],
                 "InheritedType": 7
               },
@@ -10013,8 +10015,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  205,
-                  -136
+                  342,
+                  -203
                 ],
                 "InheritedType": 7
               },
@@ -10992,7 +10994,7 @@
                     "strtype": "OBJECT/Position",
                     "intarray": [
                       0,
-                      -5
+                      0
                     ],
                     "InheritedType": 7
                   },
@@ -11392,8 +11394,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -193,
-                  -188
+                  -286,
+                  -144
                 ],
                 "InheritedType": 7
               },
@@ -11651,6 +11653,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 2000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -11874,8 +11878,8 @@
             "InheritedType": 11
           },
           {
-            "nid": 642987242,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -1310547765,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -14501,6 +14505,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 3000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -14749,8 +14755,8 @@
             "InheritedType": 11
           },
           {
-            "nid": -49801143,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -778294447,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -16577,6 +16583,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 4000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -16799,8 +16807,8 @@
             "InheritedType": 11
           },
           {
-            "nid": -34121130,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -918422095,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -17022,8 +17030,7 @@
             "InheritedType": 4
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID34077076-526478S2912147",
@@ -20386,6 +20393,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 5000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -20609,8 +20618,8 @@
             "InheritedType": 11
           },
           {
-            "nid": -869573969,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": 357370001,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -31679,6 +31688,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 6000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -31902,8 +31913,8 @@
             "InheritedType": 11
           },
           {
-            "nid": -893288285,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -1575797989,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -34655,6 +34666,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 7000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -34878,8 +34891,8 @@
             "InheritedType": 11
           },
           {
-            "nid": 900840504,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": 1836802994,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -34949,8 +34962,7 @@
             "InheritedType": 4
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID43678069-1032494S3712148",
@@ -37818,7 +37830,7 @@
                     "childs": [],
                     "nid": 1419565973,
                     "strtype": "SWITCH/Style_main",
-                    "strval": "lv.PART.MAIN, Rectangle, Pad",
+                    "strval": "lv.PART.MAIN, Rectangle, Pad, Anim1",
                     "InheritedType": 11
                   },
                   {
@@ -39424,7 +39436,7 @@
                     "childs": [],
                     "nid": -34587985,
                     "strtype": "SWITCH/Style_main",
-                    "strval": "lv.PART.MAIN, Rectangle, Pad",
+                    "strval": "lv.PART.MAIN, Rectangle, Pad, Anim1",
                     "InheritedType": 11
                   },
                   {
@@ -40448,6 +40460,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 8000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -40671,14 +40685,13 @@
             "InheritedType": 11
           },
           {
-            "nid": -1579670495,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -1818327538,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID17746866-1038311S9922148",
@@ -42242,7 +42255,7 @@
                 ],
                 "nid": -155772200,
                 "strtype": "SWITCH/Style_main",
-                "strval": "lv.PART.MAIN, Rectangle, Pad",
+                "strval": "lv.PART.MAIN, Rectangle, Pad, Anim1",
                 "InheritedType": 11
               },
               {
@@ -44103,6 +44116,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 9000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -44326,8 +44341,8 @@
             "InheritedType": 11
           },
           {
-            "nid": 1036221544,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": 21422891,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -44397,8 +44412,7 @@
             "InheritedType": 4
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID2552184-342502S8082150",
@@ -46553,6 +46567,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 10000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -46776,8 +46792,8 @@
             "InheritedType": 11
           },
           {
-            "nid": 1766492450,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -185310925,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -49472,6 +49488,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 11000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -49695,14 +49713,13 @@
             "InheritedType": 11
           },
           {
-            "nid": -36119104,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": -974449650,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID66815829-492180S6632214",
@@ -53984,6 +54001,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 12000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -54207,8 +54226,8 @@
             "InheritedType": 11
           },
           {
-            "nid": -2147345634,
-            "strtype": "SCREEN/Don’t export screen",
+            "nid": 158227496,
+            "strtype": "SCREEN/Don't export screen",
             "strval": "False",
             "InheritedType": 2
           },
@@ -56226,6 +56245,7 @@
       "saved_objtypeKey": "ELOANIMATION"
     }
   ],
+  "selected_theme": "Default",
   "info": {
     "name": "TT",
     "depth": 1,
@@ -56239,22 +56259,34 @@
     "description": "",
     "board": "VS Code with SDL for development on PC",
     "board_version": "v1.0.1",
-    "editor_version": "1.3.2",
+    "editor_version": "1.4.0",
     "image": "",
     "force_export_images": false,
     "flat_export": false,
+    "advanced_alpha": false,
     "pointfilter": false,
     "theme_simplified": false,
     "theme_dark": true,
     "theme_color1": 5,
     "theme_color2": 0,
-    "exportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
+    "uiExportFolderPath": "",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "backup_cnt": 67,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
+    "imageexport": "SOURCE",
     "lvgl_include_path": "lvgl.h",
+    "drive_stdio": "-",
+    "drive_stdio_path": null,
+    "drive_posix": "-",
+    "drive_posix_path": null,
+    "drive_win32": "-",
+    "drive_win32_path": null,
+    "drive_fatfs": "-",
+    "drive_fatfs_path": null,
+    "naming": null,
+    "naming_force_lowercase": false,
     "BitDepth": 16,
     "Name": "TT"
   }

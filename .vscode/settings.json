@@ -1,4 +1,7 @@
 {
     "idf.adapterTargetName": "esp32s3",
-    "C_Cpp.default.compilerPath": "/usr/bin/clang"
+    "C_Cpp.default.compilerPath": "/usr/bin/clang",
+    "files.associations": {
+        "esp_zigbee_gateway.h": "c"
+    }
 }

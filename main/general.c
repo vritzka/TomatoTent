@@ -894,22 +894,22 @@ void draw_socket_pair_panel(uint16_t *power_outlet_short_addr, bool bound) {
 	if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY))
 	{
 		lv_obj_clear_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_remove_event_cb(ui_Button3, pair_socket);
-		lv_obj_remove_event_cb(ui_Button2, leave_device);
+		//lv_obj_remove_event_cb(ui_Button3, pair_socket);
+		//lv_obj_remove_event_cb(ui_Button2, leave_device);
 			
 		if(!bound)
 		{	
 			lv_obj_clear_flag(ui_Button3, LV_OBJ_FLAG_HIDDEN); //bind
 			lv_obj_add_flag(ui_ToggleButton, LV_OBJ_FLAG_HIDDEN);
 			lv_obj_add_flag(ui_Button2, LV_OBJ_FLAG_HIDDEN); //unbind	
-			lv_obj_add_event_cb(ui_Button3, pair_socket, LV_EVENT_CLICKED, power_outlet_short_addr);	
+			//lv_obj_add_event_cb(ui_Button3, pair_socket, LV_EVENT_CLICKED, power_outlet_short_addr);	
 		} 
 		else
 		{
 			lv_obj_add_flag(ui_Button3, LV_OBJ_FLAG_HIDDEN); //bind
 			lv_obj_clear_flag(ui_Button2, LV_OBJ_FLAG_HIDDEN); //unbind
 			lv_obj_clear_flag(ui_ToggleButton, LV_OBJ_FLAG_HIDDEN);
-			lv_obj_add_event_cb(ui_Button2, leave_device, LV_EVENT_CLICKED, power_outlet_short_addr);
+			//lv_obj_add_event_cb(ui_Button2, leave_device, LV_EVENT_CLICKED, power_outlet_short_addr);
 		}
 		xSemaphoreGive(xGuiSemaphore);
     }

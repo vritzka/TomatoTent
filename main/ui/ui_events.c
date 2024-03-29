@@ -774,9 +774,5 @@ void ui_event_homeScreen_custom(lv_event_t * e)
 void switch_lamp(lv_event_t * e)
 {
         ESP_LOGI(TAG, "TOGGLE");
-        esp_zb_zcl_on_off_cmd_t cmd_req;
-        cmd_req.zcl_basic_cmd.src_endpoint = HA_ONOFF_SWITCH_ENDPOINT;
-        cmd_req.address_mode = ESP_ZB_APS_ADDR_MODE_DST_ADDR_ENDP_NOT_PRESENT;
-        cmd_req.on_off_cmd_id = ESP_ZB_ZCL_CMD_ON_OFF_TOGGLE_ID;
-		esp_zb_zcl_on_off_cmd_req(&cmd_req);
+
 }
