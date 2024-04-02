@@ -12,10 +12,10 @@ Credits:
 ESP32 pin     | ESP32-H2 pin
 ------------- |-------------
    GND        |    G
-   GPIO4 (RX) |    TX
-   GPIO5 (TX) |    RX
-   GPI017     |    RST
-   GPIO18     |    GPIO9(BOOT)
+   GPI40      |    TX
+   GPI41      |    RX
+   GPI04      |    RST
+   GPIO42     |    GPIO9 (BOOT)
 
 ## Documentation
 
