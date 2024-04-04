@@ -18,6 +18,9 @@
 #include "ui.h"
 #include "general.h"
 
+#include "esp_err.h"
+#include "esp_zigbee_core.h"
+
 #include <fcntl.h>
 #include <string.h>
 #include "esp_check.h"
@@ -32,6 +35,7 @@
 #include "protocol_examples_common.h"
 #include "esp_rcp_update.h"
 #include "esp_coexist.h"
+#include "esp_zigbee_gateway.h"
 
 #include "esp_vfs_dev.h"
 #include "esp_vfs_usb_serial_jtag.h"
@@ -40,9 +44,6 @@
 #if CONFIG_OPENTHREAD_SPINEL_ONLY
 #include "esp_radio_spinel.h"
 #endif
-
-#include "esp_err.h"
-#include "esp_zigbee_core.h"
 
 /* Zigbee Configuration */
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */

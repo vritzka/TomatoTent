@@ -3,5 +3,7 @@
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "files.associations": {
         "esp_zigbee_gateway.h": "c"
-    }
+    },
+    "idf.flashType": "UART",
+    "idf.port": "/dev/cu.usbserial-1430"
 }

@@ -51,44 +51,5 @@ void app_main(void)
    vStartGuiTask();
    vStartTimerTask();
    vCreateSensorTask();
- 
-
- #if defined(CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE)
-    /**
-     * We are treating successful WiFi connection as a checkpoint to cancel rollback
-     * process and mark newly updated firmware image as active. For production cases,
-     * please tune the checkpoint behavior per end application requirement.
-     */
-    const esp_partition_t *running = esp_ota_get_running_partition();
-    esp_ota_img_states_t ota_state;
-    if (esp_ota_get_state_partition(running, &ota_state) == ESP_OK) {
-        if (ota_state == ESP_OTA_IMG_PENDING_VERIFY) {
-            if (esp_ota_mark_app_valid_cancel_rollback() == ESP_OK) {
-                ESP_LOGI(TAG, "App is valid, rollback cancelled successfully");
-            } else {
-                ESP_LOGE(TAG, "Failed to cancel rollback");
-            }
-        }
-    }
-#endif
- 
-  esp_zb_platform_config_t config = {
-        .radio_config = ESP_ZB_DEFAULT_RADIO_CONFIG(),
-        .host_config = ESP_ZB_DEFAULT_HOST_CONFIG(),
-    };
-
-    ESP_ERROR_CHECK(esp_zb_platform_config(&config));
-    ESP_ERROR_CHECK(nvs_flash_init());
-    ESP_ERROR_CHECK(esp_netif_init());
-    //ESP_ERROR_CHECK(esp_event_loop_create_default());
-#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
-    ESP_ERROR_CHECK(esp_zb_gateway_console_init());
-#endif
-
-#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
-    esp_rcp_update_config_t rcp_update_config = ESP_ZB_RCP_UPDATE_CONFIG();
-    ESP_ERROR_CHECK(init_spiffs());
-    ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
-#endif
-   // vCreateZigbeeTask();
+   //vCreateZigbeeTask();
 }

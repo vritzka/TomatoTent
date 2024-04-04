@@ -14,12 +14,10 @@
  * https://github.com/espressif/esp-zigbee-sdk/blob/main/examples/esp_zigbee_customized_devices/customized_client/main/esp_HA_customized_switch.c
  */
 
+
 #include "esp_zigbee_gateway.h"
 
-static const char *TAG = "ESP_ZB_GATEWAY.c";
-
-static esp_err_t err;
-static nvs_handle_t storage_handle;
+static const char *TAG = "ESP_ZB_GATEWAY";
 
 /* Production configuration app data */
 typedef struct app_production_config_s {
@@ -206,8 +204,34 @@ static esp_err_t check_ot_rcp_version(void)
 }
 #endif
 
-void esp_zb_task(void *pvParameters)
+static void esp_zb_task(void *pvParameters)
 {
+
+///
+
+    esp_zb_platform_config_t config = {
+        .radio_config = ESP_ZB_DEFAULT_RADIO_CONFIG(),
+        .host_config = ESP_ZB_DEFAULT_HOST_CONFIG(),
+    };
+
+    ESP_ERROR_CHECK(esp_zb_platform_config(&config));
+    //ESP_ERROR_CHECK(nvs_flash_init());
+   // ESP_ERROR_CHECK(esp_netif_init());
+    //ESP_ERROR_CHECK(esp_event_loop_create_default());
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    ESP_ERROR_CHECK(esp_zb_gateway_console_init());
+#endif
+
+#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
+    esp_rcp_update_config_t rcp_update_config = ESP_ZB_RCP_UPDATE_CONFIG();
+    ESP_ERROR_CHECK(init_spiffs());
+    ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
+#endif
+
+///
+
+
+
 #if CONFIG_OPENTHREAD_SPINEL_ONLY
     esp_radio_spinel_register_rcp_failure_handler(rcp_error_handler, ESP_RADIO_SPINEL_ZIGBEE);
 #endif
@@ -221,8 +245,11 @@ void esp_zb_task(void *pvParameters)
     ESP_ERROR_CHECK(esp_zb_start(false));
     esp_zb_main_loop_iteration();
     esp_rcp_update_deinit();
-    //vTaskDelete(NULL);
+    vTaskDelete(NULL);
 }
+
+
+
 
 void vCreateZigbeeTask() {
     xTaskCreate(esp_zb_task, "Zigbee_main", 8192, NULL, 5, NULL);
