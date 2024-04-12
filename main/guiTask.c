@@ -130,7 +130,7 @@ void vGuiTask(void *pvParameter) {
         .psram_trans_align = 64,
         .num_fbs = EXAMPLE_LCD_NUM_FB,
 #if CONFIG_EXAMPLE_USE_BOUNCE_BUFFER
-        .bounce_buffer_size_px = 10 * EXAMPLE_LCD_H_RES,
+        .bounce_buffer_size_px = 5 * EXAMPLE_LCD_H_RES,
 #endif
         .clk_src = LCD_CLK_SRC_DEFAULT,
         .disp_gpio_num = EXAMPLE_PIN_NUM_DISP_EN,
@@ -324,7 +324,7 @@ TaskHandle_t xGuiTaskHandle = NULL;
   // must exist for the lifetime of the task, so in this case is declared static.  If it was just an
   // an automatic stack variable it might no longer exist, or at least have been corrupted, by the time
   // the new task attempts to access it.
-  xTaskCreatePinnedToCore( vGuiTask, "GUITASK", 4096*2, &ucParameterToPass, 10, &xGuiTaskHandle, 1 );
+  xTaskCreatePinnedToCore( vGuiTask, "GUITASK", 4096+(4096/2), &ucParameterToPass, 10, &xGuiTaskHandle, 1 );
   configASSERT( xGuiTaskHandle );
 
   // Use the handle to delete the task.

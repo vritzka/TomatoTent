@@ -131,7 +131,6 @@ void start_animation(lv_obj_t *scr)
 
 void init_tomatotent(lv_event_t * e)
 {	
-   ESP_LOGI(TAG, "Here");
    //init values
    if(my_tent.initiated == 1)
 	return;

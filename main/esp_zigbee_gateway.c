@@ -230,8 +230,6 @@ static void esp_zb_task(void *pvParameters)
 
 ///
 
-
-
 #if CONFIG_OPENTHREAD_SPINEL_ONLY
     esp_radio_spinel_register_rcp_failure_handler(rcp_error_handler, ESP_RADIO_SPINEL_ZIGBEE);
 #endif
@@ -247,8 +245,6 @@ static void esp_zb_task(void *pvParameters)
     esp_rcp_update_deinit();
     vTaskDelete(NULL);
 }
-
-
 
 
 void vCreateZigbeeTask() {

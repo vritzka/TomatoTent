@@ -17,6 +17,12 @@ ESP32 pin     | ESP32-H2 pin
    GPI04      |    RST
    GPIO42     |    GPIO9 (BOOT)
 
+
+ESP32 pin     | Function
+------------- |-------------
+   GPIO19     |   Fan PWM
+   GPIO20     |   LED Dimmer PWM      
+
 ## Documentation
 
 - [Display Module Datasheet](https://github.com/vritzka/TomatoTent/blob/v2/docs/WT32S3-07Datasheet-V1.5EN.pdf)  
