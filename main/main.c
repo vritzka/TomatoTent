@@ -51,5 +51,5 @@ void app_main(void)
    vStartGuiTask();
    vStartTimerTask();
    vCreateSensorTask();
-   vCreateZigbeeTask();
+   //vCreateZigbeeTask();
 }

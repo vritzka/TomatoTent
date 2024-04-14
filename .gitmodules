@@ -1,3 +1,6 @@
 [submodule "components/lvgl"]
 	path = components/lvgl
 	url = https://github.com/lvgl/lvgl.git
+[submodule "components/sht30"]
+	path = components/sht30
+	url = https://github.com/danmeuk/sht30.git
