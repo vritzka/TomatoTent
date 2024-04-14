@@ -22,8 +22,8 @@ ESP32 pin     | Function
 ------------- |-------------
    GPIO20     |   Fan PWM
    GPIO19     |   LED Dimmer PWM      
-   GPIO01     |   I2C SDA
-   GPIO02     |   I2C SCL
+   GPIO01     |   I2C SDA (sensors)
+   GPIO02     |   I2C SCL (sensors)
 
 ## Documentation
 

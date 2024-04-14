@@ -96,8 +96,8 @@ extern lv_chart_series_t * chart_series_fanspeed;
 extern lv_chart_series_t * chart_series_co2;
 
 
-#define I2C_MASTER_SDA              (12)
-#define I2C_MASTER_SCL              (13)
+#define I2C_MASTER_SDA              (1)
+#define I2C_MASTER_SCL              (2)
 #define I2C_MASTER_RX_BUF_DISABLE   (0)
 #define I2C_MASTER_TX_BUF_DISABLE   (0)
 #define I2C_MASTER_FREQ_HZ          (60000)
