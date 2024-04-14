@@ -5,4 +5,3 @@ dependencies:
   espressif/esp_rcp_update: "0.3.0"
   espressif/esp-serial-flasher: "~0.4.2"
   idf: ">=5.1.2"
-  esp_lcd_touch_ft5x06: "^1.0"
