@@ -47,7 +47,7 @@ void vSensorTask(void *pvParameters)
     ESP_ERROR_CHECK(gptimer_set_alarm_action(sensorTimerHandle, &alarm_config1));
 
     ESP_LOGI(TAG, "Initialising SHT30");
-    sht30.i2c_port = I2C_NUM_0;
+    sht30.i2c_port = I2C_NUM_1;
     sht30.addr = 0x44;
     if (sht30_init(&sht30) != ESP_OK)
     {

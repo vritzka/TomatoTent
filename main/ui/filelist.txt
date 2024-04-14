@@ -13,6 +13,7 @@ screens/ui_SensorSettingsScreen.c
 ui.c
 components/ui_comp_hook.c
 ui_helpers.c
+ui_events.c
 images/ui_img_plant_png.c
 images/ui_img_dry_png.c
 images/ui_img_tomato_png.c

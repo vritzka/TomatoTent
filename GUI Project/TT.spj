@@ -643,7 +643,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -430,
+                  -590,
                   -9
                 ],
                 "InheritedType": 7
@@ -1623,7 +1623,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  435,
+                  595,
                   96
                 ],
                 "InheritedType": 7
@@ -1964,8 +1964,7 @@
                 "InheritedType": 4
               }
             ],
-            "saved_objtypeKey": "BUTTON",
-            "tree_closed": true
+            "saved_objtypeKey": "BUTTON"
           },
           {
             "guid": "GUID20410833-491288S1542140",
@@ -40737,7 +40736,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   0,
-                  70
+                  100
                 ],
                 "InheritedType": 7
               },
@@ -40746,8 +40745,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Size",
                 "intarray": [
-                  480,
-                  180
+                  800,
+                  280
                 ],
                 "InheritedType": 7
               },
@@ -41084,8 +41083,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -19,
-                  -60
+                  -13,
+                  -112
                 ],
                 "InheritedType": 7
               },
@@ -41427,8 +41426,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -19,
-                  -121
+                  -13,
+                  -182
                 ],
                 "InheritedType": 7
               },
@@ -41766,8 +41765,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -185,
-                  -108
+                  -311,
+                  -177
                 ],
                 "InheritedType": 7
               },
@@ -42060,8 +42059,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -185,
-                  -52
+                  -313,
+                  -110
                 ],
                 "InheritedType": 7
               },
@@ -42693,8 +42692,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  203,
-                  -125
+                  354,
+                  -195
                 ],
                 "InheritedType": 7
               },
@@ -43098,8 +43097,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  203,
-                  -62
+                  352,
+                  -99
                 ],
                 "InheritedType": 7
               },
@@ -43483,8 +43482,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  136,
-                  -121
+                  147,
+                  -179
                 ],
                 "InheritedType": 7
               },
@@ -54730,8 +54729,8 @@
               "InheritedType": 1
             },
             {
-              "Value": 430,
-              "Time": 1000.0,
+              "Value": 580,
+              "Time": 1500.0,
               "InheritedType": 1
             }
           ],
@@ -54774,7 +54773,7 @@
             {
               "nid": 1435652867,
               "strtype": "PROPERTYANIMATION/EndValue",
-              "integer": 430,
+              "integer": 580,
               "InheritedType": 6
             },
             {
@@ -54791,7 +54790,7 @@
             {
               "nid": -919627564,
               "strtype": "PROPERTYANIMATION/Duration",
-              "integer": 1000,
+              "integer": 1500,
               "InheritedType": 6
             },
             {
@@ -54803,7 +54802,7 @@
             {
               "nid": 558348516,
               "strtype": "PROPERTYANIMATION/FullAnimationDuration",
-              "integer": 1000,
+              "integer": 1500,
               "InheritedType": 6
             },
             {
@@ -54927,8 +54926,8 @@
               "InheritedType": 1
             },
             {
-              "Value": -435,
-              "Time": 1300.0,
+              "Value": -595,
+              "Time": 1800.0,
               "InheritedType": 1
             }
           ],
@@ -54971,7 +54970,7 @@
             {
               "nid": 223426818,
               "strtype": "PROPERTYANIMATION/EndValue",
-              "integer": -435,
+              "integer": -595,
               "InheritedType": 6
             },
             {
@@ -54989,7 +54988,7 @@
             {
               "nid": -1076924868,
               "strtype": "PROPERTYANIMATION/Duration",
-              "integer": 1000,
+              "integer": 1500,
               "InheritedType": 6
             },
             {
@@ -55001,7 +55000,7 @@
             {
               "nid": 19694684,
               "strtype": "PROPERTYANIMATION/FullAnimationDuration",
-              "integer": 1300,
+              "integer": 1800,
               "InheritedType": 6
             },
             {
@@ -55125,8 +55124,8 @@
               "InheritedType": 1
             },
             {
-              "Value": -170,
-              "Time": 400.0,
+              "Value": -200,
+              "Time": 1200.0,
               "InheritedType": 1
             }
           ],
@@ -55169,7 +55168,7 @@
             {
               "nid": 868188334,
               "strtype": "PROPERTYANIMATION/EndValue",
-              "integer": -170,
+              "integer": -200,
               "InheritedType": 6
             },
             {
@@ -55186,7 +55185,7 @@
             {
               "nid": 707945963,
               "strtype": "PROPERTYANIMATION/Duration",
-              "integer": 400,
+              "integer": 1200,
               "InheritedType": 6
             },
             {
@@ -55198,7 +55197,7 @@
             {
               "nid": -873088272,
               "strtype": "PROPERTYANIMATION/FullAnimationDuration",
-              "integer": 400,
+              "integer": 1200,
               "InheritedType": 6
             },
             {
@@ -55343,7 +55342,7 @@
             {
               "nid": -1260947221,
               "strtype": "PROPERTYANIMATION/FullAnimationDuration",
-              "integer": 400,
+              "integer": 1200,
               "InheritedType": 6
             },
             {
@@ -56269,22 +56268,22 @@
     "theme_dark": true,
     "theme_color1": 5,
     "theme_color2": 0,
-    "uiExportFolderPath": "",
+    "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 67,
+    "backup_cnt": 69,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
     "imageexport": "SOURCE",
     "lvgl_include_path": "lvgl.h",
     "drive_stdio": "-",
-    "drive_stdio_path": null,
+    "drive_stdio_path": "",
     "drive_posix": "-",
-    "drive_posix_path": null,
+    "drive_posix_path": "",
     "drive_win32": "-",
-    "drive_win32_path": null,
+    "drive_win32_path": "",
     "drive_fatfs": "-",
-    "drive_fatfs_path": null,
+    "drive_fatfs_path": "",
     "naming": null,
     "naming_force_lowercase": false,
     "BitDepth": 16,
