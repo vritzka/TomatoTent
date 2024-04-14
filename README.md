@@ -20,8 +20,10 @@ ESP32 pin     | ESP32-H2 pin
 
 ESP32 pin     | Function
 ------------- |-------------
-   GPIO19     |   Fan PWM
-   GPIO20     |   LED Dimmer PWM      
+   GPIO20     |   Fan PWM
+   GPIO19     |   LED Dimmer PWM      
+   GPIO01     |   I2C SDA
+   GPIO02     |   I2C SCL
 
 ## Documentation
 

@@ -90,7 +90,6 @@ typedef struct thermometer_device_params_s {
 
 extern thermometer_device_params_t thermometer;
 
-
 extern lv_chart_series_t * chart_series_temperature;
 extern lv_chart_series_t * chart_series_humidity;
 extern lv_chart_series_t * chart_series_fanspeed;
