@@ -113,6 +113,12 @@ extern lv_chart_series_t * chart_series_co2;
 Voltage: 0-3.3V , 3.3v is full speed. 
 PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the lowest PWM signal should be 22%*/
 
+/*new one
+1, PWM speed regulation signal, frequency support range 1KHz-25KHz.
+2, PWM signal high level effective, high level voltage support 5V~15V, low level 0V.
+3, starting duty ratio >15%, closing duty ratio <10%; 10%~28% is the minimum power operation, 28%~93% is the linear adjustment, and more than 98% of the maximum power operation.
+*/
+
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
 //backlight
 #define LEDC_BACKLIGHT_TIMER              LEDC_TIMER_0

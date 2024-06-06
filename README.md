@@ -9,16 +9,16 @@ Credits:
 
 ## Wiring
 
-ESP32 pin     | ESP32-H2 pin
+ESP32 pin     | ESP32-H2 DEVKIT pin
 ------------- |-------------
    GND        |    G
-   GPI40      |    TX
-   GPI41      |    RX
+   GPI40      |    TX (24)
+   GPI41      |    RX (23)
    GPI04      |    RST
    GPIO42     |    GPIO9 (BOOT)
 
 
-ESP32 pin     | Function
+              | Function
 ------------- |-------------
    GPIO20     |   Fan PWM
    GPIO19     |   LED Dimmer PWM      
