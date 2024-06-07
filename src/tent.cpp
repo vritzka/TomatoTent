@@ -211,13 +211,19 @@ void Tent::fan(String fanStatus)
         }
     } else if(hardwareVersion == 2 || hardwareVersion == 3) {
         if (fanStatus == "OFF") {
-            analogWrite(FAN_SPEED_PIN_2, 0, 60000);
+            analogWrite(FAN_SPEED_PIN_2, 0, 100);
         } else {
-            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 255.0);
-            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 60000);
+            int fanSpeed = map(state.getFanSpeed(), 0.0, 100.0, 0.0, 64.0);
+            analogWrite(FAN_SPEED_PIN_2, fanSpeed, 4000);
         }
     } 
 }    
+/*
+1, PWM speed regulation signal, frequency support range 1KHz-25KHz.
+2, PWM signal high level effective, high level voltage support 5V~15V, low level 0V.
+3, starting duty ratio >15%, closing duty ratio <10%; 10%~28% is the minimum power operation, 28%~93% is the linear adjustment, and more than 98% of the maximum power operation.
+4, PWM speed control circuit the following circuit.
+*/
 
 void Tent::markNeedsSensorUpdate()
 {
