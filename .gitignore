@@ -2,3 +2,5 @@
 text.txt
 .c9
 *.bin
+.DS_Store
+p1.hex
