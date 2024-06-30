@@ -5,5 +5,5 @@
         "esp_zigbee_gateway.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.port": "/dev/cu.usbserial-1430"
+    "idf.port": "/dev/tty.usbserial-1440"
 }
