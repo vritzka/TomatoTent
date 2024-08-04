@@ -75,9 +75,6 @@ typedef struct {
     uint16_t co2;
     uint16_t elevation;
     uint8_t temperature_offset;
-    uint16_t power_outlet_short_addr;
-    uint16_t thermometer_short_addr;
-    uint8_t thermometer_endpoint;
 } tent_data_t;
 
 extern tent_data_t my_tent;
@@ -106,7 +103,9 @@ extern lv_chart_series_t * chart_series_co2;
 #define I2C_ACK_CHECK_DIS           (0x00)
 #define I2C_ACK_CHECK_EN            (0x01)
 #define I2C_ACK_VAL                 (0x00)
-#define I2C_NACK_VAL                (0x01)	
+#define I2C_NACK_VAL                (0x01)
+
+#define I2C_BUS_0 (0)
 
 
 /*Frequency : 20KHZ
@@ -129,14 +128,14 @@ PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the 
 
 //fan pwm
 #define LEDC_FAN_TIMER              LEDC_TIMER_1
-#define LEDC_FAN_OUTPUT_IO          (20) // Define the output GPIO for FAN
+#define LEDC_FAN_OUTPUT_IO          (19) // Define the output GPIO for FAN
 #define LEDC_FAN_CHANNEL            LEDC_CHANNEL_1
 #define LEDC_FAN_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
-#define LEDC_FAN_FREQUENCY          (20000) // Frequency in Hertz.
+#define LEDC_FAN_FREQUENCY          (4000) // Frequency in Hertz.
 
 //LED DIMMER pwm
 #define LEDC_DIMMER_TIMER              LEDC_TIMER_2
-#define LEDC_DIMMER_OUTPUT_IO          (19) // Define the output GPIO for LED Grow Lamp
+#define LEDC_DIMMER_OUTPUT_IO          (20) // Define the output GPIO for LED Grow Lamp
 #define LEDC_DIMMER_CHANNEL            LEDC_CHANNEL_2
 #define LEDC_DIMMER_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 10 bits
 #define LEDC_DIMMER_FREQUENCY          (20000) // Frequency in Hertz.
@@ -165,6 +164,5 @@ void chart_add_climate_point();
 void chart_init();
 void spinboxes_init();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
-void draw_socket_pair_panel(uint16_t * power_outlet_short_addr, bool bound);
 
 #endif

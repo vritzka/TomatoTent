@@ -2,8 +2,18 @@
     "idf.adapterTargetName": "esp32s3",
     "C_Cpp.default.compilerPath": "/usr/bin/clang",
     "files.associations": {
-        "esp_zigbee_gateway.h": "c"
+        "esp_zigbee_gateway.h": "c",
+        "stdint.h": "c",
+        "cstdint": "c",
+        "stdio.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "span": "c"
     },
     "idf.flashType": "UART",
-    "idf.port": "/dev/tty.usbserial-1440"
+    "idf.port": "/dev/tty.usbserial-1420",
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ]
 }

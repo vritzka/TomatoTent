@@ -224,29 +224,8 @@ void vGuiTask(void *pvParameter) {
     ESP_ERROR_CHECK(esp_timer_create(&lvgl_tick_timer_args, &lvgl_tick_timer));
     ESP_ERROR_CHECK(esp_timer_start_periodic(lvgl_tick_timer, EXAMPLE_LVGL_TICK_PERIOD_MS * 1000));
 
-    
-#define EXAMPLE_I2C_NUM 0
-
-
-ESP_LOGI(TAG, "Initiate I2C");
-
   esp_lcd_touch_handle_t tp = NULL;
   esp_lcd_panel_io_handle_t tp_io_handle = NULL;
-
-  ESP_LOGI(TAG, "Initialize I2C");
-
-  const i2c_config_t i2c_conf = {
-      .mode = I2C_MODE_MASTER,
-      .sda_io_num = 48,
-      .scl_io_num = 47,
-      .sda_pullup_en = GPIO_PULLUP_ENABLE,
-      .scl_pullup_en = GPIO_PULLUP_ENABLE,
-      .master.clk_speed = 400000,
-  };
-
-  /* Initialize I2C */
-  ESP_ERROR_CHECK(i2c_param_config(EXAMPLE_I2C_NUM, &i2c_conf));
-  ESP_ERROR_CHECK(i2c_driver_install(EXAMPLE_I2C_NUM, i2c_conf.mode, 0, 0, 0));
 
   esp_lcd_panel_io_i2c_config_t tp_io_config =
       ESP_LCD_TOUCH_IO_I2C_GT911_CONFIG();
@@ -254,7 +233,7 @@ ESP_LOGI(TAG, "Initiate I2C");
   ESP_LOGI(TAG, "Initialize touch IO (I2C)");
 
   /* Touch IO handle */
-  ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
+  ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)I2C_BUS_0, &tp_io_config, &tp_io_handle));
 
   esp_lcd_touch_config_t tp_cfg = {
       .x_max = EXAMPLE_LCD_V_RES,

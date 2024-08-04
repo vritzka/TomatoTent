@@ -44,8 +44,8 @@ lv_color_t arc_color[] = {
 };
 
 // LVGL image declare
-LV_IMG_DECLARE(ui_img_tomato_png)
-LV_IMG_DECLARE(tomatotent_text)
+//LV_IMG_DECLARE(ui_img_tomato_png)
+//LV_IMG_DECLARE(tomatotent_text)
 
 void anim_timer_cb(lv_timer_t *timer)
 {
@@ -72,7 +72,7 @@ void anim_timer_cb(lv_timer_t *timer)
 
         // Create new image and make it transparent
         img_text = lv_img_create(scr);
-        lv_img_set_src(img_text, &tomatotent_text);
+        lv_img_set_src(img_text, &ui_img_tomatotent_text_png);
         lv_obj_set_style_img_opa(img_text, 0, 0);
     }
 
@@ -243,17 +243,6 @@ void init_tomatotent(lv_event_t * e)
 		esp_app_desc_t running_app_info;
 		esp_ota_get_partition_description(running, &running_app_info);
 		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
-		
-		//SensorSettingsScreen
-		lv_obj_add_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
-		err = nvs_get_u16(storage_handle, "power_outlet", &my_tent.power_outlet_short_addr);
-		ESP_LOGI(TAG, "Poweroutlet address: 0x%04hx", my_tent.power_outlet_short_addr);
-		if(my_tent.power_outlet_short_addr)
-			draw_socket_pair_panel(&my_tent.power_outlet_short_addr, true);
-			
-		err = nvs_get_u16(storage_handle, "thermometer", &my_tent.thermometer_short_addr);
-		err = nvs_get_u8(storage_handle, "therm_endp", &my_tent.thermometer_endpoint);
-		ESP_LOGI(TAG, "Thermometer address: 0x%04hx, Endpoint: %d", my_tent.thermometer_short_addr, my_tent.thermometer_endpoint);	
 		
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
@@ -448,27 +437,6 @@ void screen_brightness_slider(lv_event_t * e)
 }
 
 
-void temp_unit_switch(lv_event_t * e)
-{
-	lv_obj_t * target = lv_event_get_target(e);
-	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-	
-	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
-		//on = F = 1
-		my_tent.temp_unit = 1;
-	} else { 
-		//off = C = 0	
-		my_tent.temp_unit = 0;
-	}
-	
-	update_temp_units(my_tent.temp_unit);
-	set_target_climate();
-	
-	err = nvs_set_u16(storage_handle, "temp_unit", my_tent.temp_unit);
-	err = nvs_commit(storage_handle);
-    nvs_close(storage_handle);
-}
-
 void save_general_settings_screen(lv_event_t * e)
 {
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
@@ -537,34 +505,27 @@ void save_wifi_screen(lv_event_t * e)
 }
 
 //////////////////////////////////////
-/////// Fan Speed Screen /////////////
+///////// Climate screen /////////////
 //////////////////////////////////////
 
 void fanspeed_slider(lv_event_t * e)
 {
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+
 	lv_obj_t * target = lv_event_get_target(e);
 	
 	my_tent.fanspeed_slider_left_value = lv_slider_get_left_value(target);
 	my_tent.fanspeed_slider_value = lv_slider_get_value(target);
-	
-	
+		
 	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu %%", my_tent.fanspeed_slider_left_value);
 	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu %%", my_tent.fanspeed_slider_value);
-}
 
-void save_fan_settings_screen(lv_event_t * e)
-{
-	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	err = nvs_set_u16(storage_handle, "fanspeed_min", my_tent.fanspeed_slider_left_value);
 	err = nvs_set_u16(storage_handle, "fanspeed_max", my_tent.fanspeed_slider_value);
 	
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }
-
-//////////////////////////////////////
-///////// Climate screen /////////////
-//////////////////////////////////////
 
 
 void climate_mode_switch(lv_event_t * e)
@@ -582,7 +543,7 @@ void climate_mode_switch(lv_event_t * e)
 		lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
 		lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
 	}
-	
+
 	err = nvs_set_u8(storage_handle, "climate_mode", my_tent.climate_mode);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -615,6 +576,27 @@ void temperature_dropdown(lv_event_t * e)
 	
 	err = nvs_set_u16(storage_handle, "sel_temp_index", my_tent.target_temperature_sel_index );
 	
+	err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
+}
+
+void temp_unit_switch(lv_event_t * e)
+{
+	lv_obj_t * target = lv_event_get_target(e);
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	
+	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) {   
+		//on = F = 1
+		my_tent.temp_unit = 1;
+	} else { 
+		//off = C = 0	
+		my_tent.temp_unit = 0;
+	}
+	
+	update_temp_units(my_tent.temp_unit);
+	set_target_climate();
+	
+	err = nvs_set_u16(storage_handle, "temp_unit", my_tent.temp_unit);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }
@@ -773,5 +755,19 @@ void ui_event_homeScreen_custom(lv_event_t * e)
 void switch_lamp(lv_event_t * e)
 {
         ESP_LOGI(TAG, "TOGGLE");
+
+}
+
+void updateDimmerPolarity(lv_event_t * e)
+{
+	ESP_LOGI(TAG, "Dimmer Polarity");
+
+
+	
+	int ret;
+    uint8_t write_buf[2] = {2, 0xaa};
+
+	i2c_master_write_to_device(I2C_BUS_0, 0x5d, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+	//i2c_master_write_to_device(I2C_MASTER_NUM, MPU9250_SENSOR_ADDR, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 
 }

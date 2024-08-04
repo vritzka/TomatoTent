@@ -263,16 +263,6 @@ void init_ledc(void)
 
 
 /////////////////////////////////////////////////////////
-///////////////// Event Loop ////////////////////////////
-/////////////////////////////////////////////////////////
-
-
-void event_loop_init(void) {
-	ESP_ERROR_CHECK(esp_event_loop_create_default());
-	//ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, WIFI_EVENT_SCAN_DONE, wifi_scan_done_handler, NULL, NULL));
-}
-
-/////////////////////////////////////////////////////////
 ///////////////// WIFI //////////////////////////////////
 /////////////////////////////////////////////////////////
 
@@ -471,9 +461,6 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 }
 
 esp_netif_t *sta_netif;
-esp_event_handler_instance_t instance_any_id;
-esp_event_handler_instance_t instance_got_ip;
-static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
 
@@ -486,17 +473,6 @@ void wifi_init(void)
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-
-    ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT,
-                                                        ESP_EVENT_ANY_ID,
-                                                        &wifi_event_handler,
-                                                        NULL,
-                                                        &instance_any_id));
-    ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
-                                                        IP_EVENT_STA_GOT_IP,
-                                                        &wifi_event_handler,
-                                                        NULL,
-                                                        &instance_got_ip));
 
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
@@ -562,13 +538,7 @@ void wifi_off(void)
 	esp_wifi_stop();
 	esp_wifi_deinit();
 	lv_dropdown_clear_options(ui_WifiDropdown);
-	
-    ESP_ERROR_CHECK(esp_event_handler_instance_unregister(WIFI_EVENT,
-                                                        ESP_EVENT_ANY_ID,
-                                                        &wifi_event_handler));
-    ESP_ERROR_CHECK(esp_event_handler_instance_unregister(IP_EVENT,
-                                                        IP_EVENT_STA_GOT_IP,
-                                                        &wifi_event_handler));
+
 }
 
 void draw_qr_codes() {
@@ -589,10 +559,48 @@ void draw_qr_codes() {
 }
 
 /////////////////////////////////////////////////////////
+///////////////// Event Loop ////////////////////////////
+/////////////////////////////////////////////////////////
+esp_event_handler_instance_t instance_any_id;
+esp_event_handler_instance_t instance_got_ip;
+static EventGroupHandle_t s_wifi_event_group;
+
+void event_loop_init(void) {
+	ESP_ERROR_CHECK(esp_event_loop_create_default());
+	//ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, WIFI_EVENT_SCAN_DONE, wifi_scan_done_handler, NULL, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT,
+                                                        ESP_EVENT_ANY_ID,
+                                                        &wifi_event_handler,
+                                                        NULL,
+                                                        &instance_any_id));
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
+                                                        IP_EVENT_STA_GOT_IP,
+                                                        &wifi_event_handler,
+                                                        NULL,
+                                                        &instance_got_ip));
+}
+
+/////////////////////////////////////////////////////////
 ///////////////////////  I2C  ///////////////////////////
 /////////////////////////////////////////////////////////
 
 void init_i2c() {
+
+
+  ESP_LOGI(TAG, "Initialize I2C");
+
+  const i2c_config_t i2c_conf = {
+      .mode = I2C_MODE_MASTER,
+      .sda_io_num = 48,
+      .scl_io_num = 47,
+      .sda_pullup_en = GPIO_PULLUP_ENABLE,
+      .scl_pullup_en = GPIO_PULLUP_ENABLE,
+      .master.clk_speed = 400000,
+  };
+
+  /* Initialize I2C */
+  ESP_ERROR_CHECK(i2c_param_config(I2C_BUS_0, &i2c_conf));
+  ESP_ERROR_CHECK(i2c_driver_install(I2C_BUS_0, i2c_conf.mode, 0, 0, 0));	
 	
 	 i2c_config_t i2c_config = {
         .mode = I2C_MODE_MASTER,
@@ -748,12 +756,9 @@ void setFanSpeed() {
 	  fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 11);	  	  	  	  	  	  	  	  	  	
 	}
 
-	//ESP_LOGI(TAG, "Fanspeed by Hum: %d%%", fan_speed_hum);
-	
-	my_tent.fanspeed = fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp;
-	
+
+	my_tent.fanspeed = (128-1)*((float)(fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp) / 100);
 	ESP_LOGI(TAG, "Fanspeed: %d%%", my_tent.fanspeed);
-	
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_FAN_CHANNEL, my_tent.fanspeed));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_FAN_CHANNEL));	
 
@@ -855,6 +860,13 @@ void chart_add_climate_point() {
 	}
 
 
+/////////////////////////////////////////////////////////
+///////////////////  AW9523   ///////////////////////////
+/////////////////////////////////////////////////////////
+
+
+
+
 
 /////////////////////////////////////////////////////////
 ///////////////////  HELPERS  ///////////////////////////
@@ -887,30 +899,3 @@ long map(long x, long in_min, long in_max, long out_min, long out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-void draw_socket_pair_panel(uint16_t *power_outlet_short_addr, bool bound) {
-	
-	ESP_LOGI(TAG,"SHORT ADDR 0x%04hx", *power_outlet_short_addr);
-	
-	if (pdTRUE == xSemaphoreTake(xGuiSemaphore, portMAX_DELAY))
-	{
-		lv_obj_clear_flag(ui_PowerOutletDevicePanel, LV_OBJ_FLAG_HIDDEN);
-		//lv_obj_remove_event_cb(ui_Button3, pair_socket);
-		//lv_obj_remove_event_cb(ui_Button2, leave_device);
-			
-		if(!bound)
-		{	
-			lv_obj_clear_flag(ui_Button3, LV_OBJ_FLAG_HIDDEN); //bind
-			lv_obj_add_flag(ui_ToggleButton, LV_OBJ_FLAG_HIDDEN);
-			lv_obj_add_flag(ui_Button2, LV_OBJ_FLAG_HIDDEN); //unbind	
-			//lv_obj_add_event_cb(ui_Button3, pair_socket, LV_EVENT_CLICKED, power_outlet_short_addr);	
-		} 
-		else
-		{
-			lv_obj_add_flag(ui_Button3, LV_OBJ_FLAG_HIDDEN); //bind
-			lv_obj_clear_flag(ui_Button2, LV_OBJ_FLAG_HIDDEN); //unbind
-			lv_obj_clear_flag(ui_ToggleButton, LV_OBJ_FLAG_HIDDEN);
-			//lv_obj_add_event_cb(ui_Button2, leave_device, LV_EVENT_CLICKED, power_outlet_short_addr);
-		}
-		xSemaphoreGive(xGuiSemaphore);
-    }
-}
