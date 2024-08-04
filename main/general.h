@@ -75,17 +75,10 @@ typedef struct {
     uint16_t co2;
     uint16_t elevation;
     uint8_t temperature_offset;
+	uint8_t dimmer_polarity;
 } tent_data_t;
 
 extern tent_data_t my_tent;
-
-typedef struct thermometer_device_params_s {
-    esp_zb_ieee_addr_t ieee_addr;
-    uint8_t  endpoint;
-    uint16_t short_addr;
-} thermometer_device_params_t;
-
-extern thermometer_device_params_t thermometer;
 
 extern lv_chart_series_t * chart_series_temperature;
 extern lv_chart_series_t * chart_series_humidity;
@@ -141,7 +134,6 @@ PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the 
 #define LEDC_DIMMER_FREQUENCY          (20000) // Frequency in Hertz.
 
 
-
 void update_temp_units(uint16_t temp_unit);
 void init_ledc(void);
 void event_loop_init(void);
@@ -162,7 +154,6 @@ void set_target_climate();
 void update_displayed_values();
 void chart_add_climate_point();
 void chart_init();
-void spinboxes_init();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 #endif

@@ -191,7 +191,6 @@ extern lv_obj_t *ui_WifiSwitch;
 extern lv_obj_t *ui_WifiStatusLabel;
 void ui_event_ImgButton7( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton7;
-extern lv_obj_t *ui_ImgButton2;
 void ui_event_ImgButton4( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton4;
 extern lv_obj_t *ui_QrCode1;
@@ -218,12 +217,18 @@ extern lv_obj_t *ui_Panel1;
 extern lv_obj_t *ui_DimmerPolarityContainer;
 void ui_event_PolaritySwitch1( lv_event_t * e);
 extern lv_obj_t *ui_PolaritySwitch1;
+void ui_event_PolaritySwitch2( lv_event_t * e);
 extern lv_obj_t *ui_PolaritySwitch2;
+void ui_event_PolaritySwitch3( lv_event_t * e);
 extern lv_obj_t *ui_PolaritySwitch3;
+void ui_event_PolaritySwitch4( lv_event_t * e);
 extern lv_obj_t *ui_PolaritySwitch4;
+void ui_event_PolaritySwitch5( lv_event_t * e);
 extern lv_obj_t *ui_PolaritySwitch5;
+void ui_event_PolaritySwitch6( lv_event_t * e);
 extern lv_obj_t *ui_PolaritySwitch6;
 extern lv_obj_t *ui_Image17;
+extern lv_obj_t *ui_Label11;
 extern lv_obj_t *ui_Container2;
 extern lv_obj_t *ui_Roller1;
 extern lv_obj_t *ui_Label12;
@@ -255,7 +260,6 @@ LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png
 LV_IMG_DECLARE( ui_img_1142205948);   // assets/fan-3.png
 LV_IMG_DECLARE( ui_img_953604683);   // assets/wifi-2.png
 LV_IMG_DECLARE( ui_img_1668913270);   // assets/back-up.png
-LV_IMG_DECLARE( ui_img_1126512945);   // assets/cloud-computing.png
 LV_IMG_DECLARE( ui_img_refresh_png);   // assets/refresh.png
 LV_IMG_DECLARE( ui_img_1668217869);   // assets/rj45-2.png
 LV_IMG_DECLARE( ui_img_713338696);   // assets/cloud-computing-2.png

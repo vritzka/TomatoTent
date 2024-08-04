@@ -107,18 +107,18 @@ lv_label_set_text(ui_LightDurationLightLabel,"12h");
 lv_obj_set_style_text_color(ui_LightDurationLightLabel, lv_color_hex(0x636A01), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_LightDurationLightLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_decor(ui_LightDurationLightLabel, LV_TEXT_DECOR_NONE, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_LightDurationLightLabel, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_LightDurationLightLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_LightDurationDarkLabel = lv_label_create(ui_Panel8);
 lv_obj_set_width( ui_LightDurationDarkLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_LightDurationDarkLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_LightDurationDarkLabel, 241 );
-lv_obj_set_y( ui_LightDurationDarkLabel, 18 );
+lv_obj_set_x( ui_LightDurationDarkLabel, 269 );
+lv_obj_set_y( ui_LightDurationDarkLabel, 40 );
 lv_obj_set_align( ui_LightDurationDarkLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_LightDurationDarkLabel,"12h");
 lv_obj_set_style_text_color(ui_LightDurationDarkLabel, lv_color_hex(0x1608B1), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_LightDurationDarkLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_LightDurationDarkLabel, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_LightDurationDarkLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel6 = lv_obj_create(ui_LightDurationScreen);
 lv_obj_set_width( ui_Panel6, 611);

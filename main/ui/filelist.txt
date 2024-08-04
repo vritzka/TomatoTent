@@ -35,7 +35,6 @@ images/ui_img_261459337.c
 images/ui_img_1142205948.c
 images/ui_img_953604683.c
 images/ui_img_1668913270.c
-images/ui_img_1126512945.c
 images/ui_img_refresh_png.c
 images/ui_img_1668217869.c
 images/ui_img_713338696.c

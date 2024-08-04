@@ -141,6 +141,7 @@ void init_tomatotent(lv_event_t * e)
    my_tent.elevation = 0;
    my_tent.temperature_offset = 4;
    my_tent.is_drying = 0;
+   my_tent.dimmer_polarity = 0x03;
    
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
@@ -167,8 +168,8 @@ void init_tomatotent(lv_event_t * e)
 		
 		my_tent.dark_duration = 24 - my_tent.light_duration;
 	
-		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", my_tent.light_duration );
-		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", my_tent.dark_duration ); 
+		lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1fh", my_tent.light_duration );
+		lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1fh", my_tent.dark_duration ); 
 				
 		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
 		
@@ -190,6 +191,13 @@ void init_tomatotent(lv_event_t * e)
 		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 		
+		err = nvs_get_u8(storage_handle, "dimmer_polarity", &my_tent.dimmer_polarity); 
+		uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
+		i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+		ESP_LOGI(TAG,"Dimmer Polarity: %X", my_tent.dimmer_polarity);
+
+		
+
 		//wifi screen
 		size_t required_size;
 		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
@@ -288,8 +296,8 @@ void light_duration_slider(lv_event_t * e) {
 
 	//ESP_LOGI(TAG, "%.1f", light_duration);
 	
-	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1f HRS", my_tent.light_duration );
-	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1f HRS", my_tent.dark_duration );
+	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1fh", my_tent.light_duration );
+	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1fh", my_tent.dark_duration );
 
 }
 
@@ -762,12 +770,27 @@ void updateDimmerPolarity(lv_event_t * e)
 {
 	ESP_LOGI(TAG, "Dimmer Polarity");
 
+	char value[] = "00000000"; 
 
+	value[7] = lv_obj_has_state(ui_PolaritySwitch1, LV_STATE_CHECKED) ? '1' : '0';
+	value[6] = lv_obj_has_state(ui_PolaritySwitch2, LV_STATE_CHECKED) ? '1' : '0';
+	value[5] = lv_obj_has_state(ui_PolaritySwitch3, LV_STATE_CHECKED) ? '1' : '0';
+	value[4] = lv_obj_has_state(ui_PolaritySwitch4, LV_STATE_CHECKED) ? '1' : '0';
+	value[3] = lv_obj_has_state(ui_PolaritySwitch5, LV_STATE_CHECKED) ? '1' : '0';
+	value[2] = lv_obj_has_state(ui_PolaritySwitch6, LV_STATE_CHECKED) ? '1' : '0';
+
+	value[1] = '0';
+	value[0] = '0';
+	ESP_LOGI(TAG,"Dimmer Polarity: %s", value);
+	my_tent.dimmer_polarity = strtol(value, NULL, 2);
+
+    uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
+	ESP_LOGI(TAG,"Dimmer Polarity: %X", my_tent.dimmer_polarity);
+
+	i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 	
-	int ret;
-    uint8_t write_buf[2] = {2, 0xaa};
-
-	i2c_master_write_to_device(I2C_BUS_0, 0x5d, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
-	//i2c_master_write_to_device(I2C_MASTER_NUM, MPU9250_SENSOR_ADDR, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
-
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    err = nvs_set_u8(storage_handle, "dimmer_polarity", my_tent.dimmer_polarity);
+    err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
 }

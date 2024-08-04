@@ -195,7 +195,6 @@ lv_obj_t *ui_WifiSwitch;
 lv_obj_t *ui_WifiStatusLabel;
 void ui_event_ImgButton7( lv_event_t * e);
 lv_obj_t *ui_ImgButton7;
-lv_obj_t *ui_ImgButton2;
 void ui_event_ImgButton4( lv_event_t * e);
 lv_obj_t *ui_ImgButton4;
 lv_obj_t *ui_QrCode1;
@@ -224,12 +223,18 @@ lv_obj_t *ui_Panel1;
 lv_obj_t *ui_DimmerPolarityContainer;
 void ui_event_PolaritySwitch1( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch1;
+void ui_event_PolaritySwitch2( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch2;
+void ui_event_PolaritySwitch3( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch3;
+void ui_event_PolaritySwitch4( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch4;
+void ui_event_PolaritySwitch5( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch5;
+void ui_event_PolaritySwitch6( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch6;
 lv_obj_t *ui_Image17;
+lv_obj_t *ui_Label11;
 lv_obj_t *ui_Container2;
 lv_obj_t *ui_Roller1;
 lv_obj_t *ui_Label12;
@@ -242,13 +247,13 @@ const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_11422059
 const lv_img_dsc_t *ui_imgset_1334665161[2] = {&ui_img_320680866, &ui_img_1756057095};
 const lv_img_dsc_t *ui_imgset_1554743838[1] = {&ui_img_1180469587};
 const lv_img_dsc_t *ui_imgset_now_arrow_[1] = {&ui_img_now_arrow_2_png};
+const lv_img_dsc_t *ui_imgset_223946384[1] = {&ui_img_1668217869};
 const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
 const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[2] = {&ui_img_1484485426, &ui_img_1130838376};
 const lv_img_dsc_t *ui_imgset_586263085[1] = {&ui_img_1319116584};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
-const lv_img_dsc_t *ui_imgset_223946384[1] = {&ui_img_1668217869};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -509,7 +514,7 @@ void ui_event_HomeScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_LightDurationScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 300, 0, &ui_LightDurationScreen_screen_init);
+      _ui_screen_change( &ui_LightDurationScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_LightDurationScreen_screen_init);
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP  ) {
 lv_indev_wait_release(lv_indev_get_act());
@@ -517,7 +522,7 @@ lv_indev_wait_release(lv_indev_get_act());
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_GraphScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 300, 0, &ui_GraphScreen_screen_init);
+      _ui_screen_change( &ui_GraphScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_GraphScreen_screen_init);
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
 lv_indev_wait_release(lv_indev_get_act());
@@ -564,7 +569,7 @@ void ui_event_LightDurationScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_HomeScreen_screen_init);
+      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_HomeScreen_screen_init);
 }
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
       save_light_duration_screen( e );
@@ -610,7 +615,7 @@ void ui_event_GraphScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 300, 0, &ui_HomeScreen_screen_init);
+      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_HomeScreen_screen_init);
 }
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
 lv_indev_wait_release(lv_indev_get_act());
@@ -728,7 +733,7 @@ void ui_event_GeneralSettingsScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 300, 0, &ui_HomeScreen_screen_init);
+      _ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 300, 0, &ui_HomeScreen_screen_init);
 }
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
       save_general_settings_screen( e );
@@ -747,6 +752,36 @@ if ( event_code == LV_EVENT_CLICKED) {
 }
 }
 void ui_event_PolaritySwitch1( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      updateDimmerPolarity( e );
+}
+}
+void ui_event_PolaritySwitch2( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      updateDimmerPolarity( e );
+}
+}
+void ui_event_PolaritySwitch3( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      updateDimmerPolarity( e );
+}
+}
+void ui_event_PolaritySwitch4( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      updateDimmerPolarity( e );
+}
+}
+void ui_event_PolaritySwitch5( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      updateDimmerPolarity( e );
+}
+}
+void ui_event_PolaritySwitch6( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       updateDimmerPolarity( e );

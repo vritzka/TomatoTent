@@ -25,8 +25,8 @@ lv_obj_clear_flag( ui_Image20, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_Label23 = lv_label_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Label23, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label23, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label23, -313 );
-lv_obj_set_y( ui_Label23, -154 );
+lv_obj_set_x( ui_Label23, -325 );
+lv_obj_set_y( ui_Label23, -145 );
 lv_obj_set_align( ui_Label23, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label23,"Settings");
 lv_obj_set_style_text_font(ui_Label23, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -34,8 +34,8 @@ lv_obj_set_style_text_font(ui_Label23, &lv_font_montserrat_30, LV_PART_MAIN| LV_
 ui_Panel12 = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_Panel12, 143);
 lv_obj_set_height( ui_Panel12, 456);
-lv_obj_set_x( ui_Panel12, 315 );
-lv_obj_set_y( ui_Panel12, -1 );
+lv_obj_set_x( ui_Panel12, -181 );
+lv_obj_set_y( ui_Panel12, -2 );
 lv_obj_set_align( ui_Panel12, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel12, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel12, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -45,8 +45,8 @@ lv_obj_set_style_border_width(ui_Panel12, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 ui_Label24 = lv_label_create(ui_Panel12);
 lv_obj_set_width( ui_Label24, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label24, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label24, -1 );
-lv_obj_set_y( ui_Label24, -179 );
+lv_obj_set_x( ui_Label24, 0 );
+lv_obj_set_y( ui_Label24, -192 );
 lv_obj_set_align( ui_Label24, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label24,"Screen\nBrightness");
 lv_obj_set_style_text_align(ui_Label24, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -70,15 +70,15 @@ ui_ScreenBrightnessLabel = lv_label_create(ui_Panel12);
 lv_obj_set_width( ui_ScreenBrightnessLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_ScreenBrightnessLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_ScreenBrightnessLabel, -1 );
-lv_obj_set_y( ui_ScreenBrightnessLabel, -142 );
+lv_obj_set_y( ui_ScreenBrightnessLabel, -150 );
 lv_obj_set_align( ui_ScreenBrightnessLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_ScreenBrightnessLabel,"80%");
 
 ui_SoftwareUpdatePanel = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_SoftwareUpdatePanel, 475);
 lv_obj_set_height( ui_SoftwareUpdatePanel, 171);
-lv_obj_set_x( ui_SoftwareUpdatePanel, -9 );
-lv_obj_set_y( ui_SoftwareUpdatePanel, -142 );
+lv_obj_set_x( ui_SoftwareUpdatePanel, 146 );
+lv_obj_set_y( ui_SoftwareUpdatePanel, -145 );
 lv_obj_set_align( ui_SoftwareUpdatePanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_SoftwareUpdatePanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_SoftwareUpdatePanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -138,10 +138,10 @@ lv_obj_set_align( ui_Label21, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label21,"Upgrade");
 
 ui_Panel1 = lv_obj_create(ui_GeneralSettingsScreen);
-lv_obj_set_width( ui_Panel1, 428);
-lv_obj_set_height( ui_Panel1, 215);
-lv_obj_set_x( ui_Panel1, -155 );
-lv_obj_set_y( ui_Panel1, 87 );
+lv_obj_set_width( ui_Panel1, 194);
+lv_obj_set_height( ui_Panel1, 267);
+lv_obj_set_x( ui_Panel1, 285 );
+lv_obj_set_y( ui_Panel1, 86 );
 lv_obj_set_align( ui_Panel1, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -151,103 +151,129 @@ lv_obj_set_style_border_opa(ui_Panel1, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_DimmerPolarityContainer = lv_obj_create(ui_Panel1);
 lv_obj_remove_style_all(ui_DimmerPolarityContainer);
-lv_obj_set_width( ui_DimmerPolarityContainer, 411);
-lv_obj_set_height( ui_DimmerPolarityContainer, 74);
-lv_obj_set_x( ui_DimmerPolarityContainer, 4 );
-lv_obj_set_y( ui_DimmerPolarityContainer, 45 );
+lv_obj_set_width( ui_DimmerPolarityContainer, 75);
+lv_obj_set_height( ui_DimmerPolarityContainer, 257);
+lv_obj_set_x( ui_DimmerPolarityContainer, 40 );
+lv_obj_set_y( ui_DimmerPolarityContainer, 0 );
 lv_obj_set_align( ui_DimmerPolarityContainer, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_DimmerPolarityContainer, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_PolaritySwitch1 = lv_switch_create(ui_DimmerPolarityContainer);
 lv_obj_set_width( ui_PolaritySwitch1, 50);
 lv_obj_set_height( ui_PolaritySwitch1, 25);
-lv_obj_set_x( ui_PolaritySwitch1, -176 );
-lv_obj_set_y( ui_PolaritySwitch1, -3 );
+lv_obj_set_x( ui_PolaritySwitch1, 0 );
+lv_obj_set_y( ui_PolaritySwitch1, -100 );
 lv_obj_set_align( ui_PolaritySwitch1, LV_ALIGN_CENTER );
 
 
 ui_PolaritySwitch2 = lv_switch_create(ui_DimmerPolarityContainer);
 lv_obj_set_width( ui_PolaritySwitch2, 50);
 lv_obj_set_height( ui_PolaritySwitch2, 25);
-lv_obj_set_x( ui_PolaritySwitch2, -109 );
-lv_obj_set_y( ui_PolaritySwitch2, -6 );
+lv_obj_set_x( ui_PolaritySwitch2, 0 );
+lv_obj_set_y( ui_PolaritySwitch2, -60 );
 lv_obj_set_align( ui_PolaritySwitch2, LV_ALIGN_CENTER );
 
 
 ui_PolaritySwitch3 = lv_switch_create(ui_DimmerPolarityContainer);
 lv_obj_set_width( ui_PolaritySwitch3, 50);
 lv_obj_set_height( ui_PolaritySwitch3, 25);
-lv_obj_set_x( ui_PolaritySwitch3, -39 );
-lv_obj_set_y( ui_PolaritySwitch3, -4 );
+lv_obj_set_x( ui_PolaritySwitch3, 0 );
+lv_obj_set_y( ui_PolaritySwitch3, -20 );
 lv_obj_set_align( ui_PolaritySwitch3, LV_ALIGN_CENTER );
 
 
 ui_PolaritySwitch4 = lv_switch_create(ui_DimmerPolarityContainer);
 lv_obj_set_width( ui_PolaritySwitch4, 50);
 lv_obj_set_height( ui_PolaritySwitch4, 25);
-lv_obj_set_x( ui_PolaritySwitch4, 31 );
-lv_obj_set_y( ui_PolaritySwitch4, -3 );
+lv_obj_set_x( ui_PolaritySwitch4, 0 );
+lv_obj_set_y( ui_PolaritySwitch4, 20 );
 lv_obj_set_align( ui_PolaritySwitch4, LV_ALIGN_CENTER );
 
 
 ui_PolaritySwitch5 = lv_switch_create(ui_DimmerPolarityContainer);
 lv_obj_set_width( ui_PolaritySwitch5, 50);
 lv_obj_set_height( ui_PolaritySwitch5, 25);
-lv_obj_set_x( ui_PolaritySwitch5, 102 );
-lv_obj_set_y( ui_PolaritySwitch5, -1 );
+lv_obj_set_x( ui_PolaritySwitch5, 0 );
+lv_obj_set_y( ui_PolaritySwitch5, 60 );
 lv_obj_set_align( ui_PolaritySwitch5, LV_ALIGN_CENTER );
 
 
 ui_PolaritySwitch6 = lv_switch_create(ui_DimmerPolarityContainer);
 lv_obj_set_width( ui_PolaritySwitch6, 50);
 lv_obj_set_height( ui_PolaritySwitch6, 25);
-lv_obj_set_x( ui_PolaritySwitch6, 173 );
-lv_obj_set_y( ui_PolaritySwitch6, -1 );
+lv_obj_set_x( ui_PolaritySwitch6, 0 );
+lv_obj_set_y( ui_PolaritySwitch6, 100 );
 lv_obj_set_align( ui_PolaritySwitch6, LV_ALIGN_CENTER );
+lv_obj_set_style_bg_color(ui_PolaritySwitch6, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_PRESSED );
+lv_obj_set_style_bg_opa(ui_PolaritySwitch6, 255, LV_PART_MAIN| LV_STATE_PRESSED);
 
 
 ui_Image17 = lv_img_create(ui_Panel1);
 lv_img_set_src(ui_Image17, &ui_img_1668217869);
 lv_obj_set_width( ui_Image17, LV_SIZE_CONTENT);  /// 64
 lv_obj_set_height( ui_Image17, LV_SIZE_CONTENT);   /// 64
-lv_obj_set_x( ui_Image17, 11 );
-lv_obj_set_y( ui_Image17, -52 );
+lv_obj_set_x( ui_Image17, -50 );
+lv_obj_set_y( ui_Image17, 0 );
 lv_obj_set_align( ui_Image17, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image17, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image17, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_img_set_angle(ui_Image17,900);
+lv_obj_set_style_img_recolor(ui_Image17, lv_color_hex(0xFFFFFF), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_Image17, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_Label11 = lv_label_create(ui_Panel1);
+lv_obj_set_width( ui_Label11, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label11, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_Label11, -45 );
+lv_obj_set_y( ui_Label11, -85 );
+lv_obj_set_align( ui_Label11, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label11,"Dimmer\nPolarity");
+lv_obj_set_style_text_letter_space(ui_Label11, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_line_space(ui_Label11, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_align(ui_Label11, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_Label11, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Container2 = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_remove_style_all(ui_Container2);
 lv_obj_set_width( ui_Container2, 143);
-lv_obj_set_height( ui_Container2, 244);
-lv_obj_set_x( ui_Container2, 153 );
+lv_obj_set_height( ui_Container2, 267);
+lv_obj_set_x( ui_Container2, 156 );
 lv_obj_set_y( ui_Container2, 85 );
 lv_obj_set_align( ui_Container2, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Container2, LV_OBJ_FLAG_HIDDEN );   /// Flags
 lv_obj_clear_flag( ui_Container2, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_radius(ui_Container2, 10, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_Container2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Container2, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Roller1 = lv_roller_create(ui_Container2);
 lv_roller_set_options( ui_Roller1, "1000\n2000\n4000\n6000\n8000\n10000\n15000\n20000\n25000\n", LV_ROLLER_MODE_NORMAL );
 lv_obj_set_width( ui_Roller1, 100);
-lv_obj_set_height( ui_Roller1, 177);
+lv_obj_set_height( ui_Roller1, 200);
 lv_obj_set_x( ui_Roller1, 4 );
-lv_obj_set_y( ui_Roller1, 21 );
+lv_obj_set_y( ui_Roller1, 24 );
 lv_obj_set_align( ui_Roller1, LV_ALIGN_CENTER );
 
 ui_Label12 = lv_label_create(ui_Container2);
 lv_obj_set_width( ui_Label12, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label12, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Label12, 1 );
-lv_obj_set_y( ui_Label12, -95 );
+lv_obj_set_y( ui_Label12, -104 );
 lv_obj_set_align( ui_Label12, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label12,"Fan Signal\nFrequency HZ");
+lv_obj_set_style_text_letter_space(ui_Label12, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_line_space(ui_Label12, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_align(ui_Label12, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Label12, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_ScreenBrightnessSlider, ui_event_ScreenBrightnessSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_FirmwareUpgradeButton, ui_event_FirmwareUpgradeButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_PolaritySwitch1, ui_event_PolaritySwitch1, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_PolaritySwitch2, ui_event_PolaritySwitch2, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_PolaritySwitch3, ui_event_PolaritySwitch3, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_PolaritySwitch4, ui_event_PolaritySwitch4, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_PolaritySwitch5, ui_event_PolaritySwitch5, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_PolaritySwitch6, ui_event_PolaritySwitch6, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GeneralSettingsScreen, ui_event_GeneralSettingsScreen, LV_EVENT_ALL, NULL);
 
 }
