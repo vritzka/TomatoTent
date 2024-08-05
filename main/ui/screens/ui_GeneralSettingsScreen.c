@@ -204,8 +204,6 @@ lv_obj_set_height( ui_PolaritySwitch6, 25);
 lv_obj_set_x( ui_PolaritySwitch6, 0 );
 lv_obj_set_y( ui_PolaritySwitch6, 100 );
 lv_obj_set_align( ui_PolaritySwitch6, LV_ALIGN_CENTER );
-lv_obj_set_style_bg_color(ui_PolaritySwitch6, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_PRESSED );
-lv_obj_set_style_bg_opa(ui_PolaritySwitch6, 255, LV_PART_MAIN| LV_STATE_PRESSED);
 
 
 ui_Image17 = lv_img_create(ui_Panel1);

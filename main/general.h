@@ -75,7 +75,7 @@ typedef struct {
     uint16_t co2;
     uint16_t elevation;
     uint8_t temperature_offset;
-	uint8_t dimmer_polarity;
+	uint16_t dimmer_polarity;
 } tent_data_t;
 
 extern tent_data_t my_tent;

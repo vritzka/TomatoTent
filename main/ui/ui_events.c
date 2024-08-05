@@ -191,12 +191,65 @@ void init_tomatotent(lv_event_t * e)
 		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
 		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
 		
-		err = nvs_get_u8(storage_handle, "dimmer_polarity", &my_tent.dimmer_polarity); 
-		uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
+		uint8_t write_buf[2] = {0x11, 0x10};
+		i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+
+		err = nvs_get_u16(storage_handle, "dimmer_polarity", &my_tent.dimmer_polarity); 
+		write_buf[0] = 2;
+		write_buf[1] = my_tent.dimmer_polarity;
 		i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 		ESP_LOGI(TAG,"Dimmer Polarity: %X", my_tent.dimmer_polarity);
 
-		
+		char binary[16][5] = {"0000", "0001", "0010", "0011", "0100", "0101","0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110","1111"};
+		char digits [] = "0123456789abcdef";
+
+		char input[16]; // input value
+		sprintf(input, "%X", my_tent.dimmer_polarity);
+
+		char res[16];
+		res[0] = '\0';
+		int p = 0;
+		int value =0;
+			while(input[p])
+			{
+				const char *v = strchr(digits, tolower(input[p]));
+				if(v[0]>96){
+					value=v[0]-87;
+				}
+				else{
+					value=v[0]-48;
+				}
+				if (v){
+					strcat(res, binary[value]);
+				}
+				p++;
+			}
+
+			int i;
+			for (i = 7; i > 1; --i) {
+				if(res[i] == 48) {
+					switch (i) {
+						case 7:
+							lv_obj_add_state(ui_PolaritySwitch1, LV_STATE_CHECKED);
+							break;
+						case 6:
+							lv_obj_add_state(ui_PolaritySwitch2, LV_STATE_CHECKED);
+							break;
+						case 5:
+							lv_obj_add_state(ui_PolaritySwitch3, LV_STATE_CHECKED);
+							break;
+						case 4:
+							lv_obj_add_state(ui_PolaritySwitch4, LV_STATE_CHECKED);
+							break;
+						case 3:
+							lv_obj_add_state(ui_PolaritySwitch5, LV_STATE_CHECKED);
+							break;
+						case 2:
+							lv_obj_add_state(ui_PolaritySwitch6, LV_STATE_CHECKED);
+							break;
+						}
+				}
+			}
 
 		//wifi screen
 		size_t required_size;
@@ -768,29 +821,26 @@ void switch_lamp(lv_event_t * e)
 
 void updateDimmerPolarity(lv_event_t * e)
 {
-	ESP_LOGI(TAG, "Dimmer Polarity");
-
 	char value[] = "00000000"; 
 
-	value[7] = lv_obj_has_state(ui_PolaritySwitch1, LV_STATE_CHECKED) ? '1' : '0';
-	value[6] = lv_obj_has_state(ui_PolaritySwitch2, LV_STATE_CHECKED) ? '1' : '0';
-	value[5] = lv_obj_has_state(ui_PolaritySwitch3, LV_STATE_CHECKED) ? '1' : '0';
-	value[4] = lv_obj_has_state(ui_PolaritySwitch4, LV_STATE_CHECKED) ? '1' : '0';
-	value[3] = lv_obj_has_state(ui_PolaritySwitch5, LV_STATE_CHECKED) ? '1' : '0';
-	value[2] = lv_obj_has_state(ui_PolaritySwitch6, LV_STATE_CHECKED) ? '1' : '0';
+	value[7] = !lv_obj_has_state(ui_PolaritySwitch1, LV_STATE_CHECKED) ? '1' : '0';
+	value[6] = !lv_obj_has_state(ui_PolaritySwitch2, LV_STATE_CHECKED) ? '1' : '0';
+	value[5] = !lv_obj_has_state(ui_PolaritySwitch3, LV_STATE_CHECKED) ? '1' : '0';
+	value[4] = !lv_obj_has_state(ui_PolaritySwitch4, LV_STATE_CHECKED) ? '1' : '0';
+	value[3] = !lv_obj_has_state(ui_PolaritySwitch5, LV_STATE_CHECKED) ? '1' : '0';
+	value[2] = !lv_obj_has_state(ui_PolaritySwitch6, LV_STATE_CHECKED) ? '1' : '0';
 
-	value[1] = '0';
-	value[0] = '0';
 	ESP_LOGI(TAG,"Dimmer Polarity: %s", value);
 	my_tent.dimmer_polarity = strtol(value, NULL, 2);
 
     uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
-	ESP_LOGI(TAG,"Dimmer Polarity: %X", my_tent.dimmer_polarity);
+	ESP_LOGI(TAG,"Dimmer Polarity DEC: %d", my_tent.dimmer_polarity);
+	ESP_LOGI(TAG,"Dimmer Polarity HEX: %X", my_tent.dimmer_polarity);
 
 	i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-    err = nvs_set_u8(storage_handle, "dimmer_polarity", my_tent.dimmer_polarity);
+    err = nvs_set_u16(storage_handle, "dimmer_polarity", my_tent.dimmer_polarity);
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }
