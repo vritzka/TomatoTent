@@ -36293,7 +36293,7 @@
                     "nid": -1780521924,
                     "strtype": "SLIDER/Range",
                     "intarray": [
-                      0,
+                      5,
                       100
                     ],
                     "InheritedType": 7
@@ -36313,6 +36313,7 @@
                   {
                     "nid": 236479732,
                     "strtype": "SLIDER/Value_left",
+                    "integer": 5,
                     "InheritedType": 6
                   },
                   {
@@ -52088,7 +52089,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 72,
+    "backup_cnt": 73,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
