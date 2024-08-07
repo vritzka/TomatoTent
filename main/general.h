@@ -36,6 +36,7 @@
 #include "ha/esp_zigbee_ha_standard.h"
 #include "timerTask.h"
 #include "esp_zigbee_gateway.h"
+#include <float.h>
 
 
 extern SemaphoreHandle_t xGuiSemaphore;

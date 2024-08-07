@@ -43,9 +43,6 @@ lv_color_t arc_color[] = {
     LV_COLOR_MAKE(0, 228, 0),
 };
 
-// LVGL image declare
-//LV_IMG_DECLARE(ui_img_tomato_png)
-//LV_IMG_DECLARE(tomatotent_text)
 
 void anim_timer_cb(lv_timer_t *timer)
 {
@@ -138,6 +135,9 @@ void init_tomatotent(lv_event_t * e)
    my_tent.screen_brightness_slider_value = 80;
    my_tent.light_duration_slider_value = 36;
    my_tent.led_brightness_slider_value = 80;
+   my_tent.climate_mode=1;
+   my_tent.target_humidity_sel_index = 4;
+   my_tent.target_temperature_sel_index = 4;
    my_tent.elevation = 0;
    my_tent.temperature_offset = 4;
    my_tent.is_drying = 0;
@@ -293,8 +293,7 @@ void init_tomatotent(lv_event_t * e)
 		if( my_tent.climate_mode == 1 ) { //manual climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
 		} else { //auto climate
-			lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
-			lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+			lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 		}
 		
 		set_target_climate();
@@ -319,6 +318,7 @@ void init_tomatotent(lv_event_t * e)
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
+			fanspin_Animation(ui_Fan3, 1000);
 		 } else {
 			  start_animation(ui_SplashScreen);
 			  startGrowButtonAppear_Animation(ui_StartNewGrowButton, 2000);
@@ -581,6 +581,9 @@ void fanspeed_slider(lv_event_t * e)
 	lv_label_set_text_fmt(ui_FanSpeedMinLabel, "%hu %%", my_tent.fanspeed_slider_left_value);
 	lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%hu %%", my_tent.fanspeed_slider_value);
 
+	setFanSpeed();
+	update_displayed_values();
+
 	err = nvs_set_u16(storage_handle, "fanspeed_min", my_tent.fanspeed_slider_left_value);
 	err = nvs_set_u16(storage_handle, "fanspeed_max", my_tent.fanspeed_slider_value);
 	
@@ -597,14 +600,14 @@ void climate_mode_switch(lv_event_t * e)
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) { //manual climate
 		my_tent.climate_mode = 1;
-		lv_obj_clear_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_clear_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_clear_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 	} else { //auto climate
 		my_tent.climate_mode = 0;
-		lv_obj_add_flag(ui_TemperatureSwitchPanel, LV_OBJ_FLAG_HIDDEN);
-		lv_obj_add_flag(ui_HumiditySwitchPanel, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 	}
-
+	set_target_climate();
+	setFanSpeed();
+	update_displayed_values();
 	err = nvs_set_u8(storage_handle, "climate_mode", my_tent.climate_mode);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -616,9 +619,11 @@ void humidity_dropdown(lv_event_t * e)
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	set_target_climate();
-	
 	my_tent.target_humidity_sel_index = lv_dropdown_get_selected(target);
+
+	set_target_climate();
+	setFanSpeed();
+	update_displayed_values();
 	
 	err = nvs_set_u16(storage_handle, "sel_hum_index", my_tent.target_humidity_sel_index );
 	
@@ -631,10 +636,12 @@ void temperature_dropdown(lv_event_t * e)
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	set_target_climate();
-	
 	my_tent.target_temperature_sel_index = lv_dropdown_get_selected(target);
-	
+
+	set_target_climate();
+	setFanSpeed();
+	update_displayed_values();	
+
 	err = nvs_set_u16(storage_handle, "sel_temp_index", my_tent.target_temperature_sel_index );
 	
 	err = nvs_commit(storage_handle);

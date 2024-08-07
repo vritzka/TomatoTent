@@ -1,13 +1,16 @@
 #include "sensorTask.h"
 
+#define UART_STACK_SIZE             (4096)
+ #define TEMPERATURE_OFFSET          (4.0)
+ #define SENSOR_ALTITUDE             (0)
+ char scale = SCALE_CELCIUS;
+
 static const char *TAG = "sensorTask.c";
 
 gptimer_handle_t sensorTimerHandle = NULL;
 static TaskHandle_t xSensorTaskHandle = NULL;
 // static esp_err_t err;
 SemaphoreHandle_t xSemaphore = NULL;
-
-sht30_t sht30;
 
 static bool IRAM_ATTR sensor_cb(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *user_data)
 {
@@ -17,6 +20,8 @@ static bool IRAM_ATTR sensor_cb(gptimer_handle_t timer, const gptimer_alarm_even
     // return whether we need to yield at the end of ISR
     return (high_task_awoken == pdTRUE);
 }
+
+
 
 // Task to be created.
 void vSensorTask(void *pvParameters)
@@ -46,36 +51,83 @@ void vSensorTask(void *pvParameters)
     };
     ESP_ERROR_CHECK(gptimer_set_alarm_action(sensorTimerHandle, &alarm_config1));
 
-    ESP_LOGI(TAG, "Initialising SHT30");
-    sht30.i2c_port = I2C_NUM_1;
-    sht30.addr = 0x44;
-    if (sht30_init(&sht30) != ESP_OK)
-    {
-        ESP_LOGI(TAG, "Error initialising SHT30");
-    }
+ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number());
+ 	vTaskDelay(500 / portTICK_PERIOD_MS);
+     float temperature_offset = scd4x_get_temperature_offset();
+     vTaskDelay(500 / portTICK_PERIOD_MS);
+     uint16_t sensor_altitude = scd4x_get_sensor_altitude();
+
+     if(temperature_offset != SCD41_READ_ERROR && sensor_altitude != SCD41_READ_ERROR) {
+
+         if(temperature_offset != TEMPERATURE_OFFSET) {
+             ESP_LOGW(TAG, "Temperature offset calibration from %.1f °%c to %.1f °%c", temperature_offset, scale, TEMPERATURE_OFFSET, scale);
+
+             vTaskDelay(500 / portTICK_PERIOD_MS);
+             ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset(TEMPERATURE_OFFSET));
 
     vTaskDelay(500 / portTICK_PERIOD_MS);
 
-    for (;;)
-    {
-        if (xSemaphoreTake(xSemaphore, pdMS_TO_TICKS(6000)) == pdTRUE)
-        {
-            printf("SHT30: %5.2f C %5.2f %%\n",
-                   sht30_get_temperature(&sht30, true),
-                   sht30_get_humidity(&sht30, false));
+   ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset(TEMPERATURE_OFFSET));
 
-            my_tent.temperature_c = sht30_get_temperature(&sht30, true);
-            my_tent.temperature_c = 0;
-            my_tent.humidity = sht30_get_humidity(&sht30, false);
+             vTaskDelay(500 / portTICK_PERIOD_MS);
+             ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
 
+             vTaskDelay(500 / portTICK_PERIOD_MS);
+             temperature_offset = scd4x_get_temperature_offset();
+         }
+
+         if(sensor_altitude != SENSOR_ALTITUDE) {
+             ESP_LOGW(TAG, "Sensor altitude calibration from %d m to %d m", sensor_altitude, SENSOR_ALTITUDE);
+
+             vTaskDelay(500 / portTICK_PERIOD_MS);
+             ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_sensor_altitude(SENSOR_ALTITUDE));
+
+             vTaskDelay(500 / portTICK_PERIOD_MS);
+             ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());
+
+             vTaskDelay(500 / portTICK_PERIOD_MS);
+             sensor_altitude = scd4x_get_sensor_altitude();
+         }
+         ESP_LOGI(TAG, "Temperature offset %.1f °%c - Sensor altitude %d %s", temperature_offset, scale, sensor_altitude, scale == SCALE_CELCIUS ? "m" : "ft");
+     } else {
+         ESP_LOGE(TAG, "Sensor offset/altitude read error!");
+     }
+
+     vTaskDelay(500 / portTICK_PERIOD_MS);
+
+ 	scd4x_start_periodic_measurement();
+
+ 	scd4x_sensors_values_t sensors_values = {
+ 		.co2 = 0x00,
+ 		.temperature = 0x00,
+ 		.humidity = 0x00
+     };
+
+     	for( ;; )
+ 	{
+ 		if( xSemaphoreTake( xSemaphore, pdMS_TO_TICKS(6000) ) == pdTRUE ) {
+ 			ESP_LOGI(TAG, "Sensor");
+
+ 			if(scd4x_read_measurement(&sensors_values) != ESP_OK) {
+ 				ESP_LOGE(TAG, "Sensors read measurement error!");
+ 				continue;
+ 			}
+
+ 			my_tent.temperature_c = sensors_values.temperature;
+ 			my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
+ 			my_tent.humidity = sensors_values.humidity;
+ 			my_tent.co2 = sensors_values.co2;
+
+ 			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
             update_displayed_values();
             setFanSpeed();
-        }
-        else
-        {
-            // ESP_LOGW(TAG, "Missed 1 count event or Timer stopped");
-        }
-    }
+
+ 		} else {
+ 			ESP_LOGW(TAG, "Missed 1 count event or Timer stopped");
+ 		}
+
+ 	} 
+
 }
 
 // Function that creates a task.

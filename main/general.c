@@ -9,6 +9,7 @@ static char somestring[36];
 
 tent_data_t my_tent;
 
+
 /////////////////////////////////////////////////////////
 ////////////////////// TIME /////////////////////////////
 /////////////////////////////////////////////////////////
@@ -164,7 +165,8 @@ void set_target_climate() {
 		strncpy(humidity_number_from_string, buf, 2);
 		humidity_number_from_string[3] = '\0';
 		sscanf(humidity_number_from_string, "%hhu", &my_tent.target_humidity);
-		
+		ESP_LOGI(TAG, "Target Hum:%d", my_tent.target_humidity);
+
 		lv_dropdown_get_selected_str(ui_TemperatureDropdown, buf, sizeof(buf));
 		char temperature_number_from_string[3];
 		strncpy(temperature_number_from_string, buf, 2);
@@ -177,7 +179,8 @@ void set_target_climate() {
 			sscanf(temperature_number_from_string, "%f", &my_tent.target_temperature_c);
 			my_tent.target_temperature_f = FAHRENHEIT(my_tent.target_temperature_c);
 		}		
-
+		ESP_LOGI(TAG, "Target T C:%.2f", my_tent.target_temperature_c);
+		ESP_LOGI(TAG, "Target T F:%.2f", my_tent.target_temperature_f);
 	} else { //auto
 		
 		ESP_LOGI(TAG, "Auto CLimate");
@@ -376,12 +379,8 @@ switch (group_cipher) {
     }
 }
 
-uint16_t number = DEFAULT_SCAN_LIST_SIZE;
-wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
-uint16_t ap_count = 0;   
-
 static int s_retry_num = 0;
-#define EXAMPLE_ESP_MAXIMUM_RETRY  5
+#define EXAMPLE_ESP_MAXIMUM_RETRY  2
 static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
@@ -389,10 +388,16 @@ static EventGroupHandle_t s_wifi_event_group;
 #define ESP_WIFI_SAE_MODE WPA3_SAE_PWE_HUNT_AND_PECK
 //#define EXAMPLE_H2E_IDENTIFIER ""
 
+        uint16_t number = DEFAULT_SCAN_LIST_SIZE;
+        wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
+        uint16_t ap_count = 0;
+
 static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {
 	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE)
 	{
+
+        memset(ap_info, 0, sizeof(ap_info));
 		
 		char* ssid = "";
 		err = nvs_open("storage", NVS_READWRITE, &storage_handle);
@@ -408,15 +413,17 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 		//ESP_LOGI(TAG, "SSID %s", ssid);
 		}
 		
-		memset(ap_info, 0, sizeof(ap_info));
-		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
+		//memset(ap_info, 0, sizeof(ap_info));
 		ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
+        ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&number, ap_info));
+
+        ESP_LOGI(TAG, "Total APs scanned = %u, actual AP number ap_info holds = %u", ap_count, number);
 		
 		uint8_t saved_ssid_index = 232;
 
 		for (int i = 0; (i < DEFAULT_SCAN_LIST_SIZE) && (i < ap_count); i++) {
-			//ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
-			//ESP_LOGI(TAG, "RSSI \t\t%d", ap_info[i].rssi);
+			ESP_LOGI(TAG, "SSID \t\t%s", ap_info[i].ssid);
+			ESP_LOGI(TAG, "RSSI \t\t%d", ap_info[i].rssi);
 			sprintf(somestring, "%s", ap_info[i].ssid);
 			lv_dropdown_add_option(ui_WifiDropdown, somestring, i);
 			//print_auth_mode(ap_info[i].authmode);
@@ -440,16 +447,19 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
 		ESP_LOGI(TAG, "Wifi Connect");
+        lv_label_set_text(ui_WifiStatusLabel, "On");
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_num++;
             ESP_LOGI(TAG, "retry to connect to the AP");
+            lv_label_set_text(ui_WifiStatusLabel, "re-trying");
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
         ESP_LOGI(TAG,"connect to the AP fail");
+        lv_label_set_text(ui_WifiStatusLabel, "couldn't connect");
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
@@ -461,15 +471,18 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 }
 
 esp_netif_t *sta_netif;
+//static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
 
 void wifi_init(void)
 {
+
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
     sta_netif = esp_netif_create_default_wifi_sta();
+    assert(sta_netif);
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
@@ -482,14 +495,15 @@ void wifi_init(void)
 
 void wifi_scan(void)
 {
-	lv_dropdown_clear_options(ui_WifiDropdown);
     esp_wifi_scan_start(NULL, false);
+    scanning_Animation(ui_scanning,0);
+	lv_dropdown_clear_options(ui_WifiDropdown);
 }
 
 
 void wifi_connect(void)
 {
-	
+	esp_wifi_disconnect();
 	const char *pw = lv_textarea_get_text(ui_WifiPassword);
 	char ssid[128];
     lv_dropdown_get_selected_str(ui_WifiDropdown, ssid, sizeof(ssid));
@@ -533,12 +547,13 @@ void wifi_connect(void)
 
 void wifi_off(void)
 {
-	esp_netif_destroy_default_wifi(sta_netif);
+    esp_netif_destroy_default_wifi(sta_netif);
 	esp_wifi_disconnect();
 	esp_wifi_stop();
 	esp_wifi_deinit();
-	lv_dropdown_clear_options(ui_WifiDropdown);
 
+	lv_dropdown_clear_options(ui_WifiDropdown);
+	
 }
 
 void draw_qr_codes() {
@@ -567,12 +582,13 @@ static EventGroupHandle_t s_wifi_event_group;
 
 void event_loop_init(void) {
 	ESP_ERROR_CHECK(esp_event_loop_create_default());
-	//ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, WIFI_EVENT_SCAN_DONE, wifi_scan_done_handler, NULL, NULL));
+
     ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT,
                                                         ESP_EVENT_ANY_ID,
                                                         &wifi_event_handler,
                                                         NULL,
                                                         &instance_any_id));
+ 
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
                                                         IP_EVENT_STA_GOT_IP,
                                                         &wifi_event_handler,
@@ -676,17 +692,17 @@ void setFanSpeed() {
 	
 	//ESP_LOGI(TAG, "Fanspeed by Temp: %d%%", fan_speed_temp);
 
-	
+	ESP_LOGI(TAG, "Humidity: %d%%, Target Humidity: %d%%", my_tent.humidity, my_tent.target_humidity);
+
 	diff_hum = my_tent.humidity - my_tent.target_humidity;
+
+	//ESP_LOGI(TAG, "Diff Hum: %d%%", diff_hum);
 	
 	if(diff_hum > 10) {
 		diff_hum = 10;
 	} else if(diff_hum < -10) {
 		diff_hum = -10;
-	}
-	
-	//ESP_LOGI(TAG, "Diff Hum: %d%%", diff_hum);
-	
+	}	
 	
 	switch(diff_hum) {
 	  case -10:
@@ -756,10 +772,11 @@ void setFanSpeed() {
 	  fan_speed_hum = my_tent.fanspeed_slider_left_value + ( (fanspeed_range / 20) * 11);	  	  	  	  	  	  	  	  	  	
 	}
 
+	//ESP_LOGI(TAG, "Fanspeed by Hum: %d%%", fan_speed_hum);
 
-	my_tent.fanspeed = (128-1)*((float)(fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp) / 100);
+	my_tent.fanspeed = fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp;
 	ESP_LOGI(TAG, "Fanspeed: %d%%", my_tent.fanspeed);
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_FAN_CHANNEL, my_tent.fanspeed));
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_FAN_CHANNEL, (128-1)*((float)(fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp) / 100)));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_FAN_CHANNEL));	
 
 }
@@ -861,14 +878,6 @@ void chart_add_climate_point() {
 
 
 /////////////////////////////////////////////////////////
-///////////////////  AW9523   ///////////////////////////
-/////////////////////////////////////////////////////////
-
-
-
-
-
-/////////////////////////////////////////////////////////
 ///////////////////  HELPERS  ///////////////////////////
 /////////////////////////////////////////////////////////
 
@@ -887,6 +896,7 @@ void update_displayed_values() {
 	
 	lv_label_set_text_fmt(ui_FanSpeedLabel, "%d%%", my_tent.fanspeed);
 	lv_label_set_text_fmt(ui_FanSpeedLabel2, "%d", my_tent.fanspeed);
+	lv_label_set_text_fmt(ui_FanSpeedLabel3, "%d%%", my_tent.fanspeed);
 	
 	lv_label_set_text_fmt(ui_VPDLabel, "%.1f kpa", my_tent.vpd);
 	lv_label_set_text_fmt(ui_VPDLabel2, "%.1f", my_tent.vpd);
