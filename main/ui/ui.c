@@ -230,7 +230,6 @@ lv_obj_t *ui_PolaritySwitch5;
 void ui_event_PolaritySwitch6( lv_event_t * e);
 lv_obj_t *ui_PolaritySwitch6;
 lv_obj_t *ui_Image17;
-lv_obj_t *ui_Label11;
 lv_obj_t *ui_Container2;
 lv_obj_t *ui_Roller1;
 lv_obj_t *ui_Label12;
@@ -248,13 +247,13 @@ const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_11422059
 const lv_img_dsc_t *ui_imgset_1334665161[2] = {&ui_img_320680866, &ui_img_1756057095};
 const lv_img_dsc_t *ui_imgset_1554743838[1] = {&ui_img_1180469587};
 const lv_img_dsc_t *ui_imgset_now_arrow_[1] = {&ui_img_now_arrow_2_png};
-const lv_img_dsc_t *ui_imgset_223946384[1] = {&ui_img_1668217869};
 const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
 const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[2] = {&ui_img_1484485426, &ui_img_1130838376};
 const lv_img_dsc_t *ui_imgset_586263085[1] = {&ui_img_1319116584};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
+const lv_img_dsc_t *ui_imgset_223946384[1] = {&ui_img_1668210446};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16

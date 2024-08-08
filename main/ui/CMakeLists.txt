@@ -36,7 +36,7 @@ SET(SOURCES screens/ui_SplashScreen.c
     images/ui_img_953604683.c
     images/ui_img_1668913270.c
     images/ui_img_refresh_png.c
-    images/ui_img_1668217869.c
+    images/ui_img_1668210446.c
     images/ui_img_713338696.c
     images/ui_img_1324581693.c
     images/ui_img_320680866.c

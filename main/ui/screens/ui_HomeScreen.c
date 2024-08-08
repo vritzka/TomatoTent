@@ -74,6 +74,8 @@ lv_obj_clear_flag( ui_HumidityPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_HumidityPanel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_HumidityPanel, 30, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_HumidityPanel, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_HumidityPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_PRESSED );
+lv_obj_set_style_bg_opa(ui_HumidityPanel, 50, LV_PART_MAIN| LV_STATE_PRESSED);
 
 ui_HumidityLabel = lv_label_create(ui_HumidityPanel);
 lv_obj_set_width( ui_HumidityLabel, LV_SIZE_CONTENT);  /// 1
