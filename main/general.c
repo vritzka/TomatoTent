@@ -104,7 +104,6 @@ void make_it_day(bool count_day) {
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
-	lv_label_set_text(ui_DayNightLabel, "day");
 	if(count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
@@ -118,7 +117,6 @@ void make_it_night() {
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
-	lv_label_set_text(ui_DayNightLabel, "night");
 }
 
 void make_it_drying(bool count_day) {
@@ -128,7 +126,6 @@ void make_it_drying(bool count_day) {
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x6f623c), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x6f623c), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_bud_png);
-	lv_label_set_text(ui_DayNightLabel, "dry day");
 	if(count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
@@ -161,24 +158,19 @@ void set_target_climate() {
 		ESP_LOGI(TAG, "Manual Climate");
 		static char buf[3];
 		lv_dropdown_get_selected_str(ui_HumidityDropdown, buf, sizeof(buf));
-		char humidity_number_from_string[3];
-		strncpy(humidity_number_from_string, buf, 2);
-		humidity_number_from_string[3] = '\0';
-		sscanf(humidity_number_from_string, "%hhu", &my_tent.target_humidity);
-		ESP_LOGI(TAG, "Target Hum:%d", my_tent.target_humidity);
+
+		sscanf(buf, "%hhd", &my_tent.target_humidity);
 
 		lv_dropdown_get_selected_str(ui_TemperatureDropdown, buf, sizeof(buf));
-		char temperature_number_from_string[3];
-		strncpy(temperature_number_from_string, buf, 2);
-		temperature_number_from_string[3] = '\0';
 		
 		if(my_tent.temp_unit == 1) { //f
-			sscanf(temperature_number_from_string, "%f", &my_tent.target_temperature_f);
+			sscanf(buf, "%f", &my_tent.target_temperature_f);
 			my_tent.target_temperature_c = CELSIUS(my_tent.target_temperature_f);
 		} else { //f
-			sscanf(temperature_number_from_string, "%f", &my_tent.target_temperature_c);
+			sscanf(buf, "%f", &my_tent.target_temperature_c);
 			my_tent.target_temperature_f = FAHRENHEIT(my_tent.target_temperature_c);
-		}		
+		}	
+		ESP_LOGI(TAG, "Target Hum:%d", my_tent.target_humidity);	
 		ESP_LOGI(TAG, "Target T C:%.2f", my_tent.target_temperature_c);
 		ESP_LOGI(TAG, "Target T F:%.2f", my_tent.target_temperature_f);
 	} else { //auto
@@ -691,8 +683,6 @@ void setFanSpeed() {
 	}
 	
 	//ESP_LOGI(TAG, "Fanspeed by Temp: %d%%", fan_speed_temp);
-
-	ESP_LOGI(TAG, "Humidity: %d%%, Target Humidity: %d%%", my_tent.humidity, my_tent.target_humidity);
 
 	diff_hum = my_tent.humidity - my_tent.target_humidity;
 

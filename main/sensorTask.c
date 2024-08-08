@@ -102,7 +102,8 @@ ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number())
  		.temperature = 0x00,
  		.humidity = 0x00
      };
-
+    float es;
+    float ae;
      	for( ;; )
  	{
  		if( xSemaphoreTake( xSemaphore, pdMS_TO_TICKS(6000) ) == pdTRUE ) {
@@ -117,8 +118,12 @@ ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number())
  			my_tent.temperature_f = FAHRENHEIT(sensors_values.temperature);
  			my_tent.humidity = sensors_values.humidity;
  			my_tent.co2 = sensors_values.co2;
+            
+            es = 0.61078 * exp(17.2694 * my_tent.temperature_c / (my_tent.temperature_c + 238.3));
+            ae = my_tent.humidity / 100 * es;
+            my_tent.vpd = es - ae;  //kPa
 
- 			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%%", my_tent.co2, my_tent.temperature_c, my_tent.humidity);
+ 			ESP_LOGI(TAG, "CO₂ %d ppm - Temperature %2.1f - Humidity %d%% - VPD %2.1f", my_tent.co2, my_tent.temperature_c, my_tent.humidity, my_tent.vpd);
             update_displayed_values();
             setFanSpeed();
 

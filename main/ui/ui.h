@@ -75,7 +75,7 @@ void ui_event_DayCounterPanel( lv_event_t * e);
 extern lv_obj_t *ui_DayCounterPanel;
 extern lv_obj_t *ui_DayCounterMainLabel;
 extern lv_obj_t *ui_TimeLeftLabel;
-extern lv_obj_t *ui_DayNightLabel;
+extern lv_obj_t *ui_Image1;
 // SCREEN: ui_LightDurationScreen
 void ui_LightDurationScreen_screen_init(void);
 void ui_event_LightDurationScreen( lv_event_t * e);
@@ -166,11 +166,6 @@ void ui_event_ClimateModeSwitch( lv_event_t * e);
 extern lv_obj_t *ui_ClimateModeSwitch;
 extern lv_obj_t *ui_Label19;
 extern lv_obj_t *ui_Label20;
-extern lv_obj_t *ui_Panel17;
-void ui_event_TempUnitSwitch( lv_event_t * e);
-extern lv_obj_t *ui_TempUnitSwitch;
-extern lv_obj_t *ui_Label27;
-extern lv_obj_t *ui_Label16;
 extern lv_obj_t *ui_Panel13;
 void ui_event_fanSpeedSlider( lv_event_t * e);
 extern lv_obj_t *ui_fanSpeedSlider;
@@ -233,6 +228,11 @@ extern lv_obj_t *ui_Label11;
 extern lv_obj_t *ui_Container2;
 extern lv_obj_t *ui_Roller1;
 extern lv_obj_t *ui_Label12;
+extern lv_obj_t *ui_Panel17;
+void ui_event_TempUnitSwitch( lv_event_t * e);
+extern lv_obj_t *ui_TempUnitSwitch;
+extern lv_obj_t *ui_Label27;
+extern lv_obj_t *ui_Label16;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png
@@ -247,6 +247,7 @@ LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_640654572);   // assets/sunglasses-2.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
+LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
@@ -254,7 +255,6 @@ LV_IMG_DECLARE( ui_img_1756057095);   // assets/led-light-3.png
 LV_IMG_DECLARE( ui_img_harvest_png);   // assets/harvest.png
 LV_IMG_DECLARE( ui_img_1749885216);   // assets/chevron-downwards-arrow.png
 LV_IMG_DECLARE( ui_img_2060199463);   // assets/chevron-upwards-arrow.png
-LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
 LV_IMG_DECLARE( ui_img_bud_png);   // assets/bud.png
 LV_IMG_DECLARE( ui_img_17176521);   // assets/dew-3.png
 LV_IMG_DECLARE( ui_img_261459337);   // assets/climate-change.png

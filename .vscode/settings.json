@@ -12,7 +12,7 @@
         "span": "c"
     },
     "idf.flashType": "UART",
-    "idf.port": "/dev/tty.usbserial-1420",
+    "idf.port": "/dev/tty.usbserial-1440",
     "idf.openOcdConfigs": [
         "board/esp32s3-builtin.cfg"
     ]

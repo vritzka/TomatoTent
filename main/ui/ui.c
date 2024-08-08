@@ -71,7 +71,7 @@ void ui_event_DayCounterPanel( lv_event_t * e);
 lv_obj_t *ui_DayCounterPanel;
 lv_obj_t *ui_DayCounterMainLabel;
 lv_obj_t *ui_TimeLeftLabel;
-lv_obj_t *ui_DayNightLabel;
+lv_obj_t *ui_Image1;
 
 
 // SCREEN: ui_LightDurationScreen
@@ -168,11 +168,6 @@ void ui_event_ClimateModeSwitch( lv_event_t * e);
 lv_obj_t *ui_ClimateModeSwitch;
 lv_obj_t *ui_Label19;
 lv_obj_t *ui_Label20;
-lv_obj_t *ui_Panel17;
-void ui_event_TempUnitSwitch( lv_event_t * e);
-lv_obj_t *ui_TempUnitSwitch;
-lv_obj_t *ui_Label27;
-lv_obj_t *ui_Label16;
 lv_obj_t *ui_Panel13;
 void ui_event_fanSpeedSlider( lv_event_t * e);
 lv_obj_t *ui_fanSpeedSlider;
@@ -239,6 +234,11 @@ lv_obj_t *ui_Label11;
 lv_obj_t *ui_Container2;
 lv_obj_t *ui_Roller1;
 lv_obj_t *ui_Label12;
+lv_obj_t *ui_Panel17;
+void ui_event_TempUnitSwitch( lv_event_t * e);
+lv_obj_t *ui_TempUnitSwitch;
+lv_obj_t *ui_Label27;
+lv_obj_t *ui_Label16;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
@@ -556,19 +556,19 @@ lv_indev_wait_release(lv_indev_get_act());
 void ui_event_TemperaturePanel( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ClimateControlScreen_screen_init);
+      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_ClimateControlScreen_screen_init);
 }
 }
 void ui_event_HumidityPanel( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ClimateControlScreen_screen_init);
+      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_ClimateControlScreen_screen_init);
 }
 }
 void ui_event_KpaPanel( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ClimateControlScreen_screen_init);
+      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_ClimateControlScreen_screen_init);
 }
 }
 void ui_event_FanSpeedPanel( lv_event_t * e) {
@@ -586,7 +586,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 void ui_event_DayCounterPanel( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( &ui_LightDurationScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_LightDurationScreen_screen_init);
+      _ui_screen_change( &ui_LightDurationScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_LightDurationScreen_screen_init);
 }
 }
 void ui_event_LightDurationScreen( lv_event_t * e) {
@@ -711,12 +711,6 @@ if ( event_code == LV_EVENT_CLICKED) {
       climate_mode_switch( e );
 }
 }
-void ui_event_TempUnitSwitch( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      temp_unit_switch( e );
-}
-}
 void ui_event_fanSpeedSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
@@ -809,6 +803,12 @@ void ui_event_PolaritySwitch6( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       updateDimmerPolarity( e );
+}
+}
+void ui_event_TempUnitSwitch( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      temp_unit_switch( e );
 }
 }
 

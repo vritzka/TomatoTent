@@ -26,8 +26,8 @@ lv_img_set_angle(ui_HomeSky,60);
 ui_TemperaturePanel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_TemperaturePanel, 200);
 lv_obj_set_height( ui_TemperaturePanel, 90);
-lv_obj_set_x( ui_TemperaturePanel, -225 );
-lv_obj_set_y( ui_TemperaturePanel, 5 );
+lv_obj_set_x( ui_TemperaturePanel, -150 );
+lv_obj_set_y( ui_TemperaturePanel, 30 );
 lv_obj_set_align( ui_TemperaturePanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_TemperaturePanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_TemperaturePanel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -67,8 +67,8 @@ lv_obj_clear_flag( ui_Image5, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_HumidityPanel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_HumidityPanel, 200);
 lv_obj_set_height( ui_HumidityPanel, 90);
-lv_obj_set_x( ui_HumidityPanel, -221 );
-lv_obj_set_y( ui_HumidityPanel, 124 );
+lv_obj_set_x( ui_HumidityPanel, -150 );
+lv_obj_set_y( ui_HumidityPanel, 150 );
 lv_obj_set_align( ui_HumidityPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_HumidityPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_HumidityPanel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -106,8 +106,8 @@ lv_obj_clear_flag( ui_Image3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_KpaPanel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_KpaPanel, 90);
 lv_obj_set_height( ui_KpaPanel, 90);
-lv_obj_set_x( ui_KpaPanel, 120 );
-lv_obj_set_y( ui_KpaPanel, -2 );
+lv_obj_set_x( ui_KpaPanel, 96 );
+lv_obj_set_y( ui_KpaPanel, 30 );
 lv_obj_set_align( ui_KpaPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_KpaPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_KpaPanel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -138,8 +138,8 @@ lv_obj_set_style_text_font(ui_VPDLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV
 ui_FanSpeedPanel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_FanSpeedPanel, 90);
 lv_obj_set_height( ui_FanSpeedPanel, 90);
-lv_obj_set_x( ui_FanSpeedPanel, 222 );
-lv_obj_set_y( ui_FanSpeedPanel, -6 );
+lv_obj_set_x( ui_FanSpeedPanel, 203 );
+lv_obj_set_y( ui_FanSpeedPanel, 30 );
 lv_obj_set_align( ui_FanSpeedPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_FanSpeedPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_FanSpeedPanel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -224,8 +224,8 @@ lv_obj_set_style_bg_opa(ui_DimmerArc, 0, LV_PART_KNOB| LV_STATE_DEFAULT);
 ui_Co2Panel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_Co2Panel, 200);
 lv_obj_set_height( ui_Co2Panel, 90);
-lv_obj_set_x( ui_Co2Panel, 172 );
-lv_obj_set_y( ui_Co2Panel, 119 );
+lv_obj_set_x( ui_Co2Panel, 150 );
+lv_obj_set_y( ui_Co2Panel, 150 );
 lv_obj_set_align( ui_Co2Panel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Co2Panel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Co2Panel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -261,13 +261,13 @@ lv_obj_clear_flag( ui_Co2Image, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_DayCounterPanel = lv_obj_create(ui_HomeScreen);
 lv_obj_set_width( ui_DayCounterPanel, 186);
-lv_obj_set_height( ui_DayCounterPanel, 132);
-lv_obj_set_x( ui_DayCounterPanel, -89 );
-lv_obj_set_y( ui_DayCounterPanel, -143 );
+lv_obj_set_height( ui_DayCounterPanel, 155);
+lv_obj_set_x( ui_DayCounterPanel, 8 );
+lv_obj_set_y( ui_DayCounterPanel, -127 );
 lv_obj_set_align( ui_DayCounterPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_DayCounterPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_DayCounterPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_DayCounterPanel, 10, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_opa(ui_DayCounterPanel, 30, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_DayCounterPanel, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_DayCounterPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_PRESSED );
 lv_obj_set_style_bg_opa(ui_DayCounterPanel, 20, LV_PART_MAIN| LV_STATE_PRESSED);
@@ -275,8 +275,8 @@ lv_obj_set_style_bg_opa(ui_DayCounterPanel, 20, LV_PART_MAIN| LV_STATE_PRESSED);
 ui_DayCounterMainLabel = lv_label_create(ui_DayCounterPanel);
 lv_obj_set_width( ui_DayCounterMainLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_DayCounterMainLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_DayCounterMainLabel, 7 );
-lv_obj_set_y( ui_DayCounterMainLabel, -6 );
+lv_obj_set_x( ui_DayCounterMainLabel, 0 );
+lv_obj_set_y( ui_DayCounterMainLabel, 55 );
 lv_obj_set_align( ui_DayCounterMainLabel, LV_ALIGN_TOP_MID );
 lv_label_set_text(ui_DayCounterMainLabel,"0");
 lv_obj_add_flag( ui_DayCounterMainLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
@@ -288,22 +288,24 @@ lv_obj_set_style_text_font(ui_DayCounterMainLabel, &lv_font_montserrat_24, LV_PA
 ui_TimeLeftLabel = lv_label_create(ui_DayCounterPanel);
 lv_obj_set_width( ui_TimeLeftLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_TimeLeftLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_TimeLeftLabel, -14 );
-lv_obj_set_y( ui_TimeLeftLabel, 16 );
+lv_obj_set_x( ui_TimeLeftLabel, 0 );
+lv_obj_set_y( ui_TimeLeftLabel, 50 );
 lv_obj_set_align( ui_TimeLeftLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_TimeLeftLabel,"0 hr  00 min");
 lv_obj_add_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
 lv_obj_clear_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
+lv_obj_set_style_text_align(ui_TimeLeftLabel, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_TimeLeftLabel, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_DayNightLabel = lv_label_create(ui_DayCounterPanel);
-lv_obj_set_width( ui_DayNightLabel, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_DayNightLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_DayNightLabel, -38 );
-lv_obj_set_y( ui_DayNightLabel, -8 );
-lv_obj_set_align( ui_DayNightLabel, LV_ALIGN_TOP_MID );
-lv_label_set_text(ui_DayNightLabel,"Day");
-lv_obj_set_style_text_font(ui_DayNightLabel, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_Image1 = lv_img_create(ui_DayCounterPanel);
+lv_img_set_src(ui_Image1, &ui_img_appointment_png);
+lv_obj_set_width( ui_Image1, LV_SIZE_CONTENT);  /// 64
+lv_obj_set_height( ui_Image1, LV_SIZE_CONTENT);   /// 64
+lv_obj_set_x( ui_Image1, 0 );
+lv_obj_set_y( ui_Image1, -39 );
+lv_obj_set_align( ui_Image1, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Image1, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_Image1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 lv_obj_add_event_cb(ui_TemperaturePanel, ui_event_TemperaturePanel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_HumidityPanel, ui_event_HumidityPanel, LV_EVENT_ALL, NULL);

@@ -184,6 +184,8 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_DayCounterMainLabel, "%hu", my_tent.days);
 		
 		//general settings screen
+		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
+		update_temp_units(my_tent.temp_unit);
 		err = nvs_get_u16(storage_handle, "screen_brightns", &my_tent.screen_brightness_slider_value); 
 		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", my_tent.screen_brightness_slider_value);
 		lv_slider_set_value(ui_ScreenBrightnessSlider, my_tent.screen_brightness_slider_value, LV_ANIM_OFF);
@@ -281,8 +283,6 @@ void init_tomatotent(lv_event_t * e)
 		lv_slider_set_left_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_left_value, LV_ANIM_OFF);
 		
 		// Climate Screen
-		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
-		update_temp_units(my_tent.temp_unit);
 		err = nvs_get_u8(storage_handle, "climate_mode", &my_tent.climate_mode);
 		err = nvs_get_u16(storage_handle, "sel_hum_index", &my_tent.target_humidity_sel_index);
 		err = nvs_get_u16(storage_handle, "sel_temp_index", &my_tent.target_temperature_sel_index);

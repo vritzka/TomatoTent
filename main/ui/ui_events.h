@@ -34,7 +34,6 @@ void hide_fanspeed_series(lv_event_t * e);
 void humidity_dropdown(lv_event_t * e);
 void temperature_dropdown(lv_event_t * e);
 void climate_mode_switch(lv_event_t * e);
-void temp_unit_switch(lv_event_t * e);
 void fanspeed_slider(lv_event_t * e);
 void save_wifi_screen(lv_event_t * e);
 void WifiKeyboardReady(lv_event_t * e);
@@ -44,6 +43,7 @@ void save_general_settings_screen(lv_event_t * e);
 void screen_brightness_slider(lv_event_t * e);
 void software_upgrade_button(lv_event_t * e);
 void updateDimmerPolarity(lv_event_t * e);
+void temp_unit_switch(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/
