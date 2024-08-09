@@ -19,6 +19,7 @@
 #include "timerTask.h"
 #include "otaTask.h"
 #include "sensorTask.h"
+#include "httpTask.h"
 #include "general.h"
 #include "esp_zigbee_gateway.h"
 
@@ -29,7 +30,6 @@ void heap_caps_alloc_failed_hook(size_t requested_size, uint32_t caps, const cha
 {
   printf("%s was called but failed to allocate %d bytes with 0x%lX capabilities. \n",function_name, requested_size, caps);
 }
-
 
 void app_main(void)
 {
@@ -52,5 +52,6 @@ void app_main(void)
    vStartGuiTask();
    vStartTimerTask();
    vCreateSensorTask();
+   create_http_timer();
    //vCreateZigbeeTask();
 }

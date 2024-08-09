@@ -11,7 +11,6 @@
 #include "esp_zigbee_gateway.h"
 #include "ha/esp_zigbee_ha_standard.h"
 #include "esp_err.h"
-#include "sht30.h"
 
 
 extern gptimer_handle_t sensorTimerHandle;

@@ -136,15 +136,6 @@ lv_obj_t *ui_VPDSeriesPanel;
 lv_obj_t *ui_Image16;
 lv_obj_t *ui_VPDLabel2;
 lv_obj_t *ui_Label5;
-lv_obj_t *ui_TimeScalePanel;
-lv_obj_t *ui_Label4;
-lv_obj_t *ui_Label13;
-lv_obj_t *ui_Label26;
-lv_obj_t *ui_Label28;
-lv_obj_t *ui_Label29;
-lv_obj_t *ui_Label30;
-lv_obj_t *ui_Label31;
-lv_obj_t *ui_Label32;
 lv_obj_t *ui_DimmerIconPanel2;
 lv_obj_t *ui_Image18;
 lv_obj_t *ui_DimmerBar2;
@@ -247,13 +238,13 @@ const lv_img_dsc_t *ui_imgset_877854534[2] = {&ui_img_60476769, &ui_img_11422059
 const lv_img_dsc_t *ui_imgset_1334665161[2] = {&ui_img_320680866, &ui_img_1756057095};
 const lv_img_dsc_t *ui_imgset_1554743838[1] = {&ui_img_1180469587};
 const lv_img_dsc_t *ui_imgset_now_arrow_[1] = {&ui_img_now_arrow_2_png};
+const lv_img_dsc_t *ui_imgset_223946384[1] = {&ui_img_1668210446};
 const lv_img_dsc_t *ui_imgset_1293913949[1] = {&ui_img_303216376};
 const lv_img_dsc_t *ui_imgset_459865801[2] = {&ui_img_290017612, &ui_img_791711567};
 const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[2] = {&ui_img_1484485426, &ui_img_1130838376};
 const lv_img_dsc_t *ui_imgset_586263085[1] = {&ui_img_1319116584};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
-const lv_img_dsc_t *ui_imgset_223946384[1] = {&ui_img_1668210446};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -573,7 +564,7 @@ if ( event_code == LV_EVENT_LONG_PRESSED) {
 void ui_event_FanSpeedPanel( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_LONG_PRESSED) {
-      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ClimateControlScreen_screen_init);
+      _ui_screen_change( &ui_ClimateControlScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_ClimateControlScreen_screen_init);
 }
 }
 void ui_event_WifiIcon( lv_event_t * e) {

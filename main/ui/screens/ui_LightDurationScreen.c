@@ -177,7 +177,7 @@ ui_Panel10 = lv_obj_create(ui_LightDurationScreen);
 lv_obj_set_width( ui_Panel10, 250);
 lv_obj_set_height( ui_Panel10, 112);
 lv_obj_set_x( ui_Panel10, 246 );
-lv_obj_set_y( ui_Panel10, 153 );
+lv_obj_set_y( ui_Panel10, 156 );
 lv_obj_set_align( ui_Panel10, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel10, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Panel10, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );

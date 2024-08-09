@@ -14,6 +14,7 @@
 #include "nvs.h"
 #include "general.h"
 #include "timerTask.h"
+#include "httpTask.h"
 #include "sensorTask.h"
 #include "otaTask.h"
 #include "ha/esp_zigbee_ha_standard.h"
@@ -315,6 +316,7 @@ void init_tomatotent(lv_event_t * e)
 			update_time_left(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
 			ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+			start_http_timer();
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
@@ -685,7 +687,8 @@ void start_grow(lv_event_t * e)
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
-	//ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	start_http_timer();
 	make_it_day(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
@@ -702,7 +705,8 @@ void start_dry(lv_event_t * e)
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
-	//ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
+	start_http_timer();
 	make_it_drying(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
@@ -712,7 +716,7 @@ static void stop_grow_cb(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_current_target(e);
     int id = lv_msgbox_get_active_btn(obj);
-    //ESP_LOGI(TAG, "Button %d clicked", id);
+
     if(id != 0)
 		return;
 	
@@ -720,6 +724,7 @@ static void stop_grow_cb(lv_event_t * e)
 	lv_anim_del_all();
 	ESP_ERROR_CHECK(gptimer_stop(gptimer));
 	ESP_ERROR_CHECK(gptimer_stop(sensorTimerHandle));
+	stop_http_timer();
     
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u32(storage_handle, "seconds", 0);
@@ -732,8 +737,8 @@ static void stop_grow_cb(lv_event_t * e)
     my_tent.is_drying = 0;
     
     lv_obj_set_pos(ui_tomato, 0,0);
-    lv_obj_set_pos(ui_StartNewGrowButton, -430,-9);
-    lv_obj_set_pos(ui_DryAHarvestButton, 435,96);
+    lv_obj_set_pos(ui_StartNewGrowButton, -590,-9);
+    lv_obj_set_pos(ui_DryAHarvestButton, 595,96);
     lv_scr_load(ui_SplashScreen);  
     
     start_animation(ui_SplashScreen);
