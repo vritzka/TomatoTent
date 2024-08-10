@@ -53,6 +53,7 @@ typedef struct {
     uint16_t light_duration_slider_value;
 	float_t light_duration; // in hrs
 	float_t dark_duration; // in hrs
+	uint32_t period_progress; // in seconds
 	uint16_t now_slider_value;
 	uint16_t led_brightness_slider_value;
 	uint16_t dimmer_brightness_duty;

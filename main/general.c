@@ -46,6 +46,12 @@ void update_time_left(bool count_day) {
 	
 	minutes_left_in_period = seconds_left_in_period / 60;
 	hours_left_in_period = minutes_left_in_period / 60;
+
+	if(my_tent.is_day) {
+		my_tent.period_progress = my_tent.seconds;
+	} else {
+		my_tent.period_progress = my_tent.seconds-my_tent.day_period_seconds;
+	}
 	
 	if(seconds_left_in_period > 59) {
 		

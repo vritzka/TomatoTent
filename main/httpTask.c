@@ -104,34 +104,88 @@ char post_data[] = [
 
 static void http_timer_callback(void* arg)
 {
-    int64_t time_since_boot = esp_timer_get_time();
-    ESP_LOGI(TAG, "Periodic timer called, time since boot: %lld us", time_since_boot);
-
     time_t now;
+    time(&now);
+    /*
     char strftime_buf[64];
     struct tm timeinfo;
-
-    time(&now);
-    // Set timezone to China Standard Time
-    setenv("TZ", "CST-8", 1);
-    tzset();
 
     localtime_r(&now, &timeinfo);
     strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
     ESP_LOGI(TAG, "The current date/time in Shanghai is: %s", strftime_buf);
+*/
+    char buf[64];
+    cJSON *root,*air_temperature,*air_humidity,*grow_days,*light_on,*light_period,*period_progress,*fan_auto,*fan_speed;
 
-    cJSON *air_temperature;
+    root=cJSON_CreateArray();
 
     air_temperature=cJSON_CreateObject();
-    char air_temperature_str[200];
-    sprintf(air_temperature_str,"devices.%s.air_temperature", my_tent.device_id);
-    cJSON_AddItemToObject(air_temperature, "name", cJSON_CreateString(air_temperature_str));
-
+    sprintf(buf,"devices.%s.air_temperature", my_tent.device_id);
+    cJSON_AddItemToObject(air_temperature, "name", cJSON_CreateString(buf));
     cJSON_AddNumberToObject(air_temperature,"interval",	60);
-    cJSON_AddNumberToObject(air_temperature,"value", my_tent.temperature_c);
+    sprintf(buf,"%.2f", my_tent.temperature_c);
+    cJSON_AddNumberToObject(air_temperature,"value", strtod(buf, NULL));
     cJSON_AddNumberToObject(air_temperature,"time", now);
+    root->child=air_temperature;
 
-    char *rendered=cJSON_Print(air_temperature);
+    air_humidity=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.air_humidity", my_tent.device_id);
+    cJSON_AddItemToObject(air_humidity, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(air_humidity,"interval",	60);
+    cJSON_AddNumberToObject(air_humidity,"value", my_tent.humidity);
+    cJSON_AddNumberToObject(air_humidity,"time", now);
+    air_temperature->next=air_humidity; 
+
+    grow_days=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.grow_days", my_tent.device_id);
+    cJSON_AddItemToObject(grow_days, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(grow_days,"interval",	60);
+    cJSON_AddNumberToObject(grow_days,"value", my_tent.days);
+    cJSON_AddNumberToObject(grow_days,"time", now);
+    air_humidity->next=grow_days;        
+
+    light_on=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.light_on", my_tent.device_id);
+    cJSON_AddItemToObject(light_on, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(light_on,"interval", 60);
+    sprintf(buf,"%.2f", (float)my_tent.led_brightness_slider_value/100);
+    cJSON_AddNumberToObject(light_on,"value", strtod(buf, NULL));
+    cJSON_AddNumberToObject(light_on,"time", now);
+    grow_days->next=light_on; 
+
+    light_period=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.light_period", my_tent.device_id);
+    cJSON_AddItemToObject(light_period, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(light_period,"interval", 60);
+    cJSON_AddNumberToObject(light_period,"value", my_tent.light_duration*60.0);
+    cJSON_AddNumberToObject(light_period,"time", now);
+    light_on->next=light_period; 
+
+    period_progress=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.period_progress", my_tent.device_id);
+    cJSON_AddItemToObject(period_progress, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(period_progress,"interval", 60);
+    cJSON_AddNumberToObject(period_progress,"value", my_tent.period_progress/60);
+    cJSON_AddNumberToObject(period_progress,"time", now);
+    light_period->next=period_progress; 
+
+    fan_auto=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.fan_auto", my_tent.device_id);
+    cJSON_AddItemToObject(fan_auto, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(fan_auto,"interval", 60);
+    my_tent.climate_mode ? cJSON_AddFalseToObject(fan_auto,"value") : cJSON_AddTrueToObject(fan_auto,"value");
+    cJSON_AddNumberToObject(fan_auto,"time", now);
+    light_period->next=fan_auto; 
+
+    fan_speed=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.fan_speed", my_tent.device_id);
+    cJSON_AddItemToObject(fan_speed, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(fan_speed,"interval", 60);
+    cJSON_AddNumberToObject(fan_speed,"value", my_tent.fanspeed);
+    cJSON_AddNumberToObject(fan_speed,"time", now);
+    fan_auto->next=fan_speed; 
+
+    char *rendered=cJSON_Print(root);
     ESP_LOGI(TAG, "JSON: %s", rendered);
 
 
