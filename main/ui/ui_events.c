@@ -126,7 +126,6 @@ void start_animation(lv_obj_t *scr)
 /////////////////////////////////////
 ///////// INIT TomatoTent ///////////
 /////////////////////////////////////
-
 void init_tomatotent(lv_event_t * e)
 {	
    //init values
@@ -144,6 +143,10 @@ void init_tomatotent(lv_event_t * e)
    my_tent.is_drying = 0;
    my_tent.dimmer_polarity = 0x03;
    
+   uint8_t mac[6];
+   esp_base_mac_addr_get(mac);
+   snprintf(my_tent.device_id, sizeof(my_tent.device_id),"%X%X%X%X%X%X",mac[0],mac[1],mac[2],mac[3],mac[4],mac[5]);
+
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!!!\n", esp_err_to_name(err));

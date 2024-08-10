@@ -3826,82 +3826,6 @@
                     "strtype": "LABEL/Recolor",
                     "strval": "False",
                     "InheritedType": 2
-                  },
-                  {
-                    "disabled": false,
-                    "nid": -491853455,
-                    "strtype": "_event/EventHandler",
-                    "strval": "SCREEN_LOADED",
-                    "childs": [
-                      {
-                        "nid": -1541329606,
-                        "strtype": "_custom/name",
-                        "strval": "Load",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": -1694366017,
-                        "strtype": "_custom/condition_C",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 916088125,
-                        "strtype": "_custom/condition_P",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 877271885,
-                        "strtype": "_event/action",
-                        "strval": "PLAY ANIMATION",
-                        "childs": [
-                          {
-                            "nid": 344977562,
-                            "strtype": "PLAY ANIMATION/Name",
-                            "strval": "PLAY ANIMATION",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 591736075,
-                            "strtype": "PLAY ANIMATION/FunctionName",
-                            "strval": "fanspin_Animation",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": -1562094095,
-                            "strtype": "PLAY ANIMATION/Animation",
-                            "strval": "fanspin",
-                            "InheritedType": 8
-                          },
-                          {
-                            "nid": 924913165,
-                            "strtype": "PLAY ANIMATION/Target",
-                            "strval": "-",
-                            "InheritedType": 9
-                          },
-                          {
-                            "nid": 929127666,
-                            "strtype": "PLAY ANIMATION/Delay",
-                            "InheritedType": 6
-                          },
-                          {
-                            "nid": 336070261,
-                            "strtype": "PLAY ANIMATION/Call",
-                            "strval": "<{FunctionName}>(<{Target}>, <{Delay}>)",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 976796418,
-                            "strtype": "PLAY ANIMATION/CallC",
-                            "strval": "<{FunctionName}>(<{Target}>, <{Delay}>);",
-                            "InheritedType": 10
-                          }
-                        ],
-                        "InheritedType": 10
-                      }
-                    ],
-                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "LABEL"
@@ -49232,7 +49156,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 80,
+    "backup_cnt": 81,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

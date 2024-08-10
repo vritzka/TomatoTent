@@ -9,7 +9,9 @@
         "array": "c",
         "string": "c",
         "string_view": "c",
-        "span": "c"
+        "span": "c",
+        "chrono": "c",
+        "typeinfo": "c"
     },
     "idf.flashType": "UART",
     "idf.port": "/dev/tty.usbserial-1420",

@@ -24,6 +24,7 @@
 #include "esp_tls.h"
 #include "esp_netif.h"
 #include <stdio.h>
+#include "esp_netif_sntp.h"
 #include "esp_system.h"
 #include <math.h> 
 #include "lwip/err.h"
@@ -77,6 +78,7 @@ typedef struct {
     uint16_t elevation;
     uint8_t temperature_offset;
 	uint16_t dimmer_polarity;
+	char device_id[13];
 } tent_data_t;
 
 extern tent_data_t my_tent;

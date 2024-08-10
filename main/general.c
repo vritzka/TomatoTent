@@ -75,7 +75,7 @@ void update_time_left(bool count_day) {
 			chart_add_climate_point();
 	}
 	
-	if(my_tent.seconds < 60 && (my_tent.seconds % 10 == 0)) //to quickly display something on the graph for newly started grows
+	if(my_tent.seconds < 120 && (my_tent.seconds % 10 == 0)) //to quickly display something on the graph for newly started grows
 		chart_add_climate_point();
 		
 	if(my_tent.grow_lamp_dimmed) {	
@@ -456,6 +456,10 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         lv_label_set_text(ui_WifiStatusLabel, "connected"); 
+		//settimeofday();
+		esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(2,
+								ESP_SNTP_SERVER_LIST("time.windows.com", "pool.ntp.org" ) );
+		esp_netif_sntp_init(&config);
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
         wifi_scan();
@@ -829,7 +833,6 @@ lv_chart_series_t * chart_series_co2;
 
 void chart_init() {
 
-lv_chart_set_point_count(ui_Chart, 96);
 chart_series_temperature = lv_chart_add_series(ui_Chart, lv_color_hex(0xEF5F3C), LV_CHART_AXIS_PRIMARY_Y);
 chart_series_humidity = lv_chart_add_series(ui_Chart, lv_color_hex(0x3CB7FF), LV_CHART_AXIS_PRIMARY_Y);
 chart_series_fanspeed = lv_chart_add_series(ui_Chart, lv_color_hex(0x787373), LV_CHART_AXIS_PRIMARY_Y);
