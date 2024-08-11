@@ -143,13 +143,9 @@ void init_tomatotent(lv_event_t * e)
    my_tent.is_drying = 0;
    my_tent.dimmer_polarity = 0x03;
    
-   uint8_t mac[6];
+   uint8_t mac[25];
    esp_base_mac_addr_get(mac);
-   snprintf(my_tent.device_id, sizeof(my_tent.device_id),"%X%X%X%X%X%X",mac[0],mac[1],mac[2],mac[3],mac[4],mac[5]);
-
-     //time_t now;
-    //char strftime_buf[64];
-    //struct tm timeinfo;
+   snprintf(my_tent.device_id, sizeof(my_tent.device_id),"%X%X%X%X%X%X%X%X%X%X%X%X",mac[2],mac[1],mac[0],mac[4],mac[3],mac[5],mac[5],mac[1],mac[4],mac[3],mac[4],mac[0]);
 
     // Set timezone to China Standard Time
     setenv("TZ", "CST-8", 1);

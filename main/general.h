@@ -62,6 +62,7 @@ typedef struct {
 	uint16_t screen_brightness_duty;
 	uint16_t temp_unit; //1 = F
 	uint16_t wifi;
+	bool wifi_connected;
 	uint16_t fanspeed_slider_left_value;
 	uint16_t fanspeed_slider_value;
 	uint16_t fanspeed;
@@ -79,7 +80,7 @@ typedef struct {
     uint16_t elevation;
     uint8_t temperature_offset;
 	uint16_t dimmer_polarity;
-	char device_id[13];
+	char device_id[25];
 } tent_data_t;
 
 extern tent_data_t my_tent;

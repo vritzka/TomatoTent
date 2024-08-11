@@ -8,7 +8,30 @@ static esp_timer_handle_t http_timer;
 
 static const char* TAG = "HTTP_TASK";
 
-static esp_err_t https_post_request(char url[], char post_data[]);
+static esp_err_t https_post_request(char post_data[]);
+static esp_err_t _http_event_handler(esp_http_client_event_t *evt);
+static esp_http_client_handle_t client;
+static esp_err_t err;
+
+static void init_client() {
+    esp_http_client_config_t config = {
+        .host = "graphite-blocks-prod-us-central1.grafana.net",
+        .path = "/graphite/metrics",
+        .transport_type = HTTP_TRANSPORT_OVER_SSL,
+        .event_handler = _http_event_handler,
+        .crt_bundle_attach = esp_crt_bundle_attach,
+        .is_async = true,
+        .username = "10495",
+        .password = "eyJrIjoiZWUzZDMxNDMzZmFiZWUwY2U2YWMxMDdjYmFjYmIzNDNmODRlODgwNiIsIm4iOiJtZXRyaWNzIHB1c2giLCJpZCI6MzUwMDg5fQ",
+        .timeout_ms = 5000,
+        .auth_type = HTTP_AUTH_TYPE_BASIC,
+    };
+
+    client = esp_http_client_init(&config);
+    
+    esp_http_client_set_method(client, HTTP_METHOD_POST);
+    esp_http_client_set_header(client, "Content-Type", "application/json");
+}
 
 void create_http_timer(void)
 {
@@ -21,101 +44,30 @@ void create_http_timer(void)
 
     ESP_ERROR_CHECK(esp_timer_create(&http_timer_args, &http_timer));
 
+    init_client();
+
 }
 
 void start_http_timer() {
     /* Start the timer */
-    ESP_ERROR_CHECK(esp_timer_start_periodic(http_timer, 5000000)); //5 seconds
+    ESP_ERROR_CHECK(esp_timer_start_periodic(http_timer, 30000000)); //5 seconds
     ESP_LOGI(TAG, "Started HTTP timer");
 }
 
 void stop_http_timer() {
     ESP_ERROR_CHECK(esp_timer_stop(http_timer));
 }
-/*
-char post_data[] = [
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.air_temperature",
-    "interval": 60,
-    "value": {{{air_temperature}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.air_humidity",
-    "interval": 60,
-    "value": {{{air_humidity}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.soil_capacitance",
-    "interval": 60,
-    "value": {{{soil_capacitance}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.soil_moisture",
-    "interval": 60,
-    "value": {{{soil_moisture}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.soil_temperature",
-    "interval": 60,
-    "value": {{{soil_temperature}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.grow_days",
-    "interval": 60,
-    "value": {{{grow_days}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.light_on",
-    "interval": 60,
-    "value": {{{light_on}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.light_period",
-    "interval": 60,
-    "value": {{{light_period}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.period_progress",
-    "interval": 60,
-    "value": {{{period_progress}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.fan_auto",
-    "interval": 60,
-    "value": {{{fan_auto}}},
-    "time": {{{time}}}
-},
-{
-    "name": "devices.{{{PARTICLE_DEVICE_ID}}}.fan_speed",
-    "interval": 60,
-    "value": {{{fan_speed}}},
-    "time": {{{time}}}
-}];
-*/
+
 
 static void http_timer_callback(void* arg)
 {
+    if(my_tent.wifi_connected == 0)
+        return;
     time_t now;
     time(&now);
-    /*
-    char strftime_buf[64];
-    struct tm timeinfo;
 
-    localtime_r(&now, &timeinfo);
-    strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-    ESP_LOGI(TAG, "The current date/time in Shanghai is: %s", strftime_buf);
-*/
     char buf[64];
-    cJSON *root,*air_temperature,*air_humidity,*grow_days,*light_on,*light_period,*period_progress,*fan_auto,*fan_speed;
+    cJSON *root,*air_temperature,*air_humidity,*grow_days,*light_on,*light_period,*period_progress,*fan_auto,*fan_speed,*co2;
 
     root=cJSON_CreateArray();
 
@@ -136,13 +88,21 @@ static void http_timer_callback(void* arg)
     cJSON_AddNumberToObject(air_humidity,"time", now);
     air_temperature->next=air_humidity; 
 
+    co2=cJSON_CreateObject();
+    sprintf(buf,"devices.%s.co2", my_tent.device_id);
+    cJSON_AddItemToObject(co2, "name", cJSON_CreateString(buf));
+    cJSON_AddNumberToObject(co2,"interval",	60);
+    cJSON_AddNumberToObject(co2,"value", my_tent.co2);
+    cJSON_AddNumberToObject(co2,"time", now);
+    air_humidity->next=co2;    
+
     grow_days=cJSON_CreateObject();
     sprintf(buf,"devices.%s.grow_days", my_tent.device_id);
     cJSON_AddItemToObject(grow_days, "name", cJSON_CreateString(buf));
     cJSON_AddNumberToObject(grow_days,"interval",	60);
     cJSON_AddNumberToObject(grow_days,"value", my_tent.days);
     cJSON_AddNumberToObject(grow_days,"time", now);
-    air_humidity->next=grow_days;        
+    co2->next=grow_days;        
 
     light_on=cJSON_CreateObject();
     sprintf(buf,"devices.%s.light_on", my_tent.device_id);
@@ -173,9 +133,9 @@ static void http_timer_callback(void* arg)
     sprintf(buf,"devices.%s.fan_auto", my_tent.device_id);
     cJSON_AddItemToObject(fan_auto, "name", cJSON_CreateString(buf));
     cJSON_AddNumberToObject(fan_auto,"interval", 60);
-    my_tent.climate_mode ? cJSON_AddFalseToObject(fan_auto,"value") : cJSON_AddTrueToObject(fan_auto,"value");
+    my_tent.climate_mode ? cJSON_AddNumberToObject(fan_auto,"value", 0) : cJSON_AddNumberToObject(fan_auto,"value", 1);
     cJSON_AddNumberToObject(fan_auto,"time", now);
-    light_period->next=fan_auto; 
+    period_progress->next=fan_auto; 
 
     fan_speed=cJSON_CreateObject();
     sprintf(buf,"devices.%s.fan_speed", my_tent.device_id);
@@ -186,18 +146,9 @@ static void http_timer_callback(void* arg)
     fan_auto->next=fan_speed; 
 
     char *rendered=cJSON_Print(root);
-    ESP_LOGI(TAG, "JSON: %s", rendered);
+    //ESP_LOGI(TAG, "JSON: %s", rendered);
 
-
-    //sprintf(post_data, "{\"email\":\"%s\"}", "my_system.sign_in_que_2");
-    //ESP_LOGI(TAG, "Trying to post %s", post_data);
-/*
-    esp_err_t res = https_post_request("https://graphite-blocks-prod-us-central1.grafana.net/graphite/metrics", post_data);   
-
-    if(res == ESP_OK) {
-        ESP_LOGI(TAG, "Successfully posted %s", post_data);
-    }
-*/
+    https_post_request(rendered);
 
 }
 
@@ -261,9 +212,7 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
         case HTTP_EVENT_ON_FINISH:
             ESP_LOGD(TAG, "HTTP_EVENT_ON_FINISH");
             if (output_buffer != NULL) {
-#if CONFIG_EXAMPLE_ENABLE_RESPONSE_BUFFER_DUMP
                 ESP_LOG_BUFFER_HEX(TAG, output_buffer, output_len);
-#endif
                 free(output_buffer);
                 output_buffer = NULL;
             }
@@ -293,22 +242,10 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt)
     return ESP_OK;
 }
 
-static esp_err_t https_post_request(char url[], char post_data[])
+static esp_err_t https_post_request(char post_data[])
 {
-    
-    esp_http_client_config_t config = {
-        .url = url,
-        .event_handler = _http_event_handler,
-        .crt_bundle_attach = esp_crt_bundle_attach,
-        .is_async = true,
-        .timeout_ms = 5000,
-    };
+     esp_http_client_set_post_field(client, post_data, strlen(post_data));
 
-    esp_http_client_handle_t client = esp_http_client_init(&config);
-    esp_err_t err;
-    esp_http_client_set_method(client, HTTP_METHOD_POST);
-    esp_http_client_set_post_field(client, post_data, strlen(post_data));
-    esp_http_client_set_header(client, "Content-Type", "application/json");
     while (1) {
         err = esp_http_client_perform(client);
         if (err != ESP_ERR_HTTP_EAGAIN) {
@@ -323,6 +260,6 @@ static esp_err_t https_post_request(char url[], char post_data[])
         ESP_LOGE(TAG, "Error perform http request %s", esp_err_to_name(err));
     }
     return err;
-    esp_http_client_cleanup(client);
+   // esp_http_client_cleanup(client);
 
 }

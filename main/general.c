@@ -444,10 +444,11 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 	}
 	
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
-		ESP_LOGI(TAG, "Wifi Connect");
+		ESP_LOGI(TAG, "Wifi Connecting started");
         lv_label_set_text(ui_WifiStatusLabel, "On");
         esp_wifi_connect();
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+		my_tent.wifi_connected = 0;
         if (s_retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
             esp_wifi_connect();
             s_retry_num++;
@@ -462,13 +463,12 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         lv_label_set_text(ui_WifiStatusLabel, "connected"); 
-		//settimeofday();
+		my_tent.wifi_connected = 1;
 		esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(2,
 								ESP_SNTP_SERVER_LIST("time.windows.com", "pool.ntp.org" ) );
 		esp_netif_sntp_init(&config);
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
-        wifi_scan();
     }
 }
 
