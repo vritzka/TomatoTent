@@ -50,7 +50,7 @@ void create_http_timer(void)
 
 void start_http_timer() {
     /* Start the timer */
-    ESP_ERROR_CHECK(esp_timer_start_periodic(http_timer, 30000000)); //5 seconds
+    ESP_ERROR_CHECK(esp_timer_start_periodic(http_timer, 60000000)); //60 seconds
     ESP_LOGI(TAG, "Started HTTP timer");
 }
 
