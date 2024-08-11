@@ -146,7 +146,7 @@ static void http_timer_callback(void* arg)
     fan_auto->next=fan_speed; 
 
     char *rendered=cJSON_Print(root);
-    //ESP_LOGI(TAG, "JSON: %s", rendered);
+    ESP_LOGI(TAG, "JSON: %s", rendered);
 
     https_post_request(rendered);
 

@@ -553,7 +553,7 @@ void wifi_off(void)
 	esp_wifi_disconnect();
 	esp_wifi_stop();
 	esp_wifi_deinit();
-
+	esp_netif_sntp_deinit();
 	lv_dropdown_clear_options(ui_WifiDropdown);
 	
 }
