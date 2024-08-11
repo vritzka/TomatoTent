@@ -20076,7 +20076,7 @@
               {
                 "nid": 691647031,
                 "strtype": "CHART/Number_of_points",
-                "integer": 156,
+                "integer": 144,
                 "InheritedType": 6
               },
               {
@@ -20084,7 +20084,7 @@
                 "strtype": "CHART/Division_lines",
                 "intarray": [
                   10,
-                  10
+                  13
                 ],
                 "InheritedType": 7
               },
@@ -36328,7 +36328,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   354,
-                  -195
+                  -207
                 ],
                 "InheritedType": 7
               },
@@ -36565,31 +36565,31 @@
               {
                 "nid": -490764119,
                 "strtype": "IMGBUTTON/Image_pressed",
-                "strval": "-",
+                "strval": "",
                 "InheritedType": 5
               },
               {
                 "nid": -1767683456,
                 "strtype": "IMGBUTTON/Image_disabled",
-                "strval": "-",
+                "strval": "",
                 "InheritedType": 5
               },
               {
                 "nid": 436467790,
                 "strtype": "IMGBUTTON/Image_checked_released",
-                "strval": "-",
+                "strval": "",
                 "InheritedType": 5
               },
               {
                 "nid": -1613860809,
                 "strtype": "IMGBUTTON/Image_checked_pressed",
-                "strval": "-",
+                "strval": "",
                 "InheritedType": 5
               },
               {
                 "nid": 1263180610,
                 "strtype": "IMGBUTTON/Image_checked_disabled",
-                "strval": "-",
+                "strval": "",
                 "InheritedType": 5
               },
               {
@@ -36738,7 +36738,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   325,
-                  -98
+                  -105
                 ],
                 "InheritedType": 7
               },
@@ -36747,8 +36747,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Size",
                 "intarray": [
-                  100,
-                  100
+                  120,
+                  120
                 ],
                 "InheritedType": 7
               },
@@ -49156,7 +49156,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 81,
+    "backup_cnt": 82,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

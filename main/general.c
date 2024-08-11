@@ -563,11 +563,13 @@ void draw_qr_codes() {
 	lv_color_t bg_color = lv_palette_lighten(LV_PALETTE_LIGHT_BLUE, 5);
     lv_color_t fg_color = lv_palette_darken(LV_PALETTE_BLUE, 4);
 
-    lv_obj_t * qr = lv_qrcode_create(ui_QrCode1, 64, fg_color, bg_color);
+    lv_obj_t * qr = lv_qrcode_create(ui_QrCode1, 120, fg_color, bg_color);
 
     /*Set data*/
-    const char * data = "https://lvgl.io";
-    lv_qrcode_update(qr, data, strlen(data));
+    char qr_url[58];
+	snprintf(qr_url, 58, "https://my.tomatotent.com/graphs/%s", my_tent.device_id);
+
+    lv_qrcode_update(qr, qr_url, strlen(qr_url)); 
     lv_obj_center(qr);
 
     /*Add a border with bg_color*/
