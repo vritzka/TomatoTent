@@ -223,6 +223,10 @@ void ui_event_TempUnitSwitch( lv_event_t * e);
 extern lv_obj_t *ui_TempUnitSwitch;
 extern lv_obj_t *ui_Label27;
 extern lv_obj_t *ui_Label16;
+extern lv_obj_t *ui_Container1;
+void ui_event_ResetButton( lv_event_t * e);
+extern lv_obj_t *ui_ResetButton;
+extern lv_obj_t *ui_Label4;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_plant_png);   // assets/plant.png

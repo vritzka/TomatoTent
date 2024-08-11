@@ -863,3 +863,8 @@ void updateDimmerPolarity(lv_event_t * e)
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }
+
+void restart_device(lv_event_t * e)
+{
+	esp_restart();
+}

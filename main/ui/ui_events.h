@@ -44,6 +44,7 @@ void screen_brightness_slider(lv_event_t * e);
 void software_upgrade_button(lv_event_t * e);
 void updateDimmerPolarity(lv_event_t * e);
 void temp_unit_switch(lv_event_t * e);
+void restart_device(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

@@ -302,6 +302,32 @@ lv_obj_set_align( ui_Label16, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label16,"°C");
 lv_obj_set_style_text_font(ui_Label16, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+ui_Container1 = lv_obj_create(ui_GeneralSettingsScreen);
+lv_obj_remove_style_all(ui_Container1);
+lv_obj_set_width( ui_Container1, 130);
+lv_obj_set_height( ui_Container1, 59);
+lv_obj_set_x( ui_Container1, -323 );
+lv_obj_set_y( ui_Container1, 194 );
+lv_obj_set_align( ui_Container1, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_Container1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_radius(ui_Container1, 10, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_Container1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_Container1, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_ResetButton = lv_btn_create(ui_Container1);
+lv_obj_set_width( ui_ResetButton, 80);
+lv_obj_set_height( ui_ResetButton, 30);
+lv_obj_set_align( ui_ResetButton, LV_ALIGN_CENTER );
+lv_obj_set_style_radius(ui_ResetButton, 3, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_ResetButton, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_ResetButton, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_Label4 = lv_label_create(ui_ResetButton);
+lv_obj_set_width( ui_Label4, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label4, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_align( ui_Label4, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label4,"Restart");
+
 lv_obj_add_event_cb(ui_ScreenBrightnessSlider, ui_event_ScreenBrightnessSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_FirmwareUpgradeButton, ui_event_FirmwareUpgradeButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_PolaritySwitch1, ui_event_PolaritySwitch1, LV_EVENT_ALL, NULL);
@@ -311,6 +337,7 @@ lv_obj_add_event_cb(ui_PolaritySwitch4, ui_event_PolaritySwitch4, LV_EVENT_ALL, 
 lv_obj_add_event_cb(ui_PolaritySwitch5, ui_event_PolaritySwitch5, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_PolaritySwitch6, ui_event_PolaritySwitch6, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_TempUnitSwitch, ui_event_TempUnitSwitch, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_ResetButton, ui_event_ResetButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_GeneralSettingsScreen, ui_event_GeneralSettingsScreen, LV_EVENT_ALL, NULL);
 
 }
