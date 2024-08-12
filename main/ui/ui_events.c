@@ -181,7 +181,6 @@ void init_tomatotent(lv_event_t * e)
 				
 		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
 		
-		// led brightness screen
 		err = nvs_get_u16(storage_handle, "led_brightness", &my_tent.led_brightness_slider_value);
         lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
 		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
@@ -314,8 +313,15 @@ void init_tomatotent(lv_event_t * e)
 		
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
-		if(my_tent.is_drying == 1)
+		if(my_tent.is_drying == 1) {
 			make_it_drying(false);
+			lv_obj_clear_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
+			lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_20, 0);
+		} else {
+			make_it_day(false);
+			lv_obj_add_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
+			lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_100, 0);
+		}
 			
         //is there an active grow/dry?
 		if(my_tent.seconds > 0 || my_tent.days > 0) {
@@ -398,8 +404,6 @@ void LEDBrightnessSlider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
 	my_tent.led_brightness_slider_value = lv_slider_get_value(target);
-	
-	//ESP_LOGI(TAG, "%d", led_brightness_slider_value);
 	
 	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value );
 	
@@ -684,13 +688,7 @@ void temp_unit_switch(lv_event_t * e)
 
 
 void start_grow(lv_event_t * e)
-{
-
-	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-    err = nvs_set_u8(storage_handle, "is_drying", 0);
-    err = nvs_commit(storage_handle);
-    nvs_close(storage_handle);
-    
+{    
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
@@ -699,16 +697,20 @@ void start_grow(lv_event_t * e)
 	make_it_day(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
-	
+	my_tent.led_brightness_slider_value = 80;
+	lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
+	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
+	lv_obj_add_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_100, 0);
+
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    err = nvs_set_u8(storage_handle, "is_drying", 0);
+    err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
 }
 
 void start_dry(lv_event_t * e)
-{	
-	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-    err = nvs_set_u8(storage_handle, "is_drying", 1);
-    err = nvs_commit(storage_handle);
-    nvs_close(storage_handle);
-    
+{	    
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
@@ -717,6 +719,17 @@ void start_dry(lv_event_t * e)
 	make_it_drying(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
+	my_tent.led_brightness_slider_value = 0;
+	lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
+	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
+	lv_obj_clear_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_20, 0);
+	
+	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+    err = nvs_set_u8(storage_handle, "is_drying", 1);
+	err = nvs_set_u16(storage_handle, "led_brightness", my_tent.led_brightness_slider_value);
+    err = nvs_commit(storage_handle);
+    nvs_close(storage_handle);
 }
 
 static void stop_grow_cb(lv_event_t * e)

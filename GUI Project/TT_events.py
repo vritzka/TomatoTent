@@ -206,3 +206,7 @@ def leave_lamp(event_struct):
 def updateDimmerPolarity(event_struct):
     return
 
+
+def restart_device(event_struct):
+    return
+

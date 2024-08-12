@@ -114,7 +114,6 @@ void make_it_day(bool count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
 	}
-
 }
 
 void make_it_night() {
@@ -123,6 +122,7 @@ void make_it_night() {
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
+	lv_slider_set_value(ui_LightDurationSlider, my_tent.light_duration_slider_value, LV_ANIM_OFF);
 }
 
 void make_it_drying(bool count_day) {
@@ -790,41 +790,50 @@ void setFanSpeed() {
 
 static uint16_t dimmer_brightness;
 void setGrowLampBrightness() {
-	
-	if(my_tent.is_day) {
-		
-		ESP_LOGI(TAG, "Daytime");
-		
-		if(my_tent.seconds < (15*60)) {  // sunrise
-			
-			ESP_LOGI(TAG, "Sunrise");
-			
-			dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * (my_tent.seconds/60);
-			
-		} else if( (my_tent.seconds >= (my_tent.day_period_seconds - (15*60)) ) ) {   // sunset
-		
-			ESP_LOGI(TAG, "Sunset");
-			dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * ((my_tent.day_period_seconds - my_tent.seconds)/60);
-			
-		} else {
-			
-			ESP_LOGI(TAG, "Normal Daytime");
-			dimmer_brightness = my_tent.led_brightness_slider_value; // normal daytime
-		}
-		
-		if(my_tent.grow_lamp_dimmed && dimmer_brightness > 15)
-			dimmer_brightness = 15;
-			
-	} else { // night
-		
-		ESP_LOGI(TAG, "Nighttime");
+
+	if(my_tent.is_drying) {
 		dimmer_brightness = 0;
+	} else {
+
+	
+		if(my_tent.is_day) {
+			
+			ESP_LOGI(TAG, "Daytime");
+			
+			if(my_tent.seconds < (15*60)) {  // sunrise
 				
+				ESP_LOGI(TAG, "Sunrise");
+				
+				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * (my_tent.seconds/60);
+				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (Sunrise)", my_tent.led_brightness_slider_value);
+
+			} else if( (my_tent.seconds >= (my_tent.day_period_seconds - (15*60)) ) ) {   // sunset
+			
+				ESP_LOGI(TAG, "Sunset");
+				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * ((my_tent.day_period_seconds - my_tent.seconds)/60);
+					lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (Sunset)", my_tent.led_brightness_slider_value);
+			} else {
+				
+				ESP_LOGI(TAG, "Normal Daytime");
+				dimmer_brightness = my_tent.led_brightness_slider_value; // normal daytime
+				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
+			}
+			
+			if(my_tent.grow_lamp_dimmed && dimmer_brightness > 15) {
+				dimmer_brightness = 15;
+				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (dimmed)", my_tent.led_brightness_slider_value);
+			}
+		} else { // night
+			
+			ESP_LOGI(TAG, "Nighttime");
+			dimmer_brightness = 0;
+			lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (night)", my_tent.led_brightness_slider_value);
+					
+		}
 	}
 	ESP_LOGI(TAG, "dimmer_brightness %d%%", dimmer_brightness);
 	
-	my_tent.dimmer_brightness_duty = (128-1)*((float)dimmer_brightness / 100);
-		
+	my_tent.dimmer_brightness_duty = (128-1)*((float)dimmer_brightness / 100);	
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, my_tent.dimmer_brightness_duty));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
 	
