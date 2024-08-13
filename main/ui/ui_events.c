@@ -389,16 +389,13 @@ void save_light_duration_screen(lv_event_t * e)
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else {
 		err = nvs_set_u16(storage_handle, "light_slider", my_tent.light_duration_slider_value);
+		err = nvs_set_u16(storage_handle, "led_brightness", my_tent.led_brightness_slider_value);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
 		err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds);
 		err = nvs_commit(storage_handle);
         nvs_close(storage_handle);
 	}
 }
-
-/////////////////////////////////////
-/////// LED Brightness Screen ///////
-/////////////////////////////////////
 
 void LEDBrightnessSlider(lv_event_t * e)
 {
@@ -410,24 +407,6 @@ void LEDBrightnessSlider(lv_event_t * e)
 	setGrowLampBrightness();
 }
 
-void save_led_brightness_screen(lv_event_t * e)
-{
-    err = nvs_open("storage", NVS_READWRITE, &storage_handle);
-    if (err != ESP_OK) {
-        printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-    } else {
-		
-		err = nvs_set_u16(storage_handle, "led_brightness", my_tent.led_brightness_slider_value);
-        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-		
-		err = nvs_commit(storage_handle);
-        //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-
-        // Close
-        nvs_close(storage_handle);	
-	}	
-	
-}
 
 void grow_lamp_dim(lv_event_t * e)
 {
@@ -724,6 +703,7 @@ void start_grow(lv_event_t * e)
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
 	err = nvs_set_u16(storage_handle, "light_slider", my_tent.light_duration_slider_value);
 	err = nvs_set_u32(storage_handle, "seconds", 0);
+	err = nvs_set_u16(storage_handle, "led_brightness", my_tent.led_brightness_slider_value);
     err = nvs_set_u8(storage_handle, "is_drying", 0);
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
