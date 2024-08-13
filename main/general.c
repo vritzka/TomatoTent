@@ -805,13 +805,13 @@ void setGrowLampBrightness() {
 				ESP_LOGI(TAG, "Sunrise");
 				
 				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * (my_tent.seconds/60);
-				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (Sunrise)", my_tent.led_brightness_slider_value);
+				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 
 			} else if( (my_tent.seconds >= (my_tent.day_period_seconds - (15*60)) ) ) {   // sunset
 			
 				ESP_LOGI(TAG, "Sunset");
 				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * ((my_tent.day_period_seconds - my_tent.seconds)/60);
-					lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (Sunset)", my_tent.led_brightness_slider_value);
+					lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 			} else {
 				
 				ESP_LOGI(TAG, "Normal Daytime");
@@ -821,13 +821,13 @@ void setGrowLampBrightness() {
 			
 			if(my_tent.grow_lamp_dimmed && dimmer_brightness > 15) {
 				dimmer_brightness = 15;
-				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (dimmed)", my_tent.led_brightness_slider_value);
+				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 			}
 		} else { // night
 			
 			ESP_LOGI(TAG, "Nighttime");
 			dimmer_brightness = 0;
-			lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %% (night)", my_tent.led_brightness_slider_value);
+			lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 					
 		}
 	}

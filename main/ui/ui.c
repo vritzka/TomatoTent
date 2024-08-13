@@ -94,8 +94,8 @@ lv_obj_t *ui_Image4;
 lv_obj_t *ui_LEDBrightnessLabel;
 lv_obj_t *ui_Panel10;
 lv_obj_t *ui_Image15;
-void ui_event_Button1( lv_event_t * e);
-lv_obj_t *ui_Button1;
+void ui_event_StopGrowButton( lv_event_t * e);
+lv_obj_t *ui_StopGrowButton;
 lv_obj_t *ui_Label22;
 lv_obj_t *ui_Panel4;
 void ui_event_DayDownButton( lv_event_t * e);
@@ -249,6 +249,7 @@ const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[2] = {&ui_img_1484485426, &ui_img_1130838376};
 const lv_img_dsc_t *ui_imgset_586263085[1] = {&ui_img_1319116584};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
+const lv_img_dsc_t *ui_imgset_619144037[1] = {&ui_img_427627908};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -611,7 +612,7 @@ if ( event_code == LV_EVENT_VALUE_CHANGED) {
       LEDBrightnessSlider( e );
 }
 }
-void ui_event_Button1( lv_event_t * e) {
+void ui_event_StopGrowButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       stop_grow( e );

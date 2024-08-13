@@ -48,7 +48,7 @@ lv_obj_set_style_border_opa(ui_LightDurationSlider, 100, LV_PART_MAIN| LV_STATE_
 lv_obj_set_style_border_width(ui_LightDurationSlider, 1, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_set_style_radius(ui_LightDurationSlider, 0, LV_PART_INDICATOR| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_LightDurationSlider, lv_color_hex(0xF6CF06), LV_PART_INDICATOR | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_LightDurationSlider, lv_color_hex(0xEBEB18), LV_PART_INDICATOR | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LightDurationSlider, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT);
 
 lv_obj_set_style_bg_color(ui_LightDurationSlider, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT );
@@ -197,22 +197,22 @@ lv_obj_set_align( ui_Image15, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image15, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image15, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
-ui_Button1 = lv_btn_create(ui_Panel10);
-lv_obj_set_width( ui_Button1, 100);
-lv_obj_set_height( ui_Button1, 50);
-lv_obj_set_x( ui_Button1, 31 );
-lv_obj_set_y( ui_Button1, 1 );
-lv_obj_set_align( ui_Button1, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Button1, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-lv_obj_clear_flag( ui_Button1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_Button1, lv_color_hex(0xFE7B0F), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Button1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_StopGrowButton = lv_btn_create(ui_Panel10);
+lv_obj_set_width( ui_StopGrowButton, 100);
+lv_obj_set_height( ui_StopGrowButton, 50);
+lv_obj_set_x( ui_StopGrowButton, 31 );
+lv_obj_set_y( ui_StopGrowButton, 1 );
+lv_obj_set_align( ui_StopGrowButton, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_StopGrowButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
+lv_obj_clear_flag( ui_StopGrowButton, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_bg_color(ui_StopGrowButton, lv_color_hex(0xFE7B0F), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_StopGrowButton, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Label22 = lv_label_create(ui_Button1);
+ui_Label22 = lv_label_create(ui_StopGrowButton);
 lv_obj_set_width( ui_Label22, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label22, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_align( ui_Label22, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label22,"Harvest");
+lv_label_set_text(ui_Label22,"Finish");
 lv_obj_set_style_text_font(ui_Label22, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel4 = lv_obj_create(ui_LightDurationScreen);
@@ -265,7 +265,7 @@ lv_obj_set_style_pad_top(ui_DayCounterLabel, 8, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_pad_bottom(ui_DayCounterLabel, 8, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_CalendarImage = lv_img_create(ui_Panel4);
-lv_img_set_src(ui_CalendarImage, &ui_img_appointment_png);
+lv_img_set_src(ui_CalendarImage, &ui_img_427627908);
 lv_obj_set_width( ui_CalendarImage, LV_SIZE_CONTENT);  /// 64
 lv_obj_set_height( ui_CalendarImage, LV_SIZE_CONTENT);   /// 64
 lv_obj_set_x( ui_CalendarImage, 0 );
@@ -277,7 +277,7 @@ lv_obj_clear_flag( ui_CalendarImage, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_add_event_cb(ui_LightDurationSlider, ui_event_LightDurationSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NowSlider, ui_event_NowSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_LEDBrightnessSlider, ui_event_LEDBrightnessSlider, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_Button1, ui_event_Button1, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_StopGrowButton, ui_event_StopGrowButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_DayDownButton, ui_event_DayDownButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_DayUpButton, ui_event_DayUpButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_LightDurationScreen, ui_event_LightDurationScreen, LV_EVENT_ALL, NULL);

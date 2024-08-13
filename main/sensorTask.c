@@ -65,9 +65,9 @@ ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number())
              vTaskDelay(500 / portTICK_PERIOD_MS);
              ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset(TEMPERATURE_OFFSET));
 
-    vTaskDelay(500 / portTICK_PERIOD_MS);
+            vTaskDelay(500 / portTICK_PERIOD_MS);
 
-   ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset(TEMPERATURE_OFFSET));
+            ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_set_temperature_offset(TEMPERATURE_OFFSET));
 
              vTaskDelay(500 / portTICK_PERIOD_MS);
              ESP_ERROR_CHECK_WITHOUT_ABORT(scd4x_persist_settings());

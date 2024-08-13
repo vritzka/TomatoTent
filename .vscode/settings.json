@@ -15,7 +15,7 @@
         "sstream": "c"
     },
     "idf.flashType": "UART",
-    "idf.port": "/dev/tty.usbserial-1420",
+    "idf.port": "/dev/tty.wchusbserial56580798311",
     "idf.openOcdConfigs": [
         "board/esp32s3-builtin.cfg"
     ]

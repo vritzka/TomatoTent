@@ -139,7 +139,7 @@ lv_obj_set_style_bg_opa(ui_Panel13, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_Panel13, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_fanSpeedSlider = lv_slider_create(ui_Panel13);
-lv_slider_set_range(ui_fanSpeedSlider, 5,100);
+lv_slider_set_range(ui_fanSpeedSlider, 10,100);
 lv_slider_set_mode(ui_fanSpeedSlider, LV_SLIDER_MODE_RANGE);
 lv_slider_set_value( ui_fanSpeedSlider, 20, LV_ANIM_OFF);
 if (lv_slider_get_mode(ui_fanSpeedSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_fanSpeedSlider, 5, LV_ANIM_OFF);

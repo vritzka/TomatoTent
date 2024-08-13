@@ -10478,7 +10478,7 @@
                     "strtype": "OBJECT/Position",
                     "intarray": [
                       0,
-                      55
+                      65
                     ],
                     "InheritedType": 7
                   },
@@ -10795,7 +10795,7 @@
                     "strtype": "OBJECT/Position",
                     "intarray": [
                       0,
-                      50
+                      54
                     ],
                     "InheritedType": 7
                   },
@@ -11107,7 +11107,7 @@
                     "strtype": "OBJECT/Position",
                     "intarray": [
                       0,
-                      -39
+                      -34
                     ],
                     "InheritedType": 7
                   },
@@ -11333,7 +11333,7 @@
                   {
                     "nid": -1859450644,
                     "strtype": "IMAGE/Asset",
-                    "strval": "assets/appointment.png",
+                    "strval": "assets/calendar-2.png",
                     "InheritedType": 5
                   },
                   {
@@ -11358,7 +11358,27 @@
                   },
                   {
                     "part": "lv.PART.MAIN",
-                    "childs": [],
+                    "childs": [
+                      {
+                        "nid": 1777290879,
+                        "strtype": "_style/StyleState",
+                        "strval": "DEFAULT",
+                        "childs": [
+                          {
+                            "nid": -1720069996,
+                            "strtype": "_style/Image_reColor",
+                            "intarray": [
+                              42,
+                              42,
+                              42,
+                              255
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      }
+                    ],
                     "nid": 1419025387,
                     "strtype": "IMAGE/Style_main",
                     "strval": "lv.PART.MAIN, Rectangle, Image",
@@ -12604,9 +12624,9 @@
                             "nid": 1909189175,
                             "strtype": "_style/Bg_Color",
                             "intarray": [
-                              246,
-                              207,
-                              6,
+                              235,
+                              235,
+                              24,
                               255
                             ],
                             "InheritedType": 7
@@ -17983,31 +18003,31 @@
                   {
                     "nid": -950079913,
                     "strtype": "IMGBUTTON/Image_pressed",
-                    "strval": "-",
+                    "strval": "",
                     "InheritedType": 5
                   },
                   {
                     "nid": 1481163934,
                     "strtype": "IMGBUTTON/Image_disabled",
-                    "strval": "-",
+                    "strval": "",
                     "InheritedType": 5
                   },
                   {
                     "nid": -1247786614,
                     "strtype": "IMGBUTTON/Image_checked_released",
-                    "strval": "-",
+                    "strval": "",
                     "InheritedType": 5
                   },
                   {
                     "nid": 745539245,
                     "strtype": "IMGBUTTON/Image_checked_pressed",
-                    "strval": "-",
+                    "strval": "",
                     "InheritedType": 5
                   },
                   {
                     "nid": -603829652,
                     "strtype": "IMGBUTTON/Image_checked_disabled",
-                    "strval": "-",
+                    "strval": "",
                     "InheritedType": 5
                   },
                   {
@@ -18706,7 +18726,7 @@
                   {
                     "nid": -727596181,
                     "strtype": "IMAGE/Asset",
-                    "strval": "assets/appointment.png",
+                    "strval": "assets/calendar-2.png",
                     "InheritedType": 5
                   },
                   {
@@ -32325,7 +32345,7 @@
                     "nid": -1780521924,
                     "strtype": "SLIDER/Range",
                     "intarray": [
-                      5,
+                      10,
                       100
                     ],
                     "InheritedType": 7
@@ -36565,31 +36585,31 @@
               {
                 "nid": -490764119,
                 "strtype": "IMGBUTTON/Image_pressed",
-                "strval": "",
+                "strval": "-",
                 "InheritedType": 5
               },
               {
                 "nid": -1767683456,
                 "strtype": "IMGBUTTON/Image_disabled",
-                "strval": "",
+                "strval": "-",
                 "InheritedType": 5
               },
               {
                 "nid": 436467790,
                 "strtype": "IMGBUTTON/Image_checked_released",
-                "strval": "",
+                "strval": "-",
                 "InheritedType": 5
               },
               {
                 "nid": -1613860809,
                 "strtype": "IMGBUTTON/Image_checked_pressed",
-                "strval": "",
+                "strval": "-",
                 "InheritedType": 5
               },
               {
                 "nid": 1263180610,
                 "strtype": "IMGBUTTON/Image_checked_disabled",
-                "strval": "",
+                "strval": "-",
                 "InheritedType": 5
               },
               {
@@ -47209,7 +47229,7 @@
                   {
                     "disabled": false,
                     "nid": 2046836819,
-                    "strtype": "BUTTON/EventHandler",
+                    "strtype": "_event/EventHandler",
                     "strval": "CLICKED",
                     "childs": [
                       {
@@ -50115,7 +50135,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 83,
+    "backup_cnt": 85,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

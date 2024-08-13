@@ -288,7 +288,8 @@ void init_tomatotent(lv_event_t * e)
 		lv_label_set_text_fmt(ui_FanSpeedMaxLabel, "%d %%", my_tent.fanspeed_slider_value);
 		lv_slider_set_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_value, LV_ANIM_OFF);
 		lv_slider_set_left_value(ui_fanSpeedSlider, my_tent.fanspeed_slider_left_value, LV_ANIM_OFF);
-		
+		setFanSpeed();
+
 		// Climate Screen
 		err = nvs_get_u8(storage_handle, "climate_mode", &my_tent.climate_mode);
 		err = nvs_get_u16(storage_handle, "sel_hum_index", &my_tent.target_humidity_sel_index);
@@ -387,7 +388,6 @@ void save_light_duration_screen(lv_event_t * e)
     if (err != ESP_OK) {
         printf("Error (%s) opening NVS handle!\n", esp_err_to_name(err));
     } else {
-		
 		err = nvs_set_u16(storage_handle, "light_slider", my_tent.light_duration_slider_value);
         //printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
 		err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds);
@@ -689,21 +689,41 @@ void temp_unit_switch(lv_event_t * e)
 
 void start_grow(lv_event_t * e)
 {    
-	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
+	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
 	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
 	start_http_timer();
 	make_it_day(true);
+	setFanSpeed();
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
+
+	my_tent.light_duration_slider_value	= 36;
+	lv_slider_set_value(ui_LightDurationSlider, my_tent.light_duration_slider_value, LV_ANIM_OFF);
+	lv_obj_add_flag(ui_LightDurationSlider, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_opa(ui_LightDurationSlider, LV_OPA_100, 0);
+	my_tent.light_duration = (float_t)my_tent.light_duration_slider_value / 2;
+	my_tent.day_period_seconds = my_tent.light_duration * 60 * 60;
+	
+	my_tent.dark_duration = 24 - my_tent.light_duration;
+
+	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1fh", my_tent.light_duration );
+	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1fh", my_tent.dark_duration );
+
 	my_tent.led_brightness_slider_value = 80;
 	lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
 	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 	lv_obj_add_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_100, 0);
+	setGrowLampBrightness();
+
+	my_tent.seconds = 0;
+	lv_slider_set_value(ui_NowSlider, 0, LV_ANIM_OFF);
 
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
+	err = nvs_set_u16(storage_handle, "light_slider", my_tent.light_duration_slider_value);
+	err = nvs_set_u32(storage_handle, "seconds", 0);
     err = nvs_set_u8(storage_handle, "is_drying", 0);
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -711,7 +731,7 @@ void start_grow(lv_event_t * e)
 
 void start_dry(lv_event_t * e)
 {	    
-	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0, &ui_HomeScreen_screen_init);
+	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
 	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
@@ -719,14 +739,32 @@ void start_dry(lv_event_t * e)
 	make_it_drying(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
+	setFanSpeed();
+
+	my_tent.light_duration_slider_value	= 0;
+	my_tent.light_duration = 0;
+	my_tent.day_period_seconds = 0;
+	my_tent.dark_duration = 24;	
+	lv_slider_set_value(ui_LightDurationSlider, my_tent.light_duration_slider_value, LV_ANIM_OFF);
+	lv_obj_clear_flag(ui_LightDurationSlider, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_set_style_opa(ui_LightDurationSlider, LV_OPA_20, 0);
+	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1fh", my_tent.light_duration );
+	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1fh", my_tent.dark_duration );
+
+	my_tent.seconds = 0;
+	lv_slider_set_value(ui_NowSlider, 0, LV_ANIM_OFF);
+
 	my_tent.led_brightness_slider_value = 0;
 	lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
 	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 	lv_obj_clear_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_20, 0);
+	setGrowLampBrightness();
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u8(storage_handle, "is_drying", 1);
+	err = nvs_set_u16(storage_handle, "light_slider", my_tent.light_duration_slider_value);
+	err = nvs_set_u32(storage_handle, "seconds", my_tent.seconds);
 	err = nvs_set_u16(storage_handle, "led_brightness", my_tent.led_brightness_slider_value);
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
@@ -735,10 +773,7 @@ void start_dry(lv_event_t * e)
 static void stop_grow_cb(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_current_target(e);
-    int id = lv_msgbox_get_active_btn(obj);
-
-    if(id != 0)
-		return;
+    //int id = lv_msgbox_get_active_btn(obj);
 	
 	lv_msgbox_close(obj);	
 	lv_anim_del_all();
@@ -770,9 +805,9 @@ static void stop_grow_cb(lv_event_t * e)
 
 void stop_grow(lv_event_t * e)
 {
-	static const char * btns[] = {"Finish it!", "No, go back.", ""};
+	static const char * btns[] = {"Yes, end", ""};
 
-    lv_obj_t * mbox1 = lv_msgbox_create(NULL, "Finished?", "This will end the current grow/dry.", btns, true);
+    lv_obj_t * mbox1 = lv_msgbox_create(NULL, "Finished?", "", btns, true);
     lv_obj_add_event_cb(mbox1, stop_grow_cb, LV_EVENT_VALUE_CHANGED, NULL);
     lv_obj_center(mbox1);
 	

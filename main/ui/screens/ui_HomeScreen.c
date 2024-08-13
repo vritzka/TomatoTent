@@ -276,7 +276,7 @@ ui_DayCounterMainLabel = lv_label_create(ui_DayCounterPanel);
 lv_obj_set_width( ui_DayCounterMainLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_DayCounterMainLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_DayCounterMainLabel, 0 );
-lv_obj_set_y( ui_DayCounterMainLabel, 55 );
+lv_obj_set_y( ui_DayCounterMainLabel, 65 );
 lv_obj_set_align( ui_DayCounterMainLabel, LV_ALIGN_TOP_MID );
 lv_label_set_text(ui_DayCounterMainLabel,"0");
 lv_obj_add_flag( ui_DayCounterMainLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
@@ -289,7 +289,7 @@ ui_TimeLeftLabel = lv_label_create(ui_DayCounterPanel);
 lv_obj_set_width( ui_TimeLeftLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_TimeLeftLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_TimeLeftLabel, 0 );
-lv_obj_set_y( ui_TimeLeftLabel, 50 );
+lv_obj_set_y( ui_TimeLeftLabel, 54 );
 lv_obj_set_align( ui_TimeLeftLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_TimeLeftLabel,"0 hr  00 min");
 lv_obj_add_flag( ui_TimeLeftLabel, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
@@ -298,14 +298,16 @@ lv_obj_set_style_text_align(ui_TimeLeftLabel, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN
 lv_obj_set_style_text_font(ui_TimeLeftLabel, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image1 = lv_img_create(ui_DayCounterPanel);
-lv_img_set_src(ui_Image1, &ui_img_appointment_png);
+lv_img_set_src(ui_Image1, &ui_img_427627908);
 lv_obj_set_width( ui_Image1, LV_SIZE_CONTENT);  /// 64
 lv_obj_set_height( ui_Image1, LV_SIZE_CONTENT);   /// 64
 lv_obj_set_x( ui_Image1, 0 );
-lv_obj_set_y( ui_Image1, -39 );
+lv_obj_set_y( ui_Image1, -34 );
 lv_obj_set_align( ui_Image1, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image1, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_img_recolor(ui_Image1, lv_color_hex(0x2A2A2A), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_Image1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_TemperaturePanel, ui_event_TemperaturePanel, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_HumidityPanel, ui_event_HumidityPanel, LV_EVENT_ALL, NULL);

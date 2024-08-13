@@ -96,8 +96,8 @@ extern lv_obj_t *ui_Image4;
 extern lv_obj_t *ui_LEDBrightnessLabel;
 extern lv_obj_t *ui_Panel10;
 extern lv_obj_t *ui_Image15;
-void ui_event_Button1( lv_event_t * e);
-extern lv_obj_t *ui_Button1;
+void ui_event_StopGrowButton( lv_event_t * e);
+extern lv_obj_t *ui_StopGrowButton;
 extern lv_obj_t *ui_Label22;
 extern lv_obj_t *ui_Panel4;
 void ui_event_DayDownButton( lv_event_t * e);
@@ -241,7 +241,7 @@ LV_IMG_DECLARE( ui_img_60476769);   // assets/fan-2.png
 LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_640654572);   // assets/sunglasses-2.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
-LV_IMG_DECLARE( ui_img_appointment_png);   // assets/appointment.png
+LV_IMG_DECLARE( ui_img_427627908);   // assets/calendar-2.png
 LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
