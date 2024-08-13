@@ -107,10 +107,18 @@ ESP_LOGI(TAG, "SCD40 Sensor serial number 0x%012llX", scd4x_get_serial_number())
      	for( ;; )
  	{
  		if( xSemaphoreTake( xSemaphore, pdMS_TO_TICKS(6000) ) == pdTRUE ) {
- 			ESP_LOGI(TAG, "Sensor");
+ 			
+            ESP_LOGI(TAG, "Sensor");
 
  			if(scd4x_read_measurement(&sensors_values) != ESP_OK) {
  				ESP_LOGE(TAG, "Sensors read measurement error!");
+                my_tent.temperature_c = 0;
+ 			    my_tent.temperature_f = 0;
+ 			    my_tent.humidity = 0;
+ 			    my_tent.co2 = 0;
+                my_tent.vpd = 0;
+                update_displayed_values();
+                setFanSpeed();
  				continue;
  			}
 

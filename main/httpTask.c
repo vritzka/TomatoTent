@@ -61,8 +61,9 @@ void stop_http_timer() {
 
 static void http_timer_callback(void* arg)
 {
-    if(my_tent.wifi_connected == 0)
+    if(my_tent.wifi_connected == 0 || my_tent.temperature_c == 0)
         return;
+
     time_t now;
     time(&now);
 

@@ -776,9 +776,14 @@ void setFanSpeed() {
 
 	//ESP_LOGI(TAG, "Fanspeed by Hum: %d%%", fan_speed_hum);
 
-	my_tent.fanspeed = fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp;
+	if(my_tent.seconds == 0) {
+		my_tent.fanspeed = 0;	
+	} else {
+		my_tent.fanspeed = fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp;
+	}
+
 	ESP_LOGI(TAG, "Fanspeed: %d%%", my_tent.fanspeed);
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_FAN_CHANNEL, (128-1)*((float)(fan_speed_hum > fan_speed_temp? fan_speed_hum:fan_speed_temp) / 100)));
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_FAN_CHANNEL, (128-1)*(float)my_tent.fanspeed / 100));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_FAN_CHANNEL));	
 
 }

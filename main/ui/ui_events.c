@@ -774,22 +774,24 @@ static void stop_grow_cb(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_current_target(e);
     //int id = lv_msgbox_get_active_btn(obj);
+
+	my_tent.days = 0;
+    my_tent.seconds = 0;
+    my_tent.is_drying = 0;
 	
 	lv_msgbox_close(obj);	
 	lv_anim_del_all();
 	ESP_ERROR_CHECK(gptimer_stop(gptimer));
 	ESP_ERROR_CHECK(gptimer_stop(sensorTimerHandle));
 	stop_http_timer();
-    
+	setFanSpeed();
+
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u32(storage_handle, "seconds", 0);
     err = nvs_set_u16(storage_handle, "days", 0);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
-    
-    my_tent.days = 0;
-    my_tent.seconds = 0;
-    my_tent.is_drying = 0;
+		
     
     lv_obj_set_pos(ui_tomato, 0,0);
     lv_obj_set_pos(ui_StartNewGrowButton, -590,-9);
