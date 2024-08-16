@@ -142,10 +142,7 @@ ota_end:
 
 
 void vStartOtaTask() {
-	   //xTaskCreate(&advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 5, NULL);
+	   xTaskCreate(&advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 5, NULL);
 	   ESP_LOGI(TAG, "Availabe MALLOC_CAP_8BIT: %d", heap_caps_get_free_size(MALLOC_CAP_8BIT));
 	   ESP_LOGI(TAG, "Largest Free Block MALLOC_CAP_8BIT: %d", heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
-	   
-	   //ESP_ERROR_CHECK(xTaskCreatePinnedToCore( advanced_ota_example_task, "advanced_ota_example_task", 1024 * 8, NULL, 1, NULL, 1 ));   
-
 }

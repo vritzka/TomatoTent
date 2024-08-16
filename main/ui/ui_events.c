@@ -363,7 +363,7 @@ void light_duration_slider(lv_event_t * e) {
 	
 	my_tent.dark_duration = 24 - my_tent.light_duration;
 
-	//ESP_LOGI(TAG, "%.1f", light_duration);
+	//ESP_LOGI(TAG, "%.1f", light_duration); 
 	
 	lv_label_set_text_fmt(ui_LightDurationLightLabel, "%.1fh", my_tent.light_duration );
 	lv_label_set_text_fmt(ui_LightDurationDarkLabel, "%.1fh", my_tent.dark_duration );
@@ -798,6 +798,7 @@ void stop_grow(lv_event_t * e)
 void software_upgrade_button(lv_event_t * e)
 {
 	   ESP_LOGI(TAG, "Software Update Button pressed");
+	   //vDeleteSensorTask();
 	   vStartOtaTask();
 }
 
