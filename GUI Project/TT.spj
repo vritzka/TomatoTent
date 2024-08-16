@@ -16614,7 +16614,7 @@
                       {
                         "nid": -914313156,
                         "strtype": "LABEL/Text",
-                        "strval": "Harvest",
+                        "strval": "Finish",
                         "InheritedType": 10
                       },
                       {
@@ -16655,7 +16655,7 @@
                   {
                     "nid": -790326765,
                     "strtype": "OBJECT/Name",
-                    "strval": "Button1",
+                    "strval": "StopGrowButton",
                     "InheritedType": 10
                   },
                   {
@@ -16998,7 +16998,8 @@
                     "InheritedType": 4
                   }
                 ],
-                "saved_objtypeKey": "BUTTON"
+                "saved_objtypeKey": "BUTTON",
+                "tree_closed": true
               }
             ],
             "locked": false,
@@ -19328,33 +19329,6 @@
             "strtype": "SCREEN/Style_scrollbar",
             "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
             "InheritedType": 11
-          },
-          {
-            "disabled": false,
-            "nid": 74777873,
-            "strtype": "_event/EventHandler",
-            "strval": "GESTURE_RIGHT(GESTURE)",
-            "childs": [
-              {
-                "nid": -494527378,
-                "strtype": "_custom/name",
-                "strval": "Event2",
-                "InheritedType": 10
-              },
-              {
-                "nid": -2046557080,
-                "strtype": "_custom/condition_C",
-                "strval": "",
-                "InheritedType": 10
-              },
-              {
-                "nid": -1540641979,
-                "strtype": "_custom/condition_P",
-                "strval": "",
-                "InheritedType": 10
-              }
-            ],
-            "InheritedType": 4
           },
           {
             "disabled": false,
@@ -50135,7 +50109,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 85,
+    "backup_cnt": 86,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
