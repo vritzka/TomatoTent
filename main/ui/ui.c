@@ -200,7 +200,6 @@ lv_obj_t *ui_ScreenBrightnessSlider;
 lv_obj_t *ui_ScreenBrightnessLabel;
 lv_obj_t *ui_SoftwareUpdatePanel;
 lv_obj_t *ui_CurrentVersionLabel;
-lv_obj_t *ui_SoftwareVersionsPanel;
 lv_obj_t *ui_UpgradeStatusBar;
 lv_obj_t *ui_Label10;
 void ui_event_FirmwareUpgradeButton( lv_event_t * e);
@@ -234,6 +233,7 @@ void ui_event_ResetButton( lv_event_t * e);
 lv_obj_t *ui_ResetButton;
 lv_obj_t *ui_Label4;
 lv_obj_t *ui____initial_actions0;
+const lv_img_dsc_t *ui_imgset_619144037[1] = {&ui_img_427627908};
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 const lv_img_dsc_t *ui_imgset_1798735081[2] = {&ui_img_17176521, &ui_img_1774250380};
@@ -249,7 +249,6 @@ const lv_img_dsc_t *ui_imgset_1975917571[1] = {&ui_img_640654572};
 const lv_img_dsc_t *ui_imgset_521497507[2] = {&ui_img_1484485426, &ui_img_1130838376};
 const lv_img_dsc_t *ui_imgset_586263085[1] = {&ui_img_1319116584};
 const lv_img_dsc_t *ui_imgset_1675718514[1] = {&ui_img_953604683};
-const lv_img_dsc_t *ui_imgset_619144037[1] = {&ui_img_427627908};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16

@@ -76,9 +76,9 @@ lv_label_set_text(ui_ScreenBrightnessLabel,"80%");
 
 ui_SoftwareUpdatePanel = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_set_width( ui_SoftwareUpdatePanel, 475);
-lv_obj_set_height( ui_SoftwareUpdatePanel, 171);
-lv_obj_set_x( ui_SoftwareUpdatePanel, 146 );
-lv_obj_set_y( ui_SoftwareUpdatePanel, -145 );
+lv_obj_set_height( ui_SoftwareUpdatePanel, 112);
+lv_obj_set_x( ui_SoftwareUpdatePanel, 145 );
+lv_obj_set_y( ui_SoftwareUpdatePanel, -173 );
 lv_obj_set_align( ui_SoftwareUpdatePanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_SoftwareUpdatePanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_SoftwareUpdatePanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -90,34 +90,22 @@ ui_CurrentVersionLabel = lv_label_create(ui_SoftwareUpdatePanel);
 lv_obj_set_width( ui_CurrentVersionLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_CurrentVersionLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_CurrentVersionLabel, -81 );
-lv_obj_set_y( ui_CurrentVersionLabel, 29 );
+lv_obj_set_y( ui_CurrentVersionLabel, -4 );
 lv_obj_set_align( ui_CurrentVersionLabel, LV_ALIGN_CENTER );
-lv_label_set_text(ui_CurrentVersionLabel,"Already on latest Version (");
-
-ui_SoftwareVersionsPanel = lv_obj_create(ui_SoftwareUpdatePanel);
-lv_obj_set_width( ui_SoftwareVersionsPanel, 300);
-lv_obj_set_height( ui_SoftwareVersionsPanel, 52);
-lv_obj_set_x( ui_SoftwareVersionsPanel, -61 );
-lv_obj_set_y( ui_SoftwareVersionsPanel, -24 );
-lv_obj_set_align( ui_SoftwareVersionsPanel, LV_ALIGN_CENTER );
-lv_obj_clear_flag( ui_SoftwareVersionsPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_SoftwareVersionsPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_SoftwareVersionsPanel, 30, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_border_color(ui_SoftwareVersionsPanel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_border_opa(ui_SoftwareVersionsPanel, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_label_set_text(ui_CurrentVersionLabel,"Already on latest Version");
 
 ui_UpgradeStatusBar = lv_bar_create(ui_SoftwareUpdatePanel);
 lv_obj_set_width( ui_UpgradeStatusBar, 250);
 lv_obj_set_height( ui_UpgradeStatusBar, 15);
-lv_obj_set_x( ui_UpgradeStatusBar, -73 );
-lv_obj_set_y( ui_UpgradeStatusBar, 62 );
+lv_obj_set_x( ui_UpgradeStatusBar, -75 );
+lv_obj_set_y( ui_UpgradeStatusBar, 34 );
 lv_obj_set_align( ui_UpgradeStatusBar, LV_ALIGN_CENTER );
 
 ui_Label10 = lv_label_create(ui_SoftwareUpdatePanel);
 lv_obj_set_width( ui_Label10, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label10, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label10, -62 );
-lv_obj_set_y( ui_Label10, -71 );
+lv_obj_set_x( ui_Label10, -71 );
+lv_obj_set_y( ui_Label10, -35 );
 lv_obj_set_align( ui_Label10, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label10,"Software Upgrade");
 lv_obj_set_style_text_font(ui_Label10, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -126,7 +114,7 @@ ui_FirmwareUpgradeButton = lv_btn_create(ui_SoftwareUpdatePanel);
 lv_obj_set_width( ui_FirmwareUpgradeButton, 100);
 lv_obj_set_height( ui_FirmwareUpgradeButton, 50);
 lv_obj_set_x( ui_FirmwareUpgradeButton, 155 );
-lv_obj_set_y( ui_FirmwareUpgradeButton, -23 );
+lv_obj_set_y( ui_FirmwareUpgradeButton, -1 );
 lv_obj_set_align( ui_FirmwareUpgradeButton, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_FirmwareUpgradeButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_FirmwareUpgradeButton, LV_OBJ_FLAG_SCROLLABLE );    /// Flags

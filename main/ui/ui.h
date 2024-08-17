@@ -194,7 +194,6 @@ extern lv_obj_t *ui_ScreenBrightnessSlider;
 extern lv_obj_t *ui_ScreenBrightnessLabel;
 extern lv_obj_t *ui_SoftwareUpdatePanel;
 extern lv_obj_t *ui_CurrentVersionLabel;
-extern lv_obj_t *ui_SoftwareVersionsPanel;
 extern lv_obj_t *ui_UpgradeStatusBar;
 extern lv_obj_t *ui_Label10;
 void ui_event_FirmwareUpgradeButton( lv_event_t * e);
