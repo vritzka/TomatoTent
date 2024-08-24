@@ -184,7 +184,8 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_u16(storage_handle, "led_brightness", &my_tent.led_brightness_slider_value);
         lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
 		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
-
+		setGrowLampBrightness();
+		
 		//day counter screen
 		err = nvs_get_u16(storage_handle, "days", &my_tent.days); 
 		lv_label_set_text_fmt(ui_DayCounterLabel, "%hu", my_tent.days);

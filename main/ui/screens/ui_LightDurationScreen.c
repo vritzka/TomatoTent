@@ -132,7 +132,7 @@ lv_obj_set_style_bg_opa(ui_Panel6, 20, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_Panel6, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_LEDBrightnessSlider = lv_slider_create(ui_Panel6);
-lv_slider_set_range(ui_LEDBrightnessSlider, 10,100);
+lv_slider_set_range(ui_LEDBrightnessSlider, 2,100);
 lv_slider_set_value( ui_LEDBrightnessSlider, 50, LV_ANIM_OFF);
 if (lv_slider_get_mode(ui_LEDBrightnessSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_LEDBrightnessSlider, 0, LV_ANIM_OFF);
 lv_obj_set_width( ui_LEDBrightnessSlider, 400);

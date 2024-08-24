@@ -62,9 +62,7 @@ void update_time_left(bool count_day) {
 		}
 		
 	} else {
-		
 		lv_label_set_text_fmt(ui_TimeLeftLabel, "- %lu", seconds_left_in_period);
-		
 	}
 	
 	if(my_tent.seconds % 300 == 0) {
@@ -837,7 +835,7 @@ void setGrowLampBrightness() {
 	}
 	ESP_LOGI(TAG, "dimmer_brightness %d%%", dimmer_brightness);
 	
-	my_tent.dimmer_brightness_duty = (128-1)*((float)dimmer_brightness / 100);	
+	my_tent.dimmer_brightness_duty = (64)*((float)dimmer_brightness / 100);	
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL, my_tent.dimmer_brightness_duty));
     ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_DIMMER_CHANNEL));	
 	
