@@ -91,8 +91,8 @@ extern lv_chart_series_t * chart_series_fanspeed;
 extern lv_chart_series_t * chart_series_co2;
 
 
-#define I2C_MASTER_SDA              (1)
-#define I2C_MASTER_SCL              (2)
+#define I2C_MASTER_SDA              (2)
+#define I2C_MASTER_SCL              (1)
 #define I2C_MASTER_RX_BUF_DISABLE   (0)
 #define I2C_MASTER_TX_BUF_DISABLE   (0)
 #define I2C_MASTER_FREQ_HZ          (60000)
@@ -106,9 +106,11 @@ extern lv_chart_series_t * chart_series_co2;
 #define I2C_BUS_0 (0)
 
 
-/*Frequency : 20KHZ
+/*
+Frequency : 20KHZ
 Voltage: 0-3.3V , 3.3v is full speed. 
-PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the lowest PWM signal should be 22%*/
+PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the lowest PWM signal should be 22%
+*/
 
 /*new one
 1, PWM speed regulation signal, frequency support range 1KHz-25KHz.

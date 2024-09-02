@@ -14935,7 +14935,7 @@
                     "nid": -1460760159,
                     "strtype": "SLIDER/Range",
                     "intarray": [
-                      10,
+                      2,
                       100
                     ],
                     "InheritedType": 7
