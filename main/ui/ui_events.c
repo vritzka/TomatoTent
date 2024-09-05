@@ -794,7 +794,10 @@ void stop_grow(lv_event_t * e)
 
 void software_upgrade_button(lv_event_t * e)
 {
-	   ESP_LOGI(TAG, "Software Update Button pressed");
+	   if(my_tent.wifi_connected != 1) {
+			lv_label_set_text(ui_CurrentVersionLabel, "Connect to WiFi first");
+			return;
+	   }
 	   //vDeleteSensorTask();
 	   vStartOtaTask();
 }

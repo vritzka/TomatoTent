@@ -563,6 +563,8 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         lv_label_set_text(ui_WifiStatusLabel, "connected"); 
+				lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
+
 		my_tent.wifi_connected = 1;
 		esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(2, ESP_SNTP_SERVER_LIST("time.windows.com", "pool.ntp.org" ) );
 		esp_netif_sntp_init(&config);
