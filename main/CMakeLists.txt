@@ -5,7 +5,6 @@ idf_component_register(SRCS "main.c"
 "timerTask.c"
 "general.c"
 "otaTask.c"
-"sensorTask.c"
 "esp_zigbee_gateway.c"
 ${SRC_UI}
 

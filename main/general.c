@@ -261,10 +261,8 @@ void read_scd40() {
 
 	float es;
     float ae;
-	
-	 ESP_LOGI(TAG, "Sensor");
 
-            ESP_LOGI(TAG,"%u", uxTaskGetStackHighWaterMark(NULL));
+	 ESP_LOGI(TAG, "Sensor");
 
  			if(scd4x_read_measurement(&sensors_values) != ESP_OK) {
  				ESP_LOGE(TAG, "Sensors read measurement error!");
