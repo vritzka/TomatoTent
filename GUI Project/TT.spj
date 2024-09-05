@@ -8284,7 +8284,6 @@
                   },
                   {
                     "nid": 1766440426,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -8351,7 +8350,7 @@
                   {
                     "nid": 1508311518,
                     "strtype": "OBJECT/Event_bubble",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -8585,7 +8584,6 @@
                   },
                   {
                     "nid": 561273946,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -8598,7 +8596,7 @@
                   {
                     "nid": -1422527170,
                     "strtype": "OBJECT/Clickable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -8610,19 +8608,19 @@
                   {
                     "nid": -953063646,
                     "strtype": "OBJECT/Press_lock",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
                     "nid": 1473298266,
                     "strtype": "OBJECT/Click_focusable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
                     "nid": -283414537,
                     "strtype": "OBJECT/Adv_hittest",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -8652,7 +8650,7 @@
                   {
                     "nid": 1531706289,
                     "strtype": "OBJECT/Event_bubble",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -8664,7 +8662,7 @@
                   {
                     "nid": -204067473,
                     "strtype": "OBJECT/Snappable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -9058,13 +9056,13 @@
               {
                 "nid": -1703573105,
                 "strtype": "OBJECT/Event_bubble",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
                 "nid": 975321365,
                 "strtype": "OBJECT/Gesture_bubble",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -19860,7 +19858,6 @@
               },
               {
                 "nid": -1837007686,
-                "flags": 1048576,
                 "strtype": "OBJECT/Flags",
                 "InheritedType": 1
               },
@@ -19873,7 +19870,7 @@
               {
                 "nid": -164380551,
                 "strtype": "OBJECT/Clickable",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -19885,13 +19882,13 @@
               {
                 "nid": 1042236999,
                 "strtype": "OBJECT/Press_lock",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
                 "nid": -859955684,
                 "strtype": "OBJECT/Click_focusable",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -19939,7 +19936,7 @@
               {
                 "nid": 220433387,
                 "strtype": "OBJECT/Snappable",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -27179,7 +27176,6 @@
                   },
                   {
                     "nid": -1670945714,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -27246,7 +27242,7 @@
                   {
                     "nid": -36206060,
                     "strtype": "OBJECT/Event_bubble",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -27480,7 +27476,6 @@
                   },
                   {
                     "nid": 1057661344,
-                    "flags": 1048576,
                     "strtype": "OBJECT/Flags",
                     "InheritedType": 1
                   },
@@ -27505,13 +27500,13 @@
                   {
                     "nid": 1090690865,
                     "strtype": "OBJECT/Press_lock",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
                     "nid": 791703191,
                     "strtype": "OBJECT/Click_focusable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -27547,7 +27542,7 @@
                   {
                     "nid": 1052308464,
                     "strtype": "OBJECT/Event_bubble",
-                    "strval": "False",
+                    "strval": "True",
                     "InheritedType": 2
                   },
                   {
@@ -27559,7 +27554,7 @@
                   {
                     "nid": 2074162134,
                     "strtype": "OBJECT/Snappable",
-                    "strval": "True",
+                    "strval": "False",
                     "InheritedType": 2
                   },
                   {
@@ -27861,13 +27856,13 @@
               {
                 "nid": 1924276362,
                 "strtype": "OBJECT/Event_bubble",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
                 "nid": -1653490182,
                 "strtype": "OBJECT/Gesture_bubble",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -35275,13 +35270,13 @@
               {
                 "nid": 105789850,
                 "strtype": "DROPDOWN/Show_selected",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
                 "nid": 475753751,
                 "strtype": "DROPDOWN/Base_text",
-                "strval": "Network",
+                "strval": "",
                 "InheritedType": 10
               },
               {
@@ -49589,7 +49584,7 @@
             },
             {
               "Value": 3600,
-              "Time": 2000.0,
+              "Time": 3000.0,
               "InheritedType": 1
             }
           ],
@@ -49649,7 +49644,7 @@
             {
               "nid": -262947959,
               "strtype": "PROPERTYANIMATION/Duration",
-              "integer": 2000,
+              "integer": 3000,
               "InheritedType": 6
             },
             {
@@ -49661,7 +49656,7 @@
             {
               "nid": 435602743,
               "strtype": "PROPERTYANIMATION/FullAnimationDuration",
-              "integer": 2000,
+              "integer": 3000,
               "InheritedType": 6
             },
             {
@@ -49801,7 +49796,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 86,
+    "backup_cnt": 87,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

@@ -133,7 +133,7 @@ void init_tomatotent(lv_event_t * e)
    my_tent.screen_brightness_slider_value = 80;
    my_tent.light_duration_slider_value = 36;
    my_tent.led_brightness_slider_value = 80;
-   my_tent.climate_mode=1;
+   my_tent.climate_mode=0;
    my_tent.target_humidity_sel_index = 4;
    my_tent.target_temperature_sel_index = 4;
    my_tent.fanspeed_slider_left_value = 20;

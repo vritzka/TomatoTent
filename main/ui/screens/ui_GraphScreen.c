@@ -28,6 +28,7 @@ lv_obj_set_height( ui_Chart, 378);
 lv_obj_set_x( ui_Chart, -6 );
 lv_obj_set_y( ui_Chart, 30 );
 lv_obj_set_align( ui_Chart, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_Chart, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 lv_chart_set_type( ui_Chart, LV_CHART_TYPE_LINE);
 lv_chart_set_point_count( ui_Chart, 144);
 lv_chart_set_range( ui_Chart, LV_CHART_AXIS_PRIMARY_Y, 5, 105);
@@ -281,8 +282,8 @@ lv_obj_set_height( ui_DimmerIconPanel2, 78);
 lv_obj_set_x( ui_DimmerIconPanel2, 0 );
 lv_obj_set_y( ui_DimmerIconPanel2, -283 );
 lv_obj_set_align( ui_DimmerIconPanel2, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
-lv_obj_clear_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM | LV_OBJ_FLAG_SCROLL_CHAIN );    /// Flags
+lv_obj_add_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_ADV_HITTEST | LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
+lv_obj_clear_flag( ui_DimmerIconPanel2, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM | LV_OBJ_FLAG_SCROLL_CHAIN );    /// Flags
 lv_obj_set_style_bg_color(ui_DimmerIconPanel2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_DimmerIconPanel2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_DimmerIconPanel2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -294,7 +295,7 @@ lv_obj_set_height( ui_Image18, LV_SIZE_CONTENT);   /// 32
 lv_obj_set_x( ui_Image18, 0 );
 lv_obj_set_y( ui_Image18, -8 );
 lv_obj_set_align( ui_Image18, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Image18, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_add_flag( ui_Image18, LV_OBJ_FLAG_ADV_HITTEST | LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
 lv_obj_clear_flag( ui_Image18, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_DimmerBar2 = lv_bar_create(ui_DimmerIconPanel2);
@@ -306,6 +307,8 @@ lv_obj_set_height( ui_DimmerBar2, 5);
 lv_obj_set_x( ui_DimmerBar2, 0 );
 lv_obj_set_y( ui_DimmerBar2, 23 );
 lv_obj_set_align( ui_DimmerBar2, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_DimmerBar2, LV_OBJ_FLAG_EVENT_BUBBLE );   /// Flags
+lv_obj_clear_flag( ui_DimmerBar2, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 lv_obj_set_style_radius(ui_DimmerBar2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_DimmerBar2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_DimmerBar2, 50, LV_PART_MAIN| LV_STATE_DEFAULT);
