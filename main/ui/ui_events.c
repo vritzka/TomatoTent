@@ -14,7 +14,6 @@
 #include "nvs.h"
 #include "general.h"
 #include "timerTask.h"
-#include "httpTask.h"
 #include "sensorTask.h"
 #include "otaTask.h"
 #include "ha/esp_zigbee_ha_standard.h"
@@ -138,6 +137,8 @@ void init_tomatotent(lv_event_t * e)
    my_tent.climate_mode=1;
    my_tent.target_humidity_sel_index = 4;
    my_tent.target_temperature_sel_index = 4;
+   my_tent.fanspeed_slider_left_value = 20;
+   my_tent.fanspeed_slider_value = 60;
    my_tent.elevation = 0;
    my_tent.temperature_offset = 4;
    my_tent.is_drying = 0;
@@ -157,6 +158,7 @@ void init_tomatotent(lv_event_t * e)
     } else { 
 	
 		draw_qr_codes();
+		init_scd40();
 		chart_init();
 		
 		// light duration screen
@@ -328,10 +330,8 @@ void init_tomatotent(lv_event_t * e)
         //is there an active grow/dry?
 		if(my_tent.seconds > 0 || my_tent.days > 0) {
 			ESP_LOGI(TAG, "Continuing existing Grow");
-			update_time_left(false);
+			heartbeat(false);
 			ESP_ERROR_CHECK(gptimer_start(gptimer));
-			ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
-			start_http_timer();
 			lv_scr_load(ui_HomeScreen);
 			fanspin_Animation(ui_Fan, 1000);
 			fanspin_Animation(ui_Fan2, 1000);
@@ -379,7 +379,7 @@ void now_slider(lv_event_t * e) {
 		return;
 	
 	my_tent.seconds = my_tent.now_slider_value*30*60;
-	update_time_left(false);
+	heartbeat(false);
 
 }
 
@@ -670,10 +670,9 @@ void temp_unit_switch(lv_event_t * e)
 void start_grow(lv_event_t * e)
 {    
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_HomeScreen_screen_init);
-	
+
+	read_scd40();
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
-	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
-	start_http_timer();
 	make_it_day(true);
 	setFanSpeed();
 	fanspin_Animation(ui_Fan, 1000);
@@ -715,8 +714,6 @@ void start_dry(lv_event_t * e)
 	_ui_screen_change( &ui_HomeScreen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_HomeScreen_screen_init);
 	
 	ESP_ERROR_CHECK(gptimer_start(gptimer));
-	ESP_ERROR_CHECK(gptimer_start(sensorTimerHandle));
-	start_http_timer();
 	make_it_drying(true);
 	fanspin_Animation(ui_Fan, 1000);
 	fanspin_Animation(ui_Fan2, 1000);
@@ -763,8 +760,6 @@ static void stop_grow_cb(lv_event_t * e)
 	lv_msgbox_close(obj);	
 	lv_anim_del_all();
 	ESP_ERROR_CHECK(gptimer_stop(gptimer));
-	ESP_ERROR_CHECK(gptimer_stop(sensorTimerHandle));
-	stop_http_timer();
 	setFanSpeed();
 
     err = nvs_open("storage", NVS_READWRITE, &storage_handle);

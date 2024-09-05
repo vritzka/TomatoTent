@@ -31,6 +31,7 @@ static bool IRAM_ATTR dimmer_timer_cb(gptimer_handle_t timer, const gptimer_alar
 // Task to be created.
 void vTimerTask( void * pvParameters )
 {
+    init_http_client();
 	
 	QueueHandle_t queue = xQueueCreate(10, sizeof(tent_data_t));
     if (!queue) {
@@ -89,7 +90,8 @@ void vTimerTask( void * pvParameters )
   {
         if (xQueueReceive(queue, &my_tent, pdMS_TO_TICKS(2000))) {
             ESP_LOGI(TAG, "Seconds, count=%lu", my_tent.seconds);
-            update_time_left(true);
+            ESP_LOGI(TAG,"Timer Memory Highwatermark: %u", uxTaskGetStackHighWaterMark(NULL));
+            heartbeat(true);
         } else {
             //ESP_LOGW(TAG, "Missed one count event or Timer stopped");
         }
@@ -102,7 +104,7 @@ void vStartTimerTask( void )
 {
   static uint8_t ucParameterToPass;
 
-  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 4096, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
+  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 2500, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
   configASSERT( xTimerTaskHandle );
 
 }

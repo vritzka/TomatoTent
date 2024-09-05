@@ -1,45 +1,76 @@
 dependencies:
   espressif/esp-serial-flasher:
-    component_hash: a681bba7b6404e1ee1d81af100b32777fe3b197acc19470941c0242f3dd17092
+    component_hash: dcc42a16712a1a636509cf0bf90e14032d7f2141784b533613b267b6aa318d52
+    dependencies: []
     source:
-      service_url: https://api.components.espressif.com/
+      registry_url: https://components.espressif.com/
       type: service
-    version: 0.4.3
+    version: 0.0.11
   espressif/esp-zboss-lib:
-    component_hash: 11a05772e4eef80824c4400b773ead2777be2b038c4b7b13ab4985bd13ee623d
+    component_hash: ceb89aaab088a3bc037c608bb7b7925e7116b0a7dda7c3476f44d9b06ff66c0a
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
     source:
-      service_url: https://api.components.espressif.com/
+      registry_url: https://components.espressif.com/
       type: service
-    version: 1.2.3
+    version: 1.5.0
   espressif/esp-zigbee-lib:
-    component_hash: b0c59518e72be7980f93580879d052f5b0fc8f20797ec1f111630435d320806e
+    component_hash: 238c29955025d3e4f430fd7243ad7f9f038b97775746032478f34532ad5979aa
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
     source:
-      service_url: https://api.components.espressif.com/
+      registry_url: https://components.espressif.com/
       type: service
-    version: 1.2.3
+    version: 1.5.0
   espressif/esp_lcd_touch:
     component_hash: 779b4ba2464a3ae85681e4b860caa5fdc35801458c23f3039ee761bae7f442a4
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4.2'
     source:
-      service_url: https://api.components.espressif.com/
+      registry_url: https://components.espressif.com/
       type: service
     version: 1.1.2
   espressif/esp_lcd_touch_gt911:
-    component_hash: 664c544533b91497f29b41e045bb4374a0d4d002f9d8c67c7c1bf43fb4179e3f
+    component_hash: f90c3f82f052d1ccdfd71895a062f396ccc1c90ec69d8a99c483180387230bac
+    dependencies:
+    - name: espressif/esp_lcd_touch
+      registry_url: https://components.espressif.com/
+      require: public
+      version: ^1.1.0
+    - name: idf
+      require: private
+      version: '>=4.4.2'
     source:
-      service_url: https://api.components.espressif.com/
+      registry_url: https://components.espressif.com/
       type: service
-    version: 1.1.1
+    version: 1.1.1~1
   espressif/esp_rcp_update:
-    component_hash: 61ea3dbd6d85a4e07d204fd8c7620a0c476d53f1bd94025126e24c632f87a51f
+    component_hash: 5bd5e45c7bddcbef55b7180819b056ba69a92e16ae705548f61dc0402b6d7ec7
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
     source:
-      service_url: https://api.components.espressif.com/
+      registry_url: https://components.espressif.com/
       type: service
-    version: 0.3.0
+    version: 0.3.1
   idf:
-    component_hash: null
     source:
       type: idf
-    version: 5.2.2
-manifest_hash: 50b71b35a3da55d4d511d6d4a079f209f51f2a84d02aeed53a760a01a4f3fde0
+    version: 5.3.0
+direct_dependencies:
+- espressif/esp-serial-flasher
+- espressif/esp-zboss-lib
+- espressif/esp-zigbee-lib
+- espressif/esp_lcd_touch_gt911
+- espressif/esp_rcp_update
+- idf
+manifest_hash: fa623a1664012261898c3fc5753bc47c7aad02f0cb80d212ea9fa1e2864ffb41
 target: esp32s3
-version: 1.0.0
+version: 2.0.0

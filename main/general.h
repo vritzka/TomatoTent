@@ -27,6 +27,8 @@
 #include "esp_netif_sntp.h"
 #include "esp_system.h"
 #include <math.h> 
+#include <unistd.h>
+#include <sys/param.h>
 #include "lwip/err.h"
 #include "lwip/sys.h"
 #include "esp_event.h"
@@ -38,6 +40,7 @@
 #include "timerTask.h"
 #include "esp_zigbee_gateway.h"
 #include <float.h>
+#include "cJSON.h"
 
 
 extern SemaphoreHandle_t xGuiSemaphore;
@@ -148,12 +151,13 @@ void wifi_init(void);
 void wifi_scan(void);
 void wifi_connect(void);
 void wifi_off(void);
-void update_time_left(bool count_day);
+void heartbeat(bool count_day);
 void make_it_day(bool count_day);
 void make_it_night();
 void make_it_drying(bool count_day);
 void draw_qr_codes();
-void readSensors();
+void init_scd40();
+void read_scd40();
 void setFanSpeed();
 void init_i2c();
 void setGrowLampBrightness();
@@ -162,5 +166,6 @@ void update_displayed_values();
 void chart_add_climate_point();
 void chart_init();
 long map(long x, long in_min, long in_max, long out_min, long out_max);
+void init_http_client();
 
 #endif

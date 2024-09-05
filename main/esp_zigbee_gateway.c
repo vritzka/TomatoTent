@@ -125,6 +125,7 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
                 ESP_LOGI(TAG, "Start network formation");
                 esp_zb_bdb_start_top_level_commissioning(ESP_ZB_BDB_MODE_NETWORK_FORMATION);
             } else {
+                esp_zb_bdb_open_network(180);
                 ESP_LOGI(TAG, "Device rebooted");
             }
         } else {
@@ -206,30 +207,6 @@ static esp_err_t check_ot_rcp_version(void)
 
 static void esp_zb_task(void *pvParameters)
 {
-
-///
-
-    esp_zb_platform_config_t config = {
-        .radio_config = ESP_ZB_DEFAULT_RADIO_CONFIG(),
-        .host_config = ESP_ZB_DEFAULT_HOST_CONFIG(),
-    };
-
-    ESP_ERROR_CHECK(esp_zb_platform_config(&config));
-    //ESP_ERROR_CHECK(nvs_flash_init());
-   // ESP_ERROR_CHECK(esp_netif_init());
-    //ESP_ERROR_CHECK(esp_event_loop_create_default());
-#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
-    ESP_ERROR_CHECK(esp_zb_gateway_console_init());
-#endif
-
-#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
-    esp_rcp_update_config_t rcp_update_config = ESP_ZB_RCP_UPDATE_CONFIG();
-    ESP_ERROR_CHECK(init_spiffs());
-    ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
-#endif
-
-///
-
 #if CONFIG_OPENTHREAD_SPINEL_ONLY
     esp_radio_spinel_register_rcp_failure_handler(rcp_error_handler, ESP_RADIO_SPINEL_ZIGBEE);
 #endif
@@ -240,13 +217,48 @@ static void esp_zb_task(void *pvParameters)
     ESP_ERROR_CHECK(check_ot_rcp_version());
 #endif
     esp_zb_set_primary_network_channel_set(ESP_ZB_PRIMARY_CHANNEL_MASK);
+    esp_zb_ep_list_t *ep_list = esp_zb_ep_list_create();
+    esp_zb_cluster_list_t *cluster_list = esp_zb_zcl_cluster_list_create();
+    esp_zb_endpoint_config_t endpoint_config = {
+        .endpoint = ESP_ZB_GATEWAY_ENDPOINT,
+        .app_profile_id = ESP_ZB_AF_HA_PROFILE_ID,
+        .app_device_id = ESP_ZB_HA_REMOTE_CONTROL_DEVICE_ID,
+        .app_device_version = 0,
+    };
+
+    esp_zb_attribute_list_t *basic_cluster = esp_zb_basic_cluster_create(NULL);
+    esp_zb_basic_cluster_add_attr(basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_MANUFACTURER_NAME_ID, ESP_MANUFACTURER_NAME);
+    esp_zb_basic_cluster_add_attr(basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_MODEL_IDENTIFIER_ID, ESP_MODEL_IDENTIFIER);
+    esp_zb_cluster_list_add_basic_cluster(cluster_list, basic_cluster, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
+    esp_zb_cluster_list_add_identify_cluster(cluster_list, esp_zb_identify_cluster_create(NULL), ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
+    esp_zb_ep_list_add_gateway_ep(ep_list, cluster_list, endpoint_config);
+    esp_zb_device_register(ep_list);
     ESP_ERROR_CHECK(esp_zb_start(false));
-    esp_zb_main_loop_iteration();
+    esp_zb_stack_main_loop();
     esp_rcp_update_deinit();
     vTaskDelete(NULL);
 }
 
-
 void vCreateZigbeeTask() {
+
+    esp_zb_platform_config_t config = {
+        .radio_config = ESP_ZB_DEFAULT_RADIO_CONFIG(),
+        .host_config = ESP_ZB_DEFAULT_HOST_CONFIG(),
+    };
+
+    ESP_ERROR_CHECK(esp_zb_platform_config(&config));
+//    ESP_ERROR_CHECK(nvs_flash_init());
+ //   ESP_ERROR_CHECK(esp_netif_init());
+//    ESP_ERROR_CHECK(esp_event_loop_create_default());
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    ESP_ERROR_CHECK(esp_zb_gateway_console_init());
+#endif
+
+#if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
+    esp_rcp_update_config_t rcp_update_config = ESP_ZB_RCP_UPDATE_CONFIG();
+    ESP_ERROR_CHECK(init_spiffs());
+    ESP_ERROR_CHECK(esp_rcp_update_init(&rcp_update_config));
+#endif
+
     xTaskCreate(esp_zb_task, "Zigbee_main", 8192, NULL, 5, NULL);
 }

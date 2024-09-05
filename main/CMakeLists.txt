@@ -7,7 +7,6 @@ idf_component_register(SRCS "main.c"
 "otaTask.c"
 "sensorTask.c"
 "esp_zigbee_gateway.c"
-"httpTask.c"
 ${SRC_UI}
 
 INCLUDE_DIRS "." "ui")

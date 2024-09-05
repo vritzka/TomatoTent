@@ -19,7 +19,6 @@
 #include "timerTask.h"
 #include "otaTask.h"
 #include "sensorTask.h"
-#include "httpTask.h"
 #include "general.h"
 #include "esp_zigbee_gateway.h"
 
@@ -51,7 +50,5 @@ void app_main(void)
    init_ledc();
    vStartGuiTask();
    vStartTimerTask();
-   vCreateSensorTask();
-   create_http_timer();
    //vCreateZigbeeTask();
 }
