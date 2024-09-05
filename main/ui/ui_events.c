@@ -14,7 +14,6 @@
 #include "nvs.h"
 #include "general.h"
 #include "timerTask.h"
-#include "sensorTask.h"
 #include "otaTask.h"
 #include "ha/esp_zigbee_ha_standard.h"
 
@@ -265,15 +264,17 @@ void init_tomatotent(lv_event_t * e)
 
 		//wifi screen
 		size_t required_size;
-		nvs_get_str(storage_handle, "ssid", NULL, &required_size);
-		char* ssid = malloc(required_size);
-		nvs_get_str(storage_handle, "ssid", ssid, &required_size);
-		
-		nvs_get_str(storage_handle, "pw", NULL, &required_size);
-		char* pw = malloc(required_size);
-		err = nvs_get_str(storage_handle, "pw", pw, &required_size);
-		if (err == ESP_OK)		
-			lv_textarea_set_text(ui_WifiPassword, pw);
+		err = nvs_get_str(storage_handle, "ssid", NULL, &required_size);
+		if(err == ESP_OK) {
+			char* ssid = malloc(required_size);
+			nvs_get_str(storage_handle, "ssid", ssid, &required_size);
+			
+			nvs_get_str(storage_handle, "pw", NULL, &required_size);
+			char* pw = malloc(required_size);
+			err = nvs_get_str(storage_handle, "pw", pw, &required_size);
+			if (err == ESP_OK)		
+				lv_textarea_set_text(ui_WifiPassword, pw);
+		}
 			
 		nvs_get_u16(storage_handle, "wifi", &my_tent.wifi);
 		if(my_tent.wifi == 1) {

@@ -12,7 +12,6 @@
 #include "esp_https_ota.h"
 #include "nvs.h"
 #include "nvs_flash.h"
-#include "sensorTask.h"
 //#include "protocol_examples_common.h"
 #include "esp_crt_bundle.h"
 

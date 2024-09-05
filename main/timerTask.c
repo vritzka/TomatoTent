@@ -104,7 +104,7 @@ void vStartTimerTask( void )
 {
   static uint8_t ucParameterToPass;
 
-  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 2500, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
+  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 3600, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
   configASSERT( xTimerTaskHandle );
 
 }

@@ -18,7 +18,6 @@
 #include "guiTask.h"
 #include "timerTask.h"
 #include "otaTask.h"
-#include "sensorTask.h"
 #include "general.h"
 #include "esp_zigbee_gateway.h"
 

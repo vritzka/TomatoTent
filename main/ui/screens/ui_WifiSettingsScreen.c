@@ -35,7 +35,7 @@ lv_obj_set_style_text_font(ui_WifiPassword, &lv_font_montserrat_16, LV_PART_MAIN
 
 ui_WifiDropdown = lv_dropdown_create(ui_WifiSettingsScreen);
 lv_dropdown_set_options( ui_WifiDropdown, "" );
-lv_dropdown_set_text( ui_WifiDropdown, "Network");
+lv_dropdown_set_selected_highlight( ui_WifiDropdown, false);
 lv_obj_set_width( ui_WifiDropdown, 218);
 lv_obj_set_height( ui_WifiDropdown, 45);
 lv_obj_set_x( ui_WifiDropdown, 0 );

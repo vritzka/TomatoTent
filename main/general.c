@@ -486,9 +486,9 @@ static EventGroupHandle_t s_wifi_event_group;
 #define ESP_WIFI_SAE_MODE WPA3_SAE_PWE_HUNT_AND_PECK
 //#define EXAMPLE_H2E_IDENTIFIER ""
 
-        uint16_t number = DEFAULT_SCAN_LIST_SIZE;
-        wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
-        uint16_t ap_count = 0;
+uint16_t number = DEFAULT_SCAN_LIST_SIZE;
+wifi_ap_record_t ap_info[DEFAULT_SCAN_LIST_SIZE];
+uint16_t ap_count = 0;
 
 static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {
@@ -538,7 +538,7 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 		if (ap_count == 0) {
 			lv_dropdown_add_option(ui_WifiDropdown, "No Wifi Networks found", 0);
 		} else if (saved_ssid_index != 232) {
-			lv_dropdown_set_selected(ui_WifiDropdown, saved_ssid_index);
+			//lv_dropdown_set_selected(ui_WifiDropdown, saved_ssid_index);
 		}
 		
 	}
@@ -1161,8 +1161,6 @@ static esp_err_t https_post_request(char post_data[])
 
 static void post_vital_data()
 {
-    ESP_LOGI(TAG,"httpTimer Highwatermark: %u", uxTaskGetStackHighWaterMark(NULL));
-
     if(my_tent.wifi_connected == 0 || my_tent.temperature_c == 0)
         return;
 
@@ -1249,7 +1247,7 @@ static void post_vital_data()
     fan_auto->next=fan_speed; 
 
     char *rendered=cJSON_Print(root);
-    ESP_LOGI(TAG, "JSON: %s", rendered);
+    //ESP_LOGI(TAG, "JSON: %s", rendered);
 
     https_post_request(rendered);
 }
