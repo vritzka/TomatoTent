@@ -19,6 +19,8 @@
 
 static const char *TAG = "ESP_ZB_GATEWAY";
 
+static esp_err_t esp_zcl_utility_add_ep_basic_manufacturer_info(esp_zb_ep_list_t *ep_list, uint8_t endpoint_id, zcl_basic_manufacturer_info_t *info);
+
 /* Production configuration app data */
 typedef struct app_production_config_s {
     uint16_t version;
@@ -26,30 +28,12 @@ typedef struct app_production_config_s {
     char manuf_name[16];
 } app_production_config_t;
 
-/* Note: Please select the correct console output port based on the development board in menuconfig */
-#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
-esp_err_t esp_zb_gateway_console_init(void)
-{
-    esp_err_t ret = ESP_OK;
-    /* Disable buffering on stdin */
-    setvbuf(stdin, NULL, _IONBF, 0);
+typedef struct light_bulb_device_params_s {
+    esp_zb_ieee_addr_t ieee_addr;
+    uint8_t  endpoint;
+    uint16_t short_addr;
+} light_bulb_device_params_t;
 
-    /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
-    esp_vfs_dev_usb_serial_jtag_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
-    /* Move the caret to the beginning of the next line on '\n' */
-    esp_vfs_dev_usb_serial_jtag_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
-
-    /* Enable non-blocking mode on stdin and stdout */
-    fcntl(fileno(stdout), F_SETFL, O_NONBLOCK);
-    fcntl(fileno(stdin), F_SETFL, O_NONBLOCK);
-
-    usb_serial_jtag_driver_config_t usb_serial_jtag_config = USB_SERIAL_JTAG_DRIVER_CONFIG_DEFAULT();
-    ret = usb_serial_jtag_driver_install(&usb_serial_jtag_config);
-    esp_vfs_usb_serial_jtag_use_driver();
-    esp_vfs_dev_uart_register();
-    return ret;
-}
-#endif
 
 #if(CONFIG_ZIGBEE_GW_AUTO_UPDATE_RCP)
 static void esp_zb_gateway_update_rcp(void)
@@ -94,6 +78,39 @@ static esp_err_t init_spiffs(void)
 static void bdb_start_top_level_commissioning_cb(uint8_t mode_mask)
 {
     ESP_RETURN_ON_FALSE(esp_zb_bdb_start_top_level_commissioning(mode_mask) == ESP_OK, , TAG, "Failed to start Zigbee bdb commissioning");
+}
+
+static void switch_bind_cb(esp_zb_zdp_status_t zdo_status, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Bound successfully!");
+        if (user_ctx) {
+            light_bulb_device_params_t *light = (light_bulb_device_params_t *)user_ctx;
+            ESP_LOGI(TAG, "The light originating from address(0x%x) on endpoint(%d)", light->short_addr, light->endpoint);
+            free(light);
+        }
+    }
+}
+
+static void switch_find_cb(esp_zb_zdp_status_t zdo_status, uint16_t addr, uint8_t endpoint, void *user_ctx)
+{
+    if (zdo_status == ESP_ZB_ZDP_STATUS_SUCCESS) {
+        ESP_LOGI(TAG, "Found light");
+        esp_zb_zdo_bind_req_param_t bind_req;
+        light_bulb_device_params_t *light = (light_bulb_device_params_t *)malloc(sizeof(light_bulb_device_params_t));
+        light->endpoint = endpoint;
+        light->short_addr = addr;
+        esp_zb_ieee_address_by_short(light->short_addr, light->ieee_addr);
+        esp_zb_get_long_address(bind_req.src_address);
+        bind_req.src_endp = HA_ONOFF_SWITCH_ENDPOINT;
+        bind_req.cluster_id = ESP_ZB_ZCL_CLUSTER_ID_ON_OFF;
+        bind_req.dst_addr_mode = ESP_ZB_ZDO_BIND_DST_ADDR_MODE_64_BIT_EXTENDED;
+        memcpy(bind_req.dst_address_u.addr_long, light->ieee_addr, sizeof(esp_zb_ieee_addr_t));
+        bind_req.dst_endp = endpoint;
+        bind_req.req_dst_addr = esp_zb_get_short_address(); /* TODO: Send bind request to self */
+        ESP_LOGI(TAG, "Try to bind On/Off");
+        esp_zb_zdo_device_bind_req(&bind_req, switch_bind_cb, (void *)light);
+    }
 }
 
 void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
@@ -145,6 +162,13 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
     case ESP_ZB_ZDO_SIGNAL_DEVICE_ANNCE:
         dev_annce_params = (esp_zb_zdo_signal_device_annce_params_t *)esp_zb_app_signal_get_params(p_sg_p);
         ESP_LOGI(TAG, "New device commissioned or rejoined (short: 0x%04hx)", dev_annce_params->device_short_addr);
+        
+        //switch
+        esp_zb_zdo_match_desc_req_param_t  cmd_req;
+        cmd_req.dst_nwk_addr = dev_annce_params->device_short_addr;
+        cmd_req.addr_of_interest = dev_annce_params->device_short_addr;
+        esp_zb_zdo_find_on_off_light(&cmd_req, switch_find_cb, NULL);
+        
         break;
     case ESP_ZB_NWK_SIGNAL_PERMIT_JOIN_STATUS:
         if (err_status == ESP_OK) {
@@ -224,6 +248,21 @@ static void esp_zb_task(void *pvParameters)
     esp_zb_cluster_list_add_identify_cluster(cluster_list, esp_zb_identify_cluster_create(NULL), ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
     esp_zb_ep_list_add_gateway_ep(ep_list, cluster_list, endpoint_config);
     esp_zb_device_register(ep_list);
+
+
+    //switch
+    esp_zb_on_off_switch_cfg_t switch_cfg = ESP_ZB_DEFAULT_ON_OFF_SWITCH_CONFIG();
+    esp_zb_ep_list_t *esp_zb_on_off_switch_ep = esp_zb_on_off_switch_ep_create(HA_ONOFF_SWITCH_ENDPOINT, &switch_cfg);
+    zcl_basic_manufacturer_info_t info = {
+        .manufacturer_name = ESP_MANUFACTURER_NAME,
+        .model_identifier = ESP_MODEL_IDENTIFIER,
+    };
+
+    esp_zcl_utility_add_ep_basic_manufacturer_info(esp_zb_on_off_switch_ep, HA_ONOFF_SWITCH_ENDPOINT, &info);
+    esp_zb_device_register(esp_zb_on_off_switch_ep);
+
+
+
     ESP_ERROR_CHECK(esp_zb_start(false));
     esp_zb_stack_main_loop();
     esp_rcp_update_deinit();
@@ -250,4 +289,32 @@ void vCreateZigbeeTask() {
 #endif
 
     xTaskCreate(esp_zb_task, "Zigbee_main", 8192, NULL, 5, NULL);
+}
+
+
+/**
+ * @brief Adds manufacturer information to the ZCL basic cluster of endpoint
+ * 
+ * @param[in] ep_list The pointer to the endpoint list with @p endpoint_id
+ * @param[in] endpoint_id The endpoint identifier indicating where the ZCL basic cluster resides
+ * @param[in] info The pointer to the basic manufacturer information
+ * @return
+ *      - ESP_OK: On success
+ *      - ESP_ERR_INVALID_ARG: Invalid argument
+ */
+static esp_err_t esp_zcl_utility_add_ep_basic_manufacturer_info(esp_zb_ep_list_t *ep_list, uint8_t endpoint_id, zcl_basic_manufacturer_info_t *info)
+{
+    esp_err_t ret = ESP_OK;
+    esp_zb_cluster_list_t *cluster_list = NULL;
+    esp_zb_attribute_list_t *basic_cluster = NULL;
+
+    cluster_list = esp_zb_ep_list_get_ep(ep_list, endpoint_id);
+    ESP_RETURN_ON_FALSE(cluster_list, ESP_ERR_INVALID_ARG, TAG, "Failed to find endpoint id: %d in list: %p", endpoint_id, ep_list);
+    basic_cluster = esp_zb_cluster_list_get_cluster(cluster_list, ESP_ZB_ZCL_CLUSTER_ID_BASIC, ESP_ZB_ZCL_CLUSTER_SERVER_ROLE);
+    ESP_RETURN_ON_FALSE(basic_cluster, ESP_ERR_INVALID_ARG, TAG, "Failed to find basic cluster in endpoint: %d", endpoint_id);
+    ESP_RETURN_ON_FALSE((info && info->manufacturer_name), ESP_ERR_INVALID_ARG, TAG, "Invalid manufacturer name");
+    ESP_ERROR_CHECK(esp_zb_basic_cluster_add_attr(basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_MANUFACTURER_NAME_ID, info->manufacturer_name));
+    ESP_RETURN_ON_FALSE((info && info->model_identifier), ESP_ERR_INVALID_ARG, TAG, "Invalid model identifier");
+    ESP_ERROR_CHECK(esp_zb_basic_cluster_add_attr(basic_cluster, ESP_ZB_ZCL_ATTR_BASIC_MODEL_IDENTIFIER_ID, info->model_identifier));
+    return ret;
 }

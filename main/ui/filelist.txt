@@ -5,7 +5,6 @@ screens/ui_GraphScreen.c
 screens/ui_ClimateControlScreen.c
 screens/ui_WifiSettingsScreen.c
 screens/ui_GeneralSettingsScreen.c
-screens/ui_Screen1.c
 screens/ui_ZigbeeScreen.c
 ui.c
 components/ui_comp_hook.c

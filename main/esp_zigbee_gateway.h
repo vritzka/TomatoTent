@@ -20,6 +20,7 @@
 
 #include "esp_err.h"
 #include "esp_zigbee_core.h"
+#include "ha/esp_zigbee_ha_standard.h"
 
 #include <fcntl.h>
 #include <string.h>
@@ -49,6 +50,7 @@
 /* Zigbee Configuration */
 #define MAX_CHILDREN                    10          /* the max amount of connected devices */
 #define INSTALLCODE_POLICY_ENABLE       false       /* enable the install code policy for security */
+#define HA_ONOFF_SWITCH_ENDPOINT        1  
 #define ESP_ZB_PRIMARY_CHANNEL_MASK     (1l << 13)  /* Zigbee primary channel mask use in the example */
 #define ESP_ZB_GATEWAY_ENDPOINT         1           /* Gateway endpoint identifier */
 #define APP_PROD_CFG_CURRENT_VERSION    0x0001      /* Production configuration version */
@@ -58,8 +60,21 @@
 #define HOST_RX_PIN_TO_RCP_TX           CONFIG_PIN_TO_RCP_TX
 #define HOST_TX_PIN_TO_RCP_RX           CONFIG_PIN_TO_RCP_RX
 
+/*! Maximum length of ManufacturerName string field */
+#define ESP_ZB_ZCL_CLUSTER_ID_BASIC_MANUFACTURER_NAME_MAX_LEN 32
+
+/*! Maximum length of ModelIdentifier string field */
+#define ESP_ZB_ZCL_CLUSTER_ID_BASIC_MODEL_IDENTIFIER_MAX_LEN 32
+
+/** optional basic manufacturer information */
+typedef struct zcl_basic_manufacturer_info_s {
+    char *manufacturer_name;
+    char *model_identifier;
+} zcl_basic_manufacturer_info_t;
+
+
 /* Basic manufacturer information */
-#define ESP_MANUFACTURER_NAME "\x09""ESPRESSIF"      /* Customized manufacturer name */
+#define ESP_MANUFACTURER_NAME "\x09""TENTI"      /* Customized manufacturer name */
 #define ESP_MODEL_IDENTIFIER "\x07"CONFIG_IDF_TARGET /* Customized model identifier */
 
 #define ESP_ZB_ZC_CONFIG()                                                              \

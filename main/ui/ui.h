@@ -226,11 +226,9 @@ extern lv_obj_t *ui_Container1;
 void ui_event_ResetButton( lv_event_t * e);
 extern lv_obj_t *ui_ResetButton;
 extern lv_obj_t *ui_Label4;
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-extern lv_obj_t *ui_Screen1;
 // SCREEN: ui_ZigbeeScreen
 void ui_ZigbeeScreen_screen_init(void);
+void ui_event_ZigbeeScreen( lv_event_t * e);
 extern lv_obj_t *ui_ZigbeeScreen;
 extern lv_obj_t *ui____initial_actions0;
 
