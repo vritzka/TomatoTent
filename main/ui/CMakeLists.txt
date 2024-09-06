@@ -5,6 +5,8 @@ SET(SOURCES screens/ui_SplashScreen.c
     screens/ui_ClimateControlScreen.c
     screens/ui_WifiSettingsScreen.c
     screens/ui_GeneralSettingsScreen.c
+    screens/ui_Screen1.c
+    screens/ui_ZigbeeScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c

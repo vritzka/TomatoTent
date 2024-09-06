@@ -76,7 +76,7 @@ void vTimerTask( void * pvParameters )
     };
     ESP_ERROR_CHECK(gptimer_register_event_callbacks(grow_lamp_dimmer_timer_handle, &dimmer_cbs, queue));
     
-    ESP_LOGI(TAG, "Enable Grow Lamp Dimmer  timer");
+    ESP_LOGI(TAG, "Enable Grow Lamp Dimmer timer");
     ESP_ERROR_CHECK(gptimer_enable(grow_lamp_dimmer_timer_handle));
     
 
@@ -90,8 +90,8 @@ void vTimerTask( void * pvParameters )
   {
         if (xQueueReceive(queue, &my_tent, pdMS_TO_TICKS(2000))) {
             ESP_LOGI(TAG, "Seconds, count=%lu", my_tent.seconds);
-            ESP_LOGI(TAG,"Timer Memory Highwatermark: %u", uxTaskGetStackHighWaterMark(NULL));
             heartbeat(true);
+            ESP_LOGI(TAG,"Timer Memory Highwatermark: %u", uxTaskGetStackHighWaterMark(NULL));
         } else {
             //ESP_LOGW(TAG, "Missed one count event or Timer stopped");
         }
@@ -104,7 +104,7 @@ void vStartTimerTask( void )
 {
   static uint8_t ucParameterToPass;
 
-  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 3600, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
+  xTaskCreatePinnedToCore( vTimerTask, "TIMERTASK", 4000, &ucParameterToPass, 10, &xTimerTaskHandle, 1 );
   configASSERT( xTimerTaskHandle );
 
 }

@@ -69,7 +69,7 @@ typedef struct {
 	uint16_t fanspeed_slider_left_value;
 	uint16_t fanspeed_slider_value;
 	uint16_t fanspeed;
-	uint8_t climate_mode; //0 = auto
+	uint8_t climate_mode; //1 = auto
 	uint16_t target_humidity_sel_index;
 	uint16_t target_temperature_sel_index;
 	uint8_t target_humidity;

@@ -105,15 +105,6 @@ void esp_zb_app_signal_handler(esp_zb_app_signal_t *signal_struct)
 
     switch (sig_type) {
     case ESP_ZB_ZDO_SIGNAL_SKIP_STARTUP:
-#if CONFIG_EXAMPLE_CONNECT_WIFI
-        ESP_RETURN_ON_FALSE(example_connect() == ESP_OK, , TAG, "Failed to connect to Wi-Fi");
-#if CONFIG_ESP_COEX_SW_COEXIST_ENABLE
-        ESP_RETURN_ON_FALSE(esp_wifi_set_ps(WIFI_PS_MIN_MODEM) == ESP_OK, , TAG, "Failed to set Wi-Fi minimum modem power save type");
-        esp_coex_wifi_i154_enable();
-#else
-        ESP_RETURN_ON_FALSE(esp_wifi_set_ps(WIFI_PS_NONE) == ESP_OK, , TAG, "Failed to set Wi-Fi no power save type");
-#endif
-#endif
         ESP_LOGI(TAG, "Initialize Zigbee stack");
         esp_zb_bdb_start_top_level_commissioning(ESP_ZB_BDB_MODE_INITIALIZATION);
         break;
@@ -247,9 +238,7 @@ void vCreateZigbeeTask() {
     };
 
     ESP_ERROR_CHECK(esp_zb_platform_config(&config));
-//    ESP_ERROR_CHECK(nvs_flash_init());
- //   ESP_ERROR_CHECK(esp_netif_init());
-//    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
 #if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
     ESP_ERROR_CHECK(esp_zb_gateway_console_init());
 #endif

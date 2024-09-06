@@ -133,7 +133,7 @@ void init_tomatotent(lv_event_t * e)
    my_tent.screen_brightness_slider_value = 80;
    my_tent.light_duration_slider_value = 36;
    my_tent.led_brightness_slider_value = 80;
-   my_tent.climate_mode=0;
+   my_tent.climate_mode=1;
    my_tent.target_humidity_sel_index = 4;
    my_tent.target_temperature_sel_index = 4;
    my_tent.fanspeed_slider_left_value = 20;
@@ -302,10 +302,10 @@ void init_tomatotent(lv_event_t * e)
 		lv_dropdown_set_selected(ui_HumidityDropdown, my_tent.target_humidity_sel_index);
 		lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
 		
-		if( my_tent.climate_mode == 1 ) { //manual climate
-			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
-		} else { //auto climate
+		if( my_tent.climate_mode == 1 ) { //auto climate
 			lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
+		} else { //manual climate
+			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
 		}
 		
 		set_target_climate();
@@ -593,10 +593,10 @@ void climate_mode_switch(lv_event_t * e)
 	lv_obj_t * target = lv_event_get_target(e);
 	
 	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) { //manual climate
-		my_tent.climate_mode = 1;
+		my_tent.climate_mode = 0;
 		lv_obj_clear_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 	} else { //auto climate
-		my_tent.climate_mode = 0;
+		my_tent.climate_mode = 1;
 		lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 	}
 	set_target_climate();
@@ -883,11 +883,12 @@ void updateDimmerPolarity(lv_event_t * e)
 	ESP_LOGI(TAG,"Dimmer Polarity: %s", value);
 	my_tent.dimmer_polarity = strtol(value, NULL, 2);
 
-    uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
 	ESP_LOGI(TAG,"Dimmer Polarity DEC: %d", my_tent.dimmer_polarity);
 	ESP_LOGI(TAG,"Dimmer Polarity HEX: %X", my_tent.dimmer_polarity);
 
-	i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+    uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
+	if(my_tent.is_day)
+		i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u16(storage_handle, "dimmer_polarity", my_tent.dimmer_polarity);

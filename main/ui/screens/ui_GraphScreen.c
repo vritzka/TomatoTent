@@ -9,8 +9,20 @@ void ui_GraphScreen_screen_init(void)
 {
 ui_GraphScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_GraphScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_GraphScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+ui_HomeSky2 = lv_img_create(ui_GraphScreen);
+lv_img_set_src(ui_HomeSky2, &ui_img_791711567);
+lv_obj_set_width( ui_HomeSky2, LV_SIZE_CONTENT);  /// 128
+lv_obj_set_height( ui_HomeSky2, LV_SIZE_CONTENT);   /// 128
+lv_obj_set_x( ui_HomeSky2, -283 );
+lv_obj_set_y( ui_HomeSky2, -87 );
+lv_obj_set_align( ui_HomeSky2, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_HomeSky2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_HomeSky2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_img_recolor(ui_HomeSky2, lv_color_hex(0x000000), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_HomeSky2, 100, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_bud = lv_img_create(ui_GraphScreen);
 lv_img_set_src(ui_bud, &ui_img_bud_png);
@@ -217,6 +229,8 @@ lv_obj_set_y( ui_Fan2, 0 );
 lv_obj_set_align( ui_Fan2, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Fan2, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Fan2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_img_recolor(ui_Fan2, lv_color_hex(0x9E9D9D), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_Fan2, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_FanSpeedLabel2 = lv_label_create(ui_FanspeedSeriesPanel);
 lv_obj_set_width( ui_FanSpeedLabel2, LV_SIZE_CONTENT);  /// 1

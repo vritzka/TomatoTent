@@ -9,12 +9,8 @@ void ui_LightDurationScreen_screen_init(void)
 {
 ui_LightDurationScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_LightDurationScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_LightDurationScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_LightDurationScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LightDurationScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_grad_color(ui_LightDurationScreen, lv_color_hex(0x0A002D), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_main_stop(ui_LightDurationScreen, 110, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_grad_stop(ui_LightDurationScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_grad_dir(ui_LightDurationScreen, LV_GRAD_DIR_HOR, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel8 = lv_obj_create(ui_LightDurationScreen);
 lv_obj_set_width( ui_Panel8, 745);
@@ -235,6 +231,8 @@ lv_obj_set_width( ui_DayDownButton, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_x( ui_DayDownButton, -90 );
 lv_obj_set_y( ui_DayDownButton, 0 );
 lv_obj_set_align( ui_DayDownButton, LV_ALIGN_CENTER );
+lv_obj_set_style_img_recolor(ui_DayDownButton, lv_color_hex(0x676767), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_DayDownButton, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor(ui_DayDownButton, lv_color_hex(0x242424), LV_PART_MAIN| LV_STATE_PRESSED);
 lv_obj_set_style_img_recolor_opa(ui_DayDownButton, 255, LV_PART_MAIN| LV_STATE_PRESSED);
 
@@ -245,6 +243,8 @@ lv_obj_set_width( ui_DayUpButton, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_x( ui_DayUpButton, 90 );
 lv_obj_set_y( ui_DayUpButton, 0 );
 lv_obj_set_align( ui_DayUpButton, LV_ALIGN_CENTER );
+lv_obj_set_style_img_recolor(ui_DayUpButton, lv_color_hex(0x676767), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_DayUpButton, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor(ui_DayUpButton, lv_color_hex(0x242424), LV_PART_MAIN| LV_STATE_PRESSED);
 lv_obj_set_style_img_recolor_opa(ui_DayUpButton, 255, LV_PART_MAIN| LV_STATE_PRESSED);
 
@@ -273,6 +273,8 @@ lv_obj_set_y( ui_CalendarImage, -15 );
 lv_obj_set_align( ui_CalendarImage, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_CalendarImage, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_CalendarImage, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_img_recolor(ui_CalendarImage, lv_color_hex(0x9E9D9D), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_CalendarImage, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_LightDurationSlider, ui_event_LightDurationSlider, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_NowSlider, ui_event_NowSlider, LV_EVENT_ALL, NULL);

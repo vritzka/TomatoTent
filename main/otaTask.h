@@ -12,16 +12,12 @@
 #include "esp_https_ota.h"
 #include "nvs.h"
 #include "nvs_flash.h"
-//#include "protocol_examples_common.h"
 #include "esp_crt_bundle.h"
 
 #if CONFIG_BOOTLOADER_APP_ANTI_ROLLBACK
 #include "esp_efuse.h"
 #endif
 
-#if CONFIG_EXAMPLE_CONNECT_WIFI
-#include "esp_wifi.h"
-#endif
 #include "esp_log.h"
 #include "general.h"
 

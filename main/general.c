@@ -113,9 +113,16 @@ void heartbeat(bool count_day) {
 void make_it_day(bool count_day) {
 	ESP_LOGI(TAG, "Making it Day");
 	my_tent.is_day = true;
-	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
-	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+    
+    lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x00081c), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x00081c), LV_PART_MAIN | LV_STATE_DEFAULT );
+
 	lv_img_set_src(ui_HomeSky, &ui_img_791711567);
+    lv_img_set_src(ui_HomeSky2, &ui_img_791711567);
+    
+    uint8_t write_buf[2] = {2, my_tent.dimmer_polarity};
+	i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+
 	if(count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
@@ -125,19 +132,25 @@ void make_it_day(bool count_day) {
 void make_it_night() {
 	ESP_LOGI(TAG, "Making it Night");
 	my_tent.is_day = false;
-	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
-	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x0E114D), LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
+
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
+    lv_img_set_src(ui_HomeSky2, &ui_img_432815713);
 	lv_slider_set_value(ui_LightDurationSlider, my_tent.light_duration_slider_value, LV_ANIM_OFF);
+    uint8_t write_buf[2] = {2, 0x00};
+    i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 }
 
 void make_it_drying(bool count_day) {
 	ESP_LOGI(TAG, "Making it Drying");
 	my_tent.is_day = false;
 	my_tent.is_drying = true;
-	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x6f623c), LV_PART_MAIN | LV_STATE_DEFAULT );
-	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x6f623c), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x280030), LV_PART_MAIN | LV_STATE_DEFAULT );
+	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x280030), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_bud_png);
+    uint8_t write_buf[2] = {2, 0x00};
+    i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 	if(count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
 		increase_day_counter(NULL);
@@ -165,7 +178,7 @@ void update_temp_units(uint16_t temp_unit) {
 
 void set_target_climate() {
 
-	if(my_tent.climate_mode == 1) { //manual
+	if(my_tent.climate_mode == 0) { //manual
 		
 		ESP_LOGI(TAG, "Manual Climate");
 		static char buf[3];
@@ -563,7 +576,6 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         lv_label_set_text(ui_WifiStatusLabel, "connected"); 
-				lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
 
 		my_tent.wifi_connected = 1;
 		esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(2, ESP_SNTP_SERVER_LIST("time.windows.com", "pool.ntp.org" ) );
@@ -937,6 +949,7 @@ void setGrowLampBrightness() {
 					
 		}
 	}
+
 	ESP_LOGI(TAG, "dimmer_brightness %d%%", dimmer_brightness);
 	
 	my_tent.dimmer_brightness_duty = (64)*((float)dimmer_brightness / 100);	
@@ -1236,7 +1249,7 @@ static void post_vital_data()
     sprintf(buf,"devices.%s.fan_auto", my_tent.device_id);
     cJSON_AddItemToObject(fan_auto, "name", cJSON_CreateString(buf));
     cJSON_AddNumberToObject(fan_auto,"interval", 60);
-    my_tent.climate_mode ? cJSON_AddNumberToObject(fan_auto,"value", 0) : cJSON_AddNumberToObject(fan_auto,"value", 1);
+    my_tent.climate_mode ? cJSON_AddNumberToObject(fan_auto,"value", 1) : cJSON_AddNumberToObject(fan_auto,"value", 0);
     cJSON_AddNumberToObject(fan_auto,"time", now);
     period_progress->next=fan_auto; 
 

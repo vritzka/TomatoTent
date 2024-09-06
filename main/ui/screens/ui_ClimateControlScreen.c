@@ -9,7 +9,7 @@ void ui_ClimateControlScreen_screen_init(void)
 {
 ui_ClimateControlScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_ClimateControlScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_ClimateControlScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_ClimateControlScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_ClimateControlScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image14 = lv_img_create(ui_ClimateControlScreen);
@@ -47,7 +47,7 @@ lv_dropdown_set_options( ui_HumidityDropdown, "10%\n20%\n25%\n30%\n35%\n40%\n45%
 lv_obj_set_width( ui_HumidityDropdown, 100);
 lv_obj_set_height( ui_HumidityDropdown, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_HumidityDropdown, 0 );
-lv_obj_set_y( ui_HumidityDropdown, -125 );
+lv_obj_set_y( ui_HumidityDropdown, -122 );
 lv_obj_set_align( ui_HumidityDropdown, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_HumidityDropdown, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_HumidityDropdown, LV_OBJ_FLAG_GESTURE_BUBBLE );    /// Flags
@@ -72,7 +72,7 @@ lv_dropdown_set_options( ui_TemperatureDropdown, "" );
 lv_obj_set_width( ui_TemperatureDropdown, 100);
 lv_obj_set_height( ui_TemperatureDropdown, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_TemperatureDropdown, 0 );
-lv_obj_set_y( ui_TemperatureDropdown, 20 );
+lv_obj_set_y( ui_TemperatureDropdown, 23 );
 lv_obj_set_align( ui_TemperatureDropdown, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_TemperatureDropdown, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_TemperatureDropdown, LV_OBJ_FLAG_GESTURE_BUBBLE );    /// Flags
@@ -105,27 +105,20 @@ lv_obj_set_style_border_width(ui_Panel2, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 ui_ClimateModeSwitch = lv_switch_create(ui_Panel2);
 lv_obj_set_width( ui_ClimateModeSwitch, 50);
 lv_obj_set_height( ui_ClimateModeSwitch, 25);
+lv_obj_set_x( ui_ClimateModeSwitch, 51 );
+lv_obj_set_y( ui_ClimateModeSwitch, 0 );
 lv_obj_set_align( ui_ClimateModeSwitch, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_ClimateModeSwitch, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 
 
-ui_Label19 = lv_label_create(ui_Panel2);
-lv_obj_set_width( ui_Label19, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label19, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label19, -67 );
-lv_obj_set_y( ui_Label19, 0 );
-lv_obj_set_align( ui_Label19, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label19,"Auto");
-lv_obj_set_style_text_font(ui_Label19, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
-
-ui_Label20 = lv_label_create(ui_Panel2);
-lv_obj_set_width( ui_Label20, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label20, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label20, 59 );
-lv_obj_set_y( ui_Label20, 0 );
-lv_obj_set_align( ui_Label20, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label20,"Manu");
-lv_obj_set_style_text_font(ui_Label20, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_ClimateModeLabel = lv_label_create(ui_Panel2);
+lv_obj_set_width( ui_ClimateModeLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_ClimateModeLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_ClimateModeLabel, -34 );
+lv_obj_set_y( ui_ClimateModeLabel, 0 );
+lv_obj_set_align( ui_ClimateModeLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_ClimateModeLabel,"Automatic");
+lv_obj_set_style_text_font(ui_ClimateModeLabel, &lv_font_montserrat_16, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel13 = lv_obj_create(ui_ClimateControlScreen);
 lv_obj_set_width( ui_Panel13, 177);

@@ -110,6 +110,7 @@ lv_obj_t *ui_CalendarImage;
 void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen( lv_event_t * e);
 lv_obj_t *ui_GraphScreen;
+lv_obj_t *ui_HomeSky2;
 lv_obj_t *ui_bud;
 lv_obj_t *ui_Chart;
 void ui_event_TempSeriesPanel( lv_event_t * e);
@@ -157,8 +158,7 @@ lv_obj_t *ui_Label17;
 lv_obj_t *ui_Panel2;
 void ui_event_ClimateModeSwitch( lv_event_t * e);
 lv_obj_t *ui_ClimateModeSwitch;
-lv_obj_t *ui_Label19;
-lv_obj_t *ui_Label20;
+lv_obj_t *ui_ClimateModeLabel;
 lv_obj_t *ui_Panel13;
 void ui_event_fanSpeedSlider( lv_event_t * e);
 lv_obj_t *ui_fanSpeedSlider;
@@ -232,6 +232,16 @@ lv_obj_t *ui_Container1;
 void ui_event_ResetButton( lv_event_t * e);
 lv_obj_t *ui_ResetButton;
 lv_obj_t *ui_Label4;
+
+
+// SCREEN: ui_Screen1
+void ui_Screen1_screen_init(void);
+lv_obj_t *ui_Screen1;
+
+
+// SCREEN: ui_ZigbeeScreen
+void ui_ZigbeeScreen_screen_init(void);
+lv_obj_t *ui_ZigbeeScreen;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_619144037[1] = {&ui_img_427627908};
 const lv_img_dsc_t *ui_imgset_37643851[1] = {&ui_img_713338696};
@@ -826,6 +836,8 @@ ui_GraphScreen_screen_init();
 ui_ClimateControlScreen_screen_init();
 ui_WifiSettingsScreen_screen_init();
 ui_GeneralSettingsScreen_screen_init();
+ui_Screen1_screen_init();
+ui_ZigbeeScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_SplashScreen);
 }

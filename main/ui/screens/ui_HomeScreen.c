@@ -9,7 +9,7 @@ void ui_HomeScreen_screen_init(void)
 {
 ui_HomeScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_HomeScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_HomeScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_HomeSky = lv_img_create(ui_HomeScreen);
@@ -166,6 +166,8 @@ lv_obj_set_y( ui_Fan, -16 );
 lv_obj_set_align( ui_Fan, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Fan, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Fan, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_img_recolor(ui_Fan, lv_color_hex(0x9E9D9D), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_Fan, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_WifiIcon = lv_imgbtn_create(ui_HomeScreen);
 lv_imgbtn_set_src(ui_WifiIcon, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_wifi_png, NULL);
@@ -268,7 +270,7 @@ lv_obj_set_x( ui_DayCounterPanel, 8 );
 lv_obj_set_y( ui_DayCounterPanel, -127 );
 lv_obj_set_align( ui_DayCounterPanel, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_DayCounterPanel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_DayCounterPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_DayCounterPanel, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_DayCounterPanel, 30, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_border_width(ui_DayCounterPanel, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_bg_color(ui_DayCounterPanel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_PRESSED );
@@ -308,7 +310,7 @@ lv_obj_set_y( ui_Image1, -34 );
 lv_obj_set_align( ui_Image1, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image1, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_img_recolor(ui_Image1, lv_color_hex(0x2A2A2A), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor(ui_Image1, lv_color_hex(0x9E9D9D), LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_img_recolor_opa(ui_Image1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_TemperaturePanel, ui_event_TemperaturePanel, LV_EVENT_ALL, NULL);

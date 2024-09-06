@@ -9,7 +9,7 @@ void ui_GeneralSettingsScreen_screen_init(void)
 {
 ui_GeneralSettingsScreen = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_GeneralSettingsScreen, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_GeneralSettingsScreen, lv_color_hex(0x28652A), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_color(ui_GeneralSettingsScreen, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_GeneralSettingsScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image20 = lv_img_create(ui_GeneralSettingsScreen);
@@ -216,6 +216,8 @@ lv_obj_set_align( ui_Image17, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image17, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image17, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_img_set_angle(ui_Image17,900);
+lv_obj_set_style_img_recolor(ui_Image17, lv_color_hex(0xC6C6C6), LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_img_recolor_opa(ui_Image17, 225, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Container2 = lv_obj_create(ui_GeneralSettingsScreen);
 lv_obj_remove_style_all(ui_Container2);
