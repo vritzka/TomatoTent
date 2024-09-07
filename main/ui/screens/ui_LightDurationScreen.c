@@ -30,7 +30,7 @@ lv_slider_set_range(ui_LightDurationSlider, 0,48);
 lv_slider_set_value( ui_LightDurationSlider, 20, LV_ANIM_OFF);
 if (lv_slider_get_mode(ui_LightDurationSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_LightDurationSlider, 0, LV_ANIM_OFF);
 lv_obj_set_width( ui_LightDurationSlider, 400);
-lv_obj_set_height( ui_LightDurationSlider, 30);
+lv_obj_set_height( ui_LightDurationSlider, 20);
 lv_obj_set_x( ui_LightDurationSlider, -18 );
 lv_obj_set_y( ui_LightDurationSlider, -24 );
 lv_obj_set_align( ui_LightDurationSlider, LV_ALIGN_CENTER );
@@ -49,7 +49,6 @@ lv_obj_set_style_bg_opa(ui_LightDurationSlider, 255, LV_PART_INDICATOR| LV_STATE
 
 lv_obj_set_style_bg_color(ui_LightDurationSlider, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LightDurationSlider, 255, LV_PART_KNOB| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_img_src( ui_LightDurationSlider, &ui_img_303216376, LV_PART_KNOB | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_img_opa(ui_LightDurationSlider, 255, LV_PART_KNOB| LV_STATE_DEFAULT);
 
 ui_NowSlider = lv_slider_create(ui_Panel8);
@@ -132,8 +131,8 @@ lv_slider_set_range(ui_LEDBrightnessSlider, 2,100);
 lv_slider_set_value( ui_LEDBrightnessSlider, 50, LV_ANIM_OFF);
 if (lv_slider_get_mode(ui_LEDBrightnessSlider)==LV_SLIDER_MODE_RANGE ) lv_slider_set_left_value( ui_LEDBrightnessSlider, 0, LV_ANIM_OFF);
 lv_obj_set_width( ui_LEDBrightnessSlider, 400);
-lv_obj_set_height( ui_LEDBrightnessSlider, 30);
-lv_obj_set_x( ui_LEDBrightnessSlider, 50 );
+lv_obj_set_height( ui_LEDBrightnessSlider, 20);
+lv_obj_set_x( ui_LEDBrightnessSlider, -15 );
 lv_obj_set_y( ui_LEDBrightnessSlider, 0 );
 lv_obj_set_align( ui_LEDBrightnessSlider, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_LEDBrightnessSlider, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
@@ -148,7 +147,6 @@ lv_obj_set_style_bg_opa(ui_LEDBrightnessSlider, 255, LV_PART_INDICATOR| LV_STATE
 
 lv_obj_set_style_bg_color(ui_LEDBrightnessSlider, lv_color_hex(0xFFFFFF), LV_PART_KNOB | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_LEDBrightnessSlider, 255, LV_PART_KNOB| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_img_src( ui_LEDBrightnessSlider, &ui_img_303216376, LV_PART_KNOB | LV_STATE_DEFAULT );
 
 ui_Image4 = lv_img_create(ui_Panel6);
 lv_img_set_src(ui_Image4, &ui_img_1756057095);
@@ -159,15 +157,6 @@ lv_obj_set_y( ui_Image4, 0 );
 lv_obj_set_align( ui_Image4, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Image4, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_Image4, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-
-ui_LEDBrightnessLabel = lv_label_create(ui_Panel6);
-lv_obj_set_width( ui_LEDBrightnessLabel, LV_SIZE_CONTENT);  /// 0
-lv_obj_set_height( ui_LEDBrightnessLabel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_LEDBrightnessLabel, 124 );
-lv_obj_set_y( ui_LEDBrightnessLabel, 0 );
-lv_obj_set_align( ui_LEDBrightnessLabel, LV_ALIGN_LEFT_MID );
-lv_label_set_text(ui_LEDBrightnessLabel,"10%");
-lv_obj_set_style_text_font(ui_LEDBrightnessLabel, &lv_font_montserrat_20, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel10 = lv_obj_create(ui_LightDurationScreen);
 lv_obj_set_width( ui_Panel10, 250);

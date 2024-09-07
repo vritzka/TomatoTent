@@ -91,7 +91,6 @@ lv_obj_t *ui_Panel6;
 void ui_event_LEDBrightnessSlider( lv_event_t * e);
 lv_obj_t *ui_LEDBrightnessSlider;
 lv_obj_t *ui_Image4;
-lv_obj_t *ui_LEDBrightnessLabel;
 lv_obj_t *ui_Panel10;
 lv_obj_t *ui_Image15;
 void ui_event_StopGrowButton( lv_event_t * e);
@@ -197,7 +196,6 @@ lv_obj_t *ui_Panel12;
 lv_obj_t *ui_Label24;
 void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 lv_obj_t *ui_ScreenBrightnessSlider;
-lv_obj_t *ui_ScreenBrightnessLabel;
 lv_obj_t *ui_SoftwareUpdatePanel;
 lv_obj_t *ui_CurrentVersionLabel;
 lv_obj_t *ui_UpgradeStatusBar;
@@ -236,7 +234,6 @@ lv_obj_t *ui_Label4;
 
 // SCREEN: ui_ZigbeeScreen
 void ui_ZigbeeScreen_screen_init(void);
-void ui_event_ZigbeeScreen( lv_event_t * e);
 lv_obj_t *ui_ZigbeeScreen;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_619144037[1] = {&ui_img_427627908};
@@ -756,10 +753,6 @@ lv_indev_wait_release(lv_indev_get_act());
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
       save_general_settings_screen( e );
 }
-if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP  ) {
-lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_ZigbeeScreen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_ZigbeeScreen_screen_init);
-}
 }
 void ui_event_ScreenBrightnessSlider( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
@@ -819,13 +812,6 @@ void ui_event_ResetButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       restart_device( e );
-}
-}
-void ui_event_ZigbeeScreen( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM  ) {
-lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_GeneralSettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 0, 0, &ui_GeneralSettingsScreen_screen_init);
 }
 }
 

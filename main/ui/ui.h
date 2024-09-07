@@ -93,7 +93,6 @@ extern lv_obj_t *ui_Panel6;
 void ui_event_LEDBrightnessSlider( lv_event_t * e);
 extern lv_obj_t *ui_LEDBrightnessSlider;
 extern lv_obj_t *ui_Image4;
-extern lv_obj_t *ui_LEDBrightnessLabel;
 extern lv_obj_t *ui_Panel10;
 extern lv_obj_t *ui_Image15;
 void ui_event_StopGrowButton( lv_event_t * e);
@@ -191,7 +190,6 @@ extern lv_obj_t *ui_Panel12;
 extern lv_obj_t *ui_Label24;
 void ui_event_ScreenBrightnessSlider( lv_event_t * e);
 extern lv_obj_t *ui_ScreenBrightnessSlider;
-extern lv_obj_t *ui_ScreenBrightnessLabel;
 extern lv_obj_t *ui_SoftwareUpdatePanel;
 extern lv_obj_t *ui_CurrentVersionLabel;
 extern lv_obj_t *ui_UpgradeStatusBar;
@@ -228,7 +226,6 @@ extern lv_obj_t *ui_ResetButton;
 extern lv_obj_t *ui_Label4;
 // SCREEN: ui_ZigbeeScreen
 void ui_ZigbeeScreen_screen_init(void);
-void ui_event_ZigbeeScreen( lv_event_t * e);
 extern lv_obj_t *ui_ZigbeeScreen;
 extern lv_obj_t *ui____initial_actions0;
 

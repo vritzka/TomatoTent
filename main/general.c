@@ -32,13 +32,14 @@ void heartbeat(bool count_day) {
 	if(my_tent.seconds % 1800 == 0)
 		lv_slider_set_value(ui_NowSlider, (my_tent.seconds/30/60), LV_ANIM_OFF);
 
-	if(my_tent.seconds % 5 == 0) {
+	if(my_tent.seconds % 5 == 0 && count_day) {
 		read_scd40();
 	}	
 	
-	if(my_tent.seconds % 60 == 0) {	
+	if(my_tent.seconds % 60 == 0 && count_day) {	
 		setGrowLampBrightness();
 		post_vital_data();
+		chart_add_climate_point();
 	}
 	
 		if(my_tent.seconds < my_tent.day_period_seconds) { //day
@@ -83,8 +84,6 @@ void heartbeat(bool count_day) {
 			printf((err != ESP_OK) ? "Failed!\n" : "Saved Seconds\n");
 			nvs_close(storage_handle);
 		}
-		if(count_day)
-			chart_add_climate_point();
 	}
 	
 	if(my_tent.seconds < 120 && (my_tent.seconds % 10 == 0)) //to quickly display something on the graph for newly started grows
@@ -923,29 +922,24 @@ void setGrowLampBrightness() {
 				ESP_LOGI(TAG, "Sunrise");
 				
 				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * (my_tent.seconds/60);
-				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 
 			} else if( (my_tent.seconds >= (my_tent.day_period_seconds - (15*60)) ) ) {   // sunset
 			
 				ESP_LOGI(TAG, "Sunset");
 				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * ((my_tent.day_period_seconds - my_tent.seconds)/60);
-					lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 			} else {
 				
 				ESP_LOGI(TAG, "Normal Daytime");
 				dimmer_brightness = my_tent.led_brightness_slider_value; // normal daytime
-				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 			}
 			
 			if(my_tent.grow_lamp_dimmed && dimmer_brightness > 15) {
 				dimmer_brightness = 15;
-				lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 			}
 		} else { // night
 			
 			ESP_LOGI(TAG, "Nighttime");
 			dimmer_brightness = 0;
-			lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 					
 		}
 	}

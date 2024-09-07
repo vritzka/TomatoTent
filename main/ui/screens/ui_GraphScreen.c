@@ -42,12 +42,11 @@ lv_obj_set_y( ui_Chart, 30 );
 lv_obj_set_align( ui_Chart, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Chart, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_SNAPPABLE );    /// Flags
 lv_chart_set_type( ui_Chart, LV_CHART_TYPE_LINE);
-lv_chart_set_point_count( ui_Chart, 144);
-lv_chart_set_range( ui_Chart, LV_CHART_AXIS_PRIMARY_Y, 5, 105);
+lv_chart_set_point_count( ui_Chart, 240);
 lv_chart_set_range( ui_Chart, LV_CHART_AXIS_SECONDARY_Y, 200, 2000);
-lv_chart_set_div_line_count( ui_Chart, 10, 13);
+lv_chart_set_div_line_count( ui_Chart, 10, 5);
 lv_chart_set_axis_tick( ui_Chart, LV_CHART_AXIS_PRIMARY_X, 0, 0, 10, 0, false, 40);
-lv_chart_set_axis_tick( ui_Chart, LV_CHART_AXIS_PRIMARY_Y, 5, 0, 10, 2, true, 22);
+lv_chart_set_axis_tick( ui_Chart, LV_CHART_AXIS_PRIMARY_Y, 5, 0, 11, 2, true, 22);
 lv_chart_set_axis_tick( ui_Chart, LV_CHART_AXIS_SECONDARY_Y, 5, 0, 10, 2, true, 25);
 lv_obj_set_style_bg_color(ui_Chart, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Chart, 20, LV_PART_MAIN| LV_STATE_DEFAULT);

@@ -184,7 +184,6 @@ void init_tomatotent(lv_event_t * e)
 		
 		err = nvs_get_u16(storage_handle, "led_brightness", &my_tent.led_brightness_slider_value);
         lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
-		lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 		setGrowLampBrightness();
 		
 		//day counter screen
@@ -196,7 +195,6 @@ void init_tomatotent(lv_event_t * e)
 		err = nvs_get_u16(storage_handle, "temp_unit", &my_tent.temp_unit);
 		update_temp_units(my_tent.temp_unit);
 		err = nvs_get_u16(storage_handle, "screen_brightns", &my_tent.screen_brightness_slider_value); 
-		lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%d%%", my_tent.screen_brightness_slider_value);
 		lv_slider_set_value(ui_ScreenBrightnessSlider, my_tent.screen_brightness_slider_value, LV_ANIM_OFF);
 		my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
 		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
@@ -403,9 +401,7 @@ void LEDBrightnessSlider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
 	my_tent.led_brightness_slider_value = lv_slider_get_value(target);
-	
-	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value );
-	
+		
 	setGrowLampBrightness();
 }
 
@@ -482,9 +478,7 @@ void screen_brightness_slider(lv_event_t * e)
 {
 	lv_obj_t * target = lv_event_get_target(e);
 	my_tent.screen_brightness_slider_value = lv_slider_get_value(target);
-	
-	lv_label_set_text_fmt(ui_ScreenBrightnessLabel, "%hu%%", my_tent.screen_brightness_slider_value);
-		
+			
 	my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
 		
 	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
@@ -693,7 +687,6 @@ void start_grow(lv_event_t * e)
 
 	my_tent.led_brightness_slider_value = 80;
 	lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
-	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 	lv_obj_add_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_100, 0);
 	setGrowLampBrightness();
@@ -735,7 +728,6 @@ void start_dry(lv_event_t * e)
 
 	my_tent.led_brightness_slider_value = 0;
 	lv_slider_set_value(ui_LEDBrightnessSlider, my_tent.led_brightness_slider_value, LV_ANIM_OFF);
-	lv_label_set_text_fmt(ui_LEDBrightnessLabel, "%d %%", my_tent.led_brightness_slider_value);
 	lv_obj_clear_flag(ui_LEDBrightnessSlider, LV_OBJ_FLAG_CLICKABLE);
 	lv_obj_set_style_opa(ui_LEDBrightnessSlider, LV_OPA_20, 0);
 	setGrowLampBrightness();
