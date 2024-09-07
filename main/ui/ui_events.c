@@ -303,9 +303,9 @@ void init_tomatotent(lv_event_t * e)
 		lv_dropdown_set_selected(ui_TemperatureDropdown, my_tent.target_temperature_sel_index);
 		
 		if( my_tent.climate_mode == 1 ) { //auto climate
-			lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
-		} else { //manual climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
+		} else { //manual climate
+			lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 		}
 		
 		set_target_climate();
@@ -592,12 +592,12 @@ void climate_mode_switch(lv_event_t * e)
 	
 	lv_obj_t * target = lv_event_get_target(e);
 	
-	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) { //manual climate
-		my_tent.climate_mode = 0;
-		lv_obj_clear_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
-	} else { //auto climate
+	if( lv_obj_has_state(target, LV_STATE_CHECKED) ) { //automatic climate
 		my_tent.climate_mode = 1;
 		lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
+	} else { //manual climate
+		my_tent.climate_mode = 0;
+		lv_obj_clear_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 	}
 	set_target_climate();
 	setFanSpeed();
