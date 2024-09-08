@@ -1,7 +1,32 @@
 {
   "deftheme": {
     "name": "Default",
-    "properties": []
+    "properties": [
+      {
+        "nid": -1545495288,
+        "strtype": "THEME_COLOR",
+        "strval": "gray1",
+        "intarray": [
+          103,
+          103,
+          103,
+          255
+        ],
+        "InheritedType": 0
+      },
+      {
+        "nid": 1133214582,
+        "strtype": "THEME_COLOR",
+        "strval": "Green1",
+        "intarray": [
+          7,
+          144,
+          1,
+          255
+        ],
+        "InheritedType": 0
+      }
+    ]
   },
   "themes": [],
   "selected_theme": "Default"

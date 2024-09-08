@@ -266,7 +266,6 @@ void vGuiTask(void *pvParameter) {
 
   indev_drv.read_cb = touch_read;
 
-    static uint16_t screen_brightness_slider_value; 
     ui_init();
 
     while (1) {
@@ -277,9 +276,7 @@ void vGuiTask(void *pvParameter) {
 	
         if(lv_disp_get_inactive_time(NULL) < 240000) {
 			if(!screen_lit) {
-				screen_brightness_slider_value = lv_slider_get_value(ui_ScreenBrightnessSlider);
-				ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, (128-1)*((float)screen_brightness_slider_value / 100) ));
-				ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));
+				set_display_brightness(lv_slider_get_value(ui_ScreenBrightnessSlider));
 				screen_lit = 1;		
 			}
 		} else {

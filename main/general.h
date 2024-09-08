@@ -62,7 +62,6 @@ typedef struct {
 	uint16_t dimmer_brightness_duty;
 	bool grow_lamp_dimmed;
 	uint16_t screen_brightness_slider_value;
-	uint16_t screen_brightness_duty;
 	uint16_t temp_unit; //1 = F
 	uint16_t wifi;
 	bool wifi_connected;
@@ -126,8 +125,8 @@ PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the 
 #define LEDC_BACKLIGHT_TIMER              LEDC_TIMER_0
 #define LEDC_BACKLIGHT_OUTPUT_IO          (45) // Define the output GPIO for Backlight
 #define LEDC_BACKLIGHT_CHANNEL            LEDC_CHANNEL_0
-#define LEDC_BACKLIGHT_DUTY_RES           LEDC_TIMER_7_BIT // Set duty resolution to 13 bits
-#define LEDC_BACKLIGHT_FREQUENCY          (10000) // Frequency in Hertz. 
+#define LEDC_BACKLIGHT_DUTY_RES           LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
+#define LEDC_BACKLIGHT_FREQUENCY          (3000) // Frequency in Hertz. 
 
 //fan pwm
 #define LEDC_FAN_TIMER              LEDC_TIMER_1
@@ -161,6 +160,7 @@ void read_scd40();
 void setFanSpeed();
 void init_i2c();
 void setGrowLampBrightness();
+void set_display_brightness(uint8_t screen_brightness_slider_value);
 void set_target_climate();
 void update_displayed_values();
 void chart_add_climate_point();

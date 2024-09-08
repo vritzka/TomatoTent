@@ -98,7 +98,7 @@ static void advanced_ota_example_task(void *pvParameter)
     }
     
     lv_obj_add_flag(ui_FirmwareUpgradeButton, LV_OBJ_FLAG_HIDDEN);
-	lv_label_set_text_fmt(ui_CurrentVersionLabel, "updating to: %s (please wait)", new_app_info.version);	
+	lv_label_set_text_fmt(ui_CurrentVersionLabel, "updating to %s", new_app_info.version);	
 
     
 	uint16_t bar_value;

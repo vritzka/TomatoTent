@@ -196,17 +196,18 @@ void init_tomatotent(lv_event_t * e)
 		update_temp_units(my_tent.temp_unit);
 		err = nvs_get_u16(storage_handle, "screen_brightns", &my_tent.screen_brightness_slider_value); 
 		lv_slider_set_value(ui_ScreenBrightnessSlider, my_tent.screen_brightness_slider_value, LV_ANIM_OFF);
-		my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
-		ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
-		ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
-		
+		set_display_brightness(my_tent.screen_brightness_slider_value);
+
 		uint8_t write_buf[2] = {0x11, 0x10};
 		i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 
 		err = nvs_get_u16(storage_handle, "dimmer_polarity", &my_tent.dimmer_polarity); 
 		write_buf[0] = 2;
 		write_buf[1] = my_tent.dimmer_polarity;
-		i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+		
+		if(my_tent.is_day)
+			i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+		
 		ESP_LOGI(TAG,"Dimmer Polarity: %X", my_tent.dimmer_polarity);
 
 		char binary[16][5] = {"0000", "0001", "0010", "0011", "0100", "0101","0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110","1111"};
@@ -302,7 +303,6 @@ void init_tomatotent(lv_event_t * e)
 		
 		if( my_tent.climate_mode == 1 ) { //auto climate
 			lv_obj_add_state(ui_ClimateModeSwitch, LV_STATE_CHECKED); 
-		} else { //manual climate
 			lv_obj_add_flag(ui_ClimateValuesPanel, LV_OBJ_FLAG_HIDDEN);
 		}
 		
@@ -312,7 +312,7 @@ void init_tomatotent(lv_event_t * e)
 		const esp_partition_t *running = esp_ota_get_running_partition();
 		esp_app_desc_t running_app_info;
 		esp_ota_get_partition_description(running, &running_app_info);
-		lv_label_set_text_fmt(ui_CurrentVersionLabel, "current version: %s", running_app_info.version);	
+		lv_label_set_text_fmt(ui_CurrentVersionLabel, "Software v%s", running_app_info.version);	
 		
 		//where we drying?
 		err = nvs_get_u8(storage_handle, "is_drying", &my_tent.is_drying);
@@ -479,10 +479,7 @@ void screen_brightness_slider(lv_event_t * e)
 	lv_obj_t * target = lv_event_get_target(e);
 	my_tent.screen_brightness_slider_value = lv_slider_get_value(target);
 			
-	my_tent.screen_brightness_duty = (128-1)*((float)my_tent.screen_brightness_slider_value / 100);
-		
-	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, my_tent.screen_brightness_duty));
-    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
+	set_display_brightness(my_tent.screen_brightness_slider_value);
 }
 
 
@@ -884,6 +881,9 @@ void updateDimmerPolarity(lv_event_t * e)
 	
 	err = nvs_open("storage", NVS_READWRITE, &storage_handle);
     err = nvs_set_u16(storage_handle, "dimmer_polarity", my_tent.dimmer_polarity);
+	if(err != ESP_OK)
+		ESP_LOGI(TAG, "Error (%s) saving Dimmer Polarity", esp_err_to_name(err));
+
     err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
 }

@@ -165,6 +165,11 @@ lv_obj_t *ui_Fan3;
 lv_obj_t *ui_FanSpeedMinLabel;
 lv_obj_t *ui_FanSpeedMaxLabel;
 lv_obj_t *ui_FanSpeedLabel3;
+lv_obj_t *ui_Panel17;
+void ui_event_TempUnitSwitch( lv_event_t * e);
+lv_obj_t *ui_TempUnitSwitch;
+lv_obj_t *ui_Label27;
+lv_obj_t *ui_Label16;
 
 
 // SCREEN: ui_WifiSettingsScreen
@@ -199,7 +204,6 @@ lv_obj_t *ui_ScreenBrightnessSlider;
 lv_obj_t *ui_SoftwareUpdatePanel;
 lv_obj_t *ui_CurrentVersionLabel;
 lv_obj_t *ui_UpgradeStatusBar;
-lv_obj_t *ui_Label10;
 void ui_event_FirmwareUpgradeButton( lv_event_t * e);
 lv_obj_t *ui_FirmwareUpgradeButton;
 lv_obj_t *ui_Label21;
@@ -221,11 +225,6 @@ lv_obj_t *ui_Image17;
 lv_obj_t *ui_Container2;
 lv_obj_t *ui_Roller1;
 lv_obj_t *ui_Label12;
-lv_obj_t *ui_Panel17;
-void ui_event_TempUnitSwitch( lv_event_t * e);
-lv_obj_t *ui_TempUnitSwitch;
-lv_obj_t *ui_Label27;
-lv_obj_t *ui_Label16;
 lv_obj_t *ui_Container1;
 void ui_event_ResetButton( lv_event_t * e);
 lv_obj_t *ui_ResetButton;
@@ -714,6 +713,12 @@ if ( event_code == LV_EVENT_VALUE_CHANGED) {
       fanspeed_slider( e );
 }
 }
+void ui_event_TempUnitSwitch( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      temp_unit_switch( e );
+}
+}
 void ui_event_WifiSettingsScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
@@ -800,12 +805,6 @@ void ui_event_PolaritySwitch6( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_VALUE_CHANGED) {
       updateDimmerPolarity( e );
-}
-}
-void ui_event_TempUnitSwitch( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_VALUE_CHANGED) {
-      temp_unit_switch( e );
 }
 }
 void ui_event_ResetButton( lv_event_t * e) {

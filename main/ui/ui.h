@@ -14,6 +14,8 @@ extern "C" {
 
 #include "ui_helpers.h"
 #include "ui_events.h"
+#include "ui_theme_manager.h"
+#include "ui_themes.h"
 
 void fanspin_Animation( lv_obj_t *TargetObject, int delay);
 void Gentle_rock_Animation( lv_obj_t *TargetObject, int delay);
@@ -163,6 +165,11 @@ extern lv_obj_t *ui_Fan3;
 extern lv_obj_t *ui_FanSpeedMinLabel;
 extern lv_obj_t *ui_FanSpeedMaxLabel;
 extern lv_obj_t *ui_FanSpeedLabel3;
+extern lv_obj_t *ui_Panel17;
+void ui_event_TempUnitSwitch( lv_event_t * e);
+extern lv_obj_t *ui_TempUnitSwitch;
+extern lv_obj_t *ui_Label27;
+extern lv_obj_t *ui_Label16;
 // SCREEN: ui_WifiSettingsScreen
 void ui_WifiSettingsScreen_screen_init(void);
 void ui_event_WifiSettingsScreen( lv_event_t * e);
@@ -193,7 +200,6 @@ extern lv_obj_t *ui_ScreenBrightnessSlider;
 extern lv_obj_t *ui_SoftwareUpdatePanel;
 extern lv_obj_t *ui_CurrentVersionLabel;
 extern lv_obj_t *ui_UpgradeStatusBar;
-extern lv_obj_t *ui_Label10;
 void ui_event_FirmwareUpgradeButton( lv_event_t * e);
 extern lv_obj_t *ui_FirmwareUpgradeButton;
 extern lv_obj_t *ui_Label21;
@@ -215,11 +221,6 @@ extern lv_obj_t *ui_Image17;
 extern lv_obj_t *ui_Container2;
 extern lv_obj_t *ui_Roller1;
 extern lv_obj_t *ui_Label12;
-extern lv_obj_t *ui_Panel17;
-void ui_event_TempUnitSwitch( lv_event_t * e);
-extern lv_obj_t *ui_TempUnitSwitch;
-extern lv_obj_t *ui_Label27;
-extern lv_obj_t *ui_Label16;
 extern lv_obj_t *ui_Container1;
 void ui_event_ResetButton( lv_event_t * e);
 extern lv_obj_t *ui_ResetButton;
@@ -242,7 +243,6 @@ LV_IMG_DECLARE( ui_img_wifi_png);   // assets/wifi.png
 LV_IMG_DECLARE( ui_img_640654572);   // assets/sunglasses-2.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets/co2.png
 LV_IMG_DECLARE( ui_img_427627908);   // assets/calendar-2.png
-LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_now_arrow_2_png);   // assets/now_arrow_2.png
 LV_IMG_DECLARE( ui_img_432815713);   // assets/night-mode.png
 LV_IMG_DECLARE( ui_img_1756057095);   // assets/led-light-3.png
@@ -261,6 +261,7 @@ LV_IMG_DECLARE( ui_img_713338696);   // assets/cloud-computing-2.png
 LV_IMG_DECLARE( ui_img_1324581693);   // assets/dimmer-3.png
 LV_IMG_DECLARE( ui_img_320680866);   // assets/led-light-2.png
 LV_IMG_DECLARE( ui_img_1180469587);   // assets/moon-2.png
+LV_IMG_DECLARE( ui_img_303216376);   // assets/sliders-2.png
 LV_IMG_DECLARE( ui_img_290017612);   // assets/sun-2.png
 LV_IMG_DECLARE( ui_img_1130838376);   // assets/thermometer-4.png
 LV_IMG_DECLARE( ui_img_1319116584);   // assets/wall-socket-2.png

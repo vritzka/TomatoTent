@@ -905,6 +905,20 @@ void setFanSpeed() {
 ///////////////////  GROW LAMP   ////////////////////////
 /////////////////////////////////////////////////////////
 
+void set_display_brightness(uint8_t screen_brightness_slider_value){
+	
+    uint16_t duty = (8192)*((float)screen_brightness_slider_value / 100);
+
+	if(duty < 100) {
+		duty = 1;
+	}
+
+	ESP_LOGI(TAG, "Duty: %i", duty);
+		
+	ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL, duty));
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_BACKLIGHT_CHANNEL));	
+}
+
 static uint16_t dimmer_brightness;
 void setGrowLampBrightness() {
 
