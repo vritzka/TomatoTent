@@ -910,7 +910,7 @@ void set_display_brightness(uint8_t screen_brightness_slider_value){
     uint16_t duty = (8192)*((float)screen_brightness_slider_value / 100);
 
 	if(duty < 100) {
-		duty = 1;
+		duty = 10;
 	}
 
 	ESP_LOGI(TAG, "Duty: %i", duty);

@@ -126,7 +126,7 @@ PWM Signal 0%-10% , the fan doesn't work , pwm signal >10% . the fan work , the 
 #define LEDC_BACKLIGHT_OUTPUT_IO          (45) // Define the output GPIO for Backlight
 #define LEDC_BACKLIGHT_CHANNEL            LEDC_CHANNEL_0
 #define LEDC_BACKLIGHT_DUTY_RES           LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
-#define LEDC_BACKLIGHT_FREQUENCY          (3000) // Frequency in Hertz. 
+#define LEDC_BACKLIGHT_FREQUENCY          (8000) // Frequency in Hertz. 
 
 //fan pwm
 #define LEDC_FAN_TIMER              LEDC_TIMER_1
