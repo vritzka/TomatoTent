@@ -35916,7 +35916,22 @@
               },
               {
                 "part": "lv.PART.ITEMS",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": -162976611,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": -1182455890,
+                        "strtype": "_style/Bg_Radius",
+                        "integer": 3,
+                        "InheritedType": 6
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1572015989,
                 "strtype": "KEYBOARD/Style_items",
                 "strval": "lv.PART.ITEMS, Rectangle, Pad, Text",
@@ -36302,6 +36317,12 @@
                         "strtype": "_style/Text_Font",
                         "strval": "montserrat_16",
                         "InheritedType": 3
+                      },
+                      {
+                        "nid": 1666290265,
+                        "strtype": "_style/Bg_Radius",
+                        "integer": 3,
+                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -36645,6 +36666,12 @@
                         "strtype": "_style/Text_Font",
                         "strval": "montserrat_16",
                         "InheritedType": 3
+                      },
+                      {
+                        "nid": 703669457,
+                        "strtype": "_style/Bg_Radius",
+                        "integer": 3,
+                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -37209,12 +37236,18 @@
                     "strval": "DEFAULT",
                     "childs": [
                       {
+                        "nid": 1046240426,
+                        "strtype": "_style/Bg_Radius",
+                        "integer": 3,
+                        "InheritedType": 6
+                      },
+                      {
                         "nid": 144546436,
                         "strtype": "_style/Bg_Color",
                         "intarray": [
-                          126,
-                          126,
-                          126,
+                          0,
+                          0,
+                          0,
                           255
                         ],
                         "InheritedType": 7
@@ -37230,7 +37263,29 @@
               },
               {
                 "part": "lv.PART.INDICATOR",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": -1100275621,
+                    "strtype": "_style/StyleState",
+                    "strval": "CHECKED",
+                    "childs": [
+                      {
+                        "nid": 1122253165,
+                        "strtype": "_style/Bg_Color",
+                        "strval": "Green1",
+                        "integer": 1133214582,
+                        "intarray": [
+                          7,
+                          144,
+                          1,
+                          255
+                        ],
+                        "InheritedType": 7
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": -104481298,
                 "strtype": "SWITCH/Style_indicator",
                 "strval": "lv.PART.INDICATOR, Rectangle",
@@ -47689,7 +47744,7 @@
         "deepid": -71563586,
         "isPage": true,
         "editor_posx": 9000,
-        "editor_posy": -1000,
+        "editor_posy": -1600,
         "locked": false,
         "properties": [
           {
@@ -50085,7 +50140,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
     "projectExportFolderPath": "/Users/volkerritzka/esp/TomatoTent/main/ui",
-    "backup_cnt": 93,
+    "backup_cnt": 94,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

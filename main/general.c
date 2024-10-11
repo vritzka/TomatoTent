@@ -137,7 +137,7 @@ void make_it_night() {
 	lv_img_set_src(ui_HomeSky, &ui_img_432815713);
     lv_img_set_src(ui_HomeSky2, &ui_img_432815713);
 	lv_slider_set_value(ui_LightDurationSlider, my_tent.light_duration_slider_value, LV_ANIM_OFF);
-    uint8_t write_buf[2] = {2, 0x00};
+    uint8_t write_buf[2] = {2, 0xFF};
     i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 }
 

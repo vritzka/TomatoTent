@@ -49,5 +49,5 @@ void app_main(void)
    init_ledc();
    vStartGuiTask();
    vStartTimerTask();
-   vCreateZigbeeTask();
+   //vCreateZigbeeTask();
 }
