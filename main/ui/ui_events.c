@@ -757,6 +757,9 @@ static void stop_grow_cb(lv_event_t * e)
     err = nvs_set_u16(storage_handle, "days", 0);
 	err = nvs_commit(storage_handle);
     nvs_close(storage_handle);
+
+	uint8_t write_buf[2] = {2, 0xFF};
+    i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 		
     
     lv_obj_set_pos(ui_tomato, 0,0);

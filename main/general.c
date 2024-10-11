@@ -37,7 +37,6 @@ void heartbeat(bool count_day) {
 	}	
 	
 	if(my_tent.seconds % 60 == 0 && count_day) {	
-		setGrowLampBrightness();
 		post_vital_data();
 		chart_add_climate_point();
 	}
@@ -102,11 +101,10 @@ void heartbeat(bool count_day) {
 			HideDimmerIndication2_Animation(ui_DimmerIconPanel2, 0);
 			lv_arc_set_value(ui_DimmerArc, 900);
 			lv_bar_set_value(ui_DimmerBar2, 900, LV_ANIM_OFF);
-			ESP_LOGI(TAG, "Un-Dimmed");		
-			setGrowLampBrightness();			
+			ESP_LOGI(TAG, "Un-Dimmed");					
 		}
 	}
-	
+    setGrowLampBrightness();
 }
 
 void make_it_day(bool count_day) {
@@ -148,7 +146,7 @@ void make_it_drying(bool count_day) {
 	lv_obj_set_style_bg_color(ui_HomeScreen, lv_color_hex(0x280030), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_obj_set_style_bg_color(ui_GraphScreen, lv_color_hex(0x280030), LV_PART_MAIN | LV_STATE_DEFAULT );
 	lv_img_set_src(ui_HomeSky, &ui_img_bud_png);
-    uint8_t write_buf[2] = {2, 0x00};
+    uint8_t write_buf[2] = {2, 0xFF};
     i2c_master_write_to_device(I2C_BUS_0, 0x5b, write_buf, sizeof(write_buf), I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
 	if(count_day) {
 		ESP_LOGI(TAG, "Counting the Day");
@@ -929,13 +927,13 @@ void setGrowLampBrightness() {
 	
 		if(my_tent.is_day) {
 			
-			ESP_LOGI(TAG, "Daytime");
+			ESP_LOGI(TAG, "Daytime Day %d", my_tent.days);
 			
-			if(my_tent.seconds < (15*60)) {  // sunrise
+			if(my_tent.seconds < (15*60) && my_tent.days > 1) {  // sunrise but not on first day
 				
 				ESP_LOGI(TAG, "Sunrise");
 				
-				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * (my_tent.seconds/60);
+				dimmer_brightness = (my_tent.led_brightness_slider_value / 14) * ((my_tent.seconds/60)+1);
 
 			} else if( (my_tent.seconds >= (my_tent.day_period_seconds - (15*60)) ) ) {   // sunset
 			
